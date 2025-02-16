@@ -1,0 +1,64 @@
+How to get back after a function invocation?
+
+
+bottom to top
+Text
+Data - global data
+Heap growing up towards stack growing down
+the lower the addresses go the moire the stack has grown
+%rsp is the stack pointer if you want to grow the stack you decrement %rsp
+
+pushq Src
+    writes to memory and writes to rsp
+    decrements rsp by 8 and writes the src address into the area that rsp used to point to
+popq Dest
+    reads value at address given by rsp
+    increment rsp by 8
+    store value at Dest (must be register)
+
+CallQ addr
+    changes %rip to e\invoke that function
+retq 
+    brings you back to the other scope
+    retq goes to instruction after callq
+    ret and retq wil do the same thing
+
+Callee - function invoked
+Caller - function that invoked callee
+which registers are caller safe vs callee safe
+
+Call - does the same thing as a jmp and also write sto the stack - a jmp with a push - it is pushing the next address of the instruction that follows
+
+Callq - jmp and push
+rip changes to the place of function and rsp goes down one and fills with the next registry address
+retq changes rip to whatever the stack points to
+
+Procedure Data Flow
+Registers - First 6 arguments
+    rdi
+    rsi
+    rdx
+    rcx
+    r8
+    r9
+    extra values are stored in the stack with argument 7 on top and every other argument in increasing order further into the stack
+Return Value
+    rax
+
+ia32
+%rbp is no longer like this
+
+Caller saved
+    caller has to save values and assume that the callee will modify that value - if the value is useful to the caller it needs to save it itself
+Callee Saved
+    callee saves temp values in its fram before using
+    callee restores them before returning to caller
+
+rax - return value - caller saved
+rdi,...r9 - argument - caller-saved
+r10, r11 - caller saved -can be modified by procedure
+
+Callee saved
+rbx, r12, r131, r14
+rbp - may be used as frame pointer -can mix and match
+rsp - special form of callee save -resturored to original value upon exit from procedure

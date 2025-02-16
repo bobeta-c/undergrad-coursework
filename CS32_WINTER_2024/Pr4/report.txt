@@ -1,0 +1,9 @@
+report 006150286
+1. geodb.load()
+	O(N * P) with N being the number of geopoints in the mapdata.txt file and P being the average amount of POI's per geopoint. Alternatively ignoring geopoints the program is O(T) where T is the number of lines in the file. A constant amount of operations are done per line.
+2. geodb.get_connected_points()
+	O(P) with P being the amount of connected points to the inputtetd geopoint.
+3. geodb.get_street_name()
+	O(1) this is because I stored the edge_names in their own hashmap which is quite redundant because it could have been easily stored in a struct representing an edge/node pair. However that would be O(P) time as get_connected_points violating the spec.
+4. router.route()
+	I implemented A* for my route function so instead I will list the data structures I implemented and why. I first created a hashmap to record the progress of my search algorithm to retrace my steps. I then create hashMaps for every points gScore and fScore which indicate how far a point has come and how far it is expected to be from the end. I then created a lambda function for sorting my priority_queue which would keep track of the GeoPoint with the lowest fScore. I then created a unordered_set to keep track of elements that are in the priority_queue.

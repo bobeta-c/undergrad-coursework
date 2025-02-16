@@ -1,0 +1,9 @@
+address = 0x7fffffffe000
+char[0] = 8*8 continuous bytes starting at address
+char[3] = 8*8 continous bytes starting at address + 3*8*8*sizeof(char) = address + 3*8*8
+= 0x7fffffffe0c0
+let p = char[3]
+char[3][4] = 8 continous bytes starting at p + 4*8*sizeof(char) = p + 4*8
+= 0x7fffffffe0e0
+= 0x57 0x72 0x6f 0x6e 0x67 0x00 0x00 0x00
+printing this out would return: "Wrong"
