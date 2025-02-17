@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\tr}{Tr}
+
+\title{HW 6 - 115B}
+\author{Asher Christian 006-150-286}
+\date{ 15.02.25}
+
+\begin{document}
+    \maketitle
+    \section{Exercise 1}
+    \emph{
+        Let $T$ be a normal operator on a finite-dimensional real inner product space $V$ 
+        whose characteristic polynomial splits. Prove that $V$ has an orthonormal basis
+        of eigenvectors of $T$, and use this to prove $T$ is self adjoint.
+    }
+    Since $\chi_T(\lambda)$ (characteristic polynomial) splits over $ \mathbb{R}$ by the theorem presented
+    in class there exists an orthonormal basis $B = \{v_1,v_2,...,v_n\}$ of $V$ such that
+    $[T]_B$ is upper triangular. We then prove inductively on basis element $v_i$
+    if $i=1$ then since $[T]_B$ upper triangular  $Tv_1 = \lambda_1 v_1 + 0v_2 + .. + 0v_n = \lambda_1 v_1$ is an eigenvector.
+    Assume now that for $i \in\{1,2,3,...,d\}$,  $v_i = \lambda_i v_i$ then consider 
+    \[
+        Tv_{d+1} = \alpha_1 v_1 + ... + \alpha_{d}v_{d} + \alpha_{d+1}v_{d+1} + 0v_{d+2} + ... + 0 v_{n}
+    .\] 
+    and for any $j \in {1,...,d+1}$
+    \[
+        \alpha_j = \langle Tv_{d+1},v_j \rangle = \langle v_{d+1}, T^{*}(v_j) \rangle = \langle v_{d+1},\overline{\lambda_j}v_j \rangle = 0
+    .\] 
+    so
+    \[
+        Tv_{d+1} = \alpha_{d+1}v_{d+1} = \lambda_{d+1}v_{d+1}
+    .\] 
+    is an eigenvector thus $[T]_B$ is diagonal and each $v_i$ is an eigenvector orthonormal.
+    additionally
+    \[
+        [T^{*}]_B = [T]_B^{*} = \overline{[T]_B^{t}} = [T]_B^{t} = [T]_B
+    .\] 
+    since every entry is real and the matrix is diagonal since each element is an eigenvector. Thus $[T^{*}]_B = [T]_B \implies T = T^{*}$ 
+    and $T$ is self-adjoint
+
+    \section{Exercise 2}
+    \emph{
+        Prove Corollary 2 to Theorem 6.18. That is, prove that if $T$ is a linear operator on a 
+        finite dimensional complex inner product space $V$, then: $V$ has an orthonormal basis
+        of eigenvectors of $T$ with corresponding eigenvalues of absolute value 1 iff $T$ 
+        is unitary.
+    }
+    If $T$ is unitary then
+    \[
+    ||Tv|| = ||v||
+    .\] for all $v$. Additionally $TT^{*} = T^{*}T = I$ so $T$ is normal and so there exists
+    an orthonormal basis of eigenvectors $B = \{v_1,...,v_n\}$. By unitary $||v_i|| = ||Tv_i|| = ||\lambda_i v_i|| = |\lambda_i|||v_i||$ so
+    $| \lambda_i| = 0$ for each $i$. Conversely if $V$ has an orthonormal basis $B = \{v_1,...,v_n\}$ of eigenvectors with eigenvalues of absolute value $1$ then
+    $T(B) = \{\lambda_1v_1, ..., \lambda_nv_n\}$ and
+    \[
+    \langle \lambda_i v_i, \lambda_j v_j \rangle = \lambda_i \overline{\lambda_j} \langle v_i, v_j \rangle = 0
+    .\] 
+    if $i \ne j$ and
+     \[
+    ||\lambda_iv_i|| = |\lambda_i||v_i| = 1
+    .\] 
+    Thus $T(B)$ is an orthonormal basis and so $T$ is unitary.
+
+    \section{Exercise 3}
+    \emph{
+        We saythat matrix $A \in \mathbb{C}^{n \times n}$ is unitarily equivalent to $B \in C^{n \times n}$ if
+        there exists a unitary matrix $P \in C^{n \times n}$ such that $A = P^{-1}BP$. Prove that this is an equivalence relation
+        on $ \mathbb{C}^{n \times n}$
+    }
+    Let $\sim$ denote the equivalence.
+    First
+    \[
+    A = IAI \implies A \sim A 
+    .\] 
+    \[
+    A = P^{-1}BP \implies B = PAP^{-1} = (P^{-1})^{-1}AP^{-1} \implies A \sim B \iff B \sim A
+    .\] 
+    \[
+    A = P^{-1}BP \;\; B = Q^{-1}CQ \implies A = P^{-1}Q^{-1}CQP = (QP)^{-1}C(QP) \implies A \sim B \; B \sim C \implies A \sim C
+    .\] 
+    \section{Exercise 4}
+    \emph{
+        Let $T$ be a normal operator on a finite-dimensional combplex inner product space $V$.
+        Use the sepctral decomposition $\lambda_1T_1 + ... + \lambda_mT_m$ of $T$(where $\lambda_i \in \mathbb{C}$ ) to prove the following
+    }
+\end{document}
