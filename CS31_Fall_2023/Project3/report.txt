@@ -1,0 +1,65 @@
+Notable Obstacles:
+navigating a large quantity of code using VIM.
+keeping track of the right error modifiers in errant test cases.
+reading my own code near the end.
+
+Design - pseudocode
+plotline - 
+check to make sure that the given values are valid - direction, fgbg, plotchar
+check to make sure the start location is in the box
+check to make sure the end location is in the box
+call plotHorizontalLine or plotVerticalLine depending on direction as made in the previous section.
+
+performCommands -
+check to make sure the modes are good and the plotChar is valid
+set the starting position to the top left corner
+create a tracker variabl to track the beginning of commands
+create a tracker to remember if there were any soft failures - (plotline returns false)
+create a tracker for the location where there was a sofrt failure
+create a tracker for the return value - vestigial
+create a tracker for the startingBadPosition - vestigial
+Start Parsing:
+	keep track of current position
+	case (h)
+	invoke new command GetAndMove
+
+GetAndMove - helper function
+assumes it starts at a number and tries to find a 1-2 digit number in the string
+makes sure it is inside the string
+checks for negative sign
+checks that the first digit is a digit
+checks to see if there is a possible second digit
+records all these things
+sets a value given as the value of the number and returns whether or not the case succeeded
+
+	checks to see if it can plot the horizontal line
+	if it cant records the location of the h and tells program that a command didnt work
+	
+	does the exact same thing for vertical
+	if the string element is f
+	checks to make sure next element is a leter and changes the settings accordingly
+	if the string is b
+	does the same as F jsut switch to bg instead
+	if the string is c
+	invokes cleargrid and resets everything
+	if the string element is none of the above return an error
+return the proper return value and set the proper badPos
+
+
+test cases
+assert(performCommands("h1", epc, m, bad) == 2); // bad plotChar
+assert(performCommands("h1", pc, em, bad) == 2); //bad mode
+assert(performCommands("h5v3fnh-5bov-3c", pc, m, bad) == 0 && pc == '*'); //normal test case that invokes all possible commands normally
+assert(performCommands("", pc, m, bad) == 0); // empty string is syntactically valid
+assert(performCommands("V86F", pc, m, bad) == 1 && bad == 4); //precedence in error returns
+assert(performCommands("h11v99h99", pc, m, bad) == 3 && bad == 3);//precedence in out of bounds error
+assert(performCommands("Cb\t", pc, m, bad) == 1 && bad == 2); // non printable character
+assert(performCommands("F#H+25H?V3!", pc, m, bad) == 1 && bad == 3); //leftmost syntax error
+assert(performCommands("B@H", pc, m, bad) == 1 && bad == 3);//expecting - or digit after H
+assert(performCommands("C12", pc, m, bad) == 1 && bad == 1);//C is one command; 1 can't start a command
+assert(performCommands("Q3V4#", pc, m, bad) == 1 && bad == 0); //Q is not a command
+assert(performCommands("V03c H123#", pc, m, bad) == 1 && bad == 4);//space can't start a command
+assert(performCommands("H18H-123#", pc, m, bad) == 1 && bad == 7); //H-12 is one command; 3 can't start a command
+assert(performCommands("H5H-1-2", pc, m, bad) == 1 && bad == 5); //H-1 is one command; - can't start a command
+assert(performCommands("fh8", pc, m, bad) == 1 && bad == 2); //fh is one command; 8 can't start a command
+

@@ -1,0 +1,423 @@
+\documentclass{amsart}
+\usepackage{amsfonts} % For math fonts
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\setlist{topsep=0pt, leftmargin=*, labelsep=1em}
+
+\title{HW 4 - 131AH}
+\author{Asher Christian 006-150-286}
+\date{15.11.24}
+
+\begin{document}
+    \maketitle
+    \section{Exercise 4.1}
+    \emph{Prove that a continuous real-valued function on a closed interval in $ \mathbb{R} ^2$ cannot be one
+    -to-one}\\
+    Let $f: [a_1,b_1] \times [a_2,b_2] \rightarrow \mathbb{R} $ continuous. $[a_1,b_1] \times [a_2,b_2] \subset \mathbb{R} ^2$\\
+    Let $f_1: [a_1,b_1] \rightarrow \mathbb{R}, g_1: [a_2,b_2] \rightarrow \mathbb{R}, f_2: [a_2,b_2] \rightarrow \mathbb{R}, g_2: [a_1,b_1] \rightarrow \mathbb{R}  $\\
+    with $f_1(x) = f(x,a_2), g_1(x) = f(b_1,x), f_2(x) = f(a_1,x), g_2(x) = f(x,b_2)$\\
+    If $f(a_1,a_2) \ne f(b_1,b_2)$ we are done. assume the values are not equal.
+    Then construct two continuous functions
+    \[
+        F_1(x): [0,(b_1-a_1)+(b_2-a_2)] \rightarrow \mathbb{R}  = 
+        \begin{cases}
+            f_1(x+a_1) & x < (b_1-a_1)\\
+            g_1(x-(b_1-a_1) + a_2) & x \ge (b_1-a_1)\\
+        \end{cases}
+        .\]
+        \[
+        F_2(x): [0,(b_1-a_1)+(b_2-a_2)] \rightarrow \mathbb{R}  =
+        \begin{cases}
+            f_2(x+a_2) & x < (b_2-a_2)\\
+            g_2(x-(b_2-a_2)+ a_1) & x \ge (b_2-a_2)
+        \end{cases}
+    .\] 
+    Let $m = (b_1-a_1) + (b_2-a_2)$
+    \[
+    F_1(0) = F_2(0) = f(a_1,a_2) \; , F_1(m) = F_2(m) = f(b_1,b_2)
+    .\] 
+    and both  $F_1$ and $F_2$ are continuous on the entire interval because their components are continuous and 
+    the points of their piecewise connection are continuous. So for any $c$ between $f(a_1,a_2), f(b_1,b_2)$ by the intermediate value theorem
+    There exists some $x_1,x_2$ s.t. $F_1(x_1) = F_2(x_2) = c$. We also have that if $f(x,y) = F_1(x_0), (x,y) \not\in \{(a_1,a_2),(b_1,b_2)\}$ then $F_2$ does not correspond directly to any $x,y$ in our starting interval.
+    This goes to show that the two paths created by $F_1, F_2$ are disjoint except for their start and endpoints.
+    Therefore $x_1,x_2$ correspond to two unique points in the original closed interval that have the same value therefore in this first case $f$ is not one-one\\
+
+    In general terms this proof considers the paths taken by the boundary of our initial interval and notes that either they must have some point in common or taking the boundary
+    from the intermediate corners creates a sufficient path.
+
+    \section{Exercise 4.2}
+    \emph{
+        Prove that the sequence of functions
+        \[
+         \sqrt{x}, \sqrt{x+\sqrt{x}}, \sqrt{x+\sqrt{x+\sqrt{x}}}
+        .\] 
+        on $(0,+\infty)$ is convergent and find the limit function.
+    }\\
+    Let $(f_n)_n$ be the sequence of functions defined by $f_0 = \sqrt{x}$ and $f_{n+1} = \sqrt{x+f_{n}}$ and 
+    Set $x \in [0, +\infty)$ and
+    we have that $(f_n(x))_n$ is a monotone increasing sequence since $x > 0$.
+    \[
+        \sqrt{x} < \sqrt{x+c}       
+    .\] 
+    for all $c > 0$ which implies that $f_{1}(x) > f_0(x)$
+    \[
+        f_{n+1}(x) = \sqrt{x+f_{n}(x)} > \sqrt{x+f_{n-1}(x)} = f_n(x)
+    .\] 
+    And so the sequence $(f_n(x))_n$ is strictly increasing.
+    We also have that 
+    \[
+    \sqrt{x} < \frac{1}{2} + \sqrt{\frac{1}{4}+x}
+    .\] 
+    let $a(x) = \frac{1}{2}+ \sqrt{\frac{1}{4}+x}$
+    Inductively if since $f_0(x) < a(x)$ assume $f_n(x) < a(x)$ then
+     \[
+         f_{n+1} = \sqrt{x + f_n(x)} < \sqrt{x +a(x)} = \sqrt{a(x)^2}  = a(x)
+    .\] 
+    since
+    \[
+    a(x)^2 = \frac{1}{4} + \frac{1}{4} + x + \frac{2}{2}\sqrt{\frac{1}{4}+x} = x + a(x)
+    .\] 
+    Thus the sequence $(f_n(x))_n$ is both strictly increasing and bounded from above by $a(x)$.
+    And so define $g(l) = \sqrt{l+x}$ with our x fixed.
+    $g(l)$ is continuous for 
+    \[
+        \lim_{h\to_0}(g(l+h) - g(l)) = \lim_{h\to 0} \sqrt{l+h+x} - \sqrt{l+x} = \lim_{h\to 0} \frac{(l+h+x)-(l+x)}{\sqrt{l+h+x} + \sqrt{l+x}} =\lim_{h\to 0} \frac{h}{\text{term} > 0 \forall h} = 0
+    .\] 
+    continuity of $g$ implies that
+    \[
+    \lim_{n\to\infty}f_n(x) = \lim_{n\to\infty}g(f_n(x)) = g(\lim_{n\to\infty}(f_n(x)) = \sqrt{x+\lim_{n\to\infty}f_n(x)}
+    .\] 
+    Basic algebra setting the limit of $f_n(x)$ constant shows that
+    \[
+    \lim_{n\to\infty}f_n(x) = \frac{1}{2} + \sqrt{\frac{1}{4}+x}
+    .\] 
+    Thus the limit exists for all values $x \in (0,\infty)$. and so the functions converge at all points.
+    For $x = 0$ $\sqrt{0}= 0 = \sqrt{0 + \sqrt{0}}$ and so the limit is equal to 0.
+
+    \section{Exercise 4.4}
+    \emph{Let $a,b \in \mathbb{R} , a< b$, and for $n = 1,2,3,...$ let $f_n : [a,b] \rightarrow \mathbb{R} $ be a 
+        monotone nondecreasing function. Prove that if the sequence $(f_n)_n$ converges to $f$ then
+        $f$ is a monotone nondecreasing function. Prove that if we furthur assume that $f$ is continuous then the 
+    convergence is uniform.}\\
+    (i)We can assume that the sequence $(f_n)_n$ converges then for each $x \in [a,b]$ then  $\lim_{n\to\infty}f_n(x)$ exists and it is $f(x)$.
+    pick any $x_1,x_2 \in [a,b]$ such that $x_1 < x_2$ and consider for all $n \in \mathbb{N}$ $f_n(x_2) - f_n(x_1) \ge 0$ thus 
+    $\lim_{n\to\infty}f_n(x_2)-f_n(x_1) \ge 0$ and thus $f(x_2)-f(x_1) \ge 0$. so $f$ is monotone nondecreasing.\\
+    (ii)
+    Suppose for contradiction that $(f_n)_n$ does not converge uniformly then
+    $\exists \epsilon > 0 $ such that $\forall N > 0 \; \exists x \in [a,b] $ such that $|f_n(x) - f(x)| > \epsilon$  for some $n > N$ 
+    First fix this bad $\epsilon_0 > 0$ and set $\epsilon < \frac{\epsilon_0}{3}$
+    Then set $A = f(a), B = f(b)$ partition $[A,B]$ into $\epsilon$ length segments $[A,A+\epsilon], [A+\epsilon, A+2\epsilon], ..., [A+r\epsilon,B]$ also consider
+    the unique set of points that map to the end points of this partition 
+    \[
+     S := \{a,\inf(f^{-1}(A+\epsilon)), \inf(f^{-1}(A+2\epsilon)), ... , \inf(f^{-1}(A+r\epsilon)), b\}
+    .\]
+    S can be constructed because $f$ is continuous and monotone non decreasing so every point between start and end has nonempty preimage.
+    The infimum is used because we will later pick a point above an element  and show that it converges uniformly.\\
+    For each $s \in S$ by convergence there exists some $N_s \in \mathbb{N}  > 0$ s.t.  $|f_n(s) - f(s)| < \epsilon$ for all $n > N_s$.
+    Call $N(S)$ the set of all such  $N_s$
+    Now set $ N = \max\{N_s\}$ Which satisfies point wise convergence for all points in $S$.
+    Now let $x \in [a,b]$ be any point such that $|f_n(x) - f(x)| > \epsilon$ for some $n > N$. $x$ must not be in $S$ so
+    pick $s_1, s_2 \in S$ such that $s_1 < x < s_2$ and $f(s_2) < f(s_1) + \epsilon $ (in other words the two "closest" s in S). From the monotone non-decreasing property of each $f_n$ we have that
+    $f_n(s_1) \le f_n(x) \le f_n(s_2)$. From construction 
+    By the pointwise convergence of each $s_i$ we have
+    \[
+    f(s_1) - \epsilon \le f_n(x) \le f(s_2) + \epsilon
+    .\] 
+    and
+    \[
+    f(s_1) - \epsilon \le f_n(x) \le f(s_1) + 2\epsilon
+    .\] 
+    and since 
+    \[
+    |f(x) - f(s_1)| < \epsilon
+    .\] 
+    by the construction of the set $S$. we have
+    \[
+    -2\epsilon \le (f_n(x) - f(x)) \le 3\epsilon
+    .\] 
+    and so
+    \[
+    |f_n(x) - f(x)| \le 3\epsilon < \epsilon_0
+    .\] 
+
+    a contradiction for all $x$ which proves that the functions converge uniformly.
+    \section{Exercise 4.5}
+    \emph{(i) Let $E$ and $G$ be a compact metric spaces and $\phi : E \rightarrow G$ is continuous. Show that
+        the map $F: C(G) \rightarrow C(E)$ defined by $F(g) = g \circ \phi$ for $g \in C(G)$ is 
+    uniformly continuous.}\\
+    Using the metric $d(f,g) = \max\{d(f(p)-g(p)):p \in  E$ which is possible because $E,G$ are both compact so the maximum exists. We have that $g \circ \phi $ is continuous.
+    Fix $\epsilon > 0$ 
+        \[
+            d(F(g), F(f)) = \max\{d(g(\phi(p)),f(\phi(p))): p \in E\}
+        .\] 
+        Goal find $\delta$ s.t. $d(f,g) = \max\{d(f(p),g(p)): p \in G\} < \delta$ then $d(F(g),F(f)) < \epsilon$
+        picking $\delta = \epsilon$ we have that if $d(f,g) < \delta$ then $\max\{d(f(p),g(p)) : p \in G\} < \delta$ and since
+        $\phi : E \rightarrow G$ has only outputs in $G$ we have
+        \[
+            \max\{d(f(p),g(p)) : p \in G\} \ge \max\{d(g(\phi(p)), f(\phi(p))) : p \in E\} = d(F(g),F(f))
+        .\] 
+        and so 
+        \[
+            d(F(g),F(f)) < \epsilon
+        .\] 
+
+
+    \section{Exercise  4.6}
+    \emph{Let $E$ be a compact metric space. Show that $C(E)$ is a complete normed
+        vector space if we add its elements in the usual way, multiply them by real numbers in the 
+    usual way, and take $||f|| = \max\{|f(p)| : p \in E\}$ for all $f \in C(E)$.}
+    We must verify all axioms to show that it is a complete normed vector space.
+    \begin{enumerate}
+        \item associativity\\
+            $f + (g + h) = (f + g) + h$ 
+            follows by defiition of adding functions
+        \item commutativity\\
+            $f + g = g + f$
+            also follows from definition of functions
+        \item existence of $0$\\ 
+            set $0 = f : E \rightarrow \mathbb{R} $ s.t. $f(p) = 0 \; \forall p \in G$.
+            clearly $0 + f = f$.
+        \item inverse elements\\
+            set $-f : G \rightarrow \mathbb{R} $ by $-f(p) = -1 * f(p)$
+            clearly  $-f + f = 0$ by adding elements pointwise.
+        \item  scalar multiplication\\
+            $a(bf) = (ab)f$ this is clear from the associativity of multiplication pointwise.
+            This also includes the identity scalar multiplication $1f = f$.
+        \item distributivity\\
+            $a(f+g) = af + ag$ by defining $af : G \rightarrow \mathbb{R} := af(p) = a \cdot f(p)$ 
+            distributivity follows $(a(f+g)) : G \rightarrow \mathbb{R} := a(f(p) + g(p)) = af(p) + ag(p)$ 
+            Distributivity of scalar multiplication is similarly trivial.
+        \item non-negativity of norm\\
+            absolute value is non-negative
+        \item $||f|| = 0 \Leftrightarrow f = 0$.\\
+            This is true for if $||f|| = 0$ then $f(p) = 0$ for all $p \in E$ and thus $f = 0$.
+        \item $||\lambda f|| = |\lambda| ||f||$ this is true because $|\lambda f(p)| = |\lambda| |f(p)|$ and thus we can factor out the factor of $\lambda$ from the norm.
+        \item $||f + g|| \le ||f|| + ||g||$ \\
+        by compactness first pick $p_0\in E$ such that \[
+            ||f+g|| = |(f+g)(p_0)| = |f(p_0) + g(p_0)| \le |f(p_0)| + |g(p_0)| 
+        \]\[
+            \le \max\{|f(p)| : p \in E\} + \max\{|g(p)| : p \in E\} = ||f|| + ||g||
+        \]
+        We can pick this $p_0$ because $E$ is compact and $f$ is continuous so $|(f+g)(p)|$ attains it maximum at a point $p_0$.
+        \item Completeness\\
+            The vector space is complete if every cauchy sequence $(f_n)_n$ converges to some $f \in C(E)$.
+            $||f_n - f_m|| < \epsilon$ for all $n,m < N$ since $(f_n)_n$ is cauchy. Thus
+            \[
+                \max\{|(f_n-f_m)(p)| : p \in E\} < \epsilon
+            .\] 
+            this implies that for any $p_0 \in E$ $|f_n(p_0) - f_m(p_0)| < \epsilon$ and so the sequence of points is cauchy and since $ \mathbb{R} $ is complete
+            it converges to a point $s_0 \in \mathbb{R} $and we can set $f : E \rightarrow \mathbb{R}$ so that $f(p) = s$.
+            The sequence $(f_n)_n$ converges to $f$ and it does so uniformly because for any $\epsilon > 0$ the maximum distance between any $f_n$ with $n > N $ (N dependent on epsilon)
+            the maximum distance between the functions and the convergent function is bounded and so every point is within $\epsilon$ from our final function. 
+            And from this uniform convergence we have that $f$ is continuous and thus in $C(E)$.
+    \end{enumerate}
+
+    \section{Exercise 4.7}
+    \emph{
+        Which one of the following sequence of functions converge uniformly on $[0,1]$?
+         \[
+             (i)f_n(x) = \frac{x}{1+nx^2}, \;\;\; (ii)g_n(x) = \frac{nx}{1+nx^2}, \;\;\; (iii)h_n(x) = \frac{nx}{1+n^2x^2}
+        .\] 
+    }
+    $(f_n)_n$  is the only sequence that converges uniformly
+    for any $\epsilon > 0$ set $N > \frac{1}{\epsilon^2}$ then for all $x \in [0,1]$ 
+    \[
+    |f_n(x) - 0| = \frac{x}{1+nx^2}  < \frac{x}{1+\frac{x^2}{\epsilon^2}} < \epsilon
+    .\] 
+    The final inequality holds because
+    \[
+    \frac{x}{1+\frac{x^2}{\epsilon^2}} = \frac{x\epsilon^2}{\epsilon^2+x^2}
+    .\] 
+    suppose $\frac{x\epsilon^2}{\epsilon^2+x^2} \ge \epsilon$ this implies that $\frac{x\epsilon}{\epsilon^2+x^2} \ge 1$
+    This is a contradiction because $a > 0,b \ge 0 \rightarrow ab < a^2 + b^2$
+    And so the sequence converges to $f(x) = 0$ within $\epsilon$ for all $n > N$ and and all $x \in [0,1]$ and so it converges uniformly.
+    Additionally since the bounds of $x$ were of no importance other than the equality $x \ge 0$ $(f_n)_n$ converges to $0$ on the entirety of $[0,\infty)$
+    \\
+    For $g_n(x)$ pick $\epsilon = 1$ and then for any $N$  pick $n > N $ such that $n > 4$ $m = n^2$ and then
+    \[
+    |g_n( \frac{1}{n}) - g_m( \frac{1}{n})| = |\frac{n(\frac{1}{n})}{1+n(\frac{1}{n})^2} - \frac{m \frac{1}{n}}{1 + m (\frac{1}{n})^2}| = |\frac{n}{n+1} -\frac{\frac{m}{n}}{1+\frac{m}{n^2}}| \]\[
+    .\] 
+    and since 
+    \[
+     1 > \frac{n}{n+1} 
+    .\] 
+    and
+    \[
+        \frac{\frac{m}{n}}{1+\frac{m}{n^2}} = \frac{n}{2} > 2
+    .\] 
+    we have
+    \[
+    |\frac{n}{n+1} - \frac{\frac{m}{n}}{1+\frac{m}{n^2}}| > 1 = \epsilon
+    .\] 
+    And thus there exists some $x \in [0,1]$ namely $\frac{1}{n}$ that violates the fact that for every $\epsilon > 0$ there must be a $N$ such that the
+    maximum distance between two sequential functions is less than $\epsilon$.
+    \\
+    If instead we hold $x$ fixed and $\epsilon > 0$ 
+    \[
+    g(x) =
+    \begin{cases}
+        \frac{1}{x} &x \ne 0\\
+        0 & x =0
+    \end{cases}
+    .\] 
+    if $x \ne 0$ choose $N > \frac{1-\epsilon x}{\epsilon x^{3}} \in \mathbb{N} $
+    \[
+    |g(x) - g_n(x)| = |\frac{1}{x}-\frac{nx}{1+nx^{2}}| = \frac{1}{x+nx^{3}} < \frac{1}{x+\frac{x^{3}-x^{4}\epsilon}{x^{3}\epsilon}} = \frac{1}{x+\frac{1}{\epsilon}-x} = \frac{1}{\frac{1}{\epsilon}} = \epsilon
+    .\] 
+    if $x = 0$ then $g_n(x) = 0 \forall n$ and convergence is trivial.
+    And so $g_n(x)$ converges to $g(x)$
+    \\
+    Finally to show that $(h_n)_n$ does not converges uniformly for pick $\epsilon < \frac{1}{10}$ then for all $N > 0$ pick any $n$ and  $m = 2n$
+    then the points
+    \[
+    |h_n(\frac{1}{n}) - h_m(\frac{1}{n})| = |\frac{n \frac{1}{n}}{1 + (n \frac{1}{n})^2} - \frac{m \frac{1}{n}}{1 + (m \frac{1}{n})^2}| = |\frac{1}{2} - \frac{2}{1+4}| = \frac{1}{10} > \epsilon
+    .\] 
+    By the argument before this sequence does not converge uniformly.
+    Additionally $(h_n)_n$ converges to  $0$.  for given $\epsilon > 0$ set $ N > \frac{\epsilon}{x}$ and then
+    \[
+    |h_n(x)| = \frac{nx}{1+(nx)^2} < \frac{\epsilon}{1+(nx)^2} < \epsilon
+    .\] 
+    because the denominator is strictly positive. Therefore every point  $x \in [0, \infty)$ converges and thus the function itself converges to 0.
+
+    \section{Exercise 4.8}
+    \emph{
+        Assuming you know the general properties of the $sin$ function, discuss the differentiability of
+        (i)
+        \[
+        f(x) =
+        \begin{cases}
+            xsin(\frac{1}{x}) & x \ne 0\\
+            0 & x = 0
+        \end{cases}
+        .\] 
+        (ii)
+        \[
+        g(x) =
+        \begin{cases}
+            x^2sin(\frac{1}{x}) & x \ne 0\\
+            0 & x = 0
+        \end{cases}
+        .\] 
+    }
+    By composition of functions we know that at $x \ne 0$ both $(i)$ and $(ii)$ are differentiable
+    since polynomials are differentiable and $\frac{1}{x}$ is differentiable at $x \ne 0$.
+    \[
+    \lim_{h\to 0} \frac{f(0+h)-f(0)}{h} = \lim_{h\to 0}\frac{hsin(\frac{1}{h})}{h} = \lim_{h\to 0}sin(\frac{1}{h})
+    .\] 
+    This limit does not exist because we can take two seperate sequences that converge to zero
+    \[
+        (x_n)_n : x_n = \frac{1}{\frac{\pi}{2}+2\pi n} \;\;\; \lim_{n\to\infty} x_n = 0
+    .\] 
+    \[
+        (y_n)_n : y_n = \frac{1}{2\pi n} \; \; \; \lim_{n\to\infty} y_n = 0
+    .\] 
+    but
+    \[
+    sin(\frac{1}{x_n}) = sin(\frac{\pi}{2} + 2\pi n) = 1
+    .\] 
+    and 
+    \[
+    sin(\frac{1}{y_n} )= sin(2\pi n) = 0
+    .\] 
+    and so we constructed two sequences that converge to zero but whose limits when applied to the sine function do not converge to the same value.
+    Thus $f(x)$ is not differentiable at $x = 0$
+    For  $g(x)$ we show
+    \[
+    \lim_{h\to 0} \frac{g(0+h) - g(0)}{h} = \lim_{h\to 0} \frac{h^2sin(\frac{1}{h})}{h} = \lim_{h\to 0} hsin(\frac{1}{h}) = 0
+    .\] 
+    This limit exists because we have for all $h$
+    \[
+    -|h| \le h\sin(\frac{1}{h}) \le  |h|
+    .\] 
+    since this works for all h we have
+    \[
+    \lim_{h\to_0} -|h| \le \lim_{h\to 0} h\sin(\frac{1}{h}) \le \lim_{h\to 0} |h|
+    .\] 
+    \[
+    0 \le \lim_{h\to 0 } h\sin(\frac{1}{h}) \le 0
+    .\] 
+    and so the limit exists and is 0 which is the derivative.
+
+    \section{Exercise 4.9}
+    \emph{Suppose that $a,b$ are two real numbers such that $a < b$ and $f : (a,b) \rightarrow \mathbb{R} $ is differentiable at $c \in (a,b).$
+        for any $r,s \in \mathbb{R} $, compute
+        \[
+        \lim_{h\to 0 } \frac{f(c+rh) - f(c+sh)}{h}
+        .\] 
+    }
+    we have 
+    \[
+        \lim_{h\to 0 } \frac{f(c+rh) - f(c+sh)}{h} = \lim_{h\to 0 } \frac{f(rh+c) -f(c)}{h} - \lim_{h\to 0} \frac{f(sh+c)-f(c)}{h}
+    .\] 
+    these limits exist because given that $r$ and $s$ are constant and that
+    \[
+    \lim_{h\to 0}\frac{f(ah+c)-f(c)}{h} = a\lim_{h\to 0} \frac{f(ah+c) - f(c)}{ah} = af'(c)
+    .\] 
+    the above simplifies then to
+    \[
+    \lim_{h\to 0 } \frac{f(rh+c) -f(c)}{h} - \lim_{h\to 0} \frac{f(sh+c)-f(c)}{h} = rf'(c) - sf'(c) = (r-s)f'(c)
+    .\] 
+
+    \section{Exercise 4.10}
+        \emph{Suppose that $a,b$ are real numbers such that $a < b$ and $f : (a,b) \rightarrow \mathbb{R} $ is 
+        differentiable on $(a,b)$. Prove that the following are equivalent\\
+        (i) $f' \ge 0$ on $(a,b)$ \\
+    (ii) $f$ is monotone nondecreasing on $(a,b)$}
+    To prove $(i) \rightarrow (ii)$ Consider for contradiction assume that f is not monotone nondecreasing
+    then there exist two points $\alpha, \beta$ with $a \le \alpha < \beta \le b$ s.t. $f(\alpha) > f(\beta)$.
+    By mvt $f(\beta)-f(\alpha)=f'(c)(\beta-\alpha)$ The left hand side is strictly less than zero but the
+    right hand side is greater than or equal to zero and thus we have a contradiciton.\\
+    To prove $(ii) \rightarrow (i)$ assume monotone nondecreasing and pick any point $c \in (a,b)$
+     \[
+    f'(c) = \lim_{h\to 0} \frac{f(c+h)-f(c)}{h}
+    .\] 
+    limits of points approaching from the left and the right must agree since the limit exists.
+    From the left we have
+    \[
+    \lim_{h\to 0^{-}} \frac{f(c+h)-f(c)}{h} \frac{ \le 0}{ \le 0} \rightarrow \ge 0
+    .\] 
+    \[
+    \lim_{h\to 0^{+}} \frac{f(c+h)-f(c)}{h} \frac{ \ge 0}{ \ge 0} \rightarrow \ge 0
+    .\] 
+    and since all other possible limit forms must agree with these the final limit must be greater than or equal to zero and thus
+    the derivative is greater than or equal to zero on all of $(a,b)$
+
+
+    \section{Exercise 4.12}
+    \emph{
+        Let $a,b \in \mathbb{R}  $ be such that $a < b$ and let $f$ be a differentiable real valued
+        function on an open subset of $R$  that contains $[a,b]$. Show that if $\gamma$ is any real
+        number between $f'(a)$ and $f'(b)$ then there exists a number $c \in (a,b)$ such that
+        $\gamma = f'(c)$
+    }
+    Since $\gamma$ is strictly between $f'(a)$ and $f'(b)$ we can break the question into two cases
+    the first is $f'(b) < f'(a)$ and $f'(b) < \gamma < f'(a)$. Consider 
+    \[
+    g: [a,b] \rightarrow \mathbb{R} := f(x) - \gamma x
+    .\]
+    Since $[a,b]$ is a closed set and $g$ is continuous $g$ achieves its maximum on $[a,b]$ by extreme value theorem.\\
+    $g'(x) = f'(x) - \gamma$ then clearly  $g$ does not achieve a maximum at  $a$ or  $b$ because 
+    \[
+    g'(a) = f'(a) - y > 0 \; \; \; \; g'(b) = f'(b) - y < 0
+    .\] 
+    and if either was a maximum then
+    for all $t \in (a,b)$
+    \[
+        \frac{f(a)-f(t)}{a-t} \le 0 \; \; \; \; \frac{f(b)-f(t)}{b-t} \ge 0
+    .\] 
+    which contradicts our statement about the derivative.
+    Thus $g$ achieves its maximum on some $x \in (a,b)$
+    We proved in class that at a maximum the derivative is equal to zero so $g'(x) = 0$ and
+     \[
+    0 = f'(x) - \gamma \rightarrow \gamma = f'(x)
+    .\] 
+    so $x = c$
+
+
+
+
+\end{document}

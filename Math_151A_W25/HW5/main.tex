@@ -209,5 +209,89 @@
              \[
              f'(x) = 2x\ln(x) + x \rightarrow f'(2) = 4\ln(2) + 2 \approx 4.77258872224
              .\] 
+         \item 
+             \begin{figure}[h]
+                 \centering
+                 \includegraphics[width=0.8\textwidth]{part_b.png}
+             \end{figure}
+             \begin{lstlisting}
+import matplotlib as plt
+import math
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+fp = 2*2*np.log(2) + 2
+def fp_approx(h):
+    return ((((2+h)**2)*(np.log(2+h)))-(4*np.log(2)))/h
+
+error = np.float64('inf')
+n = 0
+hs = []
+errors = []
+while True:
+    absolute_error = abs(fp-fp_approx(10**(-n)))
+    errors.append(absolute_error)
+    hs.append(10**(-n))
+    n += 1
+    if absolute_error > error:
+        break
+    else:
+        error = absolute_error
+
+print(hs)
+print(errors)
+
+
+plt.loglog(hs, errors)
+plt.gca().invert_xaxis()
+plt.xlabel("h values")
+plt.ylabel("absolute error")
+plt.title("part (b)")
+plt.savefig("part_b.png")
+         \end{lstlisting}
+         From this we see that the optimal $h$ value of the form  $10^{-n}$ is $10^{-8}$ with corresponding absolute
+         error of $1.982478181616898 \times 10^{-9}$
+     \item 
+         \begin{figure}[h]
+             \centering
+             \includegraphics[width=0.8\textwidth]{part_c.png}
+         \end{figure}
+         \begin{lstlisting}
+         \begin{lstlisting}
+import matplotlib as plt
+import math
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+fp = 2*2*np.log(2) + 2
+def fp_approx(h):
+    return ((((2+h)**2)*(np.log(2+h)))-(4*np.log(2)))/h
+
+n = 8
+hs = []
+errors = []
+for m in range(200):
+    h = 10**(-n-1 + 0.01*m )
+    absolute_error = abs(fp-fp_approx(h))
+    errors.append(absolute_error)
+    hs.append(h)
+
+print(hs)
+print(errors)
+
+
+plt.loglog(hs, errors)
+plt.gca().invert_xaxis()
+plt.xlabel("h values")
+plt.ylabel("absolute error")
+plt.title("part (b)")
+plt.savefig("part_c.png")
+
+         \end{lstlisting}
+         It seems like somewhere between $10^{-7}$ and $10^{-8}$ the calculations become extremely
+         unstable and that the absolute minimum error bottoms out just before $10^{-8}$ but it is likely
+         that an optimal h will be closer to $10^{-7}$ to avoid numeric instability.
      \end{enumerate}
 \end{document}

@@ -1,0 +1,340 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+
+\title{HW 4 - 110AH}
+\author{Asher Christian 006-150-286}
+\date{ 12.11.24}
+
+\begin{document}
+    \maketitle
+    \section{}
+    \emph{Suppose $A$ is an orthogonal $n \times n$ matrix of det = 1. $n \ge 2$. Is
+        there a continuous function $\gamma_A : [0,1] \rightarrow SO(n)$ such that $ \gamma_A(0) = I_n$ and $\gamma_A(1) = A$?
+        Prove your answer. (Suggestion: think about  $n = 2$ first).
+    }
+    Starting with $n=2$ we recall that all $A \in SO(2)$ are of the form
+    \[
+    \begin{pmatrix} % Parentheses
+    cos(\theta) & -sin(\theta) \\
+    sin(\theta) & cos(\theta ) \\
+    \end{pmatrix}
+    .\] 
+    With the case of $\theta = 0$ being the identity. Thus the function of t that is the matrix
+    \[
+    \begin{pmatrix}
+        cos(t \theta ) & -sin(t \theta )\\
+        sin(t \theta ) & cos( t \theta )
+    \end{pmatrix}
+    .\] 
+    is equal to the original matrix at $t=1$ and is equal to identity at $t=0$ and each $t \in [0,1]$ results in a
+    transformation in $SO(2)$ thus the function satisfies the above properties.
+    If $A \in SO(n)$ then $A$ splits into block form given some basis in a way that looks like
+    \[
+    A =
+    \begin{pmatrix}
+        \begin{pmatrix}
+            cos(\theta_1) & -sin(\theta_1) \\
+            sin(\theta_1) & cos(\theta_1 ) \\
+        \end{pmatrix} & 0 & ... & 0\\
+        0 & 
+        \begin{pmatrix}
+            cos(\theta_2) & -sin(\theta_2) \\
+            sin(\theta_2) & cos(\theta_2 ) \\
+        \end{pmatrix} & ... & 0\\ 
+        ... & ... & .... & 0\\
+        0 & 0 & 0 & 1
+
+    \end{pmatrix} 
+    .\]
+    Since we have proven the existence of the continous function for each block it follows
+    that one can create the similar function $\gamma_A : [0,1] \rightarrow SO(n)$ defined by
+    \[
+    \gamma_A(t) =
+    \begin{pmatrix}
+        \begin{pmatrix}
+            cos(t \theta_1) & -sin(t \theta_1) \\
+            sin(t \theta_1) & cos(t \theta_1 ) \\
+        \end{pmatrix} & 0 & ... & 0\\
+        0 & 
+        \begin{pmatrix}
+            cos(t \theta_2) & -sin(t \theta_2) \\
+            sin(t \theta_2) & cos(t \theta_2 ) \\
+        \end{pmatrix} & ... & 0\\ 
+        ... & ... & .... & 0\\
+        0 & 0 & 0 & 1
+
+    \end{pmatrix} 
+    .\] 
+    This function satisfies all of the conditions outlined in the question.
+
+    \section{}
+    \begin{enumerate}
+        \item (a)\\
+            \emph{What condition on $A$ guarantees that  $\det e^{tA} = 1$ for all $t$ with $|t| < \epsilon $ for some $\epsilon $.}\\
+            We know that $\det (e^{tA}) = e^{t\operatorname{Tr}(A)}$ thus if $t \operatorname{Tr}(A) = 0$ then the determinant is $1$. Thus
+            The condition that the trace of A is zero guarantees that the determinant of the exponentiation is equal to 1 for all $t$.
+        \item (b) \\
+            \emph{Does it follow that $\det(e^{tA})$ = 1 for all $t$ if A satisfies the condition you found in part (a)?
+            }
+            Yes it follows directly because if the trace is 0 then for all  $t$ $t\operatorname{Tr}(A) = 0$ for all $t$.
+    \end{enumerate}
+
+    \section{}
+    \emph{How is 2(b) related to the fact which you should prove that $\det(e^{tA})$ has a
+    power series in $t$ that converges for all $t \in \mathbb{R} $ }
+    \\
+    We know that 
+    \[
+    \det(e^{tA}) = \det(I+tA + \frac{t^2A^2}{2!} + \frac{t^{3}A^{3}}{3!}+...)
+    .\] 
+    fixing $t$ we have  $||tA||_{\text{op}} = c$ and by the property of operator norm
+    $(I+tA + \frac{t^2A^2}{2!} + \frac{t^{3}A^{3}}{3!}+...)$ converges if the operator norm converges $|| (I+tA + \frac{t^2A^2}{2!} + \frac{t^{3}A^{3}}{3!}+...)||_{\text{op}}$\\
+    which is less than or equal to 
+    \[
+    (1+||tA|| + \frac{||tA||^2}{2!} + \frac{||tA||^{3}}{3!}+...) 
+    .\] 
+    This is important because if $\operatorname{Tr}B = 0$ then the function $A = e^{tB}$ always has determinant $1$.
+
+
+
+    \section{}
+    \begin{enumerate}
+        \item (a)
+            \emph{Show that $\operatorname{Tr}(AB-BA) = 0$ }
+            We know that $\operatorname{Tr}(A) = \sum_{i=1}^{n}A_{ii}$
+            So
+            \[
+                \operatorname{Tr}(AB) = \sum_{i=1}^{n}(AB)_{ii} = \sum_{j=1}^{n}\sum_{k=1}^{n}A_{jk}B_{kj} = \sum_{k=1}^{n}\sum_{j=1}^{n}B_{kj}A_{jk}
+                = \sum_{i=1}^{n}(BA)_{ii} = \operatorname{Tr}(BA)
+            .\] 
+            We also have that
+            \[
+                \operatorname{Tr}(A+B) = \sum_{i=1}^{n}(A+B)_{ii} = \sum_{i=1}^{n}(A_{ii} + B_{ii}) = \sum_{i=1}^{n}A_{ii} + \sum_{i=1}^{n}B_{ii} = \operatorname{Tr}(A) + \operatorname{Tr}(B)
+            .\] 
+            Putting them together we have $\operatorname{Tr}(AB-BA) = \operatorname{Tr}(AB) - \operatorname{Tr}(BA) = \operatorname{Tr}(AB) - \operatorname{Tr}(AB) = 0$
+        \item (b)
+            \emph{Show that if $A,B$ are skew symmetric $(A^{T} = -A, B^{T} = -B$ then $AB - BA$ is skew symmetric.}\\
+            $(AB-BA)^{T} = (B^{T}A^{T}-A^{T}B^{T}) = (BA-AB) = -(AB-BA)$
+
+    \end{enumerate}
+    
+    \section{}
+    \emph{With $||A||_{op} = \max||A\vec{x}||, ||\vec{x}|| = 1$ $n\times n$ $ \mathbb{R} $valued matrix  and $||\vec{x}||$ usual euclidean length $||x_1,...,x_n|| = (\sum_{1}^{n}x^2_j)^{\frac{1}{2}}$ Show}
+    \begin{enumerate}
+        \item (a)
+            \emph{$||AB|| \le ||A|| \times ||B||$ }\\
+            Let $\vec{x}$ be s.t. $||\vec{x}|| = 1$ then $||B\vec{x}|| \le ||B||$ and let $\vec{w} = B\vec{x}$.\\
+            Then $||A\frac{\vec{w}}{||\vec{w}||}|| \le ||A||$.\\
+            Therefore $||A\vec{w}|| \le ||A||\cdot||\vec{w}||$\\
+            replace $\vec{w}$ with $B\vec{x}$ we have\\
+            $||AB\vec{x}|| \le ||A|| \cdot ||B||$\\
+            Since this holds for all $\vec{x}$ satsifying $||\vec{x}|| = 1$ we have\\
+            $||AB|| \le ||A|| \cdot ||B||$
+        \item (b)
+            $||A + B|| \le ||A|| + ||B||$
+            Let $\vec{x}$ again be s.t. $||\vec{x}|| = 1$ then\\
+            $||A\vec{x}|| \le ||A||$ and $||B\vec{x}|| \le ||B||$\\
+            Thus $||(A+B)\vec{x}|| = ||A\vec{x} + B\vec{x}|| \le ||A\vec{x}|| + ||B\vec{x}|| \le ||A|| + ||B||$
+            and so $||(A+B)\vec{x}|| \le ||A|| + ||B||$ for all $\vec{x}$ satisfying $||\vec{x}|| = 1$ thus it holds that\\
+            $||A+B|| \le ||A|| + ||B||$
+    \end{enumerate}
+
+    \section{}
+    Use prob 5 to prove
+    \begin{enumerate}
+        \item (a)
+            \emph{the series for $e^{A}$ converges for all $A$ }\\
+            $e^{A} = \sum_{i=1}^{\infty}\frac{A^{i}}{i!}$
+            let $(a_n)_n = \sum_{i=1}^{n}\frac{A^{i}}{i}$ for any $\epsilon > 0$ $\exists N $ s.t $\frac{x}{N+1} < 1$ and $\frac{||A||^{N}}{N!} < \epsilon(1-\frac{||A||}{N+1})$.
+            WLOG $n < m$
+            \[
+            ||A_m - A_n|| = ||\sum_{i=n}^{m}\frac{A^{i}}{i!}|| \le \sum_{i=n}^{m}\frac{||A||^{i}}{i!}  \le \sum_{i=n}^{\infty}\frac{||A||^{i}}{i!} = \frac{||A||^{n}}{n!}(1+ \frac{||A||}{n+1} + \frac{||A||^2}{(n+1)(n+2)}+...)
+            .\] 
+            \[
+            \le \frac{||A||^{n}}{n!}\sum_{i=1}^{\infty}(\frac{||A||}{(n+1)})^{i} = \frac{||A||^{n}}{n!} \frac{1}{1-\frac{||A||}{n+1}} < \epsilon
+            .\] 
+            Thus $(a_n)_n$ is cauchy and since $R^{n^2}$ is complete, it converges to some element.
+        \item (b)
+            \emph{The same for $ln(I+A)$ converges if $||A|| < 1$.}
+            Assuming the Taylor series for $ln(I+A)$  = 
+            \[
+                A-\frac{A^2}{2}+\frac{A^{3}}{3}-\frac{A^{4}}{4}+... = \sum_{i=1}^{\infty}\frac{(-1)^{i-1}A^{i}}{i}
+            .\] 
+            By the same logic
+            \[
+            ||\ln(I+A)|| \le ||\sum_{i=1}^{\infty}\frac{(-1)^{i-1}A^{i}}{i}|| \le \sum_{i=1}^{\infty}\frac{(-1)^{i-1}||A||^{i}}{i}
+            .\] 
+            This converges for all $||A|| < 1$ by the convergence of the taylor series for $ln(1+x)$ This implies by the previous part
+            that the sequence of partial sums is cauchy which shows that after a certain point and given an  $\epsilon > 0$ the partial sums do not allow the sum to deviate
+            more than $\epsilon$ from the final solution.
+    \end{enumerate}
+
+    \section{}
+    \emph{Check that formally
+    $e^{x-\frac{x^2}{2} + \frac{x^{3}}{3}-\frac{x^{4}}{4}...} = 1 + x$ up to terms of degree $\le 4$ in x.}
+
+    \[
+    = 1 + \sum_{i=1}^{\infty}\frac{(x-\frac{x^2}{2}+\frac{x^{3}}{3}-\frac{x^{4}}{4}...)^{i}}{i!} = 1 + x -\frac{x^2}{2} + \frac{x^{3}}{3}-\frac{x^{4}}{4} + \frac{x^2}{2} - \frac{x^{3}}{3}+\frac{11x^{4}}{24} + \frac{x^{3}}{6} - \frac{3x^{4}}{12} + \frac{x^{4}}{24} + ...
+    .\] 
+    \[
+    = 1+x + O(5+)
+    .\] 
+
+    \section{}
+    \emph{if $e^{A}=I_n$, does $A$ have to be skew symmetric ($I_n$ is of course orthogonal so this is a natural question). Suggestion
+    $P^{-1}I_nP = I_n$ whereas $P^{-1}e^{A}P = e^{P^{-1}AP}$ and $P^{-1}AP$ does not have to be skew symmetric even if $A$ is?}
+    \[
+    e^{P^{-1}AP} = \sum_{i=0}^{\infty}\frac{(P^{-1}AP)^{i}}{i!} = \sum_{i=1}^{\infty}\frac{P^{-1}A^{i}P}{i!} = P^{-1}\sum_{i=0}^{\infty} \frac{A^{i}}{i!} P = P^{-1}e^{A}P
+    .\] 
+    And so since 
+    \[
+    A = 
+    \begin{pmatrix}
+        0 & -2\pi\\
+        2\pi & 0
+    \end{pmatrix}
+    e^{A} = I
+    .\] 
+    But taking
+    \[
+    P = 
+    \begin{pmatrix}
+        -1 & 1\\
+        2 & -1
+    \end{pmatrix}
+    P^{-1} =
+    \begin{pmatrix}
+        1 & 1\\
+        2 & 1
+    \end{pmatrix}
+    PAP^{-1} = 
+    \begin{pmatrix}
+        6\pi & 4\pi\\
+        -10\pi & -6\pi
+    \end{pmatrix}
+    .\] 
+    This matrix is not skew symmetric but
+    \[
+    e^{PAP^{-1}} = I
+    .\] 
+    So It is possible for the exponentiated matrix not to be skew symmetric
+    
+
+
+    \section{}
+    \emph{If $A \in Gl(n, \mathbb{R} )$  with $\det(A) > 0$, does  $A$ have to be a square root - i.e. does there have to be a $B \in Gl(n, \mathbb{R} ) \rightarrow B^2=A$?
+    [This is related to $A$ have a ln since if $A=e^{C}$ then $(e^{\frac{c}{2}})^2 = A$ ]. }\\
+    let
+    \[
+    A = 
+    \begin{pmatrix}
+        -2 & 0 \\
+        0 & -\frac{1}{2}
+    \end{pmatrix}
+    \;
+    \det(A) = 1
+    .\] 
+    Then for any 
+    \[
+        B =
+    \begin{pmatrix}
+        a & b\\
+        c & d
+    \end{pmatrix}
+    B^2 =
+    \begin{pmatrix}
+        a^2+bc & ab+bd\\
+        ca+cd & cb + d^2
+    \end{pmatrix}
+    .\] 
+    giving the system of equations
+    \begin{align*}
+        a^2+bc &= -2\\
+        b(a+d) &= 0\\
+        c(a+d) &= 0\\
+        cb + d^2 &= -\frac{1}{2}
+    \end{align*}
+    and $b \ne 0, c \ne 0$ so $a = -d$
+    which implies 
+    \begin{align*}
+        bc &= -2 -a^2\\
+           &= -2 -d^2\\
+        cb &= -\frac{1}{2} - d^2\\
+        -2 &= -\frac{1}{2}
+    \end{align*}
+    Thus no square root exists for some $A \in GL(n, \mathbb{R} )$
+    
+
+    \section{}
+    \emph{How about prob 9 if $A \in SL(n, \mathbb{R} ) \; (\det(A) = 1)$?}
+    The example used in the last question has determinant $1$ so the same statement holds that there are some matrices with no square root.
+
+
+    \section{}
+    \emph{Work out a proof that $\det(e^{A}) = e^{\operatorname{Tr}A}$ by doing the following sequence of steps:\\
+    (a) using $\det(e^{(t+\Delta t)A } = \det(e^{tA})\det(e^{(\Delta t)A  })$ Show that if $F(t)$ = $\det(e^{tA})$ then $F'(t) = \det(e^{tA}) \cdot F'(0)$\\
+    (b) Show $F'(0) = \operatorname{Tr}A$ by writing only $e^{(\Delta t)A } -1$ and throwing away all higher degree than 1 in $\Delta t $ terms.\\
+    (c) Deduce that $F'(t) = F(t) \operatorname{Tr}(A)$ and apply what you know about differential equations to get $det(A) = e^{\operatorname{Tr}A}$ by putting $t=1$}\\
+    if $F(t) = \det(e^{tA})$ then
+    \[
+    F'(t) = \lim_{\Delta t \to 0} \frac{F(\Delta t + t) - F(t)}{\Delta t } = \lim_{\Delta t \to 0} \frac{\det(e^{(\Delta t + t)A }) - \det(e^{tA})}{\Delta t } 
+    \] 
+    \[
+    = \lim_{\Delta t \to 0}\frac{\det(e^{tA})(\det(e^{\Delta t A }) - 1)}{\Delta t } = \det(e^{tA}) \lim_{\Delta t \to 0 } \frac{\det(e^{\Delta t A }) -1}{\Delta  t} = \det(e^{tA})F'(0) = F(t)F'(0)
+    .\] 
+    \[
+    F'(0) = \lim_{\Delta t \to 0 }\frac{\det(e^{\Delta t A })-1}{\Delta t } 
+    .\] 
+    \[
+        e^{\Delta t A } = I + \Delta t A + \text{O(2+)} =
+        \begin{pmatrix}
+            1 + \Delta t a_{1,1} + O(2+) & \Delta t a_{1,2} + O(2+) & ... & ...\\
+            \Delta t a_{2,1} + O(2+) & 1 + \Delta t a_{2,2} + O(2+) & ... & ...\\
+            ... & ... & ... & ...\\
+            ... & ... & ... & 1 + \Delta t a_{n,n} + O(2+) 
+        \end{pmatrix}
+    .\] 
+    for the determinant when divided by $\Delta t $ not to go to zero we can consider only terms with order less than 2 in the determinant.
+    It is clear that when computing the determinant taking the product of any element not on the diagonal will result in at least two elements
+    not on the diagonal and thus order of at least 2 for all elements of the product. It then suffices to only compute the first order terms computed along the diagonal.
+    \[
+        \det(e^{\Delta t A }) = 1 + \sum_{i=1}^{n}\Delta t a_{i,i} + O(2+) 
+    .\] 
+    And so
+    \[
+        F'(0) = \lim_{\Delta t \to 0 } \frac{\det(e^{\Delta t A }) - 1}{\Delta t }  = \lim_{\Delta t \to 0}\sum_{i=1}^{n}a_{i,i} + O(1+) = \sum_{i=1}^{n}a_{i,i} = \operatorname{Tr}A
+    .\] 
+    Therefore since $F: \mathbb{R} \rightarrow \mathbb{R} $, $F'(0) = \operatorname{Tr}A$ and 
+    \[
+        F'(t) = F(t)\operatorname{Tr}A
+    .\] 
+    we have 
+    \[
+    F(t) = e^{t\operatorname{Tr}A}
+    .\] 
+    and
+    \[
+    \det(e^{tA}) = e^{t\operatorname{Tr}A}
+    .\] 
+    more specifically
+    \[
+    F(1) = \det(e^{A}) = e^{\operatorname{Tr}A}
+    .\] 
+
+    \section{}
+    \emph{Is every element $A \in Sl(n, \mathbb{R} ) = e^{B}$ for some Trace 0 $B$? Prove your answer.}\\
+    By question 10. There exist some elements of $A \in SL(n, \mathbb{R} )$ s.t. for all $G, G^2 \ne A$. Therefore if $e^{B} = A$ for some $B$ then $(e^{\frac{B}{2}})^{2} = e^{B} = A$ and thus
+    $e^{\frac{B}{2}}$ would be a square root of $A$ which we showed does not necessarily exist therefore not all elements of $SL(n, \mathbb{R} )$ arise from an exponential map.
+
+
+
+
+        
+\end{document}

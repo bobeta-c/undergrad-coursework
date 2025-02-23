@@ -1,0 +1,45 @@
+Question 1:
+
+A. x-rdi, result-rax, n-eci, mask-edx
+B. result is set to 0 and mask is set to 1
+C. mask != 0
+D. Mask is left shifted one each loop
+E. result is ored with x&mask
+ 
+
+
+1 long loop(long x, long n)
+2 {
+3 long result = 0;
+4 long mask;
+5 for (mask = 1; mask != 0; mask = mask << n){
+6 result | = x&mask;
+7 }
+8 return result;
+
+Question 2:
+
+long switch_prob(long x, long n) {
+    long result = x;
+    switch(n) {
+        /* Fill in code here */
+        case 60:
+        case 62:
+            result = x*8;
+            break;
+        case 63:
+            result = x;
+            result >>= 0x3;
+            break;
+        case 64:
+            result = x;
+            result <<= 0x4;
+            result -= x;
+            x = result;
+        case 65:
+            x = x*x
+        default:
+            result = x+75;
+    }
+    return result;
+}
