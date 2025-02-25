@@ -58,7 +58,7 @@
     ||Tv|| = ||v||
     .\] for all $v$. Additionally $TT^{*} = T^{*}T = I$ so $T$ is normal and so there exists
     an orthonormal basis of eigenvectors $B = \{v_1,...,v_n\}$. By unitary $||v_i|| = ||Tv_i|| = ||\lambda_i v_i|| = |\lambda_i|||v_i||$ so
-    $| \lambda_i| = 0$ for each $i$. Conversely if $V$ has an orthonormal basis $B = \{v_1,...,v_n\}$ of eigenvectors with eigenvalues of absolute value $1$ then
+    $| \lambda_i| = 1$ for each $i$. Conversely if $V$ has an orthonormal basis $B = \{v_1,...,v_n\}$ of eigenvectors with eigenvalues of absolute value $1$ then
     $T(B) = \{\lambda_1v_1, ..., \lambda_nv_n\}$ and
     \[
     \langle \lambda_i v_i, \lambda_j v_j \rangle = \lambda_i \overline{\lambda_j} \langle v_i, v_j \rangle = 0
@@ -85,6 +85,14 @@
     .\] 
     \[
     A = P^{-1}BP \;\; B = Q^{-1}CQ \implies A = P^{-1}Q^{-1}CQP = (QP)^{-1}C(QP) \implies A \sim B \; B \sim C \implies A \sim C
+    .\] 
+    this follows since $I$ is unitary $Iv = v$. If $P$ unitary then $P^{-1} = P^{*}$ is unitary since 
+    \[
+    \langle P^{*}v, P^{*}v \rangle = \langle PP^{*}v, v \rangle = \langle v, v \rangle
+    .\] 
+    and if $P$ unitary and $Q$ unitary then
+    \[
+    \langle PQv, PQv \rangle = \langle Qv, Qv \rangle = \langle v, v \rangle
     .\] 
     \section{Exercise 4}
     \emph{
@@ -124,9 +132,11 @@
                 \[
                     = \sum_{j=1}^{m}\lambda_j^{i}T_j + (\lambda_{m+1}T_{m+1})^{i} + \sum_{k}^{}\alpha_k(\lambda_{m+1}T_{m+1})^{s_k}(\sum_{j=1}^{m}\lambda_j^{r_k}T_j)
                 .\] 
+                where $\alpha_k$ are binomial coefficients and $s_k$ and $r_k$ are the powers associated with the coefficients
                 But since
+
                 \[
-                    T_{i}T_{j} = \delta_{ij}
+                    T_{i}T_{j} = \delta_{ij}T_i
                 .\] 
                 the last terms are all zero so it simplifies to
                 \[
@@ -158,7 +168,7 @@
                 \[
                 T^{n}v = \lambda_1^{n}v_1 + ...  + \lambda_m^{n}v_m = 0
                 .\] 
-                since each $v_i \ne 0$ this implies each $\lambda_i^{n} = 0$ implies $\lambda_i = 0$ for all $i \in \{1,2,...,m\}$
+                since this holds for all $v$ there is a case where each $v_i \ne 0$ this implies each $\lambda_i^{n} = 0$ implies $\lambda_i = 0$ for all $i \in \{1,2,...,m\}$
                 and thus  $T = 0$
             \item 
                 first if $U$ commutes with each $T_i$
@@ -217,6 +227,8 @@
                 if $T$ is a projection onto $W_1$ along $W_2$ then for each $v \in W_1$ $Tv  = v$ and for each  $w \ in W_2$ $Tw = 0$ and
                 picking a basis $B = \{v_1,...,v_n\}$ of $W_1$ extending to a basis $B =\{v_1,...,v_n,w_1,...,v_m\}$ of $V$ then clearly 
                 every basis element is an eigenvector of eigenvalue  $1$ or $0$ so every eigenvector is 1 or 0.
+                additionally if $T = \sum_{i=1}^{m}\lambda_iT_i, T^2 = \sum_{i=1}^{m}\lambda_i^2T_i$ but if $\lambda_i \in \{0,1\}$ then $\lambda_i^2 = \lambda_i$ so they are equivalent and $T$ is a projection.
+                Additionally if any $\lambda_i$ is not $0$ or $1$ then the two sides of the equation would be different and $T \ne T^2$ implies $T$ not a projection.
             \item If $T = -T^{*}$ then for every eigenvector
                 \[
                 Tv = \lambda v
