@@ -69,9 +69,129 @@ through an edge that goes into vertex $i$, all of those edges are ones that have
 and thus the longest path to vertex $i$ is the longest path to a vertex that has an edge leading to vertex  $i$ plus one, which is exactly what $opt(i)$ computes. Thus $opt(i)$ is
 the longest path to every vertex.
 \\
-The algorithm is as follows
-\begin{lstlisting}
-\end{lstlisting}
+The algorithm is as follows assuming for each vertex we can read off incoming edges in $O(1)$ time.
+{\small
+    \begin{itemize}
+        \item \texttt{Initialize array of length n called opt initializing every value to -inf and the first element to 0}
+        \item \texttt{For i in \{2,...,n\}}
+            \begin{itemize}
+                \item \texttt{Compute opt(i) = $1 + \max_k\{opt(k)\}$ where k indexes across each incoming edge incident to $v_i$}
+            \end{itemize}
+        \item \texttt{return opt(n)}
+    \end{itemize}
+}
+this algorithm runs in $O(n+m)$ time, this is because it first does an $O(n)$ initialization, then for each $n$ nodes it does $O(n_v)$ work
+examining $opt(k)$ for each $k$  incident edge where $n_v$ is the number of incoming edges for that node. In total it does $O(m)$ such operations on edges for a total of $O(n+m)$
 
+
+\section{Exercise 5 P 316}
+Let opt(i) be the largest sum attainable given the first i characters.
+Consider opt(i), the ith character must be in some word, there are i possible words it can be in corresponding to all
+pairs (j,i) with $1 \le j \le i$ (i,i) meaning just i indicating the start and end indices of the word. opt(i) is equal to
+Let quality([j,i]) denote the quality of the strong including  $x_jx_{j+1}...x_i$. Then opt(i) is 
+ \[
+     \max_{0 \le j \le i-1}\{opt(j)+\text{quality}([j+1,i])
+.\] 
+with $opt(0) = 0$.
+This is true as shown by induction on the number of characters  $n$. If $n=1$ then the expression only has one term $opt(0) + \text{quality}([1,1])$ 
+which is the only possible value. Inductively assume that for the first $i-1$ letters the algorithm finds the optimal sum. Then for $i$ letters,
+the  ith letter must be in some word starting at index $j$ and $opt(i) = \text{quality}([j,i]) + opt(j-1)$ by inductive hypothesis since  $[j,i]$ is the optimal word
+and $opt(j-1)$ is optimal by induction hypothesis. In fact our algorithm will examine every such word and settle only on the one that produces the highest sum so this ordering will be seen
+and thus the algorithm will correctly identify $opt(i)$. If in addition to opt(i) we store word(i) corresponding to the $j$ value that opt(i) picks we can retain what words
+are chosen optimally.
+
+the algorithm is as follows
+{\small
+    \begin{itemize}
+        \item \texttt{Intialize an array of length n called opt and another of length n called word and set opt(0) = 0}
+        \item \texttt{For i in $\{1,2,...,n\}$}
+             \begin{itemize}
+                 \item \texttt{set opt(i) = $\max_{0 \le j \le i-1}\{opt(j) + \text{quality}([j+1,i])\}$ and record the j satisfying maximality}
+                 \item \texttt{set word(i) = j}
+            \end{itemize}
+        \item \texttt{opt(n) is the maximum score}
+        \item \texttt{starting at word(n) return [word(n),n] and [word(word(n)-1), word(n)-1] ... to retrieve the segments}
+    \end{itemize}
+} 
+this algorithm operates in $O(n^2)$
+time. First it creates an array in $O(n)$ time, then for each $i$ it does $O(i)$ operations for a total of $O(n^2)$ in the 
+main loop. lastly recursively finding the partitions takes $O(n)$ time in worst case having to follow the word array $n$ times.
+
+\section{Exercise 4 P 321}
+For part (a) the algorithm given does not work for consider the two strings\\
+A = 10, 0; B = 0, 100
+This algorithm would greedily pick $a_0$ thus locking in $a_0,a_1$ which sums to 10 when the true optimal solution is $b_0,b_1$ for a total of 100.
+\\
+We compute the optimal solution that ends in either set A or set B at time step i, when we transition from A to B for example, the time step in which we do no work
+we say we end in set B. Thus we compute
+opt[i][A] and opt[i][B] for the optimal number of computations completed ending on A or B at that time step. Set opt[1][A] = $a_1$ and opt[1][B] = $b_1$.
+Then for any $i$, opt[i][A] is one of the following:\\
+In the optimal solution last turn ended in A or B. If it ended in A then opt[i][A] = opt[i-1][A] + $a_i$, if it ended in B then opt[i][A] = opt[i-1][B]
+similarly for opt[i][B]
+opti[i][B] = max(opt[i-1][B] +  $b_i$, opt[i-1][A])
+.\\
+optimality of this method is proven inductively, clearly the optimal solution ending at timestep 1 is accurate since there is only one choice per set.
+Assuming it holds for i-1, at time step i there are only two possiblities per set of how the optimal solution ends in the set either it completes a transition or it stays the same
+both of the resulting weights are computed and the maximal one is chosen. Thus at each step optimality is preserved.
+
+Implementing the algorithm is as follows:
+{\small
+    \begin{itemize}
+        \item \texttt{initialize opt[A] and opt[B] n dimensional arrays with opt[A][1] = $a_1$ and opt[B][1] = $b_1$}
+        \item \texttt{for i in \{2,...,n\}}
+            \begin{itemize}
+                \item \texttt{opt[A][i] = max\{opt[A][i-1] + $a_i$, opt[B][i-1]\}}
+                \item \texttt{opt[B][i] = max\{opt[B][i-1] + $b_i$, opt[A][i-1]\}}
+            \end{itemize}
+        \item \texttt{return max(opt[A][n] , opt[B][n])}
+    \end{itemize}
+}
+this algorithm runs in $O(n)$ time by doing a constant (4 comparisons and some algebra) calculations per iteration on $O(n)$ elements.
+
+\section{Exercise 5}
+\emph{Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value
+obtainable by cutting up the rod and selling the pieces. For example, if length of the rod is 8 and the values of different pieces are given as following, 
+then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6)}
+
+if the length of the rod is 1 then there is only one value it can have namely val(1).
+Assume we know the most efficient way each length can be split up to maximize value for all lengths up to and including length $i-1$ call these values
+opt(j) for $1 \le j \le i-1$, then
+the maximal value of a rod of length $i$ is either the value of the rod or some combination of other cuts that produces a greater value as seen by
+\[
+    opt(i) = \max\{val(i), opt(i-1) + opt(1), opt(i-2) + opt(2), ..., opt(\lfloor \frac{i}{2} \rfloor) + opt(\lceil \frac{i}{2} \rceil)\}
+.\] 
+inductively this is true since the base case is already detailed. Assume we can find the optimal cut for all lengths less than $i$. Then for length $i$ there
+are two possiblities, either theoptimal value is no cuts or there is at least one cut. If there are no cuts then $val(i)$ is the highest value, if there is at least one cut
+then let that cut contain a piece of length $j < i$ $opt(j)$ and $opt(i-j)$ are already known and computed and thus their sum is the value. In fact we check every possible cut leveraging
+the fact that we already know the optimal subproblems to find $opt(i)$.
+An algorithm is as follows
+{\small
+    \begin{itemize}
+        \item \texttt{initialize an array opt with opt[1] = val(1)}
+        \item \texttt{for i in \{2,...,n\}}
+            \begin{itemize}
+                \item \texttt{set m value = -inf}
+                \item \texttt{for j in $\{1,2,...,\lfloor \frac{i}{2} \rfloor\}$}
+                    \begin{itemize}
+                        \item \texttt{update m if opt(i-j) + opt(j) is greater than m}
+                    \end{itemize}
+                \item \texttt{set opt(i) = max(m, val(i))}
+            \end{itemize}
+        \item \texttt{return opt(n)}
+    \end{itemize}
+}
+this algorithm runs in $O(n^2)$ time since it runs the outer loop $n$ times and the internal loop $\frac{i}{2}$ times which by known sum calculation
+is
+\[
+\sum_{i=1}^{n}\frac{i}{2} = O(n^2)
+.\] 
+
+
+\section{Exercise 6}
+\emph{
+    Consider a row of n coins of values v1 . . . vn, where n is even. We play a game against an opponent by alternating turns (you can both see all coins 
+    at all times) . In each turn, a player selects either the first or last coin from the row, removes it from the row permanently, and receives the value
+    of the coin. Determine the maximum possible amount of money we can win if we move first.
+}
 
 \end{document}
