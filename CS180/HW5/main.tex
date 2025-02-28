@@ -39,7 +39,74 @@
     extra space.
     arr = [1,5,2,2,2,5,5,4] k =3
     Output: (2,5) and (1,4)
+}\\
+I propose the following algorithm that I will later justify
+{\small
+    \begin{itemize}
+        \item \texttt{set k to be abs(k)}
+        \item \texttt{use heap sort to sort the array in place in ascending order}
+        \item \texttt{initialize two pointers the first pointing at the first element and the second at the second one named first and one named second}
+        \item \texttt{while the pointers are not pointing to the last element}
+            \begin{itemize}
+                \item \texttt{compute the difference between the elements pointed at by the pointer}
+                \item \texttt{if the difference is equal to k output the values pointed at by both pointers in a pair and advance the second pointer and first pointer until they are both
+                    pointing at new elements}
+                \item \texttt{If the difference is greater than k advance the first pointer until it is pointing at a new element}
+                \item \texttt{If the difference is less than k advance the second pointer until it is pointing at a new element}
+                \item \texttt{if it any point the second pointer must advance but is incapable by the size of n, end the algorithm}
+                \item \texttt{advance the second pointer if at any time it is pointing to the same element as the first pointer so they are never pointing at the same element}
+            \end{itemize}
+    \end{itemize}
 }
+I will now prove the correctness of this algorithm assuming the correctness of the heap sort which I will later analyze.
+Given the sorted array first note that if $k < 0$ then any pair with difference $k$ is also a pair with difference $-k$ in the other order
+so it suffices to check those pairs with $k \ge 0$. Then since $k \ge 0$ all pairs in this sorted array will have the smaller element before the larger element.
+Every pair outputed by my algorithm is valid as is verified by the difference calculation. Assume for contradiction
+that there is a pair $(a,b)$ in the array such that $b-a = abs(k)$ and  it is not outputted by the algorithm. Consider the first time that
+the first pointer points at a, there are three cases in which this could happen. First a is the initial element in which case the second pointer is also pointing to a.
+the second case is if the algorithm previously found a pair with difference k and advanced both the first and second pointers to new elements. In this case let  $(c,d)$ be the
+previous pair then $c < a < d < b$ by the ordering and so the element pointed to by the second pointer is no greater than b. In the third case the difference was too large with some $c < a$ and so
+the pointer was advanced to $a$. In this case the second pointer is also pointing to a value less than or equal to b for if it were not then it was pointing to an element larger than b and when it was pointing to b the difference between b and c
+was too small and so the algorithm would have advanced the first pointer and kept the second poitner at b. Thus there is always a state in which a is pointed to by the first pointer
+and the second pointer is pointing to a value less than or equal to $b$. If it is pointing to b it outputs (a,b) and we are done.
+If it points to an element less than $b$, then the difference is less than k and so the second pointer advances. This happens repeatedly until
+after a finite amount of steps the second pointer points to $b$ in which case the pair is outputted and we are done. Thus (a,b) is outputted and we are done. Note that
+a must be visited by the first pointer since the first pointer visits every element such that $a-f \le k$ where f is the largest element. Note that the case where the algorithm terminates before examining every element, every
+pair with largest element being the largest element of the array has been checked and so no more pairs exist.\\
+
+Heapsort is as follows using array indexing in place of actual node storage of the heap.
+{\small
+    \begin{itemize}
+        \item \texttt{Convert the array into a max heap}
+            \begin{itemize}
+                \item \texttt{For each item in the array}
+                    \begin{itemize}
+                        \item \texttt{while the item's parent node is smaller than it}
+                            \begin{itemize}
+                                \item \texttt{swap node with parent node}
+                            \end{itemize}
+                    \end{itemize}
+            \end{itemize}
+        \item \texttt{Pop off the maximum element and switch it for the last heap element to place it in final list}
+            \begin{itemize}
+                \item \texttt{Swap the first element of array with last element in heap}
+                \item \texttt{While swapped element is not larger than both children}
+                    \begin{itemize}
+                        \item \texttt{swap with larger child}
+                    \end{itemize}
+            \end{itemize}
+    \end{itemize}
+}
+We have covererd heaps in class so it is known that heapify works. In particular each time we add an element we add it to the bottom of the heap and then
+heapify up to place it in a valid position. When the sorting stage happens we guarantee that at each step the largest element in the array not yet placed
+is put at the end thus justifying a valid ordering. This algorithm takes $O(n\log n)$ time since each insertion or deletion takes $O(\log n)$ and $O(n)$ such
+actions are performed.
+The total running time of the algorithm is then $O(n \log n)$ dominated by the sorting. After sorting we do a linear time run through of the list as
+each pointer visits every index $O(1)$ times since the indices only increase and at least one will increase at each comparison.
+
+additionally the space complexity is $O(1)$ since heapsort is done in place, and every comparison and swap can be one with $O(1)$ extra variables
+no data structure is introduced and no recursion creates memory usage.
+
 
 \section{Exercise 3 P 314}
 For part (a)
@@ -193,5 +260,80 @@ is
     at all times) . In each turn, a player selects either the first or last coin from the row, removes it from the row permanently, and receives the value
     of the coin. Determine the maximum possible amount of money we can win if we move first.
 }
+I wrote the solution to this problem in python
+\begin{lstlisting}
+l = [1,3,5,7,4,2,3,7,8,9]
+n = len(l)
+opt = [[0 for i in range(n)] for i in range(n)]
+pick = [['0' for i in range(n)] for i in range(n)]
+sig = [[0 for i in range(n)] for i in range(n)]
+
+print(l)
+
+for i in range(n):
+    opt[i][i] = l[i]
+    pick[i][i] = 'l'
+    sig[i][i] = l[i]
+
+for i in range(n):
+    for j in range(n-i):
+        sig[j][j+i] = sig[j][j+i-1] + l[j+i]
+
+
+for i in range(1,n):
+    for j in range(n-i):
+        # calculate opt[j][j+i]
+        if opt[j+1][j+i] < opt[j][j+i-1]:
+            pick[j][j+i] = 'l'
+            opt[j][j+i] = sig[j][j+i] - opt[j+1][j+i]
+        else:
+            pick[j][j+i] = 'r'
+            opt[j][j+i] = sig[j][j+i] - opt[j][j+i-1]
+
+for i in range(n):
+    for j in range(n):
+        print(f"({opt[i][j]}, {pick[i][j]})", end = '')
+    print()
+
+print(opt[0][n-1])
+
+i = 0
+j = n-1
+player = 0
+while j-i >= 0:
+    print(f"player: {player}, list {l[i:j+1]}, ", end = '')
+    if(pick[i][j] == 'l'):
+        print(f"{l[i]}")
+        i += 1
+    else:
+        print(f"{l[j]}")
+        j -= 1
+    player = int(not player)
+
+\end{lstlisting}
+to describe this algorithm we consider any arbitrary point in the game
+in which only the indices $i$ through $j$ are left. and we consider how much
+money (value) we can get by playing optimaly in this position assuming we know all subproblems.
+let $\sigma(i,j)$ denote the sum of all coins in the interval $(i,j)$ and $opt(i,j)$ denote the optimal sum possible 
+by starting first with indices $i$ through $j$.
+then  if the optimal solution involves picking the left coin at index $i$ our optimal solution will be
+\[
+\sigma(i,j) - opt(i+1,j)
+.\] 
+that is we will get everything our opponent will not get since they are playing optimally.
+similarly if the optimal solution involves picking the right coin at index $j$ our optimal solution will be
+\[
+\sigma(i,j) - opt(i,j-1)
+.\] 
+thus by finding the minimum of $opt(i+1,j), opt(i,j-1)$ we can
+determine which action to take. additionally we can record which choice we make by recording $\text{pick}(ij)$.
+Inductively this argument works if we set the base case of opt(i,i) to be the value of the coin at position i.
+Inducting on two elements assume we know the optimal solution for $opt(i,j)$ and $opt(i+1,j+1)$ then 
+ \[
+opt(i,j+1) = \sigma(i,j+1) - \min(opt(i+1,j+1), opt(i,j))
+.\] 
+of which we know both values and of which we argued by the cases.
+The time complexity of this algorithm is $O(n^2)$ since we do $O(1)$ calculations
+for each $opt(i,j)$ with  $i \le j$ and as can be seen in the for loops that are all  $O(n^2)$
 
 \end{document}
