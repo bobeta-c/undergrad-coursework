@@ -102,7 +102,7 @@ heapify up to place it in a valid position. When the sorting stage happens we gu
 is put at the end thus justifying a valid ordering. This algorithm takes $O(n\log n)$ time since each insertion or deletion takes $O(\log n)$ and $O(n)$ such
 actions are performed.
 The total running time of the algorithm is then $O(n \log n)$ dominated by the sorting. After sorting we do a linear time run through of the list as
-each pointer visits every index $O(1)$ times since the indices only increase and at least one will increase at each comparison.
+each pointer visits every index $O(1)$ times for a total of $O(n)$ operations since the indices only increase and at least one will increase at each comparison.
 
 additionally the space complexity is $O(1)$ since heapsort is done in place, and every comparison and swap can be one with $O(1)$ extra variables
 no data structure is introduced and no recursion creates memory usage.
@@ -154,8 +154,8 @@ examining $opt(k)$ for each $k$  incident edge where $n_v$ is the number of inco
 \section{Exercise 5 P 316}
 Let opt(i) be the largest sum attainable given the first i characters.
 Consider opt(i), the ith character must be in some word, there are i possible words it can be in corresponding to all
-pairs (j,i) with $1 \le j \le i$ (i,i) meaning just i indicating the start and end indices of the word. opt(i) is equal to
-Let quality([j,i]) denote the quality of the strong including  $x_jx_{j+1}...x_i$. Then opt(i) is 
+pairs (j,i) with $1 \le j \le i$ (i,i) meaning just i indicating the start and end indices of the word. 
+Let quality([j,i]) denote the quality of the string including  $x_jx_{j+1}...x_i$. Then opt(i) is 
  \[
      \max_{0 \le j \le i-1}\{opt(j)+\text{quality}([j+1,i])
 .\] 
@@ -193,7 +193,7 @@ We compute the optimal solution that ends in either set A or set B at time step 
 we say we end in set B. Thus we compute
 opt[i][A] and opt[i][B] for the optimal number of computations completed ending on A or B at that time step. Set opt[1][A] = $a_1$ and opt[1][B] = $b_1$.
 Then for any $i$, opt[i][A] is one of the following:\\
-In the optimal solution last turn ended in A or B. If it ended in A then opt[i][A] = opt[i-1][A] + $a_i$, if it ended in B then opt[i][A] = opt[i-1][B]
+In the optimal solution the last turn ended in A or B. If it ended in A then opt[i][A] = opt[i-1][A] + $a_i$, if it ended in B then opt[i][A] = opt[i-1][B]
 similarly for opt[i][B]
 opti[i][B] = max(opt[i-1][B] +  $b_i$, opt[i-1][A])
 .\\

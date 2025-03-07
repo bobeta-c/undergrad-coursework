@@ -1,0 +1,152 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\DeclareMathOperator{\Ima}{Im}
+\DeclareMathOperator{\tr}{Tr}
+\newtheorem{theorem}{Theorem}[section] % Numbered within sections
+\newtheorem{lemma}[theorem]{Lemma} % Shares numbering with Theorem
+\newtheorem{corollary}[theorem]{Corollary} % Shares numbering with Theorem
+
+
+\title{Normal Operator Decomp}
+\author{Asher Christian}
+\date{ 03.05.25}
+
+\begin{document}
+    \maketitle
+    \begin{lemma}\label{lem:pick_2d}
+        If $T$ is a linear operator on a nonzero finite-dimensional real
+        vector space v, then there exists a  $T$-invariant subspace $W$ of $V$ such that
+        $1 \le \dim(W) \le 2$.
+    \end{lemma}
+    \begin{lemma}\label{lem:perp}
+        If $T$ is a normal linear operator on an inner product space $V$, $W$ a $T$-invariant
+        subspace of $V$, then $W^{\perp}$ is $T^{*}$-invariant
+        \begin{proof}
+            let $w \in W^{\perp}, v \in W$ then
+            \[
+            \langle v, T^{*}w \rangle = \langle Tv, w \rangle = 0
+            .\]
+            since $Tv \in W$ is orthogonal to $w \in W^{\perp}$ so $T^{*}w \in W^{\perp} \;\; \forall w \in W^{\perp}$ 
+        \end{proof}
+    \end{lemma}
+    \begin{theorem}\label{thm:big}
+        If $T$ is a normal operator on a finite-dimensional inner product space $V$, and $W$ 
+        a $T$-invariant subspace of $V$, then $W$ is $T^{*}$-invariant
+        \begin{proof}
+            Pick an orthonormal basis $B'$ for  $W$ and extend it to an orthonormal basis $B$ of V.
+             \[
+         [T]_B = \begin{pmatrix} A_{1,1} & A_{1,2} \\ 0 & A_{2,2} \end{pmatrix} \;\;
+         [T^{*}]_B = [T]_B^{*} = \begin{pmatrix}
+             A_{1,1}^{*} & 0\\
+             A_{1,2}^{*} & A_{2,2}^{*}
+         \end{pmatrix}
+    .\]
+    By $T$-invariance of $W$
+    and likewise
+    \[
+        [TT^{*}]_B = [T]_B[T^{*}]_B = \begin{pmatrix}
+            A_{1,1}A^{*}_{1,1} + A_{1,2}A^{*}_{1,2} & ... \\
+            \vdots & A_{2,2}A^{*}_{2,2}
+        `\end{pmatrix}
+    .\]
+    and
+    \[
+        [T^{*}T]_B = [T^{*}]_B[T]_B = \begin{pmatrix}
+            A^{*}_{1,1}A_{1,1} & ...\\
+            \vdots & \ddots
+        \end{pmatrix}
+    .\]
+    Thus
+    \[
+        A_{1,1}A_{1,1}^{*} + A_{1,2}A_{1,2}^{*} = A^{*}_{1,1}A_{1,1}
+    .\]
+    and likewise
+    \[
+        \tr(A_{1,1}A_{1,1}^{*}) + \tr(A_{1,2}A_{1,2}^{*}) = \tr(A^{*}_{1,1}A_{1,1})
+    .\]
+    but $\tr(AA^{*}) = \tr(A^{*}A)$ by the following
+    \[
+        \tr(AA^{*}) = \sum_{i=1}^{n}(AA^{*})_{ii} = \sum_{i=1}^{n}\sum_{j=1}^{n}A_{ij}A^{*}_{ji} = \sum_{i=1}^{n}\sum_{j=1}^{n}A_{ij}\overline{A_{ij}} = \sum_{i=1}^{n}\sum_{j=1}^{n}\overline{A_{ij}}A_{ij}
+    .\]
+    \[
+        = \sum_{j=1}^{n}\sum_{i=1}^{n}A^{*}_{ji}A_{ij} = \sum_{j=1}^{n}(A^{*}A)_{jj} = \tr(A^{*}A)
+    .\]
+    so
+    \[
+        \tr(A_{1,2}A^{*}_{1,2}) = 0
+    .\]
+    but since
+    \[
+        A_{ij}\overline{A_{ij}} \in \mathbb{R} \;\;\; A_{ij}\overline{A_{ij}} \ge 0
+    .\]
+    for any $A_{ij} \in \mathbb{C}$ and since $\tr(AA^{*})$ sums over every $i,j$ pair in $A$
+    this implies that each $(A_{1,2})_{ij} = 0$ for all $i,j$ in its dimension and thus  $A_{1,2} = 0$ and
+     \[
+         [T]_B = \begin{pmatrix}
+         A_{1,1} & 0\\
+         0 & A_{2,2}
+     \end{pmatrix}
+     [T^{*}]_B = \begin{pmatrix}
+         A^{*}_{1,1} & 0\\
+         0 & A^{*}_{2,2}
+     \end{pmatrix}
+    .\]
+    from which it is evident that $W$ is $T^{*}$-invariant.
+        \end{proof}
+    \end{theorem}
+    \begin{corollary}\label{cor:wperp}
+        If $T$ is a normal linear operator on a finite dimensional inner product space, $W$ a $T$-invariant subspace of $V$, then 
+        \begin{enumerate}[label = (\alph*)]
+            \item 
+                $W^{\perp}$ is $T$-invariant
+            \item 
+                $T|_W$ is normal
+            \item 
+                $T|_{W^{\perp}}$ is normal
+        \end{enumerate}
+        \begin{proof}
+            ~\\
+            \begin{enumerate}[label = (\alph*)]
+                \item by Lemma~\ref{lem:perp} $W^{\perp}$ is $T^{*}$-invariant and by
+                    Theorem~\ref{thm:big}, $W^{\perp}$ is $(T^{*})^{*}=T$-invariant 
+                \item  For any $v \in W$ $T|_Wv = Tv$ and $T^{*}|_Wv = T^{*}v$ by $T$-invariance
+            \end{enumerate}
+        \end{proof}
+    \end{corollary}
+    \begin{theorem}
+        Let $V$ be a real finite dimensional inner product space, $V \ne \{0\}$, $T$ a
+        normal linear operator, then there exist $T$-invariant, mutually orthogonal, subspaces $W_1,...,W_m$ such that
+        \[
+            V = \bigoplus_{i=1}^{m} W_i
+        .\]
+        and $\dim(W_i) \in \{1,2\} \forall i$
+        \begin{proof}
+            By induction on $\dim(V)$. \\Base case  $\dim(V) =1$, take $W_1 = V$.\\
+            Assume it holds for $\dim(V) \le n-1$ then for  $\dim(V) = n$ by Lemma~\ref{lem:pick_2d},
+            there exists some $W$ subspace of $V$ such that $1 \le \dim(W) \le 2$ and $T(W) = W$. Then
+             \[
+            V = W \oplus W^{\perp}
+            .\] 
+            and $\dim(W^{\perp}) \le n-1 $. Additionally $W^{\perp}$ is $T$-invariant and $T|_{W^{\perp}}$ is normal by corollary~\ref{cor:wperp}
+            so applying the inductive hypothesis we get $W^{\perp} = \bigoplus_{i=1}^{m}W_i$ with each $\dim(W_i) \in \{1,2\}$
+            so
+            \[
+            V = W \oplus W_1 \oplus ... \oplus W_m
+            .\] 
+            To show orthogonality, induct on $i$, for  $W$, it is clearly orthogonal to each $W_i$ since
+            each $W_i \subset W^{\perp}$. Inductively for each $W_i$ it is orthogonal to $W$ and all $W_j$, $j < i$, by construction
+            $W_{i+1} \oplus  ... \oplus W_m = W_{i}^{\perp}$ so $W_i$ is orthogonal to each $W_j$ for $j \ne i$
+        \end{proof}
+    \end{theorem}
+
+    
+
+\end{document}
