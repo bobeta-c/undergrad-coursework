@@ -33,6 +33,59 @@
 \begin{document}
 \maketitle
 \section{Exercise 19 P 329}
+I propose the following recurrence relation:
+Let A be the first signal, B the second signal and S the string.
+Let opt[i][a][b] be the boolean value denoting whether there exists an interleaving of $S[0:i]$
+such that the next last element of $A$ is $A[a]$ and the last element of $B$ is $B[b]$ with 0 denoting either no element or the last element.
+then for opt[0][a][b] is False exactly one of a,b is 0 and the other is 1 in which case
+opt[0][0][1] is true only if the first element of B is the first element of S and opt[0][1][0] is true if the
+first element of A is the first element of S. Assuming we know opt[n-1] for every index a and b then
+ \[
+     opt[n][a][b] = (opt[n-1][a-1][b] \text{and} S[n] = A[a-1]) \text{or} (opt[n-1][a][b-1] \text{and} S[n] = B[b-1])
+.\] 
+where we implicitly assume that if a-1 or b-1 is negative that we wrap around to the other side of the string.
+The logic behind this fact is that if opt[n][a][b] is true then it must be that the a-1 element of A is the last element of S in which case it must
+also be true that there is a valid interleaving in which This element is the next element on the substring one element shorter which is equivalent to opt[n-1][a-1][b] is true
+. Similarly if the last element is the $b-1$ element of $B$, this is true only if there is a possible solution on the substring of one element less such that the next element of $B$ is $b-1$ element
+and the A element is held constant.
+
+I implement the solution as follows in python where indexing negative wraps around to the end of the string.
+The solution also includes an example of a valid interleaving
+
+\begin{lstlisting}
+import numpy as np
+x = "10111"
+i = len(x)
+y = "0100"
+j=len(y)
+s = "10010111010010111010010111010010
+1110100101110100101110100101110101111011110111"
+k = len(s)
+
+opt = np.zeros((k,i,j))
+
+
+for q in range(k):
+    for a in range(i):
+        for b in range(j):
+            if q == 0:
+                if a == 0 and b == 1:
+                    opt[0][a][b] = y[0] == s[0]
+                elif a == 1 and b == 0:
+                    opt[0][a][b] = x[0] == s[0]
+                else:
+                    opt[0][a][b] = False
+            else:
+                opt[q][a][b] =
+                (opt[q-1][a-1][b] and s[q] == x[a-1])
+                or (opt[q-1][a][b-1] and s[q] == y[b-1])
+print(opt[k-1].any())
+\end{lstlisting}
+The final .any() call returns whethere there is any ending that is valid.
+If $s$ is the length of the string $S$, $a$ the length of the first pattern $A$, and $b$ the length of the second pattern $B$ 
+then the total time complexity of this algorithm is
+$O(sab)$ which can be easily verified by the loops that do an  $O(1)$ operation for each index unique $s,a,b$
+
 \section{Exercise 22 P 330}
 \emph{
     given a weighted directed graph $G = (V,E)$ and two nodes $v,w \in V$ compute the number
@@ -113,4 +166,46 @@ and $j$ indexes the hopsitals, however if there exists a possible pairing then t
 at most $\lceil \frac{n}{k} \rceil$ packets are entering the hospital. Thus if there were a possible solution it would have been found by the algorithm and thus does not exist.
 The time complexity is  $O(n^2k)$ since the amount of nodes is $O(n + k)$ and the max flow is $O(n)$ and the number of edges is $O(nk)$ corresponding to an edge between each person and each hopsital, for a total of $O(n^2k)$ time implementing 
 the network flow algorithm
+
+\section{Exercise 6}
+\emph{Given a sequence of numbers find a sub-sequence of alternating order, where the sub-sequence is as long as possible. (that is, find a longest sub-sequence with alternate low and high elements). As always, prove the correctness of your algorithm and analyze its time complexity.}
+I propose the following recurrence relation. Assume we know the maximal length alternating sub-sequence such that the last element is less than the second to last element and such that the last element is greater than teh second to last element.
+Denote those by less[] and greater[] respectively and that we know their values for every prefix of the total string up until n-1. then
+\[
+    \text{greater}[n] = \max_{\substack{i < n \\ s[i] < s[n]}}(\text{less}[i], 0) + 1
+.\] 
+\[
+    \text{less}[n] = \max_{\substack{i < n \\ s[i] > s[n]}}(\text{greater}[i], 0) + 1
+.\] 
+This is because this last element must be in one sub-sequence or none and that if it is greater then
+the sub-sequence it is joining must be one in the less category, and if it is less then it must be in the greater category.
+This recurrence relation checks all such valid sequences to join, again under the assumption that they are all known, and picks the one that
+results in the longest sub-sequence adding one to account for it joining the sequence.
+The base cases are simply setting less[0] and greater[0] = 1 implying that the first element can start any sequence.
+Assuming now that we know the longest subsequence length that ends in greater or less than for every prefix, we can do a 
+one time scan through the greater and less lists to find the largeset element in either and this must be the longest subsequence.
+Then we can do the recurrence relation in reverse to find which subsequence the element is attached to and returning all the way until the sequence is maximized by 0 .
+\\
+Using zero indexing
+{\small
+    \begin{enumerate}
+        \item \texttt{Initialize two arrays greater and less of length n where n is the length of the sequence S and set everything to 0}
+        \item \texttt{Set greater[0] and less[0] to 1}
+        \item \texttt{ For index j in length n starting at 1}
+            \begin{enumerate}
+                \item \texttt{Set greater[j] =  $\max_{\substack{i < j \\ s[i] < s[j]}}(\text{less}[i], 0) + 1 $}
+                \item \texttt{Set less[j] =  $\max_{\substack{i < j \\ s[i] > s[j]}}(\text{greater}[i], 0) + 1 $}
+            \end{enumerate}
+        \item \texttt{Let j be a pointer pointing to the maximum value in either greater or less}
+            \begin{enumerate}
+                \item \texttt{ouput the index that achieves this maximum and set the pointer to point to the element of the other path that allows it to achieve this maximum}
+                \item \texttt{repeat this process until the element that achieves the maximum is either the first element of is no element(0)}
+            \end{enumerate}
+    \end{enumerate}
+}
+Thus we ouput the sequence in reverse order. flipping at the end to restore order. The time complexity of this algorithm is $O(n^2)$ where $n$ is the number of
+elements in the sequence this is verifiable by noting that the outer loop occurs $n$ times and the inner loop can check at most $n$ times to determine the maximum. Similarly the
+backwards step takes the same order for a total of $O(n^2)$
+
+
 \end{document}
