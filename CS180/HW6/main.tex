@@ -124,7 +124,24 @@ Additionally the time complexity of this algorithm is $O(|V||E|)$ for bellman-Fo
 
 
 \section{Exercise 24 P 331}
-
+Let $n$ be the number of precincts and $m$ be the number of voters in each precinct. additionally let $S[i]$ be the total amount of votes for party  $A$ in the first $i$ districts.
+Set opt(j,k,x) to be the boolean value corresponding to the existence of a solution
+in which the first $j$ precincts are divided such that out of those $j$ precincts,
+$k$ of them are in district 1 and $j-k$ of them are in distrinct 2 and such that
+district 1 has at least $x$ votes for group A.
+Then if precinct $j+1$ has $x_{j+1}$ votes for group A
+\[
+    opt(j+1,k,x) = opt(j,k-1,x-x_{j+1}) \;\; or \;\; opt(j,k,x)
+.\] 
+This is because either the $j+1th$ precinct is part of the first or second district. If it is in the first district then there must be a gerrymandering
+such that the first district has $x-x_{j+1}$ votes with the $j$ remaining precincts, or there is a solution where the $j+1th$ precinct  is part
+of the second district in which it provides nothing to the voter count in the first district.
+If either of those cases is true then there exists a gerrymandering including this district.
+Additionally the base case opt(1,k,x) is true if $k=1$ and $x <= x_{1}$ and $y = 0$ or $k=0$ $x = 0$  this is because
+the first precinct can be in only one of the two districts and contributes  $x_1$ votes to the district it is assigned to and zero to the other district.
+With this base case every recursive step can be computed by increase $j$ and iterating all $k,x$ combinations.
+Additionally to complete the final check this algorithm would be run with both the first party and the second party and at the end $opt(n,\frac{n}{2},s)$ would be checked for each $s$ such that
+$s > \frac{nm}{4}$ and $s < S - \frac{nm}{4}$ corresponding to all cases where a majority is achieved in each district. Additionally the running time to fill this $opt$ table is $O(n^{3}m)$ since there are $n\times n \times nm$ entries in the table.
 \section{Exercise 7 P 417}
 Given the set of $n$ clients and their corresponing $(x,y)$ coordinates and $r$ ranges as well as the $k$ base stations with their $(x,y)$ coordinates and $L$ loads, I propose the following algorithm
 {\small
