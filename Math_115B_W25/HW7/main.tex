@@ -52,7 +52,7 @@
             for any $w \in W$, $||T|_Ww|| = ||Tw|| = ||w||$ so  $T|_W$ preserves norms and is unitary
         \item 
             by exercise 7 HW 5 part (b)  $W^{\perp}$ is $T^{*}$ invariant since orthogonal/unitary operators are normal.
-            And by exercise 8 HW 5, since $W^{\perp}$ is $T^{*}$ invariant it is also $(T^{*})^{*} = T$ invariant and thus $W^{\perp}$ is $T$ 
+            And by exercise 8 HW 5 (I proved it for general normal not necessarily complex), since $W^{\perp}$ is $T^{*}$ invariant it is also $(T^{*})^{*} = T$ invariant and thus $W^{\perp}$ is $T$ 
             invariant.
         \item 
             for any $w \in W^{\perp}$, $||T|_{W^{\perp}}w|| = ||Tw|| = ||w||$ so $T|_{W^{\perp}}$ preserves
@@ -157,7 +157,7 @@
             .\] 
             then using trigonometry and the fact that rotations preserve angles
             \[
-            r_2 = \begin{pmatrix} \sin(\theta) \\ \cos(\theta) \end{pmatrix}  = Te_2
+            r_2 = \begin{pmatrix} -\sin(\theta) \\ \cos(\theta) \end{pmatrix}  = Te_2
             .\] 
             is the only possible value
         \item 
@@ -240,5 +240,16 @@
         Let $V$ be a real inner product space of dimension 2. For any $v,w \in V$ such that 
         $||v|| = ||w|| = 1$, show that there exists a unique rotation $R$ on $V$ such that $R(v) = w$
     }
+    Pick an orthonormal basis for $V$ $B = \{v,v_2\}$  with $v$ as above then the inner product on $V$ is equivalent to the 
+    inner product on $ \mathbb{R}^2$ using the standard basis as above. In particular every element in $V$ that is
+    length 1 is isomorphic to a vector in $ \mathbb{R}^2$ with length 1. We know  that $e_1$ in $ \mathbb{R}^2$ represents $v \in V$.
+    since $||w|| = 1$ it must be $ \begin{pmatrix} \cos(\theta) \\ \sin(\theta) \end{pmatrix} $ for some $ \theta \in [0,2\pi)$
+    Consider the matrix
+    \[
+        [T]_B = \begin{pmatrix} \cos(\theta) & -\sin(\theta) \\ \sin(\theta) & \cos(\theta) \end{pmatrix} 
+    .\] 
+    This transformation sends $[v]_B = e_1$ to $[w]_B$ so  $T$ represented by this matrix sends $v$ to $w$ and 
+    this transformation is a reflection.
+
 
 \end{document}
