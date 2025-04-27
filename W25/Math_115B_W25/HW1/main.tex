@@ -1,0 +1,185 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+
+\title{HW 1 - 115B}
+\author{Asher Christian 006-150-286}
+\date{ 07.01.25}
+
+\begin{document}
+    \maketitle
+    \section{Exercise 1}
+    \emph{Assume $V$ and $W$ are vector spaces over a field $k$, and let $T : V \rightarrow W$ denote a linear
+    transformation between them. Prove that if $T$ has an inverse, then that inverse is a linear
+    function.}\\
+    To prove this statement we first assume that $T$ has an inverse $T' : W \rightarrow V$ such that $T' \circ T = id_{V}$ and $T \circ T' = id_{W}$ and then show that it must be a linear function.\\
+    For $T'$ to be a linear function it must satisfy 
+    \begin{align*}
+        T'(u + v) &= T'(u) + T'(v), u,v \in W\\
+        T'(cu) &= cT(u), c \in k, u \in W
+    \end{align*}
+    By invertibility of T for any $u', v' \in W$ there exist  \emph{unique} $u, v \in V$ s.t. $u' = T(u), v' = T(v)$\\
+    By linearity of $T$
+    \[
+    T'(u' + v') = T'(T(u) + T(v)) = T'(T(u+v)) = id_{V}(u+v) = u+v = T'(T(u)) + T'(T(v)) = T'(u') + T'(v')
+    .\] 
+    Showing that the first property of linearity holds. Likewise
+    \[
+    T'(cu') = T'(cT(u)) = T'(T(cu)) = cu = cT'(T(u)) = cT'(u')
+    .\] 
+    Thus we have shown that both properties of a linear function hold and thus $T'$ = $T$ inverse is a linear function.
+
+    \section{Exercise 2}
+    \emph{Assume that $v_1,v_2,v_3$ are vectors in a vector space $V$ over some field $k$.
+        Is it possible that the vectors $v_1,v_2,v_3$ are linearly independent but the vectors
+    $w_1 = v_1 + v_2 \;, w_2 = v_1+v_3 \;, w_3 = v_2 + v_3$ are linearly \emph{dependent}}\\
+    Assume for contradiction that $w_1,w_2,w_3$ are linearly dependent. Then there exists some $x_1,x_2,x_3 \in k$ not all $0$ s.t.
+    $x_1w_1+x_2w_2+x_3w_3 = 0$ where $0$ is the zero vector in $V$. expanding this equation gives
+     \[
+    x_1(v_1+v_2)+x_2(v_1+v_3)+x_3(v_2+v_3) = 0
+    .\] 
+    \[
+        (x_1+x_2)v_1+(x_1+x_3)v_2+(x_2+x_3)v_3 = 0
+    .\] 
+    By the linear independence of the $v_i's$ the previous equation implies further that
+    \begin{align*}
+        x_1+x_2 &= 0\\
+        x_1+x_3 &= 0\\
+        x_2+x_3 &= 0\\
+    \end{align*}
+    and solving shows
+    \begin{align*}
+        x_3&=x_2=x_1=0
+    \end{align*}
+    This is a contradiction since each $x_i$ is 0 even when it was explicitly said that was not the case. Thus the vectors
+    $w_1,w_2,w_3$ are linearly \emph{independent}
+
+    \section{Exercise 3}
+    \emph{Assume $V$ is a vector space consisting of 49 vectors over a field $k$.}
+    \begin{enumerate}
+        \item \emph{Prove that the set of elements in $k$ is finite.}\\
+            Assume for the sake of contradiction that $k$ has infinite elements. Since there can only be one zero element of $V$ pick a non-zero element $v$ 
+            Consider the set $\{k_1v,k_2v,...k_{50}v\}$ with each $k_i$ different which is possible since there are infinitely many different $k$.  No two elements in this set can be the same
+            for if $k_iv = k_jv$ this implies $(k_i-k_j)v = 0$ which futher implies $k_i = k_j$ since $v \ne 0$. This creates a contradiction since there are only $49$ elements in $V$.
+            Therefore $k$ must be finite and in particular must have no more than 49 elements.
+        \item \emph{Prove that $V$ is finite dimensionsal and that dim(V) = 1 or dim(V) = 2}\\
+            Since $V$ has 49 vectors any basis has at most $49$ vectors and thus is of finite dimension.
+            Let $K$ be the number of elements in $k$ since $k$ is finite and $D$ be the dimension or number of basis vectors of $V$.
+            There must be then $K^{D}$ elements in $V$ since $K^{D} $ represents counting all possible combinations of basis vectors.
+            and so $K^{D} = 49^{1} = 7^2$ Since this is the unique prime factorizeation there are no other $p_1^{e_1}...p_k^{e_k}$ $p_i,e_i \in \mathbb{N} $ that can represent it by the fundamental theorem of arithmetic. and so
+            either $K = 49, D = 1$ or $K = 7, D = 2$ showing that the dimension is either $1$ or $2$.
+    \end{enumerate}
+
+    \section{Exercise 4}
+    \emph{Assume V is a vector space over some field k, and let $W_1, W_2$ denote subspaces of $V$. Define
+        \[
+            W_1 + W_2 := \{ w_1 + w_2: w_1 \in W_1, w_2 \in W_2\}
+        .\] 
+    }
+    \begin{enumerate}
+        \item \emph{Prove that $W_1 \subset W_1 + W_2$ and $W_2 \subset W_2 + W_1$ }\\
+            Firstly by the commutative property of vector addition, $W_1 + W_2 = W_2 + W_1$ by commuting the addition within the set definition.
+            To show $W_1 \subset W_1 + W_2$ for any $w \in W_1$ let $w_2 = 0$ then $w+ w_2 = w \in W_1 + W_2$. Similarly picking $w_1 = 0$ and $w_2 = w$ we can show the same for the second relation.
+        \item \emph{Prove that $W_1+W_2$ is a subspace of $V$.}\\
+            To show this we only need to show that $W_1 + W_2$ is closed under addition and scalar multiplication and includes the zero vector.\\
+            since $W_1$ and $W_2$ are subspaces they both include the zero vector and $0+0 = 0$ so $W_1+W_2$ contains the zero vector.\\
+            consider arbitrary elements  $v,u \in W_1+w_2$ by definition $v = w_1^{1} + w_2^{1}, u = w_1^{2} + w_2^2$ 
+            \[
+            v+u = w_1^{1} + w_2^1 + w_1^2+w_2^2 = (w_1^{1}+w_1^2)\in W_1+(w_2^{1}+w_2^2) \in W_2
+            .\] 
+            and so $u+v \in W_1+W_2$. Let $c \in k$
+            \[
+                cv = c(w_1^{1}+w_2^{1} ) = cw_1^{1} \in W_1 + cw_2^{1}\in W_2 
+            .\] 
+            The last property holding by the fact that $W_1$ and $W_2$ are subspaces. Thus $W_1 + W_2$ is a subspace.
+        \item \emph{Assume that $W \subset V$ is a subspace such that $W_1 \subset W$ and $W_2 \subset W$. Prove $W_1 + W_2 \subset W$ }\\
+            Any element $v \in W_1 + W_2$ is of the form $w_1 \in W_1 + w_2 \in W_2$ but by the containment of $W_1 \subset W$ and $W_2 \subset W$  $w_1, w_2 \in W$ and so $w_1 + w_2 \in W$ but subspace definition.
+            Therefore $w_1 + w_2 \in W$ for all $w_1, w_2$ and so $W_1 + W_2 \in W$
+    \end{enumerate}
+
+    \section{Exercise 5}
+    \emph{Let $k$ denote some field. For each function $f$ below, determine if $f$ is al inear functional and prove your answer is correct.
+    You may assume standard results from calculus.}
+    \begin{enumerate}
+        \item $V = \mathbb{R}[x], f(p(x)) := 4p'(0) + p''(1)$ \\
+            For this and all subsequent questions I will verify that $f(v_1+v_2) = f(v_1) +f(v_2)$ and $f(cv) = cf(v)$ with $v_1,v_2,v \in V$ and $c \in k$.
+            \[
+            f(p_1(x) + p_2(x)) = 4(p_1+p_2)'(0) + (p_1+p_2)''(1) = 4(p_1'+p_2')(0) +(p_1''+p_2'')(1)
+            .\] 
+            This follows from the linearity of the derivative
+            \[
+            = 4p_1'(0) + p_1''(1) + 4p_2'(0) + p_2''(1) = f(p_1) + f(p_2)
+            .\] 
+            \[
+            f(cp) = 4(cp)'(0) + (cp)''(1) = 4cp'(0) + cp''(1) = cf(p)
+            .\] 
+            Again by linearity of derivative.
+            Thus $f$ is a linear functional.
+        \item $V = k^2$, $f( \left(\begin{array}{c} a \\ b \end{array}\right) ) = \left(\begin{array}{c} 2x \\ 4y \end{array}\right) $\\
+            This is not a linear functional because although the function is linear its codomain is not the field k it is still $k^2$
+        \item $V = k^{2 \times 2}, f(A) = tr(A)$\\
+            This function has a proper codomain
+            $tr(A) = a_{11}+a_{22}$\\
+            \[
+                tr(A+B) = (a_{11}+b_{11}) + (a_{22}+b_{22}) = (a_{11}+a_{22})+ (b_{11}+b_{22}) = tr(A) + tr(B)
+            .\] 
+            \[
+            tr(cA) = (ca_{11}+ca_{22}) = c(a_{11}+a_{22}) = ctr(A)
+            .\] 
+            Yes this function is a linear functional
+        \item $V = \mathbb{R} [x], f(p(x) = \int_{0}^{1}p(x)dx$ \\
+            \[
+            f(p_1+p_2) = \int_{0}^{1}(p_1+p_2)dx = \int_{0}^{1}p_1dx+\int_{0}^{1}p_2dx = f(p_1) + f(p_2)
+            .\] 
+            \[
+            f(cp) = \int_{0}^{1}cpdx = c\int_{0}^{1}pdx = cf(p)
+            .\] 
+            Yes this function is a linear functional since evaluation this integral will give values in $ \mathbb{R} $.
+        \item $V = \mathbb{Q} ^{3}, f(\left(\begin{array}{c} x \\ y \\ z \end{array}\right) ) = x^2+y^2+z^2$
+            No because
+            \[
+            f(c \left(\begin{array}{c} x \\ y \\ z \end{array}\right) ) = c^2x^2+c^2y^2+c^2z^2 = c^2(x^2+y^2+z^2) = c^2f( \left(\begin{array}{c} x \\ y \\ z \end{array}\right) ) \ne c f( \left(\begin{array}{c} x \\ y \\ z \end{array}\right) 
+            .\] 
+            for any $c \ne 0, 1$ and  $x,y,z \ne 0$
+    \end{enumerate}
+    \section{Exercise 6}
+    \emph{Assume that  $m,n$ are positive integers, and fix $x_1,...,x_m \in \mathbb{R} $ s.t. $x_i \ne x_j$ if $i,j \in \{1,...,m\}$ s.t. $i \ne j$. Let
+        \[
+            W := \{f \in \mathbb{R} [x]_{\le n} : f(x_1) = f(x_2) = ... = f(x_m) = 0 \}
+        .\]
+        Where $ \mathbb{R} [x]_{\le n}$, denotes degree less than or equal to $n$.
+    }
+    \begin{enumerate}
+        \item \emph{Prove that $W$ is a vector space over $ \mathbb{R} $ }\\
+            Since $ \mathbb{R} [x]_{\le n} $ is a vector space and $W$ is a subset of this space it suffices to show that $W$ is closed under vector addition, scalar multiplication and has the zero element.
+            clearly the zero element is part of this set because $0(x) = 0$ for all $x$
+            if $f_1, f_2 \in W$ then
+            \[
+                (f_1+f_2)(x_i) = f_1(x_i) + f_2(x_i) = 0 + 0 = 0
+            .\] 
+            additionally $deg(f_1+f_2) = \max\{deg(f_1),deg(f_2)\}$ so $f_1+f_2 \in W$
+            also if $c \in \mathbb{R} $
+            \[
+            cf(x_i) = c*0 = 0
+            .\] 
+            and so $cf \in W$ 
+        \item \emph{Compute the dimension of $W$.}\\
+            The rank of $ \mathbb{R} _{\le n}$ is $n+1$ for the $n+1$ choices of coefficients of a degree $n$ polynomial. Consider the linear transformation $T : \mathbb{R}_{\le n} \rightarrow \mathbb{R}^{m}$ defined by
+            $T(f) = (f(x_1),f(x_2),...,f(x_m))$ the kernel of $T$ is all functions s.t. $f(x_i) = 0$ for all $i \in \{1,...,m\}$ which is the definition of $W$. This function is also clearly linear.
+            Applying Rank-Nullity we get that $dim( \mathbb{R} _{\le n}) = dim(Im(T)) + dim(Ker(T))$ the image of $T$ is the entirety of $ \mathbb{R} ^{m}$ because we can construct a polynomial to correspond to any vector in  $ \mathbb{R}^{m}$ and so has dimension $m$ Thus:
+            \[
+            n+1 = m + dim(W)
+            .\] 
+            \[
+            dim(W) = n + 1 -m
+            .\] 
+            
+    \end{enumerate}
+
+    \end{document}

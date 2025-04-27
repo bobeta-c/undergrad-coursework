@@ -1,0 +1,294 @@
+\documentclass{amsart}
+\usepackage{amsfonts} % For math fonts
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\setlist{topsep=0pt, leftmargin=*, labelsep=1em}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    backgroundcolor=\color{black}, % Light gray background
+    basicstyle=\ttfamily\small\color{white}, % Code style
+    keywordstyle=\color{cyan}\bfseries, % Keywords style
+    stringstyle=\color{yellow}, % Strings style
+    commentstyle=\color{gray}, % Comments style
+    frame=single, % Box around code
+    rulecolor=\color{white}, % Frame color
+    numbers=left, % Line numbers
+    numberstyle=\tiny\color{white}, % Line number style
+    breaklines=true, % Automatic line breaking
+    showstringspaces=false
+}
+
+
+\title{HW 6 - 151A}
+\author{Asher Christian 006-150-286}
+\date{ 26.02.25} 
+
+\begin{document}
+    \maketitle
+    \section{Exercise 1}
+    \emph{
+        The Trapezoidal Rule applied to $\int_{0}^{2}f(x)dx$ gives the value 4
+        and Simpson's rule gives the value 2. What is $f(1)$ t
+    }\\
+    Trapezoidal approximation is $f(0) + f(2) = 4 \rightarrow \frac{1}{3}f(0) + \frac{1}{3}f(2) = \frac{4}{3}$ 
+    Simpsons approximation is $\frac{1}{3}f(0) + \frac{4}{3}f(1) + \frac{1}{3}f(2) = 2$ thus
+    \[
+    \frac{4}{3}f(1) = 2 - \frac{4}{3} = \frac{2}{3} \implies f(1) = \frac{1}{2}
+    .\] 
+
+    \section{Exercise 2}
+    \emph{
+        Let $b-a = 2h$, $x_1 = a_h = \frac{a+b}{2}$ using Taylor's polynomial of second order
+        \[
+        f(x) = f(x_1) + (x-x_1)f'(x_1) + \frac{1}{2}(x-x_1)^2f''(\eta (x))
+        .\] 
+        to derive the error for the midpoint rule
+        \[
+        \int_{a}^{b}f(x)dx = 2hf(x_1) + \frac{h^{3}}{3}f''(\xi)
+        .\] 
+        where $\xi \in [a,b]$
+    }
+    Take the integral of both sides
+    \[
+    \int_{a}^{b}f(x) = \int_{a}^{b}f(x_1) + f'(x_1)\int_{a}^{b}(x-x_1) + \frac{1}{2}\int_{a}^{b}(x-x_1)^2f''(\eta (x))
+    .\] 
+    appllying the mean value theorem for integrals and since
+    \[
+        \int_{a}^{b}(x-\frac{a+b}{2}) = \int_{-h}^{h}udu= (\frac{u^2}{2})|^{h}_{-h} = h^2-\frac{-h^2}{2} = 0
+    .\] 
+    we get
+    \[
+    \int_{a}^{b}f(x) = f(x_1)2h + \frac{f''(\xi)}{2}\int_{-h}^{h}u^2du
+    .\] 
+    and
+    \[
+        \int_{-h}^{h}u^2 = \frac{u^{3}}{3}\Big|^{h}_{-h}  = \frac{2h^{3}}{3}
+    .\] 
+    \[
+    =2hf(x_1) + \frac{f''(\xi)}{2}\frac{2h^{3}}{3} = 2hf(x_1) + \frac{h^{3}}{3}f''(\xi)
+    .\] 
+
+    \section{Exercise 3}
+    \emph{
+        Use the Composite Trapezoidal and Composite Simpson's rules to approximate the integra
+        \[
+        \int_{1}^{2}x\ln(x)dx
+        .\] 
+        with $n=3$ subintervals. What are the relative errors?
+    }
+    The true integral is
+    \[
+    \int_{1}^{2}x\ln(x) = \frac{2^2}{2}\ln(2) - \frac{1}{2}\int_{1}^{2}xdx = 2\ln(2) - \frac{3}{4} \approx 0.63629436112
+    .\] 
+    for trapezoidal rule
+    \[
+        \int_{a}^{b}f(x)dx \approx \frac{1}{6}(f(1) + 2f(1 +\frac{1}{3}) + 2f(1 + \frac{2}{3}) + f(2)) = 0.642699772257
+    .\] 
+    with relative error
+    \[
+        \frac{|0.642699772257 - \int_{1}^{2}x\ln(x)dx|}{\int_{1}^{2}x\ln(x)dx} =  0.0100667419499
+    .\] 
+    for composite simpson's rule we must have an additional interval so everything is $n=4$
+    \[
+    \int_{1}^{2}f(x)dx \approx \frac{1}{9}(f(1) + 2f(1 + \frac{1}{2}) + 4(f(1 + \frac{1}{4})+f(1+\frac{3}{4}) + f(2)) = 0.636309829797
+    .\] 
+    with relative error
+    \[
+    0.0000243105675671
+    .\] 
+
+    \section{Exercise 4}
+    \emph{
+        Recall that the error in the Composite Trapezoidal rule (CTR) using n subintervals of width
+        h is given by
+        \begin{equation} \label{eq:1}
+            -\frac{h^2}{12}(b-a)f''(\mu)
+        \end{equation}
+        for some $\mu \in (a,b)$
+        \begin{enumerate}[label = (\alph*)]
+            \item \label{seq:1}
+                Determine the values of $n$ and $h$ that are sufficient to approximate
+                \begin{equation}
+                    \int_{1}^{2}x\ln(x)dx
+                \end{equation}
+                to within an error tolerance of $\tau = 10^{-5};$ that is, determine $n$ so that
+                the error when applying the CTR to $(2)$ is smaller in absolute value than $\tau$ 
+            \item Repeat part \ref{seq:1} for the case of Composite Simpson's Rule.
+        \end{enumerate}
+    }
+    Solution:
+    \begin{enumerate}[label = (\alph*)]
+        \item first note that 
+            \[
+            f''(\mu) = \frac{1}{\mu}
+            .\] 
+            which is strictly positive and bounded from above on the interval $\mu \in (1,2)$ by $f''(1) = 1$
+            thus the error in absolute value is less than
+             \[
+            \frac{h^2}{12}(2-1)1 = \frac{h^2}{12}
+            .\] 
+            thus we must find $h$ such that $\frac{h^2}{12} < 10^{-5}$, the largest $h$ that ensures this bound
+            is $h = 0.0109544511501$. This h or smaller can be obtained by dividing into $n = 92$ or more subintervals
+        \item The simpson's rule error is given by
+            \[
+            \frac{h^{4}}{180}(b-a)f^{(4)}(\xi)
+            .\] 
+            $f^{(4)}(\mu) = \frac{2}{\mu^{3}}$ strictly positive and bounded above by $2$
+            thus the error is given by
+             \[
+            \frac{h^{4}}{90}
+            .\] 
+            the largest $h$ value that works is $h = 0.173205080757$ corresponding to $n \ge 6$
+    \end{enumerate}
+
+    \section{Exercise 5}
+    \emph{
+        find the constants a,b,c, and d such that the quadrature rule below has a degree of exactness
+        at least 3:
+        \[
+        \int_{-1}^{1}f(x)dx = af(-1) +bf(1) + cf'(-1) + df'(1)
+        .\] 
+    }
+    if $f(x) = x_0 + x_1x + x_2x^2 + x_3x^{3}$ then
+    \[
+        \int_{-1}^{1}f(x)dx = 2x_0+\frac{2}{3}x_2 = a(x_0-x_1+x_2-x_3) + b(x_0+x_1+x_2+x_3) + c(x_1-2x_2+3x_3) + d(x_1+2x_2+3x_3)
+    .\] 
+    giving us four equations
+    \[
+    a + b = 2
+    .\] 
+    \[
+    -a+b+c+d = 0
+    .\] 
+    \[
+    a+b-2c+2d = \frac{2}{3}
+    .\] 
+    \[
+    -a+b+3c+3d = 0
+    .\] 
+    this results in 
+    \[
+    a = b = 1, c = \frac{1}{3}, d = -\frac{1}{3}
+    .\] 
+
+    \section{Exercise 6}
+    \emph{
+        Consider the nonlinear equation for x:
+        \[
+        \int_{0}^{x}\frac{1}{\sqrt{2\pi}}e^{-\frac{t^2}{2}}dt = 0.45
+        .\] 
+        \begin{enumerate}[label = (\alph*)]
+            \item Define 
+                \[
+                f(x) := \int_{0}^{x}\frac{1}{\sqrt{2\pi }}e^{-\frac{t^2}{2}}dt-0.45
+                .\] 
+                Using the Fundamental Theorem of Calculus write down Newton's method applied to
+                the equation $f(x) = 0$
+            \item Each step of Newton's method derived in (a) requires an evaluation of f(x),
+                while we cannot evaluate f(x). Instead, we apply Composite Trapezoidal Rule to estimate f(x)
+                with N subintervals. Write down the expression for Composite Trapezoidal Rule with N subintervals
+                to approximate $\int_{0}^{x}\frac{1}{\sqrt{2\pi }}e^{-\frac{t^2}{2}}$ (denoted by $I_{\text{trap}}[g;x;N]$ where $g(t)$ is the function
+                we are integrating. Then write down a modified version of Newton's method where the integration is approximated by its composite Trapezoidal Rule.
+            \item Write a code to imploement the method you derived above with $N = 50$ subintervals and 
+                initialization $x_0 = 0.5$. Stop the method you derived above when the approximation for the residual $|f(x_n)|$ is 
+                smaller than $\tau = 10^{-5}$ or a maximum of iteration 100 is reached. Report the number of iteration and the 
+                approximated root (with 5 sig figs)
+        \end{enumerate}
+    }
+    \begin{enumerate}[label = (\alph*)]
+        \item 
+            \[
+                 x_n = x_{n-1} - \frac{f(x_{n-1})}{f'(x_{n-1})}
+            .\] 
+            but 
+            \[
+            \frac{d}{dx}\int_{0}^{x}\frac{1}{\sqrt{2\pi }}e^{-\frac{t^2}{2}}dt =\frac{1}{\sqrt{2\pi} }e^{-\frac{x^2}{2}}
+            .\] 
+            so
+            \[
+                x_n = x_{n-1} - \frac{\int_{0}^{x_{n-1}}\frac{1}{\sqrt{2\pi} }e^{-\frac{t^2}{2}}dt - 0.45}{\frac{1}{\sqrt{2\pi }}e^{-\frac{x_{n-1}^2}{2}}}
+            .\] 
+        \item $I_{\text{trap}}[g;x;N]$ is
+            \[
+            \frac{h}{2}(g(0) + 2\sum_{i=1}^{N-1}g(x_i) + g(x))
+            .\] 
+            where $h = \frac{x}{N}$. applying $g(0) = \frac{1}{\sqrt{2\pi}}$ we get
+            \[
+                I_{\text{trap}}[g;x;N] = \frac{x}{2N}(\frac{1}{\sqrt{2\pi}}+2\sum_{i=1}^{N-1}g(i\frac{x}{N}) + g(x))
+            .\] 
+            plugging this in to the newtons method we get
+            \[
+                x_n = x_{n-1} - \frac{\frac{x_{n-1}}{2N}(\frac{1}{\sqrt{2\pi}} + 2\sum_{i=1}^{N-1}g(ix_{n-1}/N) + g(x_{n-1}))-0.45}{g(x_{n-1})}
+            .\] 
+        \item The number of iterations and root are reported as follows:
+            Newton's Method starting at $p_0$ = 0.5\\
+            iterations: 4\\
+            p estimate: 1.64496210809254\\
+            f(p) final: -4.112324099858622e-06
+            \\
+            attained with the following code
+            \begin{lstlisting}
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+using namespace std;
+
+
+double EPSILON = pow(10,-5);
+double MAX_ITERATIONS = 100;
+int N = 50;
+
+double newtons_method(double p0, double (*f)(double), double (*fp)(double));
+double f(double x);
+double fp(double x);
+double g(double x);
+
+int main(void){
+    double s0 = 0.5;
+    cout << setprecision(16);
+    newtons_method(s0,f,fp);
+}
+
+double g(double x){
+    return (1/sqrt(2 * M_PI))*exp(-(pow(x,2))/2);
+}
+
+double f(double x){
+    double sum = 0;
+    for(int i = 1; i <= N-1; i++){
+        sum += g(i*x/N);
+    }
+    return (x/(2*N))*(1/sqrt(2 * M_PI) + 2*sum + g(x)) - 0.45;
+}
+
+double fp(double x){
+    return g(x);
+}
+
+
+double newtons_method(double p0, double (*f)(double), double (*fp)(double))
+{
+    double p = p0;
+    int iterations = 0;
+    while(abs(f(p)) >= EPSILON && iterations < 100){
+        p = p - (f(p)/fp(p));
+        iterations += 1;
+    }
+    cout << "Newton's Method starting at p0 = " << p0 << ", iterations: " << iterations;
+    cout << " p estimate: " << p << " f(p) final: " << f(p) << endl << endl;
+    return p;
+}
+            \end{lstlisting}
+    \end{enumerate}
+
+
+\end{document}

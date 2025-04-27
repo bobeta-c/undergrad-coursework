@@ -1,9 +1,0 @@
-Asher Christian Report.txt
-10/4/23
-
-
-Input Error step 5: 0, 100, 10 - produced infinite results due to the lack of a divide by 0 check.
-
-Logic Error: reversed / and * when calculating percentages causing an error in the logic behind calculating the percentages. This ultimately led to completely incorrect output.
-
-Compile Errors: Deleted "using namespace std;" causing all cout/cin to break. Additionally removing the parentheses around the if statement made the statement unable to compile.

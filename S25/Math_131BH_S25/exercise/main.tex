@@ -1,0 +1,108 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 131BH}
+\newcommand{\ced}{Spring 2025}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Homework Set #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{mathtools}
+
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{32848c}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\section{Lemma}
+\[
+    f: \mathbb{R} \rightarrow \mathbb{R}^2 \hspace{0.5cm} f(x) = (f_1(x),f_2(x)) \hspace{0.5cm} \text{continuous} \implies f_1: \mathbb{R} \rightarrow \mathbb{R} \text{ continuous}
+.\] 
+Assume $f$ is continuous. For any point $p \in \mathbb{R}$, $\epsilon > 0$ there exists $  \delta > 0$ such that $|p-q| < \delta \implies \norm{f(p) - f(q)} = \norm{(f_1(p)-f_1(q),f_2(p)-f_2(q))} < \epsilon$ but
+\[
+\sqrt{a^2 + b^2} \ge |a|
+.\] 
+so this implies that when $|p-q| < \delta$
+\[
+|f_1(p) - f_1(q)| < \epsilon
+.\] 
+thus $f_1$ is continuous.
+
+
+\section{Theorem}
+\[
+    U \subset \mathbb{R} \;\; \text{closed}
+.\] 
+\[
+    E = \{(x,g(x)): x \in U\} \subset \mathbb{R}^2
+.\] 
+\[
+    g: U \rightarrow \mathbb{R} \hspace{1cm}  \text{not continuous} \implies E \text{ not path connected}
+.\] 
+$g$ not continuous implies that there exists some point $p \in U$ and some $\epsilon > 0$ such that for every $\delta > 0$ there exists $q, |p-q| < \delta, \norm{g(p)-g(q)} > \epsilon$ 
+Assume for contradiction that $E$ is path connected, then for any $x \in U$ there exists continuous  $f: [0,1] \rightarrow E$ such that $f(0) = (x,g(x)), f(1) = (p,g(p))$. Consider
+$U \cap (p, \infty)$ and $U \cap (-\infty, p)$ one of these sets must be nonempty and contain infinitely many points like $q$ as described earlier. Assume without loss of generality that the set
+$U \cap (p, \infty)$ contains infinitely such $q$ and pick one of them to be $x$.\\
+
+if $a < b$ and $f(a) = (A,g(A)), f(b) = (B,g(B))$  then for any $C$ between $A$ and $B$, there exists  $a < c < b$ such that $f(c) = (C, g(C))$ this is because $f(t) = (f_1(t),f_2(t))$ and $f_1(t)$ is continous by Lemma 1 so  $f_1((a,b))$ is connected and $A,B \in f_1((a,b))$ so $U \subset f_1((a,b))$ where $U$ is the open interval between $A$ and $B$ where in particular $C \in U \implies C \in f_1((a,b)) \implies (C,g(C)) \in f((a,b))$.\\
+
+Let $t$ be $\inf_{t: f(t) = (p,g(p))}(t)$, the minimum $t$ that satisfies $f(t) = (p,g(p))$. Importantly if $\tau < t \implies f(\tau) = (a_1,g(a_1)), a_1 > p$ By the previous paragraph\\
+
+Since $f$ is continuous there exists some $\delta_f > 0$ such that $|y-t| < \delta_f \implies \norm{(p,g(p)) - f(y)} < \epsilon$ pick  $\tau = t-\frac{\delta_f}{2}$ then $f(\tau) = (a_1,g(a_1)), a_1 > p$. Pick
+$q$ such that $q > p$, $|p-q| < |a_1-p|$, and $\norm{g(p) - g(q)} > \epsilon$ then by Lemma there exists some $\eta$ such that $\tau \le \eta < t$ such that  $f(\eta) = (q,g(q))$ but
+\[
+    \eta \in N_{\delta_f}(t) \hspace{1cm} \norm{f(\eta) - (p,g(p))} = \norm{(q,g(q)) - (p,g(p))} \ge |g(p)-g(q)| > \epsilon
+.\] 
+This is a contradiction thus $E$ is not path connected.
+
+\section{$\sin(\frac{1}{x})$}
+\[
+f(x) = 
+\begin{cases}
+    \sin(\frac{1}{x}) & x > 0\\
+    0 & x \le 0
+\end{cases}
+.\] 
+is discontinuous at $x=0$ therefore the graph $E := \{(x,f(x)): x \in \mathbb{R}\}$ is not path connected.
+
+
+\end{document}

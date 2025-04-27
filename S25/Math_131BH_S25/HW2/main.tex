@@ -1,0 +1,410 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 131BH}
+\newcommand{\ced}{Spring 2025}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Homework Set #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{32848c}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Exercise 1: Rudin p 100 problem 18}
+\[
+f(x) =
+\begin{cases}
+    0 & x \in \mathbb{R} \setminus \mathbb{Q}\\
+    \frac{1}{n} & x = \frac{m}{n}
+\end{cases}
+.\] 
+\solution{
+    For every interval $[a,a+1]$,  $a \in \mathbb{Z}$ and any $n \in \mathbb{N}$ there are at most $n$ numbers of the form $\frac{m}{n}$.
+    they are elements of the set 
+    \[
+        S_{a,n} := \{\frac{an}{n}, \frac{an + 1}{n}, \dots , \frac{an+n}{n}\}
+    .\] 
+    This can be seen since $\frac{an}{n} = a$ and $\frac{an+n}{n} = a + 1$.
+    Consider any point $x \in \mathbb{R} \setminus \mathbb{Q}$ and let $a \in \mathbb{N}$ be the  natural number such that $a < x < a+1$\\
+    $f(x) = 0$. Consider any  $\epsilon > 0$ and let $n \in \mathbb{N}$ be such that $\frac{1}{n} < \epsilon$.
+    then define the set of "bad points" $G_{x,\epsilon}$ to be
+    \[
+        G_{x,\epsilon} := \bigcup_{m=1}^{n}S_{a,m}
+    .\] 
+    and
+    \[
+        \eta = \min_{p \in G_{x,\epsilon}}(|x-p|)
+    .\] 
+    note that $\eta > 0$ since every point in $G_{x,\epsilon}$ is in $ \mathbb{Q}$ so cannot be equal to $x$.\\
+    I claim any $\delta < \eta$ satisfies the property that $|p-x| < \delta \implies |f(p) - f(x)| = |f(p)| < \epsilon$ indeed consider any $p$ such that
+    $|p-x| < \delta$ then if $p \in \mathbb{R} \setminus \mathbb{Q}$ the property holds since $f(p) = 0$. If instead $p \in \mathbb{Q}$ we know
+    $p \not\in G_{x,\epsilon}$ which means that when $p = \frac{k}{j}$ where $k,j \in \mathbb{N}$ share no common factors, it must be that  $j > n$ which implies that $f(p) = \frac{1}{j} < \frac{1}{n} < \epsilon$, thus for any $p, |p-x| < \delta \implies |f(p)-f(x)|< \epsilon$.
+    Thus $f$ is continuous at all $x \in \mathbb{R} \setminus \mathbb{Q}$. However $f$ is not continuous at all rational numbers. This is because for any $x = \frac{m}{n} \in \mathbb{Q}$ pick $\epsilon < \frac{1}{n}$ then since $ \mathbb{Q}$ is dense in $ \mathbb{R}$, for any $\delta > 0$ there exists some point $p \in \mathbb{R} \setminus \mathbb{Q}$ 
+    such that $|p-x| < \delta$ but $|f(p)-f(x)| = |0 - \frac{1}{n}| = | \frac{1}{n}| > \epsilon$. so for any delta this point admits close points that are farther than $\epsilon$ away and thus $f$ is not continuous at any $x \in \mathbb{Q}$.
+}
+
+\section{Exercise 2: Rudin p 100 problem 23}
+\[
+    f(\lambda x + (1-\lambda)y) \le \lambda f(x) + (1-\lambda)f(y)
+.\] 
+\solution{
+    \begin{enumerate}
+        \item convex $\implies$ continuous\\
+            for any numbers $a < b < c$ there exists $\lambda$ such that $b = \lambda a + (1-\lambda) c$ if $b = a + \delta_1$, $c = a + \delta_2$ and $\delta_1, \delta_2$ both greater than zero
+            \[
+            a + \delta_1 = \lambda a +  a + \delta_2 - \lambda a - \lambda \delta_2 = a - \lambda\delta_2 + \delta_2
+            .\] 
+            \[
+            \lambda \delta_2 = \delta_2 - \delta_1
+            .\] 
+            \[
+            \lambda = \frac{\delta_2 - \delta_1}{\delta_2} = 1 - \frac{\delta_1}{\delta_2} > 0
+            .\] 
+            \\\\If you have three points $a < b < c$ then it cannot be the case that $f(a) < f(b)$ and $f(c) < f(b)$ since otherwise pick $\lambda$ such that $\lambda a + (1-\lambda)c = b$
+            \[
+            f(b) \le  \lambda f(a) + (1-\lambda)f(c) < f(b)
+            .\] 
+            a Contradiction.\\
+            \\\\I first prove that for any $x > 0$ and any $\epsilon > 0$ there exists a point $p \in (a,b)$ such that $p > x$ and $|f(p)-f(x)| < \epsilon$.\\
+            Assume not then pick any point $p > x$ we have
+             \[
+            |f(p) - f(x)| < k \epsilon
+            .\] 
+            for some $ k > 1$ assume further that $f(p) > f(x)$, then for any
+            \[
+                \lambda \ge \frac{k-1}{k} \hspace{1cm} (1-\lambda) \le \frac{1}{k}
+            .\] 
+             \[
+            r = \lambda x + (1-\lambda)p
+            .\] 
+            \[
+            f(r) \le \lambda f(x) + (1-\lambda)f(p)  \le \frac{k-1}{k}f(x) + \frac{1}{k}f(p) \le f(p)
+            .\] 
+            since if $a < b$ any weighted average $\lambda a + (1-\lambda) b \le b$ so we have
+            \[
+            f(r_0)-f(x) \le \lambda f(x) + (1-\lambda)f(p) - f(x) \le  \frac{k-1}{k}f(x) + \frac{1}{k}f(p) - \frac{k}{k}f(x) = \frac{1}{k}(f(p)-f(x)) < \epsilon
+            .\] 
+            Pick some $r_0$ with this property. If it is also the case that
+            \[
+            f(r_0) - f(x) \ge  -\epsilon
+            .\] 
+            we are done. Otherwise $f(x) - f(r_0) > l \epsilon$ for some $l > 1$  and $f(r_0) < f(x) - l\epsilon$. NOTE this is equivalent to the case where $f(p) < f(x)$ justifying our assumption above. since
+            \[
+            f(r_0) < f(x)
+            .\] 
+            for any $q < x$ it must be that $f(q) \ge f(x)$, repeat the same process as above to get  $y$ such that
+            \[
+            f(y) - f(x) < \epsilon 
+            .\] 
+            \[
+            |y-x| < |x-r_0|
+            .\] 
+            since $f(y) \ge f(x)$ we have that $|f(y) - f(x)| < \epsilon$. Let $\delta = x-y$
+            Pick $x < r_1 \le r_0$ such that $|x-r_1| = |y-x|$. Then
+            \[
+            x = \frac{1}{2}y + \frac{1}{2}r_1
+            .\] 
+           and  $f(r_1) < f(x) - (1+\tau)\epsilon$ for some $\tau > 1$
+            \[
+            f(x) \le \frac{1}{2}f(y) + \frac{1}{2}f(r_1) \le \frac{1}{2}(f(x)+ \epsilon) + \frac{1}{2}(f(x)-\epsilon - \tau \epsilon) 
+            .\] 
+            \[
+            = f(x) - \frac{\tau}{2} \epsilon 
+            .\] 
+            which is a contradiciton, thus there must exist some point $p > x$ such that $|f(p)-f(x)| < \epsilon$. The same reasoning can be used to show that
+            there must exist a point $t < x$ such that $|f(t)-f(x)| < \epsilon$ additionally if $f(t) < f(x)$ then $f(t_0) < f(x)$ for all $t < t_0 < x$ by the second statement of this proof
+            and same with $p$. If $f(t) > f(x)$, then either every point $t < t_0 < x$ is such that $f(t) > f(x)$ or as the proof has shown there exists some closer $t < t_1 < x$ such that $f(t_1) < f(x)$ and $|f(t_1)-f(x)| < \epsilon$ with the same argument applying to $p$,
+            thus there are two points such that $f$ of any point between them is within $\epsilon$ of $f(x)$. Let the minimum of their distances from $x$ be $\delta$ then $|x-x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon$ and so $f$ is continuous at $x$ and since $x$ is 
+            arbitrary, $f$ is continuous everywhere and is therefore continuous.
+        \item convex increasing of convex is convex
+            Let $f$ be a convex function and $g$ be an increasing convex function, $a \le b \implies g(a) \le g(b)$
+            \[
+            g \circ f (\lambda a + (1-\lambda) b) \le g(\lambda f(a) + (1- \lambda) f(b)) \le \lambda g\circ f(a) + (1-\lambda) g \circ f(b)
+            .\] 
+            by applying definitions, thus $g \circ f$ is convex.
+        \item Let $f$ be convex in $(a,b)$ and $a < s < t < u < b$.
+            First for any $a < l < r < b$ and any  $x \in [0, r-l]$, set $\lambda = 1 - \frac{x}{r-l} \in [0,1]$ then we have
+            \[
+            f(l + x) = f(\lambda l + (1-\lambda) r) \le \lambda f(l) + f(r) - \lambda f(r)
+            .\] 
+            \[
+            = f(l) - \frac{f(l)x}{r-l} + f(r) - f(r) + \frac{f(r)x}{r-l}
+            .\] 
+            \[
+            = f(l) + \frac{f(r)-f(l)}{r-l}x
+            .\] 
+            \[
+            f(l + x) \le f(l) + \frac{f(r) - f(l)}{r-l}x
+            .\] 
+            to show that
+            \[
+                \frac{f(u) - f(s)}{u-s} \ge \frac{f(t)-f(s)}{t-s}
+            .\] 
+            consider
+            \[
+                \frac{f(u)-f(s)}{u-s}(t-s) + f(s) \ge f(t) = \frac{f(t)-f(s)}{t-s}(t-s) + f(s)
+            .\] 
+            so
+            \[
+                \frac{f(u)-f(s)}{u-s} \ge \frac{f(t)-f(s)}{t-s}
+            .\] 
+            since $(t-s) > 0$.\\
+            Similarly if $a < l < r < b$ and any $x \in [0,r-l]$ set $\lambda = \frac{x}{r-l} \in [0,1]$ we have
+            \[
+            f(r - x) = f(\lambda l + (1-\lambda)r) \le \lambda f(l) + f(r) - \lambda f(r)
+            .\] 
+            \[
+            = f(r) - x \frac{f(r) - f(l)}{r -l}
+            .\] 
+            To show that
+            \[
+                \frac{f(u) - f(s)}{u-s} \le \frac{f(u)-f(t)}{u-t}
+            .\] 
+            consider
+            \[
+            -(u-t)\frac{f(u)-f(s)}{u-s} + f(u) \ge f(t) = -(u-t)\frac{f(u)-f(t)}{u-t} + f(u)
+            .\] 
+            \[
+            - \frac{f(u)-f(s)}{u-s} \ge - \frac{f(u)-f(t)}{u-t} \implies \frac{f(u)-f(s)}{u-s} \le  \frac{f(u)-f(t)}{u-t}
+            .\] 
+    \end{enumerate}
+}
+\section{Exercise 3 Rudin p 100 problem 24}
+\[
+f(\frac{x+y}{2}) \le \frac{f(x) + f(y)}{2}
+.\] 
+And $f$ is continuous\\
+\solution{
+Assume $f$ is not convex, then there exists some points $x_1,x_2$ and $\lambda \in [0,1]$ such that
+\[
+f(\lambda x_1 + (1-\lambda)x_2) = \lambda f(x_1) + ( 1-\lambda)f(x_2) + \eta
+.\] 
+If $\lambda = 1$ or $\lambda = 0$ then the statement is clearly false, so assume $\lambda \not\in \{0,1\}$.\\
+Let $\xi = \lambda x_1 + (1-\lambda)x_2$. Since $f$ is continuous, it holds that for any sequence $(x_n)_n \rightarrow x$, $\lim_{n\to \infty}f(x_n) = f(x)$. I will give
+a sequence $(m_n)_n \rightarrow \xi$ such that $\lim_{n\to \infty} f(m_n) < \lambda f(x_1) + (1-\lambda)f(x_2) + \eta$. Assume WLOG that $a < x_1 < x_2 < b$ rather than the other way around
+and set $m_1 = \frac{x_1 + x_2}{2}$ then if $\xi = m_1$ we have
+\[
+f(m_1) \le \frac{f(x_1) + f(x_2)}{2} = \lambda f(x_1) + (1-\lambda)f(x_2)
+.\] 
+since there is only one way assuming $x_1 \ne x_2$ to write $\xi$ as a weighted average of $x_1$ and $x_2$ as shown in the previous quesiton. This is clearly a contradiciton. 
+Otherwise one of the two holds $x_1 < \xi  < m_1$ or $m_1 < \xi < x_2$. In either case rename the variables such that
+\[
+    y_{1,1} < \xi < y_{1,2}
+.\] 
+and $y_{1,1}, y_{1,2} \in \{x_1,m_1,x_2\}$.
+Inductively define
+\[
+    m_{i} = \frac{y_{i-1,1} + y_{i-1,2}}{2}
+.\] 
+\[
+    y_{i,1},y_{i,2} \in \{y_{i-1,1},y_{i-1,2},m_{i-1}\} \hspace{1cm} y_{i,1} < \xi < y_{i,2}
+.\] 
+if any $m_i = \xi$ then we have
+ \[
+     f(m_i) \le \frac{f(y_{i-1,1}) + f(y_{i-1,2})}{2} \le ... \le k_1 f(x_1) + k_2 f(x_2)
+.\] 
+where $k_1x_1 + k_2x_2 = m_i$ and $k_1 + k_2 = 1$. This is because if
+\[
+    f(m_i) \le k_{i,1}f(x_1) + k_{i,2}f(x_2) \hspace{1cm} k_{i,1} + k_{i,2} = 1, \; k_{i,1}x_1 + k_{i,2}x_2 = m_i
+.\] 
+then if $r_i \in \{x_1,x_2,m_1,....,m_i\}$ and
+\[
+    f(r_i) \le k_{r_i,1}f(x_1) + k_{r_i,2}f(x_2) \hspace{1cm} k_{r_i,1} + k_{r_i,2} = 1, \; k_{r_i,1}x_1 + k_{r_i,2}x_2 = r_i
+.\] 
+\[
+    f(m_{i+1}) \le  \frac{f(m_i) + f(r_i)}{2} \le \frac{k_{i,1}}{2}f(x_1) + \frac{k_{i,2}}{2}f(x_2) + \frac{k_{r_i,1}}{2}f(x_1) + \frac{k_{r_i,2}}{2}f(x_2)
+.\] 
+\[
+    m_{i+1} = \frac{k_{i,1}x_1 + k_{i,2}x_2}{2} + \frac{k_{r_i,1}x_i + k_{r_i,2}x_2}{2}
+.\] 
+and clearly
+\[
+    \frac{k_{i,1} + k_{i,2} + k_{r_i,1} + k_{r_1,2}}{2} = 1
+.\] 
+so it holds inductively. Thus if $m_i = \xi$ for any $i$ we have a contradiction.
+Let $M = |x_2-x_1|$
+Note that $|y_{i,1} - y_{i,2}| = \frac{1}{2^{i}}M$ this is because, $|y_{i,1}-y_{i,2}| = \frac{M}{2}$ since the interval spanned by $[y_1,y_2]$ is $\frac{1}{2}M$.
+Additionally if $|y_{i,1}-y_{i,2}| = \frac{1}{2^{i}}M$ then
+\[
+    |y_{i+1,1}-y_{i+1,2}| = \frac{1}{2^{i+1}}M
+.\] 
+since one of the $y_{i+1,j}$ will be the midpoint of the two, thus halving the total distance. Additionally  $\xi \in [y_{i,1},y_{i,2}]$ for all  $i$ by construction
+thus
+ \[
+|m_i - \xi| \le \frac{1}{2^{i}}M
+.\] 
+and $(m_i)_i \rightarrow \xi$ since $f$ is continuous for some  $0 <\epsilon < \frac{\eta}{2}$ there exists a $\delta > 0$ such that
+\[
+|\xi - x| < \delta \implies |f(\xi) - f(x)| < \frac{\eta}{2}
+.\] 
+pick $m_n$ with this property such that $|\lambda - k_{n,1}| \le \frac{\eta}{2|f(x_1) - f(x_2)|}$
+\[
+    f(\xi) - f(m_n) \ge (\lambda - k_{n,1})(f(x_1)-f(x_2)) + \eta \ge \frac{\eta}{2}
+.\] 
+a contradiction, thus $f$ is convex.
+}
+
+\section{Exercise 4 Rudin p 100 Problem 26}
+$X,Y,Z$ metric spaces, $Y$ compact, $f: X \rightarrow Y$, $g : Y \rightarrow Z$ continuous one-one. $h(x) = g(f(x))$
+\begin{enumerate}
+    \item $h$ uniformly continuous $\implies$ $f$ uniformly continuous
+    \item $h$ continuous $\implies$ $f$ continuous
+\end{enumerate}
+\solution{
+     Assume $h$ is continuous. we have $g(Y) \subset Z$ is compact. Additionally $g^{-1}$ defined by $g^{-1}(g(x)) = x, x \in Y$ is continuous map from $g(Y)$ to $Y$ since $Y$ is compact.
+    since $g$ is one-one we have $f(x) = g^{-1}(h(x))$ is continuous since it is a composition of continuous functions. this proves $(b)$.
+    If instead $h$ is uniformly continuous we have $f(x) = g^{-1}(h(x))$ $g^{-1}$ is uniformly continuous and $h$ is uniformly continuous. For any $\epsilon > 0$ there exists
+    $ \delta_Y > 0$ such that $d_Z(x,y) < \delta_Y \implies d_Y(g^{-1}(x),g^{-1}(y)) < \epsilon, x,y \in g(Y)$ additionally there exists $\delta_X$ such that
+    $d_X(a,b) < \delta_X \implies d_Z(h(a),h(b)) < \delta_Y, a,b \in X$ so
+    \[
+    d_X(a,b) < \delta_X \implies d_Y(g^{-1}h(a),g^{-1}h(b)) < \epsilon, a,b \in X
+    .\] 
+    and so $f$ is uniformly continuous.\\
+    let
+    \[
+        f: [0,2\pi) \rightarrow R^2 \hspace{1cm} f(t) = \begin{pmatrix} \cos t\\ \sin t \end{pmatrix} 
+    .\] 
+    $f$ is continuous and one-one but $f^{-1}$ is not continuous, however
+    \[
+    f \circ f^{-1} : \mathbb{R}^2 \rightarrow \mathbb{R}^2
+    .\] 
+    is the identity function and is thus continuous and uniformly continuous, yet clearly $f^{-1}$ is not continuous or uniformly continuous since the point $\begin{pmatrix} 1 \\ 0 \end{pmatrix} $ is close
+    to the preimage of $1$ and $2\pi$
+}
+
+\section{Exercise 5}
+$f : E \rightarrow Y$ uniformly continuous, $E \subset \mathbb{R}^{K}$ and $Y$ a metric space.
+\begin{enumerate}
+    \item E is bounded in $ \mathbb{R}^{k}$ $\implies f(E)$ is bounded in $Y$.
+    \item Show this is not true in arbitrary metric space $(X,d)$
+\end{enumerate}
+\solution{
+    \begin{enumerate}
+        \item E is bounded implies there exists some bounded set $U = R_1 \times R_2 \times \dots \times R_k$ such that $E \subset U$ and each $R_1 \subset \mathbb{R}$ closed intervals.
+            Pick $\epsilon = 1$ then there exists $\delta > 0$ such that $||a-b||_2 < \delta \implies d(a,b) < 1$ for all $a,b \in E$. for each  $x \in U$ consider the set
+             \[
+            N_\frac{\delta}{2}(x)
+            .\] 
+            the set 
+            \[
+                \{N_\frac{\delta}{2}(x)\}_{x \in U}
+            .\] 
+            is an open cover of $U$ thus there exists a finite subcover that also covers $E$ 
+            \[
+                G_E := \{N_\frac{\delta}{2}(x_i) \cap E\}_{i=1}^{N} = \{\hat N_\frac{\delta}{2}(x_i)\}_{i=1}^{N}
+            .\] 
+            open subcover of $E$. Additionally $f(\hat N_\frac{\delta}{2}(x_i)) \subset N_\epsilon(p_i)$ for some $p_i$ in $Y$.
+            Thus $f(E) \subset \bigcup_{i=1}^{N}N_\epsilon(p_i)$. Let $M = \max_{j\in\{1,...,N\}}\{d(p_1,p_j)\}$, then for every point  $q \in f(E)$
+             $d(p_1,q) \le M + \epsilon$ since $q \in \hat N_\frac{\delta}{2}(x_j)$ for some $j$ and $d(p_1,q) \le d(p_1,p_j) + d(p_j,q) \le M + \epsilon$ and so $f(E)$ is bounded.
+         \item  consider the set $E = (0,1) \subset \mathbb{R}$ with the discrete metric
+             \[
+             d(p,q) = 
+             \begin{cases}
+                 1 & p = q\\
+                 0 & p \ne q
+             \end{cases}
+             .\] 
+             then every every function from $E$ is uniformly continuous with $\delta = \frac{1}{2}$ but consider
+             \[
+             f  : E \rightarrow \mathbb{R}
+             .\] 
+             \[
+             f(x) = \frac{1}{x}
+             .\] 
+             \[
+             f(E) = [1,\infty)
+             .\] 
+             is unbounded
+    \end{enumerate}
+}
+\section{Exercise 6}
+$E$ is open and connected in $ \mathbb{R}^{k}$ implies $E$ is pathwise connected in $ \mathbb{R}^{k}$
+\solution{
+    First we show that any open ball in $R^{k}$ is pathwise connected. Indeed for any two points $p,q \in N_r(c)$ let  $f[0,1] \rightarrow R^{k}$ be
+    \[
+    f(t) = tp + (1-t)q
+    .\] 
+    then
+    \[
+    ||f(t) - l|| = ||tp + (1-t)q - tl - (1-t)l|| \le t ||p - l|| + (1-t)||q -l|| < tr + (1-t)r = r
+    .\] 
+    lies in the ball.\\
+    Pick some point $p \in E$ and define
+    \[
+        S := \{x \in E: \exists f : [0,1] \rightarrow E \;\; \text{continuous} \; f(0) = p, f(1) = x\}
+    .\] 
+    The set of points that are path connected to $p$. $S$ is open in $E$ for consider any point
+    $x$ then since $x$ is in $E$ there exists an open neighborhood $N_r(x) \subset E$. since open balls are pathwise connected and $x$ is pathwise connected to $p$,
+    for any $y \in N_r(x)$. Let $g$ be the continuous function from $p$ to $x$ then define:
+     \[
+         f: [0,1] \rightarrow E
+    .\] 
+    \[
+    f(t) =
+    \begin{cases}
+        g(\frac{t}{2}) & t \in [0,\frac{1}{2}]\\
+        (2-2t)x + (2t-1)y & t \in (\frac{1}{2},1] 
+    \end{cases}
+    .\] 
+    is continuous at every point $t \in [0,\frac{1}{2}) \cup (\frac{1}{2}, 1]$. at $t = \frac{1}{2}$ we have the left hand limit equal to $x$ and the right hand
+    limit equal to $x$ thus $f$ is continuous at $t = \frac{1}{2}$ and is continuous everywhere.\\
+    Additionally consider
+    \[
+    P = E \setminus S
+    .\] 
+    then $P$ must be open for consider any $x \in P$, there exists an open ball $N_r(x) \subset E$ since $E$ is open.
+    but no point in $N_r(x)$  can be in $S$ since if it were, using the same argument as before we could construct a path from that point to $x$, thus $P$ is open.
+    Lastly $P$ and $S$ are disjoint by definition. So there exists a closed and open set $P$ that is not empty in $E$. since $E$ is connected this implies that $S = E$ 
+    and so the set of points that are path connected to an arbitrary point is the entire set, so for any given point there exists a continuous path to every other point and so $E$ is pathwise connected.
+}
+\section{Exercise 7}
+\solution{
+    Local maximum at point $x_i$ means that for some $\epsilon > 0$ $|x-x_i| < \epsilon, \implies f(x) \le f(x_i)$.
+    $f([x_1, x_2]$ since $f$ is continuous the image of this set is a compact subset of $ \mathbb{R}$ and so it attains its minimum at some point $p \in [x_1,x_2]$ we can make sure $p$ is not equal to $x_1$ or $x_2$
+    since there exists some $\epsilon > 0$ such that $|x-x_1| < \epsilon \implies f(x) \le f(x_1)$ and so $x$ would achieve the same or better minimum. Thus there exists a point
+    such that it maps to the minimum of the image of $f([x_1,x_2])$ and thus for any point nearby it in the interval $f$ must map to the same or higher value.
+}
+
+\end{document}

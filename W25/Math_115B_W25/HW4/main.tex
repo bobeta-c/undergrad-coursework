@@ -1,0 +1,258 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\DeclareMathOperator{\Ima}{Im}
+
+\title{HW 4 - 115B}
+\author{Asher Christian 006-150-286}
+\date{ 07.02.25}
+
+\begin{document}
+    \maketitle
+    \section{Exercise 1}
+    \emph{
+        V f.d.v.s. $W_1 \subset V$ $W_2 \subset V$ subspaces. prove $V = W_1 \oplus W_2$ iff
+        $V = W_1 + W_2$  and $W_1 \cap W_2 = \{0\}$
+    }
+    To prove the first direction it suffices to show that if $v = w_1 + w_2 = u_1 + u_2$, $w_1,u_1 \in W_1$ $w_2,u_2 \in W_2$ that $w_1 = u_1$ and $w_2 = u_2$
+    Indeed the above implies that
+    \[
+    0 = (w_1-u_1) + (w_2-u_2)
+    .\] 
+    If one of the terms is $0$ then it implies that the other 2 elements are equal so we
+    will only consider the case where both terms are not equal zero.
+    Then the set $\{(w_1-u_1), (w_2-u_2)\}$ is linearly dependent but since $W_1 \cap W_2 = \{0\}$
+    $(w_1-u_1) \in W_1$ is not in $W_2$ and thus not in the span of any vectors in $W_2$ so it must be linearly independent with
+    respect to any set of vectors in $W_2$ a contradiction thus the first direction has been proved.
+    To prove the other direction assume that $V = W_1 \oplus W_2$ This means that any $v \in V$ can be written as $w_1 + w_2$ with $w_1 \in W_1 \;\; w_2 \in W_2$ unique.
+    This directly shows that  $V = W_1 + W_2$. Assume for contradiction that $W_1 \cap W_2 \ne \{0\}$ then there exists some $v \in W_1 \cap W_2$ $v \ne 0$
+    But then
+     \[
+    v = v + 0 = 0 +v
+    .\] 
+    a contradiction since $v$ can be represented as two ways with one element from each subspace.
+
+    \section{Exercise 2}
+    \emph{
+        V f.d.v.s. with basis $B$ with $B_1,B_2,...,B_m$ a partition of $B$. Prove that
+        $V = \oplus_{i=1}^{m} \text{\emph{span}} (B_i)$
+    }\\
+    First note that span$(B_i)$ is a subspace of  $V$ and that each span$(B_i)$ is disjoint by the disjoint nature of the  $B_i$.
+    And note that 
+    \[
+        B_i \cap (B_{j_1} \cup B_{j_2} \cup ... \cup B_{j_n}) = \{0\}
+    .\] 
+    Provided $j_k \ne i$. Thus inducting on the number $n$ of partitions of $B$.
+    In the case of only one element in $B, B_1$ clearly span$(B_1) = V$ since it is the span of the basis for the vector space.
+    Inducting on  $n$ assume it holds for $n-1$ for $n$ partitions note that $B_1$ is disjoint from\
+    $B_2 \oplus B_3 \oplus ... \oplus B_n$ since it is disjoint from the spans of the bases. and any element of V 
+    can be written as
+    \[
+        v = x_{1,1} + x_{1,2} + ... + x_{1,n_1} + x_{2,1}  + ... + x_{n,n_n}
+    .\] 
+    with $x_{i,j} \in \text{span}(B_i)$ so clearly each  $v$ can be written as a sum of
+    elements in $B_1$ and in $B_2 \oplus B_3 \oplus ... \oplus B_n$ and since they are disjoint as previously discussed,
+    $V = \oplus_{i=1}^{n}\text{span}(B_i)$
+
+    \section{Exercise 3}
+    \emph{T operaton on fdvs V. Prove that T is diagnoalizable iff V is direct sum of one-dimensional T-inv subspaces}\\
+    If $V$ is a direct sum of one-dimensional T-invariant subspaces. each subspace is an eigenspace since for any $v \in W$ a
+    one-dimensional T-invariant subspace
+     $Tv = \alpha v$ since otherwise $v,Tv$ would be lin dep and $W$ would not be one-dim T inv.
+     So $V$ is a direct sum of eigenspaces and thus $T$ diagonalizable. For the second direction
+     if instead $T$ is diagonalizable pick the basis $B = \{v_1,v_2,...,v_n\}$  such that $Tv_i = \alpha_i v_i$
+     The basis such that $[T]_B$ is diagonal and consider the subspace
+     \[
+     W_i = \text{span}(v_i)
+     .\] 
+     The subspaces are disjoint, T invariant, and their sum is all of $V$ b y construction and so their direct sum is $V$ by the
+     previous question.
+
+
+     \section{Exercise 4}
+     \emph{
+         Let $V$ be a fdvs\\
+         Assume $T$ is a projection onto $W_1$ along $W_2$. Show that the range of $T$ is $W_1$ and
+         the kernel of $T$ is $W_2$
+     }
+     since $V = W_1 \oplus W_2$ each $v = w_1 + w_2$ with $w_1 \in W_1$ and $w_2 \in W_2$ 
+     then for all $v$ $Tv = w_1$ and so for any $w_1 \in W_1$ there exists some $v \in V$ such that $w_1 = Tv$ additionally
+     if $w_i \not \in W_1$ assume  $w_i = Tv$ for some $v$ and $w_i = w_1 + w_2$ for some $w_2 \in W_2 \ne 0$ then
+     Then $v = v_1 + v_2$ for some $v_1 \in W_1, v_2 \in W_2$ and $Tv = v_1$ so $v_1 = w_1 + w_2$ so $(v_1-w_1) = w_2$ but $w_2 \in W_2$ and the other
+     side is in $W_1$ and the two are disjoint a contradiction thus the range is precisely $W_1$.
+     The kernel of $T$ is $W_2$ for take any element of $W_2$ then if $v = 0 + w_2, \;\; Tv = 0$ so $w_2 \in \ker(T)$ assume there is an element $v \not\in W_2$ such that $Tv = 0$ 
+     then $v = w_1 + w_2$ as before and $Tv = w_1 = 0$ implies that $w_1 =0$ implies that $v \in W_2$ so the kernel is the entirety of $W_2$.\\
+     \emph{
+         Prove that a linear endomorphism $T: V \rightarrow V$ is a projection iff $T = T^2$ 
+     }\\
+     If $T = T^2$ then for any $v \in \Ima(T)$ $v = Tw = T^2w = T(v)$ which implies that
+     $T|_{\Ima(T)} = \text{Id}|_{\Ima(T)}$. Since $V = \Ima(T) \oplus \ker(T)$ 
+     and whenever  $v = v_1 + v_2$ with $v_1 \in \Ima(T)$ and $v_2 \in ker(T)$, then $Tv = v_1$ Thus
+     $T$ is a projection. If $T$ is a projection then there exist $W_1, W_2$ such that $V = W_1 \oplus W_2$ and  every $v = w_1 + w_2$ with $w_1 \in W_1 \;\; w_2 \in W_2$ then $Tv = w_1$
+     indeed
+     \[
+     T^2v = T(Tv) = T(w_1) = w_1 = Tv
+     .\] 
+     and so $T^2 = T$ proving the second direction.
+
+     \section{Exercise 5}
+     \emph{
+         Let $n \in \mathbb{Z}^{>0}$ and let $A \in k^{n \times n}$ be the matrix
+         \[
+         A = \begin{pmatrix} 
+             1 & 2 & ... & n\\
+             n+1 & n+2 & ... & 2n\\
+             \vdots & \vdots & \ddots & \vdots\\
+             n^2-n+1 & n^2-n+2 & ... & n^2
+         \end{pmatrix} 
+         .\] 
+         Compute the characteristic polynomial of $A$
+     }
+     We start by using the fact that collumn rank is equal to row rank is equal to the rank of a transformation.
+     The column rank is 2 because row 2 - row 1 is
+     \[
+         \begin{pmatrix} n + 1 \\ n + 2 \\ \vdots \\ 2n \end{pmatrix}  - \begin{pmatrix} 1 \\ 2 \\ \vdots \\ n \end{pmatrix} = n \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix} 
+     .\] 
+     there fore the column of all 1s is in the span of the column vectors as is the first column.
+     if $\vec{v_1} $ is the first column and $\vec{v_2} $ is the column of all ones, then every column $i$ is
+     \[
+     \vec{v_1} + in\vec{v_2}
+     .\] 
+     Thus every other column is in the span of $\vec{v_1}$ and $\vec{v_2}$, additionally these vectors are clearly
+     linearly independent so the column space is spanned by two linearly independent vectors and thus the rank of the
+     transformation is 2. since  $L_A : V \rightarrow V$ acts on an $n $ dimensional vector space the kernel must be dim($n-2$ ).
+     Thus there must be $n-2$ lin indep eigenvectors of eigenvalue 0. So It suffices to find two more eigenvectors and their eigenvalues to uniquely determine the degree
+     n characteristic polynomial.
+     Additionally if $W = \text{span}(\vec{v_1}, \vec{v_2})$ then $W$ is  $T-$invariant becausde
+     \[
+     A \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix} = \begin{pmatrix} \sum_{i=1}^{n}i \\ n^2 + \sum_{i=1}^{n}i \\ 2n^2 + \sum_{i=1}^{n}i \\  \vdots \\ (n-1)n^2 + \sum_{i=1}^{n}i \end{pmatrix} 
+     .\] 
+     \[
+     = \sum_{i=1}^{n}i\begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix}  + n^2(\begin{pmatrix} 1 \\ 2 \\ \vdots \\ n \end{pmatrix}  - \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix} )
+     .\] 
+     A linear combination of the two vectors. Likewise
+     \[
+     A \begin{pmatrix} 1 \\ 2 \\ \vdots \\ n \end{pmatrix}  = \begin{pmatrix} \sum_{i=1}^{n}i^2 \\ n\sum_{i=1}^{n}i + \sum_{i=1}^{n}i^2 \\ 2n\sum_{i=1}^{n}i + \sum_{i=1}^{n}i^2 \\ \vdots \\ (n-1)n\sum_{i=1}^{n}i + \sum_{i=1}^{n}i^2 \end{pmatrix}  = \sum_{i=1}^{n}i^2 \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix} 
+     + (n\sum_{i=1}^{n}i) (\begin{pmatrix} 1 \\ 2 \\ \vdots \\ n \end{pmatrix} - \begin{pmatrix} 1 \\ 1 \\ \vdots \\ 1 \end{pmatrix} )
+     .\] 
+     Thus if $B = \{ \vec{v_1}, \vec{v_2} \}$ is a basis for $A$ then
+     \[
+         A|_W = \begin{pmatrix} \sum_{i=1}^{n}i - n^2 & \sum_{i=1}^{n}i^2 - n\sum_{i=1}^{n}i \\ n^2 & n\sum_{i=1}^{n}i \end{pmatrix}  = \begin{pmatrix} \frac{n-n^2}{2} & \frac{(n+1)(n-n^2)}{6} \\ n^2 &  \frac{n^2(n+1)}{2} \end{pmatrix} 
+     .\] 
+     Computing the characteristic polynomial we get
+     \[
+     \lambda = \frac{n}{2}\left(\frac{1}{2}+\frac{n^{2}}{2} \pm \sqrt{\frac{n^{4}}{4}+\frac{n^{3}}{3}+\frac{n^{2}}{2}-\frac{n^{1}}{3}+\frac{1}{4}}\right)
+     .\] 
+     Thus these are the remaining two roots that are non-zero and so the characteristic polynomial is
+     \[
+     x^2(x-\lambda_1)(x-\lambda_2)
+     .\] 
+
+     \section{Exercise 6}
+     \emph{
+         Assume $T: V \rightarrow V$ is some invertible linear endomorphism of an inner product
+     space. Show that $T^{*} $ is invertible and moreover $(T^{*})^{-1} = (T^{-1})^{*}$
+     }
+     $T^{*}$ satisfies
+     \[
+     \langle T(v),w \rangle \;\;=\;\; \langle v, T^{*}(w) \rangle
+     .\] 
+     for all $v,w \in V$.
+     Furthermore every $T$ has an adjoint in particular there exists $J : V \rightarrow V$ such that
+     \[
+     \langle T^{-1}(v), w \rangle = \langle v, J(w) \rangle
+     .\] 
+     \[
+     \langle v, w \rangle = \langle T^{-1}(T(v)) , w \rangle  = \langle T(v), J(w) \rangle = \langle v, T^{*}(J(w)) \rangle
+     .\] 
+     Therefore $T^{*} \circ J = I$ and in particular $J = (T^{*})^{-1}$ this last statement verifiable by switching
+     the order from $T^{-1}(T(v))$ to $T(T^{-1}(v))$ 
+
+
+     \section{Exercise 7}
+     \emph{
+         For each of the following inner product spaces $V$ and linear operators $T$ on $V$, 
+         evaluate the adjoint of $T$ at the given vector in $V$
+     }
+     \begin{enumerate}
+         \item $V = \mathbb{R}^2, T(\begin{pmatrix} a \\ b \end{pmatrix} ) = \begin{pmatrix} 2a + 2b \\ a- 3b \end{pmatrix} , \vec{v} = \begin{pmatrix} 3 \\ 5 \end{pmatrix} $\\
+             \[
+             T^{*}(\vec{v}) = \begin{pmatrix} 11 \\ -9 \end{pmatrix} 
+             .\] 
+         \item $V = \mathbb{C}^2, T( \begin{pmatrix} z_1 \\ z_2 \end{pmatrix} ) = \begin{pmatrix} 2z_1 + iz_2 \\ (1-i)z_1 \end{pmatrix} , \vec{v} = \begin{pmatrix} 3-i \\ 1 + 2i \end{pmatrix} $ 
+             \[
+                 T^{*} = \begin{pmatrix} 2 & 1 + i \\ -i & 0 \end{pmatrix} 
+             .\] 
+             \[
+             T^{*}(\vec{v})  = \begin{pmatrix} 5 + i \\ -1 -3i \end{pmatrix} 
+             .\] 
+
+         \item $V = \mathbb{R}[x]_{\le_1} \; \; \langle f, g \rangle = \int_{-1}^{1}f(x)g(x)dx, T(f) = f' + 3f, \vec{v} = 4-2x$ 
+             We want to find $T^{*}(\vec{v})$ such that
+             \[
+             \langle T(w), 4-2x \rangle = \langle w, T^{*}(4-2x) \rangle
+             .\] 
+             for all $w$ 
+             for general $w = a + bx$,  $T(w) = (b+3a) + 3bx$
+              \[
+             \int_{-1}^{1}((b+3a)+3bx)(4-2x)dx =  4b + 24a = \int_{-1}^{1}(a+bx)(c+dx)dx = 2ac + \frac{2bd}{3}
+             .\] 
+             Which means that
+             \[
+             T^{*}(\vec{v}) = 12+6x
+             .\] 
+     \end{enumerate}
+
+     \section{Exercise 8}
+     \emph{
+         Let $T$ be a linear endomorphism on an inner product space $V$. we say any linear operator
+         $U : V \rightarrow V$ is self adjoint if $V$ is its own conjugate transpose.
+     }
+     \begin{enumerate}
+         \item \emph{
+                 Let $U_1 = T + T^{*} $ and $U_2 = TT^{*}$ Prove that $U_1$ and $U_2$ are self adjoint
+             }
+             Indeed since $(T^{*})^{*} = T$
+             \[
+             \langle (T+T^{*})(v) , w \rangle = \langle T(v) , w \rangle + \langle T^{*}(v), w \rangle
+             = \langle v, T^{*}(w) \rangle + \langle v, T(w) \rangle = \langle v, (T^{*} + T)(w) \rangle
+             .\] 
+             likewise
+             \[
+             \langle (TT^{*})(v) , w \rangle = \langle T^{*}(v), T^{*}(w) \rangle = \langle v , (TT^{*})(w) \rangle
+             .\] 
+         \item \emph{
+                 Assume $T$ is a linear endomorphism of an inner product space $V$. Prove that
+                 $T$ preserves lengths of all vectors if and only if it preserves all inner products.
+                 More precisely, prove that $||T(\vec{v})|| = ||\vec{v}||$ for all $\vec{v} \in V$ if and only
+                 if $\langle T(\vec{v}), T(\vec{w}) \rangle = \langle \vec{v}, \vec{w} \rangle$ for all $ \vec{v}, \vec{w} \in V$
+             }
+             To prove the first diretion if $ \langle T(\vec{v}) , T(\vec{w}) \rangle = \langle \vec{v}, \vec{w} \rangle$ then 
+             \[
+                 ||T(\vec{v})|| = \sqrt{\langle T(\vec{v}) , T(\vec{v}) \rangle} = \sqrt{\langle \vec{v}, \vec{v} \rangle} = ||\vec{v}||
+             .\] 
+             For the second direction we show first that the real part and then the imaginary part of the inner products are preserved
+             given that $T$ preserves lengths. First for the real parts
+             \begin{align*}
+                 \langle T(v) + T(w), T(v) + T(w) \rangle &= \langle v + w, v + w \rangle\\
+                 \langle T(v), T(v) \rangle + \langle T(w), T(v) \rangle + \langle T(v), T(w) \rangle + \langle T(w), T(w) &= \langle v, v \rangle + \langle v, w \rangle + \langle w, v \rangle + \langle w, w \rangle\\
+                 \langle T(v), T(w) \rangle + \overline{ \langle T(v), T(w) \rangle} &= \langle v, w \rangle + \overline{\langle v, w \rangle}
+             \end{align*}
+             Thus the real parts are aligned, similarly
+             \begin{align*}
+                 \langle T(v) + iT(w), T(v) + iT(w) \rangle &= \langle v + iw, v +iw \rangle\\
+                 \langle T(v), T(v) \rangle + i\langle T(w), T(v) \rangle - i\langle T(v), T(w) \rangle + \langle T(w), T(w) \rangle &= \langle v, v \rangle + i \langle w, v \rangle -i \langle v, w \rangle + \langle w, w \rangle\\
+                 \langle T(w), T(v) \rangle - \overline{\langle T(w), T(v) \rangle} = \langle w, v \rangle + \overline{ \langle w, v \rangle}
+             \end{align*}
+             And thus the imaginary parts are aligned and so the inner products are equal for all $w,v \in V$
+     \end{enumerate}
+
+    
+
+\end{document}

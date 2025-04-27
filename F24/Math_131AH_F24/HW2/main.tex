@@ -1,0 +1,138 @@
+\documentclass{article}
+\usepackage{amsmath} % For math equations
+\usepackage{amsfonts} % For math fonts
+\usepackage{amssymb} % For math symbols
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+
+\title{HW 2 - 131AH}
+\author{Asher Christian 006-150-286}
+\date{19.10.24}
+
+\begin{document}
+    \maketitle
+    \section{2.3}
+    Prove that if the points of a convergent sequence of points in a metric space
+    are reordered, then the new sequence converges to the same limit.
+    \\
+    let $(p_n)_n$ be the sequence with $p_1,p_2,p_3,...$ all the elements in that sequence and the converging point $p$.
+    Then for any $\epsilon > 0, \exists N$ such that $d(p,p_n) < \epsilon \; \forall n\ge N$ so there are at most $N-1$ elements that do not
+    satisfy this distance property for any $\epsilon $. let $\sigma : N \rightarrow N$ be any permutation of the natural numbers and
+    $(p_n)_\sigma $ be the rearranged sequence. To prove that this sequence also converges to $p$ consider $M=max\{\sigma (1),\sigma (2),...,\sigma (N-1)\}$ then setting $N_\epsilon = M+1$ we have 
+    $d(p,p_n) < \epsilon \; \forall :, n \ge N_\epsilon, \; p_n \in (p_n)_\sigma $ because each $n > N_\epsilon $  is necessarily mapped by an element that came after $N-1$ in the original ordering and thus satisfies the inequality.
+
+    \section{2.4}
+    Prove that if $a_1,a_2,a_3,...$ is a sequence of real numbers that converges to $a$, then
+    \[
+       a = \lim_{n\to \infty} \frac{\sum_{i=1}^{n}a_i}{n}
+    .\] 
+    let $(a_n)_n$ be the sequence. Then for any $\epsilon \; \exists \: N$ such that $d(a,a_n) < \epsilon \; \forall \, n > N$ 
+    \[
+        a = \lim_{n\to \infty} \frac{\sum_{i=1}^{n}a_i}{n} = \lim_{n\to\infty}\frac{\sum_{i=1}^{N}a_i}{n} + \lim_{n\to\infty} \frac{\sum_{i=N}^{n}a_i}{n}
+    .\] 
+
+    The first limit clearly approaches zero for let $x = \sum_{i=1}^{N}a_i$ and $M_\epsilon = \frac{x}{\epsilon }$ then $|\frac{\sum_{i=1}^{N}a_i}{n}-0| < \epsilon $ for any $\epsilon $. From the second we can create an inequality.
+    \[
+        \lim_{n\to\infty}\frac{\sum_{i=N}^{n}a - \epsilon }{n} \le \lim_{n\to\infty}\frac{\sum_{i=N}^{n}a_i}{n} \le \lim_{n\to\infty}\frac{\sum_{i=N}^{n}a + \epsilon }{n}
+    .\] 
+    The top epsilon term in each can also be seperated out of the summand and approaches zero 
+    And so the original limit is just
+    \[
+    \lim_{n\to\infty}\frac{\sum_{i=N}^{n}a}{n} = \lim_{n\to\infty} \frac{na - Na}{n} = \lim_{n\to\infty}a - \frac{N}{n}a = a
+    .\] 
+    Thus the equality is proven.
+    \section{2.5}
+    Prove that any sequence in $ \mathbb{R} $ has a monotonic subsequence.
+    \\
+    If any subsequence has no least term then it is trivial for take that subsequence and starting with the first element continue taking only elements that are smaller than the first. And since there is no least element this will never
+    terminate and a subsequence is formed that is monotonic. The same is true if a subsequence has no greatest element\\
+    Assume then that a sequence exists with every subsequence containing a minimum element and a maximum element. If either element repeats infinitely many times we are done. Instead this element must only repeat a finite amount of times.
+    Consider any subsequence and remove all occurences of its minimum element and all of the maximum. Then either the resulting subsequence has no minimum or no maximum and we are done or we repeat the process again. Every time the sequence is still
+    a valid subsequence and either the process terminates or it does not.
+    \\
+    In the case where this process never terminates consider the minimum elements that have been removed $a_1,a_2,...$ with each $a_i < a_j \; i < j$ and the corresponding sequence $s_1,s_2,...$ each corresponding to the index in the original subsequence of each $a_i$.
+    \\
+    $(s_n)_n$ is unbounded so
+    Starting with $s_1$ there will be an $s_i$ that is greater than $s_1$ and after that an index greater than the previous such that a subsequence of $(s_n)_n$ can be created strictly increasing in the natural numbers. The corresponding subset of $(a_n)_n$ with each $a_n$ corresponding to the same element of the subset of $s_n$ is a strictly
+    increasing subset of our starting subset and therefore completes our proof.
+    \section{2.6}
+    Prove that any bounded sequence in  $ \mathbb{R} $ has a convergent subsequence\\
+    let $a$ be a lower bound and $b$ an upper bound. Let $(s_n)_n$ be any sequence. From the previous question
+    there exists a monotonic subsequence let it be $(p_n)_n$. WLOG let it be increasing, then it has a least upper bound let it be called $\beta $. Then for any $\epsilon $
+    there must be a $p_N$ such that $p_N > \beta - \frac{\epsilon}{2} $ because if not it would not be a least bound. Then consider the $N$ that satisfies the prior statement and since the sequence
+is increasing all $p_n, n > N$ also satisfy the inequality and therefore $|p_n-p_m| < |p_n - \beta | + |\beta - p_m| < \frac{\epsilon }{2} + \frac{\epsilon}{2}  < \epsilon $ for all $n,m > N$ and any $\epsilon $. Therefore the sequence $(p_n)_n$ is cauchy and is convergent so $(s_n)_n$ has a convergent subsequence.
+    \section {2.8}
+    Suppose that $(a_n)_n$ is bounded. Prove that $\lim \text{inf}_{n\to+\infty}a_n \le \lim \text{sup}_{n\to+\infty} a_n$ and equality holds if and only if $(a_n)_n$ is convergent.  
+    \\
+    Assuming both limits exist $\forall n \; \text{inf}\{a_k \; : \; k \ge n\} \le \text{sup}\{a_k \; : \; k \ge n\} $\\
+    For any two sequences in $ \mathbb{R} $  $(a_n)_n, (b_n)_n$ convergent to $a,b$ respectively with $a_n < b_n$ for all $n$ then $\lim_{n\to\infty} b_n - a_n = b-a > 0$ so $b>a$\\
+    By that argument the inequality of the limits above holds.\\
+
+    If there is equality let  $\alpha$ be the limit of both.
+    Consider the sequence itself  $(a_n)_n$ by definition of the convergence of the sup and inf sequences there exists an $N$ for any $\epsilon $ such that
+    $\alpha - a_n < \epsilon  $ by the sup limit and $a_n - \alpha < \epsilon $ by the inf limit so $|a_n-\alpha| < \epsilon $ for all $n > N$ and it satisfies convergence to $\alpha $.
+    \\
+    The other direction can be proved for if $(a_n)_n$ converges then  $|a_n-\alpha | < \epsilon $ for any $\epsilon > 0$ and all $n > N$ for a specific $N$ then $a_n < \alpha + \epsilon $ for all n which means that the max of $a_n \; n > N$ gets within  $\epsilon $ of $\alpha $ and the limit exists and is $\alpha $
+    and $a_n > \alpha - \epsilon $ for all $n > N$ which satisfies similarly the minimum and gives the same limit.
+    \section {2.9}
+    Let $(a_n)_n$ and $(b_n)_n$ be bounded sequences of real numbers. Show that
+    \[
+        \limsup\limits_{n\to+\infty}(a_n+b_n) \le \limsup\limits_{n\to\infty}a_n + \limsup\limits_{n\to\infty}b_n
+    .\] 
+    Consider $\sup\{a_k + b_k\} \; k > n $
+    assume that $\sup\{a_k + b_k\} > \sup\{a_k\} + \sup\{b_k\}$ 
+    Then for some $l \ge n$ $a_l +b_l > a_i + b_j$  $i, j \ge n$ however by definition of sup
+     $a_i \ge a_l$ and $b_j \ge b_l$ so there is a contradiction and
+     \[
+     \sup\{a_k + b_k\} \le \sup\{a_k\} + \sup\{b_k\}
+     .\] 
+     with $k > n$ for any $n$ and following the logic in the previous question two sequences one that is always in an inequality with the other results in limits that hold the same inequality.
+     proving the first part.
+    \\
+    If one of the sequences converges say $(a_n)_n$ then $\sup\{a_n\}$ approaches  $\alpha  = \lim_{n\to\infty}(a_n)$ by the previous question and eventually
+    $|a_n- \alpha| \le \epsilon $ for any positive epsilon and $n$ sufficienty high so the $\sup\{a_k + b_k\} k > n$ and  $i$ the index at the supremum the inequality follows.
+    \[
+    \alpha - \epsilon + b_i\le a_i + b_i \le \alpha + \epsilon + b_i
+    .\] 
+    and thus $|a_i+b_i-\alpha | \le b_i + \epsilon  $ and so the limit approaches that of the sum of the two suprema limits.
+    \section {2.11}
+    Show that a complete subspace of a metric space is a closed set. 
+    let  $S \subset E$ be complete. assume it is not a closed set. Then $S^{c}$ is not open. Therefore there exists a point
+     $p$ in $S^{c}$ such that no open ball with center $p$ is contained in $S^{c}$ which means that part of the ball is contained in $S$.
+     Consider the cauchy sequence from all of the points in that ball ordered by their distance from $p$ then the series converges to $p$ but $p$ is in $S^{c}$ which
+     violates the fact that $S$ is complete therefore $S$ must be closed.
+     \section {2.12}
+     Find all cluster points of the subset $A$ of $ \mathbb{R} $ given by
+     \[
+         A = \left\{ \frac{1}{n} + \frac{1}{m}: n,m \text{ are positive integers} \right\}
+     .\] 
+     for any $p$ it is a cluster point if any open ball surrounding it contains an infinite amount of points in $A$.
+     For every cluster point consider an open ball $D_p(\epsilon )$ with $p$ the cluster point and $\epsilon >0$ arbitrary. It is necessary that there be infinitely many points in the set that are within that ball.
+     For this specific instance any cluster point must therefore be a limit point for a sequence of points can be generated for any arbitrary $\epsilon $. The converse is true if no element of the sequence is equal to the point. For then the points must get arbitrarily close and not equal the points so there must be infinitely many of them
+     within any $\epsilon $ of the point.
+     \\
+     Consider now every non constant limit point of $A$.\\
+     Any sequence $(p_k)_k$ is of the form $(\frac{1}{n_k} + \frac{1}{m_k})$. Because rearranging a sequence keeps the same limiting point rearrange the sequence so that each $n_k + m_k \le n_{k+1} + m_{k+1}$
+     This sum necessarily approaches infinity for all possible sequences. and there are three ways in which that can happen. Either $n_k$ or $m_k$ approach infinity or both. In the first case the limit is of the form
+     $\frac{1}{n}$ for some $n$ and in the second case the limit approaches zero.
+     Thus all of the cluster points are of the form $\frac{1}{n}$ or $0$.
+     \section{2.15}
+     Let $E$ be a compact metric space, $\{U_i\}_{i\in I}$ a collection of open subsets of  $E$ whose union is $E$.
+     Show that there exists a real number $\epsilon > 0$ such that any closed ball in $E$ of radius $\epsilon $ is entirely contained in at least one set $U_i$.
+     \\
+     Suppose there is no such radius.
+     Then for any $\epsilon $ there exists a point that is not within $\epsilon $ of one single open subset $U$.\\
+     Consider all $\epsilon $ of the form $\frac{1}{n}, n \in \mathbb{N} $. Let the corresponding $\epsilon $ be $\epsilon_n$. Then for each $\epsilon_n$ there is a point $p_n$ such that
+     closed ball $B_{\epsilon_n}(p_n)$ is not contained in any $U_i$. \\
+     Consider the sequence $(p_n)_n$. Because $E$ is compact there is a strictly increasing map $\sigma: N \rightarrow N$ such that $\lim_{n\to\infty} p_{\sigma (n)}$ exists.
+     Let it equal $p$. p must be contained in at least one of the $U_i$ so pick one and call it $U$ because $U$ is open there exists some $\delta $ such that the open ball $D_{\delta }(p)$ is
+     entirely contained in $U$. Again consider the closed balls all of the form $B_{\epsilon_{\sigma(n)}}(p_{\sigma (n)})$. Because $p_{\sigma (n)}$ approaches $p$ we can choose $d(p_k,p) < \frac{\delta}{2}$ for any $k > K$. 
+ we can also choose $\epsilon_j < \frac{\delta}{2}$ for any $j > J$ Whichever  $k$ or $j$ is greater set the other to equal it so that both inequalities are still satisfied and $k=j$ and consider an arbitrary point  $\beta \in B_{\epsilon_k}(p_k)$.
+ We construct the following inequality.\\
+ $d(\beta, p) \le d(\beta,p_k) + d(p_k, p) < \frac{\delta}{2} + \frac{\delta}{2} < \delta $ This implies that $ \beta \in D_{\delta }(p)$ and therefore the ball $B_{\epsilon_k}(p_k) \subset D_{\delta }(p) \subset U$ which is a contradiction.
+ Thus there is no number that a closed ball of that radius is not contained in any set.
+     
+\end{document}

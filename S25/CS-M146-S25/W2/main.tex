@@ -1,0 +1,320 @@
+\documentclass[a4paper,12pt]{scrartcl} % From KOMA-script
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lipsum} % For filler text
+\usepackage{amsthm}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsfonts, amssymb, float, enumitem}
+\definecolor{darkbg}{HTML}{1E1E1E}
+\definecolor{darktext}{HTML}{E0E0E0}
+\definecolor{theoremcolor}{HTML}{d3dce5}
+\definecolor{answercolor}{HTML}{e9dfc0}
+\definecolor{sectioncolor}{HTML}{dec3c3}
+\pagecolor{darkbg}
+\color{darktext}
+\newenvironment{solution}
+  {\par\color{answercolor}\textbf{Solution:}\ }
+  {\par}
+\newenvironment{prf}
+  {\par\textbf{Proof:}\ }
+  {\par}
+
+\newcounter{customcounter}
+\newcommand{\setcustomcounter}[1]{\setcounter{customcounter}{#1}}
+
+\newtheoremstyle{darktheorem}
+  {\topsep}{\topsep}
+  {\itshape\color{theoremcolor}}{}
+  {\bfseries\color{theoremcolor}}{.}{.5em}{}
+\theoremstyle{darktheorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{topic}[theorem]{Topic}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[customcounter]{Exercise}
+\newtheorem{announcement}[theorem]{Announcement}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Clear default headers
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Set Author and Date in the top left
+\fancyhead[L]{\textcolor{darktext}{\small Asher Christian \\ 006-150-286 \\ \today }}
+
+\begin{document}
+
+
+\title{\color{sectioncolor}W1 CS M146}
+\author{}
+\date{}
+\maketitle
+
+% Apply fancyhdr on the title page
+\thispagestyle{fancy}
+\section{Logistic Regression and Linear Regression}
+\begin{announcement}
+    Course Reader Chap 1-3\\
+    HW 1 given  later today\\
+    given loss function $l(y,h(x))$ optimize over population risk $R(h) = E_{hx}[l(y,h(x)]$\\
+    $R^{\text{EMP}}(h) = \frac{1}{N}\sum_{i=1}^{N}l(y_i,h(x_i))$
+\end{announcement}
+\begin{topic}
+   Hard to soft decisions $\rightarrow$ Logistic Regression\\
+   Soft classification as opposed to hard classifier perceptron.
+   Even if the points are linearly separable, how do I assign a confidence level to classification?
+   Even if data is not linearly separable there can be a trend, we want to give a notion of "confidence" to interpret a
+   "trend".\\
+   Observe: Even if the data  is not linearly separable we can give a confidence level given the trend.
+   try to capture $p(y|x)$
+\end{topic}
+\begin{topic}
+    Logistic classification\\
+    \begin{enumerate}
+        \item input: $x \in \mathbb{R}^{D}$ 
+        \item Output $y \in \{0,1\}$ 
+        \item Training data: $D = \{(x_n,y_n),n = 1,.2,\dots,N\}$
+        \item Hypothesis/Model:
+             \[
+                 h_\theta(x) = h_{w,b}(x) = p(y=1|x;b,w) = \sigma(a(x))
+            .\] 
+            where
+            \[
+            a(x) = b + \sum_{d}^{}w_dx_d = b + w^{T}x
+            .\] 
+            and $\sigma(\dot)$ stand for the sigmoid function
+            \[
+            \sigma(a) = \frac{1}{1 + e^{-a}}
+            .\] 
+    \end{enumerate}
+    we have gone from the sign non-linearity to the sigmoid non-linearity
+    Hypothesis class
+    \[
+        H = \{h: h_\theta(x) = \sigma(\theta^{T}x)\}
+    .\] 
+    since sigmoid is monotone increasing we can derive classification rules
+    $\sigma(a) > 0.5$, positive (classify as  1), $\sigma(a) < 0.5$ negative, $\sigma(a) = 0.5$ unknown\\
+    Given training data $N$ samples:
+    $D^{\text{TRAIN}} = \{(x_1,y_1),(x_2,y_2),\dots,(x_N,y_N)\},$ train/learn/induce $h_{w,b}$
+    we want to find  $(w,b)$ values.
+    \[
+        x \leftarrow [1 \; x_1 \; x_2 \; \dots \; x_d]
+    .\] 
+    \[
+        \theta \leftarrow [b \; w_1 \; w_2 \; \dots \; w_d]
+    .\] 
+    Logistic loss function
+    \[
+        J(\theta) = -\sum_{n}^{}\{y_n\log(h_\theta(x_n)) + (1-y_n)\log(1-h_\theta(x_n))\}
+    .\] 
+    find $\theta$ that minimizes this loss function $J(\theta)$ to find the minimal distance of $h_\theta(x)$ and $p(y|x)$\\
+    Approaches:
+    \begin{enumerate}
+        \item try to solve for $\nabla J(\theta) = 0$ and solve for $\theta$\\
+            might not have a closed form solution, might not be unique amond other issues
+    \end{enumerate}
+
+\end{topic}
+\begin{topic}
+    Gradient Descent\\
+    \begin{enumerate}
+        \item Compute $\nabla f(w_0) = \nabla f(w) |_{w = w_0}$
+        \item 
+            \[
+                w_t = w_{t-1} -- \eta \nabla f(w_{t-1})
+            .\] 
+        \item repeat until stopping criterion is satisfied
+    \end{enumerate}
+    Will it converge? What is stopping criterion?
+    if $f(w)$ is convex $\implies$ any local minimum is a global minimum, otherwise multiple local minima may exist.\\
+    A function $f(x)$ is convex if
+    \[
+    f(\lambda a + (1-\lambda) b) \le \lambda f(a) + (1-\lambda) f(b)
+    .\] 
+    for
+    \[
+    0 \le \lambda \le 1
+    .\] 
+    $f(w)$ is convex if 
+    \[
+        \forall w \hspace{1cm} f''(w) \ge 0
+    .\] 
+    Hessian
+    \[
+        H = \begin{pmatrix} \frac{\partial^2f(w)}{\partial w_1^2} & \frac{\partial^2f(w)}{\partial w_1 \partial w_2} & \dots & \frac{\partial^2 f(w)}{\partial w_1 \partial w_d} \\
+            \frac{\partial^2f(w)}{\partial w_1 \partial w_2} & \frac{\partial^2f(w)}{\partial w_2^2} & \dots & \frac{\partial ^2f(w)}{\partial w_2 \partial w_d}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            \frac{\partial^2f(w)}{\partial w_1 \partial w_d} & \frac{\partial^2f(w)}{\partial w_2 \partial w_d} & \dots & \frac{\partial^2f(w)}{\partial w_d^2}
+        \end{pmatrix} 
+    .\] 
+
+    
+\end{topic}
+\begin{definition}
+    Positive semidefinite matrix. A symmetric matrix $H$ such that  $(H)_{ij} = (H)_{ji}$ and
+     \[
+    \forall z \;\; z^{T}Hz \ge 0 \;\;\; z \in \mathbb{R}^{D+1}
+    .\] ,
+\end{definition}
+\[
+w = \begin{pmatrix}  w_1 \\ w_2 \end{pmatrix} , f(w) = w_1^2 + 2w_2^2
+.\] 
+\[
+f : \mathbb{R}^2 \rightarrow \mathbb{R}
+.\] 
+\[
+\nabla f = \begin{pmatrix} 2w_1 \\ 4w_2 \end{pmatrix} 
+.\] 
+\[
+    \nabla^2f(w) = \begin{pmatrix} 2 & 0 \\ 0 & 4 \end{pmatrix}  = \begin{pmatrix} \frac{\partial f}{\partial w_1^2} & \frac{\partial^2f}{\partial w_1 \partial w_2)} \\
+    \frac{\partial^2f}{\partial w_2 \partial w_1} & \frac{\partial^2f}{\partial w_2^2}
+\end{pmatrix} 
+.\] 
+General form for minimizing $f(\theta)$
+\[
+\theta^{t+1} \leftarrow \theta^{t} - \eta \frac{\partial f}{\partial \theta}(\theta^{t})
+.\] 
+\begin{announcement}
+    \_\\
+    \begin{enumerate}
+        \item Read the Chap 1-4 of course reader
+        \item HW 1 due Apr 22
+        \item Midterm May 5 in class
+    \end{enumerate}
+\end{announcement}
+If the Hessian
+\[
+    H_{ij} = \frac{\partial^2f}{\partial w_i \partial w_j}
+.\] 
+is positive semi-deinite
+which means
+\[
+H = H^{T}
+.\] 
+all eigenvalues are greater than zero
+if and only if
+for all $z$, $z^{T}Hz \ge 0$
+\section{Gradient Descent Update for Logistic Regression}
+Logistic function $\sigma(a) = \frac{1}{1+e^{-a}}$ 
+\[
+\frac{d}{da}\sigma(a) = -\frac{1}{(1+e^{a})^2} \frac{d}{da} (1+e^{-a}
+.\] 
+\[
+    \frac{d \sigma(a)}{da} = \frac{d}{da}(1+e^{-a})^{-1} = \frac{-(1+e^{-a})'}{(1+e^{-a})^2}
+.\] 
+\[
+= \frac{e^{-a}}{(1+e^{-a})^2} = \frac{1}{1+e^{-a}} \frac{e^{-a}}{1+e^{-a}}
+.\] 
+\[
+\implies \frac{d\sigma(a)}{da} = \sigma(a) (1- \sigma(a))
+.\] 
+
+\[
+    J(\theta) = -\sum_{n}^{}\{y_n \log h_\theta(x_n) = ( 1- y_n)\log [1- h_\theta(x_n)]\}
+.\] 
+goal find $\hat \theta = \arg \min_\theta J(\theta)$
+\begin{align*}
+    \frac{d\sigma(a)}{da} &= \sigma(a) (1-\sigma(a))\\
+    h_\theta(x_n) &= \sigma (\theta^{T}x_n)\\
+    \frac{\partial}{\partial \theta_i}(\theta^{T}x_n) &= (x_n)_i\\
+    \frac{d}{d\theta}\log h_\theta(x_n) &= (1-h_\theta(x_n))x_n\\
+    \frac{d}{d \theta} \log(1-h_\theta(x_n)) &= -h_\theta(x_n)x_n \\
+    \frac{\partial J(\theta)}{\partial \theta} &= \sum_{n}^{}\{h_\theta(x_n)-y_n\}x_n
+\end{align*}
+Is it convex, is the hessian positive semi-definite?
+\[
+\nabla^2J(\theta) =  \sum_{}^{} \frac{\partial}{\partial \theta} (h_\theta(x_n) -y_n)x_n
+.\] 
+\[
+=\sum_{}^{} \frac{\partial}{\partial \theta}h_\theta(x_n) \cdot x_n^{T}
+.\] 
+\[
+    = \sum_{}^{}h_\theta(x_n) \cdot [1-h_\theta(x_n)]x_n \cdot x_n^{T} \ge 0
+.\] 
+\[
+    z^{T}Hz = z^{T}(\sum_{n}^{}a_nx_nx_n^{T})z = \sum_{n}^{}a_n(z^{T}x_n)^{2} \ge 0 \implies \nabla^2J(\theta) \text{positive semi-definite}
+.\] 
+
+\[
+    \theta^{(t+1)} \leftarrow \theta^{(t)} - \eta \sum_{n}^{}\{\sigma(\{\theta^{(t)}\}^{T}x_n)-y_n\}x_n
+.\]  
+\section{Regression}
+Labels are real valued i.e. (predicting shoe size from height, weight, gender)
+we need to measure the "distance" to the threu label.\\
+Prediction
+\[
+    \hat y = \theta^{T}x, \hspace{1cm} |\hat y - y|^2 \rightarrow \text{error} = l(\hat y, y)
+.\] 
+\[
+\theta = \begin{pmatrix} b \\ w_1 \\ w_2 \\ \vdots \\ w_D \end{pmatrix} 
+.\] 
+\[
+H_\theta = \theta^{T}x
+.\] 
+\[
+J(\theta) = \sum_{n=1}^{N}|\theta^{T}x_n - y_n|^2 = \sum_{n}^{}l(h_\theta(x_n),y_n)
+.\] 
+\section{How to optimize?}
+Method 1:\\
+Gradient descent. Issues
+\begin{enumerate}
+    \item computing the gradient
+    \item Is the problem convex
+\end{enumerate}
+\[
+    X = \begin{pmatrix} x_1^{T} \\ x_2^{T} \\ \vdots \\ x_N^{T} \end{pmatrix}  \in \mathbb{R}^{N \times (D+1)}, \hspace{1cm} y = \begin{pmatrix} y_1 \\ y_2 \\ \vdots \\ y_N \end{pmatrix} 
+.\] 
+\[
+X\theta = \begin{pmatrix} x_1^{T}\theta \\ x_2^{T}\theta \\ \vdots \\ x^{T}_N\theta \end{pmatrix} 
+.\] 
+\[
+y-X\theta = \begin{pmatrix} y_1 - x_1^{T}\theta \\ y_2 - x_2^{T}\theta \\ \vdots \\ y_n - x_N^{T}\theta \end{pmatrix} 
+.\] 
+\[
+||y - X\theta||^{2}_2 = (y-X\theta)^{T}(y-X\theta) = \sum_{n}^{}[y_n-x_n^{T}\theta)^2
+.\] 
+gradient of $J(\theta) = ||y-X\theta||^2$
+\[
+    \frac{\partial J(\theta)}{\partial \theta} = \sum_{n}^{} \frac{\partial}{\partial \theta}(y_n-\theta^{T}x_n)^2 = \sum_{n}^{}2(y_n - \theta^{T}x_n)(-x_n)
+.\] 
+\[
+\implies \frac{\partial J(\theta)}{\partial \theta} = \sum_{n}^{}2(\theta^{T}x_n - y_n)x_n
+.\] 
+Is it convex?
+\[
+    H = \nabla^2J(\theta) = \sum_{n}^{}2\frac{\partial}{\partial\theta}[x^{T}x_n-y_n]x^{T}_n = \sum_{}^{}2x_nx_n^{T}
+.\] 
+so yes it is convex.
+\\
+
+Method 2: Analytically
+find optimal  $\hat \theta$.\\
+Normal equations\\
+we need $\frac{\partial J(\theta)}{\partial \theta} = 0$ 
+\[
+2\sum_{n}^{}x_n^{T}\theta x_n = 2 \sum_{n}^{}y_nx_n
+.\] 
+\[
+    \sum_{n}^{}y_nx_n = \sum_{n}^{}x_n(x_N^{T}\theta) = \{\sum_{n}^{}x_nx_n^{T}\}\theta
+.\] 
+\[
+\sum_{n}^{}y_nx_n = X^{T}y
+.\] 
+\[
+\sum_{n}^{}x_nx_n^{T} = X^{T}X
+.\] 
+\[
+\nabla J(\theta) = 2 X^{T}X \theta - 2X^{T}y = 0
+.\] 
+\[
+\hat \theta = (X^{T}X)^{-1}X^{T}y
+.\] 
+\end{document}

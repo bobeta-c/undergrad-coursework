@@ -1,0 +1,228 @@
+\documentclass{amsart}
+\usepackage{amsfonts} % For math fonts
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{listings} % For custom coding font
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    backgroundcolor=\color{gray}, % Light gray background
+    basicstyle=\ttfamily\small\color{white}, % Code style
+    keywordstyle=\color{cyan}\bfseries, % Keywords style
+    stringstyle=\color{yellow}, % Strings style
+    commentstyle=\color{black}, % Comments style
+    frame=single, % Box around code
+    rulecolor=\color{white}, % Frame color
+    numbers=left, % Line numbers
+    numberstyle=\tiny\color{white}, % Line number style
+    breaklines=true, % Automatic line breaking
+    showstringspaces=false
+}
+
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\setlist{topsep=0pt, leftmargin=*, labelsep=1em}
+
+\title{HW6 CS 180}
+\author{Asher Christian 006-150-286}
+\date{ 03.06.25}
+
+\begin{document}
+\maketitle
+\section{Exercise 19 P 329}
+I propose the following recurrence relation:
+Let A be the first signal, B the second signal and S the string.
+Let opt[i][a][b] be the boolean value denoting whether there exists an interleaving of $S[0:i]$
+such that the next last element of $A$ is $A[a]$ and the last element of $B$ is $B[b]$ with 0 denoting either no element or the last element.
+then for opt[0][a][b] is False exactly one of a,b is 0 and the other is 1 in which case
+opt[0][0][1] is true only if the first element of B is the first element of S and opt[0][1][0] is true if the
+first element of A is the first element of S. Assuming we know opt[n-1] for every index a and b then
+ \[
+     opt[n][a][b] = (opt[n-1][a-1][b] \text{and} S[n] = A[a-1]) \text{or} (opt[n-1][a][b-1] \text{and} S[n] = B[b-1])
+.\] 
+where we implicitly assume that if a-1 or b-1 is negative that we wrap around to the other side of the string.
+The logic behind this fact is that if opt[n][a][b] is true then it must be that the a-1 element of A is the last element of S in which case it must
+also be true that there is a valid interleaving in which This element is the next element on the substring one element shorter which is equivalent to opt[n-1][a-1][b] is true
+. Similarly if the last element is the $b-1$ element of $B$, this is true only if there is a possible solution on the substring of one element less such that the next element of $B$ is $b-1$ element
+and the A element is held constant.
+
+I implement the solution as follows in python where indexing negative wraps around to the end of the string.
+The solution also includes an example of a valid interleaving
+
+\begin{lstlisting}
+import numpy as np
+x = "10111"
+i = len(x)
+y = "0100"
+j=len(y)
+s = "10010111010010111010010111010010
+1110100101110100101110100101110101111011110111"
+k = len(s)
+
+opt = np.zeros((k,i,j))
+
+
+for q in range(k):
+    for a in range(i):
+        for b in range(j):
+            if q == 0:
+                if a == 0 and b == 1:
+                    opt[0][a][b] = y[0] == s[0]
+                elif a == 1 and b == 0:
+                    opt[0][a][b] = x[0] == s[0]
+                else:
+                    opt[0][a][b] = False
+            else:
+                opt[q][a][b] =
+                (opt[q-1][a-1][b] and s[q] == x[a-1])
+                or (opt[q-1][a][b-1] and s[q] == y[b-1])
+print(opt[k-1].any())
+\end{lstlisting}
+The final .any() call returns whethere there is any ending that is valid.
+If $s$ is the length of the string $S$, $a$ the length of the first pattern $A$, and $b$ the length of the second pattern $B$ 
+then the total time complexity of this algorithm is
+$O(sab)$ which can be easily verified by the loops that do an  $O(1)$ operation for each index unique $s,a,b$
+
+\section{Exercise 22 P 330}
+\emph{
+    given a weighted directed graph $G = (V,E)$ and two nodes $v,w \in V$ compute the number
+    of shortest $v-w$ paths in $G$.
+}
+I propose the following algorithm under the assumption that there is at least one negative node and all cycles are strictly positive. Let $c_e$ denote the weight of edge $e$
+{\small
+    \begin{enumerate}
+        \item \texttt{Run the Bellman-Ford Algorithm on $G$ starting at node $v$ to receive the
+            minimum distance from  $v$ to each other node recorded in array Dist($v$ )}
+        \item \texttt{maintain array shortest\_paths indexed by the vertices and set shortest\_paths[v] = 1}
+        \item \texttt{return paths($w$)}
+        \item \texttt{paths(node)}
+            \begin{enumerate}
+                \item \texttt{if shortest\_paths[node] is note None return shortest\_paths[node]}
+                \item \texttt{sum = 0}
+                \item \texttt{for each incoming edge $e = (z,\text{node})$ such that Dist($z$) + $c_e = $ Dist(node)}
+                    \begin{enumerate}
+                        \item \texttt{sum += paths(z)}
+                    \end{enumerate}
+                \item \texttt{shortest\_paths[node] = sum}
+                \item \texttt{return sum}
+            \end{enumerate}
+    \end{enumerate}
+}
+To prove its validity first note that no shortest path visits the same node twice. This is because every cycle has strictly positive weight so if any node $v \in V$ is visited twice
+the sum of weights leading from the first instance of $v$ to the second is strictly positive and removing it from the path would decrease the length of the total path contradicting the fact 
+that the path is shortest.
+Now consider any node $z \in V$, the number of shortest paths from $v$ to $z$ is equal to the sum of shortest paths to each node that is incident to $z$ such that there is a shortest path from $v$ to $z$ through that incident node.
+This is the same condition as sthe shortest path to each incident node plus the weight of the edge from that node to z is equal to the length of the shortest path to $z$. This is exactly what the recurrence relation is doing.
+Additionally for any node $z$ considering the set of incident nodes satisfying this property, none of the shortest paths to those nodes contain the node $z$, this is because of the strictly positive
+cycle quality as if for contradiction the shortest path contained $z$ then that would imply there was a shortest path from $v$ to $z$ containing $z$ twice which, as described before, is impossible.
+Thus there are no infinite loops in this recurrence relation since each recurrence call will never call itself and so the recurrence must terminate as there are finitely many nodes since the graph including all of these "optimal" edges is a DAG.
+Additionally the time complexity of this algorithm is $O(|V||E|)$ for bellman-Ford and by using memoization the recursive calls are computed once per node and each one computes $O(n_v)$ (incoming edges) operations summing for a total of
+ $O(|E| + |V|)$ time thus the time complexity is dominated by Bellman-Ford and runs in $O(|V||E|)$
+
+
+\section{Exercise 24 P 331}
+Let $n$ be the number of precincts and $m$ be the number of voters in each precinct. additionally let $S[i]$ be the total amount of votes for party  $A$ in the first $i$ districts.
+Set opt(j,k,x) to be the boolean value corresponding to the existence of a solution
+in which the first $j$ precincts are divided such that out of those $j$ precincts,
+$k$ of them are in district 1 and $j-k$ of them are in distrinct 2 and such that
+district 1 has at least $x$ votes for group A.
+Then if precinct $j+1$ has $x_{j+1}$ votes for group A
+\[
+    opt(j+1,k,x) = opt(j,k-1,x-x_{j+1}) \;\; or \;\; opt(j,k,x)
+.\] 
+This is because either the $j+1th$ precinct is part of the first or second district. If it is in the first district then there must be a gerrymandering
+such that the first district has $x-x_{j+1}$ votes with the $j$ remaining precincts, or there is a solution where the $j+1th$ precinct  is part
+of the second district in which it provides nothing to the voter count in the first district.
+If either of those cases is true then there exists a gerrymandering including this district.
+Additionally the base case opt(1,k,x) is true if $k=1$ and $x <= x_{1}$ and $y = 0$ or $k=0$ $x = 0$  this is because
+the first precinct can be in only one of the two districts and contributes  $x_1$ votes to the district it is assigned to and zero to the other district.
+With this base case every recursive step can be computed by increase $j$ and iterating all $k,x$ combinations.
+Additionally to complete the final check this algorithm would be run with both the first party and the second party and at the end $opt(n,\frac{n}{2},s)$ would be checked for each $s$ such that
+$s > \frac{nm}{4}$ and $s < S - \frac{nm}{4}$ corresponding to all cases where a majority is achieved in each district. Additionally the running time to fill this $opt$ table is $O(n^{3}m)$ since there are $n\times n \times nm$ entries in the table.
+\section{Exercise 7 P 417}
+Given the set of $n$ clients and their corresponing $(x,y)$ coordinates and $r$ ranges as well as the $k$ base stations with their $(x,y)$ coordinates and $L$ loads, I propose the following algorithm
+{\small
+    \begin{enumerate}
+        \item \texttt{populate array of linked lists called connectable indexed by the $n$ clients  corresponding to the list of stations that are within $r$ from the client.}
+        \item \texttt{create graph with capacities $G$ with a node for each client and each tower as well as special nodes $S$ and $T$. Create a edge of capacity 1 connecting each client to $S$ and a edge of capacity $L_i$ connecting each
+            base station $i$ to $T$ corresponding to the base station's max load. and Finally create and edge btween each client and every base station that the client is able to reach correonding ot the  array connectable}
+        \item \texttt{compute network flow on graph $G$ and return true if max-flow is equal to $n$ and False if otherwise.}
+    \end{enumerate}
+}
+If this algorithm return True, then since $S$ has exactly $n$ edges each with capacity 1, then there is 1 flow entering each client. Additionally  by flow rules, there is 1 flow leaving each
+client and entering a base station that is within r from the client by the existence of the edge guaranteed by the radius requirement. Each client is connected to only one base station because the inflow
+is 1 and all flows are integer valued. Additionally each base station is connected to no more than $L$ clients because the outflow is less than or equal to $L$ and the outflow equal inflow which is the number of
+clients connected. Thus the existence of a maxflow with $n$ packets being sent is equivalent to there existing a configuration of clients and base towers in which every client is connected to a base tower in its range without
+exceeding load requirements. Conversely if the algorithm returns False then there does not exist any pairings between clients and base stations in which each client is connected because assume for contradiction that there
+does exist a pairing then each client is paired to a base station  within its range and each base station has no more than $L$ connections, however this configuration is possible in the network
+since every client can have one flow in and one flow out to any station in its range and each connection is represented by the way that the edges are included  and each base station can receive $L$ connections by the outflow from each base station to $T$ accepting at most $L$ 
+flow. \\
+Additionally the time complexity is $O(nk)$ to commpute the array and the graph since to compute the array for each client we must calculate the distance to each base station in $O(nk)$ time.
+And to populate the graph, for each node we must add  $O(n+k)$ nodes and $o(nk)$ edges since there is an edge for each client-base station pair that is within a certain distance upper bounded by a edge for each pair.
+The netwokr flow algoirthm works in  $O(n^2k)$ time since there are $O(nk)$ edges and the max flow is $O(n)$, this dominates the time complexity of the algorithm for a total of $O(n^2k)$ time.
+
+
+\section{Exercise 9 P 419}
+Given the set of $n$ injured people, $k$ hospitals and Time(i,j) corresponding to the time of driving from person i to hospital j. I propose almost the exact same algorithm
+{\small
+    \begin{enumerate}
+        \item \texttt{populate a graph with capacities $G$ with a node for each injured person and each hospital as well as special nodes $S$ and $T$. create
+                an edge of capacity 1 connecting each injured person to $S$ and from each person to all hopsitals that are less than $\frac{1}{2}$ hour away all with capacity 1.
+            create an edge of capacity $\lceil \frac{n}{k} \rceil$ connecting each hospital to $T$.}
+        \item \texttt{compute network flow on $G$ and return true if max-flow is equal to $n$ else return False }
+    \end{enumerate}
+}
+If this algorithm returns True, then since $S$ has exactly $n$ edges each with capacity 1, there must be 1 flow on each of those edges, this implies that each injured person has one flow
+leaving and entering a hopsital correesponding to that injured person being assigned that hospital, note that a person cannot be connected to multiple hospitals since there is only one flow going into that person.
+Each hopsital has at most $\lceil \frac{n}{k} \rceil$ people assigned to it since its outflow is capped by $\lceil \frac{n}{k} \rceil$ so the inflow is similarly capped. Thus there exists a valid balanced pairing.
+If this algorithm returns False, then the flow must be less than $n$ and so at least one injured person is not paired to a hospital. There is no possible matching because each possible matching is represented as a set of pairs $\{(i,j): i \in \{1,...,n\}, j \in \{1,...,k\}\}$ where  $i$ indexes the people
+and $j$ indexes the hopsitals, however if there exists a possible pairing then the set of edges defined by that pairing exist in the graph by construction and so a flow is possible by sending one packet into each person and from each person into the hopsital corresponding to the pair, and from each hospital to $T$ since
+at most $\lceil \frac{n}{k} \rceil$ packets are entering the hospital. Thus if there were a possible solution it would have been found by the algorithm and thus does not exist.
+The time complexity is  $O(n^2k)$ since the amount of nodes is $O(n + k)$ and the max flow is $O(n)$ and the number of edges is $O(nk)$ corresponding to an edge between each person and each hopsital, for a total of $O(n^2k)$ time implementing 
+the network flow algorithm
+
+\section{Exercise 6}
+\emph{Given a sequence of numbers find a sub-sequence of alternating order, where the sub-sequence is as long as possible. (that is, find a longest sub-sequence with alternate low and high elements). As always, prove the correctness of your algorithm and analyze its time complexity.}
+I propose the following recurrence relation. Assume we know the maximal length alternating sub-sequence such that the last element is less than the second to last element and such that the last element is greater than teh second to last element.
+Denote those by less[] and greater[] respectively and that we know their values for every prefix of the total string up until n-1. then
+\[
+    \text{greater}[n] = \max_{\substack{i < n \\ s[i] < s[n]}}(\text{less}[i], 0) + 1
+.\] 
+\[
+    \text{less}[n] = \max_{\substack{i < n \\ s[i] > s[n]}}(\text{greater}[i], 0) + 1
+.\] 
+This is because this last element must be in one sub-sequence or none and that if it is greater then
+the sub-sequence it is joining must be one in the less category, and if it is less then it must be in the greater category.
+This recurrence relation checks all such valid sequences to join, again under the assumption that they are all known, and picks the one that
+results in the longest sub-sequence adding one to account for it joining the sequence.
+The base cases are simply setting less[0] and greater[0] = 1 implying that the first element can start any sequence.
+Assuming now that we know the longest subsequence length that ends in greater or less than for every prefix, we can do a 
+one time scan through the greater and less lists to find the largeset element in either and this must be the longest subsequence.
+Then we can do the recurrence relation in reverse to find which subsequence the element is attached to and returning all the way until the sequence is maximized by 0 .
+\\
+Using zero indexing
+{\small
+    \begin{enumerate}
+        \item \texttt{Initialize two arrays greater and less of length n where n is the length of the sequence S and set everything to 0}
+        \item \texttt{Set greater[0] and less[0] to 1}
+        \item \texttt{ For index j in length n starting at 1}
+            \begin{enumerate}
+                \item \texttt{Set greater[j] =  $\max_{\substack{i < j \\ s[i] < s[j]}}(\text{less}[i], 0) + 1 $}
+                \item \texttt{Set less[j] =  $\max_{\substack{i < j \\ s[i] > s[j]}}(\text{greater}[i], 0) + 1 $}
+            \end{enumerate}
+        \item \texttt{Let j be a pointer pointing to the maximum value in either greater or less}
+            \begin{enumerate}
+                \item \texttt{ouput the index that achieves this maximum and set the pointer to point to the element of the other path that allows it to achieve this maximum}
+                \item \texttt{repeat this process until the element that achieves the maximum is either the first element of is no element(0)}
+            \end{enumerate}
+    \end{enumerate}
+}
+Thus we ouput the sequence in reverse order. flipping at the end to restore order. The time complexity of this algorithm is $O(n^2)$ where $n$ is the number of
+elements in the sequence this is verifiable by noting that the outer loop occurs $n$ times and the inner loop can check at most $n$ times to determine the maximum. Similarly the
+backwards step takes the same order for a total of $O(n^2)$
+
+
+\end{document}

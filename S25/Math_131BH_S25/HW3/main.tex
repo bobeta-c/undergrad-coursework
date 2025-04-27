@@ -1,0 +1,421 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 131BH}
+\newcommand{\ced}{Spring 2025}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Homework Set #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{32848c}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Exercise 1}
+\solution{
+    Assume $f: (0,1) \rightarrow \mathbb{R}$ is differentiable and $c \in (0,1)$ and
+    that $\lim_{x\to  c}f'(x) = A$ exists and is finite.
+    Assume for contradiction that $A \ne f'(c)$.
+    Let $\epsilon < \frac{|A - f'(c)|}{2}$. Since the limit converges
+    there exists some $\delta > 0$ such that $|x-c| \le \delta, x \ne c \implies |f'(x)-A| < \epsilon$
+    consider the interval $[c-\delta,c+\delta] \subset (0,1)$.
+    There are two cases
+    \[
+        f'(c-\delta) < f'(c) \hspace{1cm} f'(c- \delta) > f'(c)
+    .\] 
+    consider the first case. This implies that $A < f'(c)$ and pick
+     \[
+    \lambda = f'(c) - \frac{\epsilon}{2} \in (f'(c - \delta), f'(c))
+    .\] 
+    by the intermediate value property of derivatives there exists $y \in (c-\delta, c)$ such that
+    \[
+    f'(y) = \lambda
+    .\]
+    and we have
+    \[
+    |f'(y) - A| = f'(c) - \frac{\epsilon}{2} - A \ge \frac{3}{2}\epsilon
+    .\] 
+    contradicts the existence of the limit.\\
+    Similarly if $f'(c-\delta) > f'(c)$ pick $ \lambda = f'(c) + \frac{\epsilon}{2} \in (f'(c), f'(c-\delta))$
+    and so again by intermediate value property there exists $y \in (c-\delta, c)$ such that
+    \[
+    f'(y) = \lambda
+    .\] 
+    giving
+    \[
+    |f'(y) - A| = A - f'(c) - \frac{\epsilon}{2} \ge \frac{3}{2}\epsilon
+    .\] 
+    and so it must be that $A = f'(c)$
+}
+\section{Exercise 2}
+\[
+f(x) := \sum_{n=0}^{\infty}\frac{1}{2^{n}}\sin(10^{n}x)
+.\] 
+\solution{
+    \begin{enumerate}
+        \item to show continuity, for any $x \in \mathbb{R}$ and any $\epsilon > 0$ pick $N > 0$ such that
+            \[
+            \sum_{n=N}^{\infty}\frac{1}{2^{n}}2 < \frac{\epsilon}{2}
+            .\] 
+            this is possible since the sum converges.
+            we have that any finite sum is continuous because it is a finite sum of continuous functions so pick $\delta > 0$
+            such that
+            \[
+            |x - p| < \delta \implies |\sum_{n=0}^{N}\frac{1}{2^{n}}\sin(10^{n}x) - \sum_{n=0}^{N}\frac{1}{2^{n}}\sin(10^{n}p)| < \frac{\epsilon}{2}
+            .\] 
+            then we have
+            \[
+            |x-p| < \delta \implies |\sum_{n=0}^{N}\frac{1}{2^{n}}\sin(10^{n}x) - \sum_{n=0}^{N}\frac{1}{2^{n}}\sin(10^{n}p) + \sum_{n=N}^{\infty}\frac{1}{2^{n}}\sin(10^{n}x) - \sum_{n=N}^{\infty}\frac{1}{2^{n}}\sin(10^{n}p)|
+            .\] 
+            \[
+             < \frac{\epsilon}{2} + |\sum_{n=N}^{\infty}\frac{1}{2^{n}}(\sin(10^{n}x)-\sin(10^{n}p))| \le \frac{\epsilon}{2} + \sum_{n=N}^{\infty}|\frac{1}{2^{n}}(\sin(10^{n}x)-\sin(10^{n}p))|
+         \]
+         \[
+             \le \frac{\epsilon}{2} + \sum_{n=N}^{\infty}\frac{2}{2^{n}} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+            .\] 
+            and so $f(x)$ is continuous.
+        \item 
+            fix $x_0 \in \mathbb{R}$. Pick $B_m = z\pi, z \in \mathbb{Z}$ such that 
+            \[
+            \pi \le B_m - 10^{m}x_0 \le 2\pi
+            .\] 
+            and set
+            \[
+            A_m = \frac{B_m}{10^{m}}
+            .\] 
+            then we have
+            \[
+            \lim_{m\to \infty}A_m = x_0
+            .\] 
+            therefore we must have that
+            \[
+            \lim_{m\to \infty}\frac{f(A_m)-f(x_0)}{A_m-x_0} = w'(x_0)
+            .\] 
+            is bounded. however consider any term
+            \[
+            \sum_{n=0}^{\infty}(\frac{1}{2})^{n}\frac{\sin(10^{m}A_m)-\sin(10^{n}x_0)}{A_m-x_0}
+            .\] 
+            let
+            \[
+            L_m = \sum_{n=0}^{m-1}(\frac{1}{2})^{n}\frac{\sin(10^{n}A_n)-\sin(10^{n}x_0)}{A_m-x_0}
+            .\] 
+            \[
+            R_m = \sum_{n=m}^{\infty}(\frac{1}{2})^{n}\frac{\sin(10^{n}A_n)-\sin(10^{n}x_0)}{A_m-x_0}
+            .\] 
+            then the limit is equal to $L_m + R_m$
+             \[
+            L_m = \sum_{n=0}^{m-1}(\frac{10}{2})^{m}(\frac{\sin(10^{n}A_m)-\sin(10^{n}x_0)}{10^{m}(A_m-x_0)})
+            .\] 
+            \[
+                = \sum_{n=0}^{m-1}(\frac{10}{2})^{m}\cos(\xi_{n,m})
+            .\] 
+            for some $\xi \in \mathbb{R}$ by MVT.
+            Thus
+            \[
+            |L_m| \le \sum_{n=0}^{m-1}(\frac{10}{2})^{n} = \frac{(\frac{10}{2})^{m}-1}{\frac{10}{2}-1} < 2(\frac{10}{2})^{m}
+            .\] 
+            note that for $n \ge m$ we have
+            \[
+            \sin(10^{n}A_m) = \sin(10^{n-m}z\pi) = 0
+            .\] 
+            thus we have
+            \[
+            R_m = \sum_{n=m}^{\infty}(\frac{1}{2})^{n}\frac{-\sin(10^{n}x_0)}{A_m-x_0}
+            .\] 
+            I genuinely tried so many different ways to solve this problem and got nowhere. I am sorry, I couldn't complete this problem.
+    \end{enumerate}
+}
+\section{Exercise 3}
+\solution{
+    \[
+        f: [0,1] \rightarrow \mathbb{R} \hspace{1cm} f(0) = f(1) = 0
+    .\] 
+    fix $\lambda > 0$ and define
+    \[
+    g(x) = f(x)e^{-\lambda x}
+    .\] 
+    then $g(0) = g(1) = 0$ and $g(x)$ is a product of differentiable functions and is thus differentiable by the chain rule
+    using the chain rule we have
+     \[
+    g'(x) = f'(x)e^{-\lambda x} - \lambda f(x) e^{-\lambda x}
+    .\] 
+    and by MVT we have that
+    \[
+        0 =\frac{g(1) - g(0)}{1-0} = g'(t)
+    .\] 
+    for some $t \in (0,1)$ so we have
+    \[
+    f'(t)e^{-\lambda t} - \lambda f(t) e^{-\lambda t} = 0
+    .\] 
+    and since $e^{-\lambda t}$ is strictly positive for all $t \in \mathbb{R}$ we can divide both sides by it to get
+    \[
+    f'(t) = \lambda f(t)
+    .\] 
+}
+\section{Exercise 4}
+\[
+    f: [0,1] \rightarrow \mathbb{R}
+.\] 
+differentiable on $(0,1)$
+\solution{
+    \begin{enumerate}
+        \item fix $0 < p < 1$ such that $f'(c)$ is not a max or min of $f'$ 
+     \[
+     g_p(x) = 
+     \begin{cases}
+         \frac{f(p)-f(x)}{p-x} & x \ne p\\
+         f'(p) & x = p
+     \end{cases}
+     .\] 
+     $g_p(x)$ is continuous since 
+     \[
+     \lim_{x\to p} \frac{f(p)-f(x)}{p-x} = f'(p)
+     .\] 
+     and both $g_p([0,p)), g_p((p,1])$ are connected. If this image contains $f'(p)$ we are done. If not it must be of the form
+      \[
+          (f'(p),a) \hspace{1cm} \text{or} \hspace{1cm} (a, f'(p)) \hspace{1cm} \text{or} \hspace{1cm} (a,f'(p)) \cup (f'(p),b)
+     .\] 
+     for some $a,b$ since $\lim_{x\to p}g_p(x) = f'(p)$. Assume WLOG that we are in the first case $(f'(c),a)$.
+     Pick $m$ such that  $f'(m) < f'(p)$ which is possible by the assumption of not being max or min.
+     then similarly construct  $g_m(x)$ and consider  $g_m([0,m)), g_m((m,1])$ both sets are connected.
+     Additionally both sets include points arbitrarily close to $g'(m) < g'(p)$ and one of the sets contains a point in  $f'(p),a)$ since
+      \[
+          \frac{f(p) - f(m)}{p-m}
+     .\] 
+     is an element of the image of both. So there exists a connected set in the image of $g_m$ containing  $f'(m) + \epsilon_1$ and $f'(p) + \epsilon_2$ for some $\epsilon_1, \epsilon_2$
+     and since $f'(p) > f'(m)$ it must contain  $f'(p)$ thus there exist points  $m, y \in (0,1)$ such that
+      \[
+          \frac{f(m) - f(y)}{m-y} = f'(p)
+     .\] 
+     Since this holds for arbitrary $p$ given our assumption on min/maximimality we have proven the statement.
+ \item Dropping the minimality, maximimality constraint, however does not work, for consider
+     \[
+     f(x) = (x-0.5)^{3}
+     .\] 
+     then
+     $f'(0.5) = 0$
+     however  $f$ is strictly monotonic increasing, and thus for any $a< b, f(a) < f(b)$ implies that for any $a< b, \frac{f(a)-f(b)}{a-b} \ne 0$.
+\end{enumerate}
+}
+\section{Exercise 5}
+Let $F : \mathbb{R} \rightarrow \mathbb{R}$ be lipschitz $|F(y) -F(z)| \le L |y-z| \forall y,z \in \mathbb{R}$, $f,g : [0,\infty) \rightarrow \mathbb{R}$ continuous and differentiable.
+\[
+    f'(t) = F(f(t)) \hspace{1cm} g'(t) \le F(g(t))
+.\] 
+$g(0) \le f(0)$
+\solution{
+    Define
+    \[
+    h(x) = g(x) - f(x)
+    .\] 
+    is continuous and differentiable. assume for contradiction that $h(x) > 0$ for some  $x$. Let $x_0$ be the first time such that $p \in (x_0,x_0+\delta) \implies h(p) > 0$.
+    it must be that $h(x_0) = 0$. Additionally we have
+    \begin{align*}
+        h'(x) &= g'(x) - f'(x)\\
+              &\le F(g(x)) - F(f(x))\\
+              &\le L |g(x)-f(x)|\\
+              &= L|h(x)|
+    \end{align*}
+    %we have that $h'(x_0) \le 0$. additionally for all $h\in(x_0,x_0+\delta)$
+    %\[
+    %    \frac{h(x_0+h) - h(x_0)}{\delta} = \frac{h(x_0+h)}{h} > 0
+    %.\] 
+    %so $h'(x_0) \ge 0$. Thus  $h'(x_0) = 0$.\\
+    pick $\epsilon_0 < \delta$ and let
+    \[
+    m = \frac{h(x_0+\epsilon_0)}{\epsilon_0} > 0
+    .\] 
+    let $\epsilon_1$ be the smallest point where $\frac{h(x_0+\epsilon_1)}{\epsilon_1} = m$. This point exists by continuity of $\frac{h(x_0+h)}{h}$ with respect to $h > 0$ and 
+    the fact that the preimage of  $m$ is closed and thus it achieves its infimum since it is bounded by below.
+    We now have
+    \[
+        m = \frac{h(x_0+\epsilon_1)}{\epsilon_1} = h'(x_0 + \epsilon_2)\le Lh(x_0+\epsilon_2) < Lm\epsilon_2
+    .\] 
+    $\epsilon_2 < \epsilon_1$ exists by MVT and the last inequality holds by the minimality of $\epsilon_1$ with repsect to this slope and the continuity of $h$.
+    \[
+    L > \frac{1}{\epsilon_2} > \frac{1}{\epsilon_1} > \frac{1}{\epsilon_0}
+    .\]  
+    since this holds for all $\epsilon_0 > 0$ we have that $L$ is unbounded which contradicts its existence by lipschitz continuity.
+}
+
+\section{Exercise 6}
+Let $f$ and $g$ be $n$-th differentiable on (0,1), and suppose that for some $c \in (0,1)$ we have 
+$f(c) = f'(c) = \dots = f^{(n-1)}(c) = 0$ and $g(c) = g'(c) = \dots = g^{(n-1)}(c) = 0$ but that $g^{(n)}(x)$ is never zero in $(0,1)$.
+\solution{
+    \begin{enumerate}
+        \item For any $0 \le k \le n-1$
+            we have
+             \[
+            g^{(k)}(x) = g^{(k)}(c) + \frac{g^{(k+1)}(c)}{1!}(x-c) + \dots + \frac{g^{(n)}(\xi)}{(n-k)!}(x-c)^{n-k}
+            .\] 
+            with the existence of the $\xi$ between $c$ and $x$ given by taylors theorem
+            \[
+            = 0 + 0 + \dots + A
+            .\] 
+            where $A \ne 0$ if  $x_1 \ne c$ this holds for all $x \in (0,1), x \ne c$. Thus  $g^{(k)}(x)$ is nonzero for all $x \ne c$
+        \item 
+            it suffices to show that
+            \[
+            \lim_{x\to c} \frac{f^{(n-1)}(x)}{g^{(n-1)}(x)} = \frac{f^{(n)}(c)}{g^{(n)}(c)}
+            .\] 
+            since after proving the existence of this limit we have inductively that
+            \[
+            \lim_{x\to c} \frac{f^{(k)}(x)}{g^{(k)}(x)} = \lim_{x\to c} \frac{f^{(k-1)}(x)}{g^{(k-1)}(x)}
+            .\] 
+            $k \in (1,...,n-1)$ by L'hospital theorem using induction and the fact that  $f^{(k)}(c) = g^{(k)}(c) = 0$ for all $k \in (0,...,n-1)$ and both are nonzero on any open set except at $c$.
+            first the left hand side of the limit is well defined since $\frac{f^{(n-1)}(x)}{g^{(n-1)}(x)}$ is well defined and continuous on $(0,1) \setminus \{c\}$ by part  $(a)$.
+            Additionally by L'hospital Thm we have
+            \[
+            \lim_{x\to c}\frac{f^{(n-1)}(x)}{g^{(n-1)}(x)} = \lim_{x\to c}\frac{f^{(n)}(x)}{g^{(n)}(x)}
+            .\] 
+            We also have by problem 1 that
+            \[
+            \lim_{x\to c}\frac{f^{(n)}(x)}{g^{(n)}(x)} = \frac{f^{(n)}(c)}{g^{(n)}(c)}
+            .\] 
+            and thus we are done.
+    \end{enumerate}
+}
+
+\section{Exercise 7 5.6 Rudin}
+\begin{enumerate}
+    \item $f$ continuous for $x \ge 0$ 
+    \item $f'(x)$ exists for $x > 0$ 
+    \item $f(0) = 0$ 
+    \item $f'$ is monotonically increasing
+\end{enumerate}
+\[
+g(x) = \frac{f(x)}{x}
+.\] 
+prove that $g$ is monotonically increasing.
+
+\solution{
+    This is equivalent to showing that $g'(x) \ge 0$ for all $x$.
+    \[
+    g'(x) = \frac{f'(x)}{x} - \frac{f(x)}{x^2}
+    .\] 
+    we need
+    \[
+    f'(x) \ge \frac{f(x)}{x}
+    .\] 
+    however we have
+    \[
+        \frac{f(x)}{x} = \frac{f(x)-f(0)}{x-0} = f'(\xi)
+    .\] 
+    for some $\xi \in (0,x)$. importantly  $\xi < x$ and by monotonic increasing of  $f'$ we have
+    \[
+    \xi \le x \implies f'(\xi) \le f'(x)
+    .\] 
+    so we have
+    \[
+    f'(x) \ge f'(\xi) = \frac{f(x)}{x}
+    .\] 
+    implies that $g'(x) > 0$ for all  $x > 0$ and  $g$ is monotonic increasing.
+}
+
+\section{Exercise 8 5.15 Rudin}
+$a \in \mathbb{R}$ $f,f',f''$ exist on  $(a, \infty)$ $|f(x)| < M_0, |f'(x)| < M_1, |f''(x)| < M_2$ on $(a,\infty)$
+prove that
+\[
+M_1^2 \le 4M_0M_2
+.\] 
+\solution{
+    By the hint, we have
+    \[
+    f'(x) = \frac{1}{2h}(f(x+2h)-f(x)) - hf''(\xi)
+    .\] 
+    for some $\xi \in (x,x+2h)$
+    and
+     \[
+    |f'(x)| \le M_1 \le hM_2 + \frac{M_0}{h}
+    .\] 
+    for all $h$
+    since squaring preserves positive inequalities we have
+    \[
+    M_1^2 \le h^2 M_2^2 + 2M_2M_0 + \frac{M_0^2}{h^2}
+    .\] 
+    if I can show that
+    \[
+    h^2M_2^2 + \frac{M_0^2}{h^2} \ge 2M_2M_0
+    .\] 
+    we are done.
+    Indeed for any $a,b \in \mathbb{R}$
+    \begin{align*}
+        a^2 + b^2 &\ge? \; 2ab\\
+        a^2 - 2ab + b^2 &\ge? \; 0\\
+        (a-b)^2 &\ge 0
+    \end{align*}
+    We have
+    \[
+        (hM_2)^2 + (\frac{M_0}{h})^2 \ge 2(hM_2)(\frac{M_0}{h}) = 2M_2M_0
+    .\] 
+    In the specific case
+    \[
+    f(x) = 
+    \begin{cases}
+        2x^2-1 & (-1 < x < 0)\\
+        \frac{x^2-1}{x^2+1} & (0 \le x < \infty)
+    \end{cases}
+    .\] 
+    then $M_0 - 1$ since on $(-1,0)$  $|f(x)|$ is bounded above by $1$ and for all other terms the denominator is greater than numerator and thus $|f(x)| < 1$.
+    also
+    \[
+    f'(x) = 
+    \begin{cases}
+        4x & (-1 < x < 0)\\
+        \frac{4x}{(x^2+1)^2} & (0 \le x < \infty)
+    \end{cases}
+    .\] 
+    which is bounded by $M_1=4$ on $(-1,0)$ and  $(0,\infty)$ since the denominator is always greater than x and 1
+    lastly
+    \[
+    f''(x) =
+    \begin{cases}
+        4 & (-1 < x < 0)\\
+        \frac{4-12x^2}{(x^2+1)^{3}} & (0 \le x < \infty)
+    \end{cases}
+    .\] 
+    which is also bounded by $M_2 = 4$ thus $M_1^2 =4M_0M_2$ can actually happen
+}
+
+\end{document}

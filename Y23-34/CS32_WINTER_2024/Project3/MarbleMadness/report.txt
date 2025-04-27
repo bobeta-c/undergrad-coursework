@@ -1,0 +1,7 @@
+Control Flow for character interacting with goodie:
+	If the character moves onto a square occupied by a goodie it is the goodie on either the same tick or the next tick that registers being picked up. This happens when the goodie asks the studentWorld if it should be picked up. The student world then checks if the avatar is on the same spot as the goodie. If the querie returns true then the studentWorld instructs the goodie to give its bonus. Each goodie has a similar giveBonus member function that gives the bonus and kills the goodie. Each one gives a bonus, sets its health to zero, plays a sound, and then gives a unique bonus.
+Functionality not included:
+	To the best of my knowledge, all functionality is included. Due to my testing environment, I was unable to test the game with sound but I believe it is functional.
+Assumptions Made:
+	It was not obvious that thiefbots could not pick up crystals but after playing the demo version it became clear. I included extra functionality to easily skip levels by pressing TAB to make testing easier. Besides that I did not have to make any assumptions - the testing criteria were pretty obvious.
+

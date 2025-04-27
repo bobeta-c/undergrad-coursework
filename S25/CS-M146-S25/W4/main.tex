@@ -1,0 +1,70 @@
+\documentclass[a4paper,12pt]{scrartcl} % From KOMA-script
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lipsum} % For filler text
+\usepackage{amsthm}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsfonts, amssymb, float, enumitem}
+\definecolor{darkbg}{HTML}{1E1E1E}
+\definecolor{darktext}{HTML}{E0E0E0}
+\definecolor{theoremcolor}{HTML}{d3dce5}
+\definecolor{answercolor}{HTML}{e9dfc0}
+\definecolor{sectioncolor}{HTML}{dec3c3}
+\pagecolor{darkbg}
+\color{darktext}
+\newenvironment{solution}
+  {\par\color{answercolor}\textbf{Solution:}\ }
+  {\par}
+\newenvironment{prf}
+  {\par\textbf{Proof:}\ }
+  {\par}
+
+\newcounter{customcounter}
+\newcommand{\setcustomcounter}[1]{\setcounter{customcounter}{#1}}
+
+\newtheoremstyle{darktheorem}
+  {\topsep}{\topsep}
+  {\itshape\color{theoremcolor}}{}
+  {\bfseries\color{theoremcolor}}{.}{.5em}{}
+\theoremstyle{darktheorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{topic}[theorem]{Topic}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[customcounter]{Exercise}
+\newtheorem{announcement}[theorem]{Announcement}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Clear default headers
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Set Author and Date in the top left
+\fancyhead[L]{\textcolor{darktext}{\small Asher Christian \\ 006-150-286 \\ \today }}
+
+\begin{document}
+
+
+\title{\color{sectioncolor}W4 CS M146}
+\author{}
+\date{}
+\maketitle
+
+% Apply fancyhdr on the title page
+\thispagestyle{fancy}
+\section{NNC}
+nearest neighbor classification. Normalize data to have zero mean and unit variance
+so that neearest neighbor works properly.\\
+No training is required for NNC - can be computationally intensive.
+
+
+
+\end{document}

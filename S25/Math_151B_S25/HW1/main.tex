@@ -1,0 +1,252 @@
+\documentclass[a4paper,12pt]{scrartcl} % From KOMA-script
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lipsum} % For filler text
+\usepackage{amsthm}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsfonts, amssymb, float, enumitem}
+\definecolor{darkbg}{HTML}{1E1E1E}
+\definecolor{darktext}{HTML}{E0E0E0}
+\definecolor{theoremcolor}{HTML}{d3dce5}
+\definecolor{answercolor}{HTML}{e9dfc0}
+\definecolor{sectioncolor}{HTML}{dec3c3}
+\pagecolor{darkbg}
+\color{darktext}
+\newenvironment{solution}
+  {\par\color{answercolor}\textbf{Solution:}\ }
+  {\par}
+\newenvironment{prf}
+  {\par\textbf{Proof:}\ }
+  {\par}
+
+\newcounter{customcounter}
+\newcommand{\setcustomcounter}[1]{\setcounter{customcounter}{#1}}
+
+\newtheoremstyle{darktheorem}
+  {\topsep}{\topsep}
+  {\itshape\color{theoremcolor}}{}
+  {\bfseries\color{theoremcolor}}{.}{.5em}{}
+\theoremstyle{darktheorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[customcounter]{Exercise}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setlist[enumerate]{label=(\alph*)}
+
+% Clear default headers
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Set Author and Date in the top left
+\fancyhead[L]{\textcolor{darktext}{\small Asher Christian \\ 006-150-286 \\ \today }}
+
+\begin{document}
+
+
+\title{\color{sectioncolor}HW 1 Math 151B}
+\author{}
+\date{}
+\maketitle
+
+% Apply fancyhdr on the title page
+\thispagestyle{fancy}
+
+\begin{exercise}
+    Let $\lambda = a + ib$ where $a,b \in \mathbb{R}$ and $i = \sqrt{-1}$. The solution to
+    IVP:
+     \[
+         y' = \lambda y \hspace{2cm} y(0) = 1
+    .\] 
+    is given by $y(t) = e^{\lambda t}$ show that the modulus of the solution is $|y(t)| = e^{at}$. Then, deduce
+    that
+    \[
+    |y(t)|
+    \begin{cases}
+        \rightarrow 0 & a < 0\\
+        = 1 & a = 0  \hspace{2cm} t \rightarrow \infty\\
+        \rightarrow \infty & a > 0
+    \end{cases}
+    .\] 
+    the modulus of a complex number $z = \alpha + i \beta$ is $|z| = \sqrt{\alpha^2 + \beta^2}$ and $e^{i\theta} = \cos(\theta) + i\sin(\theta)$
+\end{exercise}
+\begin{solution}
+    \[
+    y(t) = e^{\lambda t} = e^{(a + bi)t} = e^{at}(e^{bit}) = e^{at}(\cos(bt) + i\sin(bt))
+    .\] 
+    \[
+    |y(t)| = e^{at}\sqrt{\cos^2(bt) + \sin^2(bt)} = e^{at}
+    .\] 
+    if $a < 0$ $at$ is monotone decreasing with no lower bound and $e^{-\infty}$ approaches zero so  
+    \[
+    \lim_{t\to \infty} e^{at} = 0
+    .\] 
+    if $a = 0$ then $e^{at} = e^{0} = 1$ for all $t$ and
+    \[
+    \lim_{t\to \infty}1 = 1
+    .\] 
+    if $a > 0$ then $at$ grows without bound and approaches $\infty$ with $e^{n}$ approaching infinity as well
+    so 
+    \[
+    \lim_{t\to \infty}e^{at} = \infty
+    .\] 
+\end{solution}
+
+\begin{exercise}
+    \leavevmode
+    \begin{enumerate}[label = (\alph*)]
+        \item Let $D = \{(t,y) : a \le t \le b,c \le y \le d\}$. Suppose $f \in C^{1}(D)$.
+            Show that $f$ is Lipschitz continuous in $D$.
+        \item Show that $f(t,y) = \frac{t^2y^2}{1+t^2}$ is Lipschitz continuous in $D = \{(t,y): t_0 \le t \le t_f, -\delta \le y \le \delta\}$
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}[label = (\alph*)]
+        \item  $f \in C^{1}(D)$ implies that
+            \[
+            \frac{df}{dt} = f_t
+        .\] exists and is continuous on $D$.
+        since $D$ is a compact set, and $f_t$ is continuous
+        \[
+            \sup_{p \in D}|f_t(p)| = M
+        .\] 
+        exists.\\
+        consider the following for any $y_1 < y_2 \in [c,d]$
+            \[
+                \frac{f(t,y_1) - f(t,y_2)}{y_1-y_2} = f_t(t,\xi)
+            .\] 
+            for some $\xi \in (y_1,y_2)$ and in particular
+            \[
+            |f(t,y_1) - f(t,y_2)| = |y_1-y_2||f(t,\xi)| \le M|y_1-y_2|
+            .\] 
+            and so $f$ is Lipschitz continuous on $D$
+        \item 
+            \[
+            |\frac{df}{dt}| = 2y^2|\frac{t}{(1+t^2)^2}| \le 2y^2 \le 2\delta^2
+            .\] 
+            this is because $|\frac{t}{(1+t^2)^2}| \le 1$ which can be verified by considering the cases where $|t| < 1$
+            and $|t| \ge 1$ and since  $|y| \le \delta$ by nature of $D$, and so by the nature
+            of the previous part of the question, $f$ is lipschitz continuous.
+    \end{enumerate}
+\end{solution}
+
+\begin{exercise}
+    \begin{enumerate}
+        \item Apply Forward Euler method to the IVP $y'(t) = \lambda y(t)$ with $\lambda = -10$ and 
+            $y(0) = 1$. Show that the numerical solution is sgiven by
+            \[
+                y_n = (1-10h)^{n}, \hspace{1cm} n \ge 0
+            .\] 
+        \item Compute $y_1,y_2,y_3$ for $h = \frac{1}{6}$ and $h=\frac{1}{12}$ respectively.
+            Comment on your results.
+        \item What is the largest value of $h$ that can be used for $\lambda = -10$ such that the numerical solution
+            $y_n \ge 0$ for all $n \ge 1$?
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}
+        \item we have $y(t_0+h) = y(t_0) + hy'(t_0) + O(h^2) = y(t_0) -10hy(t_0) + O(h^2) = y(t_0)(1-10h) $
+        \item 
+            with $h = \frac{1}{6}$,
+            \begin{align*}
+                y_1 = y(\frac{1}{6}) &= 1(1-\frac{5}{3}) = -\frac{2}{3}\\
+                y_2 = y(\frac{2}{6}) &= -\frac{2}{3}(1-\frac{5}{3}) = \frac{4}{9}\\
+                y_3 = y(\frac{3}{6}) &= \frac{4}{9}(-\frac{2}{3}) = -\frac{8}{27} 
+            \end{align*}
+            with $h = \frac{1}{12}$ 
+            \begin{align*}
+                y_1 = y(\frac{1}{12}) &= 1(1-\frac{10}{12}) = \frac{1}{6}\\
+                y_2 = y(\frac{1}{6}) &= \frac{1}{6}(\frac{1}{6}) = \frac{1}{36}\\
+                y_3 = y(\frac{1}{4}) &= \frac{1}{36}(\frac{1}{6}) = 216
+            \end{align*}
+        \item since $y_0$ is positive for $y_n$ to change signs $1-10h$ must be negative. This means that $h > \frac{1}{10}$ so $h = \frac{1}{10}$ 
+            is the largest $h$ value that does not change signs. 
+    \end{enumerate}
+\end{solution}
+\begin{exercise}
+    Consider the IVP
+    \[
+        y''(t) + y(t)y'(t) + 4y(t) = t^2, \hspace{1cm} t > 0
+    .\] 
+    \[
+        y(0) = 0, \hspace{1cm} y'(0) = 1
+    .\] 
+    \begin{enumerate}
+        \item Rewrite the IVP as a first order system of ODE.
+        \item Derive Forward Euler method for the system that you have derived in $(a)$
+    \end{enumerate}
+\end{exercise}
+\begin{solution}
+    \begin{enumerate}
+        \item First let $v =y$ and $u = y'$ then
+            \[
+            u' = y'' = t^2 - vu -4v
+            .\] 
+            \[
+            v' = y' = u 
+            .\] 
+            $v(0) = 0, u(0) = 1$
+            in matrix form we have
+             \[
+            \begin{pmatrix} v'(t) \\ u'(t) \end{pmatrix} = \begin{pmatrix} u \\ t^2 - vu - 4v  \end{pmatrix} \\
+            .\] 
+        \item For forward Euler we have
+            \begin{align*}
+                y_{n+1} &= y_{n} + hf(y_{n})\\
+                \begin{pmatrix} v_{n+1} \\ u_{n+1} \end{pmatrix} &= \begin{pmatrix} v_n \\ u_n \end{pmatrix} + h \begin{pmatrix} u_n \\ t_n^2 - v_nu_n -4v_n \end{pmatrix} 
+            \end{align*}
+            solving with $y_1,y_2$ to approximate $y(0.1), y(0.2)$ we get
+            \begin{align*}
+                \begin{pmatrix} v_1 \\ u_1 \end{pmatrix} &= \begin{pmatrix} 0 \\ 1 \end{pmatrix} + 0.1 \begin{pmatrix} 1 \\ 0^2 - 0(1) - 4(0) \end{pmatrix} \\
+                &= \begin{pmatrix} 0.1 \\ 1 \end{pmatrix} \\
+                \begin{pmatrix} v_2 \\ u_2 \end{pmatrix} &= \begin{pmatrix} 0.1 \\ 1 \end{pmatrix}  + 0.1 \begin{pmatrix} 1 \\ 0.1^2 - 0.1(1) - 4(0.1) \end{pmatrix} \\
+                                                         &= \begin{pmatrix} 0.2 \\ 0.951 \end{pmatrix} 
+            \end{align*}
+            so we get $y(0.2) \approx y_2 = 0.2$
+    \end{enumerate}
+\end{solution}
+\begin{exercise}
+    Find the local trunctation error of the Backward Euler method. Show that it is first order accurate
+\end{exercise}
+\begin{solution}
+    Recall backward Euler is given by
+    \[
+        y_{n+1} = y_n + hf(t_{n+1},y_{n+1})
+    .\] 
+    and recall the taylor expansion about $x=t_{n}$ with remainder, 
+     \[
+         y(t_{n}) = y(t_{n+1}) - hy'(t_{n+1}) + \frac{h^2}{2}y''(\xi) 
+    .\] 
+    \[
+        y(t_{n+1}) = y(t_n) + hy'(t_{n+1}) - \frac{h^2}{2}y''(\xi)
+    .\] 
+    for some $\xi \in [t_n,t_n +h] = [t_n, t_{n+1}]$. Now assuming that $y_n = y(t_n)$ we get
+     \[
+         \tau_{n+1} = y(t_{n+1}) - y_{n+1} = y(t_n) + hy'(t_{n+1}) - \frac{h^2}{2}y''(\xi) - y(t_n) - hf(t_{n+1},y_{n+1})
+    .\] 
+    \[
+        \tau_{n+1} = h(f(t_{n+1},y(t_{n+1}))-f(t_{n+1},y_{n+1})) - \frac{h^2}{2}y''(\xi)
+    .\] 
+    Now assuming further that $f$ is Lipschitz continuous in  $y$ with Lipschitz constant  $K$ we get
+    \[
+        \tau_{n+1} = hK(y(t_{n+1}) - y_{n+1}) - \frac{h^2}{2}y''(\xi)
+    .\] 
+    \[
+        \tau_{n+1} = hK(\tau_{n+1}) - \frac{h^2}{2}y''(\xi)
+    .\] 
+    \[
+        \tau_{n+1} = -\frac{h^2y''(\xi)}{2(1-hK)} = O(h^2)
+    .\] 
+    thus $BE$ is first order accurate.
+\end{solution}
+
+
+\end{document}

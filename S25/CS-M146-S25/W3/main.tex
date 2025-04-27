@@ -1,0 +1,151 @@
+\documentclass[a4paper,12pt]{scrartcl} % From KOMA-script
+\usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lipsum} % For filler text
+\usepackage{amsthm}
+\usepackage{times}
+\usepackage{microtype}
+\usepackage{amsmath, amssymb, amsfonts, amssymb, float, enumitem}
+\definecolor{darkbg}{HTML}{1E1E1E}
+\definecolor{darktext}{HTML}{E0E0E0}
+\definecolor{theoremcolor}{HTML}{d3dce5}
+\definecolor{answercolor}{HTML}{e9dfc0}
+\definecolor{sectioncolor}{HTML}{dec3c3}
+\pagecolor{darkbg}
+\color{darktext}
+\newenvironment{solution}
+  {\par\color{answercolor}\textbf{Solution:}\ }
+  {\par}
+\newenvironment{prf}
+  {\par\textbf{Proof:}\ }
+  {\par}
+
+\newcounter{customcounter}
+\newcommand{\setcustomcounter}[1]{\setcounter{customcounter}{#1}}
+
+\newtheoremstyle{darktheorem}
+  {\topsep}{\topsep}
+  {\itshape\color{theoremcolor}}{}
+  {\bfseries\color{theoremcolor}}{.}{.5em}{}
+\theoremstyle{darktheorem}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{topic}[theorem]{Topic}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[customcounter]{Exercise}
+\newtheorem{announcement}[theorem]{Announcement}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+% Clear default headers
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+
+% Set Author and Date in the top left
+\fancyhead[L]{\textcolor{darktext}{\small Asher Christian \\ 006-150-286 \\ \today }}
+
+\begin{document}
+
+
+\title{\color{sectioncolor}W1 CS M146}
+\author{}
+\date{}
+\maketitle
+
+% Apply fancyhdr on the title page
+\thispagestyle{fancy}
+\section{Recap}
+\begin{announcement}
+    \begin{enumerate}
+        \item Read Chap 1-4 of course reader
+        \item HW 1 due in a week.
+        \item Midterm May 5 in class
+    \end{enumerate}
+\end{announcement}
+\section{Computational complexity}
+Bottlenecking of computing solution
+\[
+\hat \theta = (X^{T}X)^{-1}X^{T}y
+.\] 
+\[
+X^{T}X \in \mathbb{R}^{(D+1)\times (D+1)}
+.\] 
+matrix multiply is $O(ND^2)$, inversion is $O(D^{3}))$ impractical for very large $D$ or $N$.\\
+Gradient descent does an $O(ND)$ operation and you do it $n$ number of iterations where $n$ is typically small. The
+gradient descent is exponential. So gradient descent is much faster
+\section{Stochastic gradient descent}
+This is not gradient descent.
+\begin{enumerate}
+    \item $t \leftarrow 0$ 
+    \item initialize $\theta^{(0)}$ 
+    \item repeat
+        \begin{enumerate}
+            \item randomly choose a training sample $(x_{i(t)},y_{i(t)})$
+            \item compute its contribution to the gradient  $g_t = (x_{i(t)}^{T}\theta^{t}-  y_{i(t)})x_{i(t)}$\\
+            \item $\theta^{(t+1)} \leftarrow \theta^{(t)} - \eta g_t$ 
+            \item $t \leftarrow t + 1$
+        \end{enumerate}
+    \item until convergence
+    \item return $\theta^{(t)}$
+\end{enumerate}.
+complexity: $O(D)$ per iteration
+\[
+    E[||\theta^{(t)}-\theta^{*}||^2] \rightarrow 0
+.\] 
+over the entire dataset.
+whereas for GD $||\theta^{(t)}-\theta^{*}||^2 \rightarrow 0$.
+Batch graident descent, using $B$ stochastic samples instead, take $B$ random samples each iteration. If $B=1$ we have stochastic GD and if $B = N $ we have GD.\\
+What if $\hat \theta = (X^{T}X)^{-1}X^{t}y$ and $X^{T}X$ is not invertible this could haveppen if $N < D$ or $X$ columns are not linearly independent, which means there are not unique solutions.
+You can either get more data or eliminate redundant features.
+
+
+\section{Nonlinear data}
+You can transform the input feature
+\[
+\phi(x): x \in \mathbb{R}^2 \rightarrow z = x_1 x_2
+.\] 
+\[
+\phi(x): x \in \mathbb{R}^2 \rightarrow z = \begin{pmatrix}  x_1^2 \\ x_1 x_2 \\ x_2^2 \end{pmatrix}  \in \mathbb{R}^{3}
+.\] 
+we want to find
+\[
+\phi(x): x \in \mathbb{R}^{D} \rightarrow z \in \mathbb{R}^{M}
+.\] 
+\[
+X = \begin{pmatrix} x_1^{T} \\ \vdots \\ x_N^{T} \end{pmatrix}  \rightarrow \Phi = \begin{pmatrix} \phi(x_1)^{T} \\ \vdots \\ \phi(x_N)^{T} \end{pmatrix} 
+.\] 
+\[
+    \sum_{n}^{}[\theta^{T}\phi(x_n) - y_n]^2
+.\] 
+\[
+\hat \theta = (\Phi^{T}\Phi)^{-1}\Phi^{T}y
+.\] 
+
+example
+\[
+\phi: \mathbb{R} \rightarrow \mathbb{R}^{M+1}
+.\] 
+\[
+\phi(x) = \begin{pmatrix} 1 \\ x \\ x^2 \\ \vdots \\ x^{M} \end{pmatrix} \implies h(x) = \theta_0 + \sum_{m=1}^{M}\theta_mx^{m}
+.\] 
+Large $M$ will memorize the data, $M \ge N-1$ 
+coeffiients get large is an indicator of overfitting
+\section{Generalization and Decision Trees}
+\begin{announcement}
+    Chapter 1-6 course reader. HW 1 due next week, midterm May 5 in class
+\end{announcement}
+Last time, linear regression, gradient descent - sochastic gradient descent
+Bias
+
+\section{Decision Trees}
+Hypothesis class is the set of decision trees.
+Classification trees are the focus of the class - but there are regression trees.
+continuous features can turn into thresholds. Decision tree can be nondeterministic.
+
+\end{document}

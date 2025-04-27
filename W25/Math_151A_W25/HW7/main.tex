@@ -1,0 +1,87 @@
+\documentclass{amsart}
+\usepackage{amsfonts} % For math fonts
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\setlist[enumerate,1]{label=\arabic*.}
+\setlist[enumerate,2]{label=\alph*.,itemindent=2em}
+\setlist{topsep=0pt, leftmargin=*, labelsep=1em}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\lstset{
+    language=Python,
+    backgroundcolor=\color{black}, % Light gray background
+    basicstyle=\ttfamily\small\color{white}, % Code style
+    keywordstyle=\color{cyan}\bfseries, % Keywords style
+    stringstyle=\color{yellow}, % Strings style
+    commentstyle=\color{gray}, % Comments style
+    frame=single, % Box around code
+    rulecolor=\color{white}, % Frame color
+    numbers=left, % Line numbers
+    numberstyle=\tiny\color{white}, % Line number style
+    breaklines=true, % Automatic line breaking
+    showstringspaces=false
+}
+
+
+\title{HW 7 - 151A}
+\author{Asher Christian 006-150-286}
+\date{ 03.08.25} 
+
+\begin{document}
+    \maketitle
+    \section{Exercise 1}
+    \emph{
+        The two point Gaussian quadrature rule on $[-1,1]$ is given by
+         \[
+        \int_{-1}^{1}g(x)dx \approx g(-\frac{1}{\sqrt{3}}) + g(\frac{1}{\sqrt{3}})
+        .\] 
+        Suppose $[a,b] = [1,2]$ use the change of variable formula to approximate
+        \[
+            \int_{1}^{2}\ln(x)dx
+        .\] 
+    }
+    First we set
+    \[
+    t = \frac{1}{2}x + \frac{3}{2}
+    .\] 
+    then
+    \[
+    \int_{1}^{2}\ln(t)dt = \int_{-1}^{1}\ln(\frac{1}{2}x+\frac{3}{2})\frac{1}{2}dx 
+    .\] 
+    \[
+    \approx \frac{1}{2}(\ln(\frac{1}{2}(-\frac{1}{\sqrt{3}})+\frac{3}{2}) + \ln(\frac{1}{2}(\frac{1}{\sqrt{3}})+\frac{3}{2})) \approx 0.386594944117
+    .\] 
+    with relative error
+    \[
+    0.000778119038494
+    .\] 
+
+    \section{Exercise 2}
+    \emph{
+        \begin{enumerate}[label = (\alph*)]
+            \item Solve the following linear systems using Gaussian elimination with partial
+                pivoting and backward substitution
+                \begin{align*}
+                    2x_1 - \frac{3}{2}x_2 + 3x_3 &= 1\\
+                    -x_1 + 2x_3 &= 3\\
+                    4x_1 -\frac{9}{2}x_2 + 5x_3 &= 1
+                \end{align*}
+            \item Write down the LU factorization of the corresponding matrix $A$ for the system of equations.
+                Solve the linear system $LUx = b$ with the forward and backward substitution
+                \begin{align*}
+                    4x_1 -x_2 + x_3 &= 8\\
+                    2x_1 + 5x_2 + 2x_3 &= 3\\
+                    x_1 + 2x_2 + 4x_{33} &= 11
+                \end{align*}
+        \end{enumerate}
+    }
+    \begin{enumerate}[label = (\alph*)]
+        
+    \end{enumerate}
+
+\end{document}
