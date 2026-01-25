@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 275B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Exercise 1}
+\emph{
+    Let $\{X_n\}_{n=1}^{\infty}$ be a sequence of independent random variables defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. For each $\omega \in \Omega$, let  $L(\omega)$ denote
+    the set of limit poins of the sequence  $\{X_n(\omega)\}_{n=1}^{\infty}$ in the extended real line $ \overline{ \mathbb{R}} = [-\infty, +\infty]$. That is
+    \[
+        L(\omega) = \{x \in \overline{ \mathbb{R}}: \exists \; \{n_k\} \;\; \lim_{k\to \infty} X_{n_k}(\omega) = x\}
+    \] 
+    Prove that there exists a deterministic closed set $S \subset \overline{ \mathbb{R}}$ such that
+    \[
+        \mathbb{P}(\{w \in \Omega: L(\omega) = S\} = 1
+    \] 
+}
+
+\section{Exercise 2}
+\emph{
+    A sequence of probability measures $\{\mu_n\}$ on a metric space $S$ is tight if for every  $\epsilon >0$
+    there exists a compact set $K \subset S$ such that $\inf_n \mu_n(K) > 1 - \epsilon$.
+    Let $\{P_n\}_{n=1}^{\infty}$ be a sequence of probability measures on $ (\mathbb{R}^2, \mathcal{R}^2)$. Let $ P_{n,1}$ and  $P_{n,2}$ be the marginal measures on  $ \mathbb{R}$ defined by
+    \[
+        P_{n,1}(A) = P_n(A \times \mathbb{R}), \quad P_{n,2}(B) = P_n( \mathbb{R} \times B)
+    \] 
+    For all $A,B \in \mathcal{R}$. Prove that  $\{P_n\}$ is tight in  $ \mathbb{R}^2$ if and only if $\{P_{n,1}\}$ is tight in $ \mathbb{R}$ and $\{P_{n,2}\}$ is tight in  $ \mathbb{R}$.
+}
+\solution{
+    First assume that $\{P_n\}$ is tight. Fix  $\epsilon > 0$, then there exists $K \subset  \mathbb{R}^2$ compact such that $\inf_{n} P_n(K) > 1 - \epsilon$. Then
+    since $K$ is compact in $ \mathbb{R}^2$ it is bounded and so it is contained in $[-M,M] \times [-M,M]$ for some  $M$.
+    Now
+    \[
+        \inf_n P_{n,1}([-M,M]) = \inf_n P_n([-M,M] \times \mathbb{R}) \ge \inf_n P_n([-M,M] \times [-M,M]) \ge \inf_n P_n(K) > 1-\epsilon
+    \] 
+    with the same holding for $P_{n,2}$ so we have that the two sequences  $\{P_{n,1}\}, \{P_{n,2}\}$ are tight.
+    This proves the first direction. Now for the second direction assume that both the sequences are tight, fix  $\epsilon > 0$ and find $K_1,K_2$ such that
+    \[
+        \inf_n P_{n,1}(K_1) > 1 - \frac{\epsilon}{2}  \qquad \inf_n P_{n,2}(K_2) > \frac{1}{\epsilon_2}
+    \] 
+Then there exists $M_1,M_2$ such that $K_1 \subset [-M_1,M_1]$ and $K_2 \subset [-M_2,M_2]$ and let $M = \max(M_1,M_2)$
+}
+
+\section{Exericse 3}
+\emph{
+    Let $\mathcal{C}$ be a collection of randomvariables. PRove the following are equivalent
+     \begin{enumerate}
+         \item $\lim_{_k\to \infty}\sup_{X \in \mathcal{C}} \mathbb{E}[|X| 1_{|X| > K}] = 0$
+         \item for all $\epsilon > 0$ there exists $\delta > 0$ suchg that
+             \[
+                 \mathbb{P}(A) \le \delta \implies \sup_{X \in \mathcal{C}} \mathbb{E}[|X| 1_{A}| \le \epsilon
+             \] 
+    \end{enumerate}
+}
+
+\end{document}

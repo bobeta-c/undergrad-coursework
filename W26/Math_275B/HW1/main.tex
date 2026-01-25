@@ -1,0 +1,230 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 275B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Exercise 1}
+\emph{
+    Let $\{X_n\}_{n=1}^{\infty}$ be a sequence of independent random variables defined on a probability space $(\Omega, \mathcal{F}, \mathbb{P})$. For each $\omega \in \Omega$, let  $L(\omega)$ denote
+    the set of limit poins of the sequence  $\{X_n(\omega)\}_{n=1}^{\infty}$ in the extended real line $ \overline{ \mathbb{R}} = [-\infty, +\infty]$. That is
+    \[
+        L(\omega) = \{x \in \overline{ \mathbb{R}}: \exists \; \{n_k\} \;\; \lim_{k\to \infty} X_{n_k}(\omega) = x\}
+    \] 
+    Prove that there exists a deterministic closed set $S \subset \overline{ \mathbb{R}}$ such that
+    \[
+        \mathbb{P}(\{w \in \Omega: L(\omega) = S\} = 1
+    \] 
+}
+\solution{
+    Let $S = \{x \in \overline{ \mathbb{R}} : \mathbb{P}(x \in L) = 1\}$. Firstly $S$ is closed. this is because if
+    there is a sequence of points $(x_n)_n \subset S$ converging to some point  $x$ then  with probability $1$
+    there exist  $n_{k^{1}}, n_{k^{2}}, \dots$ such that
+    \[
+        \lim_{k\to \infty} X_{n_{k^{i}}}(\omega) = x_i
+    \] 
+    and we have
+    \[
+        \lim_{k\to \infty}X_{n_{k^{k}}}(\omega) = \lim_{n\to \infty}x_n = x
+    \] 
+    is in $L(\omega)$ and since this holds for almost sure  $\omega$ we have that  $ \mathbb{P}(x \in L) = 1$ and so $x \in S$. We now need to show
+    \[
+    \mathbb{P}(L = S) = 1 \iff \mathbb{P}(L \subset S) = \mathbb{P}(L \supset S) = 1
+    \] 
+    clearly $ \mathbb{P}(S \subset L) = 1$ since for each $x \in S$,  $ \mathbb{P}(x \in L) = 1 $ and since $ \overline{\mathbb{R}}$ is separable we can
+    get a countable subset of $S$, $A$ such that $\overline{ A} = S$ and so with probability 1 each $x \in A$ is in  $L$ and by the previous argument each  $x \in \overline{ A} \in L$ and so for each $x \in S$  $x \in L$ with
+    probability 1 so  $ \mathbb{P}(S \subset L) = 1$. We want to show that
+     \[
+    \mathbb{P}(L \subset S) = 1
+    \] 
+     This is equivalent to showing that
+     \[
+     \mathbb{P}(L \cap S^{c} = \emptyset) = 1
+     \] 
+     we have that $S^{c}$ is open since $ S$ is closed so it is the countable disjoint union of open intervals $\{I_k\}_{k=1}^{\infty}$. 
+     if $x \in I_k$ for some  $k$ then since $\{x \in L\} \in \mathcal{T}$ is a tail event and $x \not\in S$ this implies that  $ \mathbb{P}(x \in L) = 0$.
+     Additionally the event
+     \[
+         \mathbb{P}(L \cap B_r(x) \ne \emptyset) \in \{0,1\}
+     \] 
+     by the Kolomogorov's 0-1 Law since the set $L$ is defined only using the tail distribution. We have
+     \[
+         \{x \in L\} = \bigcap_{m=1}^{\infty} \{L \cap B_{\frac{1}{m}}(x) \ne \emptyset\}
+     \] 
+     so
+     \[
+     0 = \mathbb{P}(x \in L) = \lim_{m\to \infty} \mathbb{P}( L \cap B_{\frac{1}{m}}(x) \ne \emptyset)
+     \] 
+     which implies that for $m > M(x)$ 
+      \[
+          \mathbb{P}(L \cap B_{\frac{1}{m}}(x) \ne \emptyset) = 0
+     \] 
+     for all $x \not\in S$ However there are countably many balls of this form that cover $S^{c}$ this is because there exists a countable base of $ \mathbb{R}$ and so for each $x$ and a respective $B_{\frac{1}{m}}(x)$ that satisfies this property,
+     we can take an element of the countable base that is a subset of this ball and add it to our collection. Since there are only countably many balls of this sort we end up with a sequence
+     \[
+         \{U_i\}_{i=1}^{\infty} \quad \text{ countable cover of $S^{c}$ } \qquad \mathbb{P}(L \cap U_i \ne \emptyset) = 0
+     \] 
+     and so
+     \[
+     \mathbb{P}(L \cap S^{c} \ne \emptyset) = \sum_{i=1}^{\infty} \mathbb{P}(L \cap U_i \ne \emptyset) \le \sum_{i=1}^{\infty}0 =0
+     \] 
+     and so we have proven that
+     \[
+     \mathbb{P}(L = S) = 1
+     \] 
+}
+
+
+\section{Exercise 2}
+\emph{
+    A sequence of probability measures $\{\mu_n\}$ on a metric space $S$ is tight if for every  $\epsilon >0$
+    there exists a compact set $K \subset S$ such that $\inf_n \mu_n(K) > 1 - \epsilon$.
+    Let $\{P_n\}_{n=1}^{\infty}$ be a sequence of probability measures on $ (\mathbb{R}^2, \mathcal{R}^2)$. Let $ P_{n,1}$ and  $P_{n,2}$ be the marginal measures on  $ \mathbb{R}$ defined by
+    \[
+        P_{n,1}(A) = P_n(A \times \mathbb{R}), \quad P_{n,2}(B) = P_n( \mathbb{R} \times B)
+    \] 
+    For all $A,B \in \mathcal{R}$. Prove that  $\{P_n\}$ is tight in  $ \mathbb{R}^2$ if and only if $\{P_{n,1}\}$ is tight in $ \mathbb{R}$ and $\{P_{n,2}\}$ is tight in  $ \mathbb{R}$.
+}
+\solution{
+    First assume that $\{P_n\}$ is tight. Fix  $\epsilon > 0$, then there exists $K \subset  \mathbb{R}^2$ compact such that $\inf_{n} P_n(K) > 1 - \epsilon$. Then
+    since $K$ is compact in $ \mathbb{R}^2$ it is bounded and so it is contained in $[-M,M] \times [-M,M]$ for some  $M$.
+    Now
+    \[
+        \inf_n P_{n,1}([-M,M]) = \inf_n P_n([-M,M] \times \mathbb{R}) \ge \inf_n P_n([-M,M] \times [-M,M]) \ge \inf_n P_n(K) > 1-\epsilon
+    \] 
+    with the same holding for $P_{n,2}$ so we have that the two sequences  $\{P_{n,1}\}, \{P_{n,2}\}$ are tight.
+    This proves the first direction. Now for the second direction assume that both the sequences are tight, fix  $\epsilon > 0$ and find $K_1,K_2$ such that
+    \[
+        \inf_n P_{n,1}(K_1) > 1 - \frac{\epsilon}{2}  \qquad \inf_n P_{n,2}(K_2) > \frac{1}{\epsilon_2}
+    \] 
+    Then there exists $M_1,M_2$ such that $K_1 \subset [-M_1,M_1]$ and $K_2 \subset [-M_2,M_2]$ and let $M = \max(M_1,M_2)$. 
+    Then Let $K = [-M,M] \times [-M,M]$ we have
+     \[
+         P_n( \mathbb{R}^2 \setminus ([-M,M] \times [-M,M])) \le P_n(( \mathbb{R} \setminus [-M,M]) \times \mathbb{R} \cup \mathbb{R} \times ( \mathbb{R} \setminus [-R,R])) 
+    \] 
+    \[
+        \le P_n( ( \mathbb{R} \setminus [-M,M]) \times \mathbb{R}) + P_n( \mathbb{R} \times ( \mathbb{R} \setminus [-M,M]) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+    \] 
+    so by taking the supremum over all $n$ we have
+    \[
+        \sup_n P_n( \mathbb{R}^2 \setminus([-M,M] \times [-M,M])) < \epsilon
+    \] 
+    which is an equivalent definition of tightness
+}
+
+\section{Exericse 3}
+\emph{
+    Let $\mathcal{C}$ be a collection of random variables. Prove the following are equivalent
+     \begin{enumerate}
+         \item $\lim_{_k\to \infty}\sup_{X \in \mathcal{C}} \mathbb{E}[|X| 1_{|X| > K}] = 0$
+         \item
+             \[
+                 \sup_{X \in \mathcal{C}} \mathbb{E}[|X|] \le M < \infty
+             \] 
+             for all $\epsilon > 0$ there exists $\delta > 0$ such that
+             \[
+                 \mathbb{P}(A) \le \delta \implies \sup_{X \in \mathcal{C}} \mathbb{E}[|X| 1_{A}| \le \epsilon
+             \] 
+    \end{enumerate}
+}
+\emph{
+    First the first direction $(a) \implies (b)$. Fix  $\epsilon > 0$ then there exists $k$ such that
+     \[
+         \sup_{X \in \mathcal{C}} \mathbb{E}[|X|1_{|X|>K}] < \frac{\epsilon}{2}
+    \] 
+    set $\delta = \frac{\epsilon}{2k}$. Then if $ \mathbb{P}(A) \le \delta$ we have for any $X \in \mathcal{C}$
+    \[
+        \mathbb{E}[|X| 1_A] = \mathbb{E}[|X| 1_{A \cap |X| > k}]  + \mathbb{E}[|X| 1_{A \cap |X| \le k}]
+    \] 
+    \[
+        \mathbb{E}[|X|1_{A \cap \{|X| > k\}}] \le  \mathbb{E}[|X| 1_{|X| > k}] < \frac{\epsilon}{2}
+    \] 
+    \[
+        \mathbb{E}[|X| 1_{A \cap \{|X| \le k\}}] \le k \mathbb{E}[1_{A}] \le k \mathbb{P}(A) \le k \frac{\epsilon}{2k} = \frac{\epsilon}{2}
+    \] 
+    so putting together we get
+    \[
+        \mathbb{E}[|X| 1_A] < \epsilon
+    \] 
+    Additionally if
+    \[
+        \mathbb{E}[|X|1_{|X| > k}] < \frac{\epsilon}{2}
+    \] 
+    then
+    \[
+        \mathbb{E}[|X|] = \mathbb{E}[|X|1_{|X| \le k}] + \mathbb{E}[|X|1_{|X| > k} \le k + \frac{\epsilon}{2}
+    \] 
+    so the expectations are bounded uniformly.\\
+    For the second direction. Fix $\epsilon > 0$, then there exists $\delta > 0$ by assumption such that
+    \[
+        \mathbb{P}(A) \le \delta \implies \sup_{X \in C} \mathbb{E}[|X| 1_A] \le \epsilon
+    \] 
+    Additionally there exists $M$ such that
+     \[
+         \mathbb{E}[|X|] \le M
+    \] 
+    for all $X \in \mathcal{C}$. Pick $K$ so large so that $\frac{M}{K} < \delta$ then
+    \[
+        \mathbb{P}(|X| \ge K) \le \frac{\mathbb{E}[|X|]}{K} \le \frac{M}{K} < \delta
+    \] 
+    and so
+    \[
+        \mathbb{E}[|X|1_{|X| \ge K}] < \epsilon
+    \] 
+    for all $X \in \mathcal{C}$ so we conclude that
+     \[
+         \sup_{X \in \mathcal{C}}  \mathbb{E}[|X| 1_{|X| \ge K}] \le \epsilon
+    \] 
+    and since this holds for any epsilon we can say that the limit is zero as $K$ goes to infinity.
+}
+
+\end{document}

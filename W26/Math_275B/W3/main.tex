@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Lemma}
+\emph{
+    \[
+        \mathbb{E}X^{2k}_n \rightarrow \alpha_{2k} < \infty \quad \mathbb{E}X_n^{2k+2} \rightarrow \alpha_2k+2 < \infty
+    \] 
+    and
+    \[
+        X_n \rightarrow X \quad a.s \;\; \implies \mathbb{E}X^{2k} = \alpha_{2k}
+    \] 
+    we have
+    \[
+        \{X_n\} \rightarrow \{\alpha_k\}
+    \] 
+    \[
+    X_n \rightarrow^{d} X
+    \] 
+    \[
+    \mathbb{E}X_n^{2k} \rightarrow \mathbb{E} X^{2k}
+    \] 
+}
+
+\section{Lemma 1.6.8}
+$X_n \rightarrow X$ in distribution and $f \ge 0$ and  $g \ge 0$ 
+\[
+\lim_{a\to \infty}\frac{g(a)}{f(a)} = +\infty \qquad \sup \mathbb{E} g(X_n) < \infty
+\] 
+then
+\[
+\mathbb{E} f(X_n) \rightarrow \mathbb{E} f(X)
+\] 
+now we apply this lemma with $f(a) = a^{2k}$ and $g(a) = a^{2k+2}$
+
+We have MCT BCT and DCT and Lemma 1.6.8
+
+When is there only 1 distribution for $\{\alpha_k\}$
+\[
+\mathbb{E}X^{k} = \alpha_k
+\] 
+if there is only one distribution then we have
+\[
+\mathbb{E}X_n^{k} \rightarrow \alpha_k \implies X_n \rightarrow^{d} X
+\] 
+
+Carlemen: if 
+\[
+    \sum_{k}^{}\frac{1}{(\alpha_{2k})^{\frac{1}{2k}}} = +\infty \implies \text{ only one }
+\] 
+if $\alpha_{2k} \le (M)^{2k}$ then $\frac{1}{(\alpha_{2k})^{\frac{1}{2k}}} > \frac{1}{M}$ implies the sum diverges.
+Or $\alpha_{2k} \le (ck)^{2k}$ $c > 0$ then $\dots > \frac{1}{ck}$ so the series diverges.
+if $\alpha_{2k} \le (ck)^{2k}$ for some $c > 0$  $\forall k$
+ \[
+\mathbb{E}X^{k} = \alpha_k < \;\; +\infty \;\; \forall\; k
+\] 
+Example: Hat problem $Z_n = \sum_{k=1}^{n}X_k^{(n)}$ $X_k = 1$ if  $k$-th person gets their hat otherwise 0.
+Then  $Z_n \rightarrow^{d} Poi(1) \sim^{d} Z_\infty \leftarrow^{d} \tilde{Z_n} \sim^{d} B(n,\frac{1}{n})$ We neet to prove for all $k$
+ \[
+     \mathbb{E}Z_n^{k} \rightarrow \mathbb{E}Z_{\infty}^{k}
+\] 
+Need to prove for fixed $k$
+ \[
+     \mathbb{E} Z_n^{k} - \mathbb{E}\tilde{Z_n}^{k} \rightarrow 0
+\] 
+where
+\[
+B(n,\frac{1}{n}) = \sum_{k=1}^{n}Y_k^{(n)}
+\] 
+so we need
+\[
+\mathbb{E}(\sum_{k=1}^{n}X_k^{(n)})^{m} - \mathbb{E}(\sum_{k=1}^{n}Y_k^{(n)})^{m} \rightarrow 0
+\] 
+\[
+    \mathbb{E}(\dots)^{m} = \mathbb{E}\sum_{i_1,\dots,i_m}^{}X_{i_1}X_{i_2}\dots X_{i_m} = \sum_{\dots}^{}( \mathbb{E} \cdots)
+\] 
+\[
+\mathbb{E}(X_1X_2X_3) = \frac{1}{n^{3}}+ o(\frac{1}{n^{3}}) \quad \mathbb{E}(X_1X_2X_1X_4X_4) = \mathbb{E}(X_1^2X_2X_4^2) = \mathbb{E}(X_1X_2X_4) = \frac{1}{n^{3}} + o(\frac{1}{n^{3}})
+\] 
+but for the $Y_s$ we have the same issue but without the  $o(\frac{1}{n^{l}})$ terms
+
+\section{Friday}
+
+Lemma:
+\emph{
+    $X$ random variable, $\exists c,C \in \mathbb{R}$ such that
+     \[
+    \mathbb{P}(|X| > t) \le Ce^{-ct}
+    \] 
+    for $t > 0$.
+    Then $\exists C'$ such that  $\forall k \in \mathbb{N}$ $ \mathbb{E}X^{k} \le (C'k)^{k}$ 
+    Or $||X||_k \le C'k$
+}\\
+Proof $k \in 2 \mathbb{Z}$ and assume $X$ is positive: 
+\[
+\mathbb{E}X^{k} = \int_{}^{}ks^{k-1} \mathbb{P}(|X| > s) \le C\int_{}^{}ks^{k-1}e^{-cs}ds \approx \frac{1}{c^{k}}\Gamma(k+1) \approx \frac{k!}{c^{k}} \approx \frac{\left( \frac{k}{e} \right)^{k}}{c^{k}}
+\] 
+Lemma: $\dots$
+ \[
+\mathbb{P}(|X| > t) \le Ce^{-ct^{\alpha}}
+\] 
+then
+\[
+\mathbb{E}X^{k} \le (C'k)^{\frac{k}{\alpha}}
+\] 
+Carleman condition
+\[
+\sum_{k}^{}\frac{1}{ (\mathbb{E} X^{2k})^{\frac{1}{2k}}} = \infty
+\] 
+sub-exponential decay implies
+\[
+\sum_{k}^{}\frac{1}{C'k} = +\infty
+\] 
+Moment Problem
+Hamburger moment problem  says that if you know $\{\alpha_k\} \implies \mu$ on $ \mathbb{R}$ that is unique.
+Also the Stieltjes asks  $\{\alpha_k\} \implies \mu$ on $[0,+\infty)$ . And Hausdorff asks if
+$\{\alpha_k\} \implies \mu$ on $[0,1]$. Carleman condition for both of the first two. For hamburger it is the one we learned
+ \[
+     \sum_{}^{{}}\frac{1}{(m_{2k})^{\frac{1}{2k}}} = +\infty
+\] 
+but in Stieltjes we do
+\[
+    \sum_{}^{}\frac{1}{(m_{2k})^{\frac{1}{k}}} = +\infty
+\] 
+\section{Lemma}
+$X$ if for 
+\[
+\limsup_{t\to \infty } \frac{\mathbb{P}(|X| > t + 1)}{ \mathbb{P}(|X| > t)} = \rho < 1
+\] 
+then there exists $c, C $ such that $ \mathbb{P}(|X| \le t ) \le Ce^{-ct}$ \\
+Example Poi(1) is sub-exponential
+\[
+    \frac{\mathbb{P}(X \ge n+1)}{ \mathbb{P}(X \ge n)} = \frac{\frac{1}{(n+1)!} + \frac{1}{(n+2)!} + \dots}{\frac{1}{n!} + \frac{1}{(n+1)!} + \dots} \le \frac{1}{n+1} \rightarrow 0
+\] 
+
+\section{Hat Problem}
+$n$ people $n$ hat. 
+\[
+Z_n = \sum_{k=1}^{n} X_k^{(n)}
+\] 
+\[
+Z_n \rightarrow^{d} Poi(1)
+\] 
+we know
+\[
+B(n, \frac{1}{n}) \rightarrow^{d} Poi(1)
+\] 
+Proof of above
+\[
+\tilde Z_n = \sum_{k=1}^{n} Y_k^{(n)} , \quad Y_k^{(n)} = Bern(\frac{1}{n})
+\] 
+Method 1. Direct calculation
+\[
+\mathbb{P}(B(n,\frac{1}{n}) = k) = \binom{n}{k} (\frac{1}{n})^{k}(1-\frac{1}{n})^{n-k} \rightarrow \frac{e^{-1}}{k!}
+\] 
+Method 2
+\[
+    \phi_{\tilde Z_n} = \Pi_k \phi_{Y_k^{(n)}} = (\phi_{Y_1^{(n)}}(t))^{n} \dots = \phi_{poi(1)}(t)
+\] 
+Lemma: $ \mathbb{E}(\tilde Z_n)^{k} \rightarrow \mathbb{E}(Poi(1))^{k}$ for all $k$.\\
+additionally for all $m$  $\sup_n \mathbb{E}(\tilde Z_n)^{m} < \infty$ by apploying $1.6.8$. and the fact that in distribution convergence implies existence of copies that converge almost sure
+\[
+\sup_n \mathbb{E}(X_n)^{4} < \infty
+\] 
+\[
+ \mathbb{E}(X_n)^2 \rightarrow \mathbb{E} X^2
+\] 
+We leave the 
+\[
+\sup_n \mathbb{E}( \tilde Z_n)^{m} < \infty
+\] 
+in the moment method proof.\\
+We need to prove that 
+\[
+\forall m \;\; \mathbb{E}(Z_n)^{m} - \mathbb{E}(\tilde Z_n)^{m} = o(1)
+\] 
+With the bounding of the supremum and the convergence of moments we have that
+\[
+\mathbb{E}(Z_n)^{m} \rightarrow \mathbb{E} Poi(1)^{m} \implies Z_n \rightarrow^{d} Poi(1)
+\] 
+since $Poi(1)$ is sub-exponential so uniqueness is guaranteed by the carlemann condition.
+ \[
+     \mathbb{E}\sum_{i_1,\dots,i_k = 1}^{n} Y_{i_1} Y_{i_2}\dots Y_{i_k} = \sum_{i_1,\dots,i_k}^{} \mathbb{E} \dots
+\] 
+there are $n^{k}$ total terms. For example when $k = 3 \mathbb{E}Y_1Y_2Y_3 = (\frac{1}{n})^{3}$ but $ \mathbb{E}Y_1Y_3Y_1 = (\frac{1}{n})^{2}$ 
+For a fixed $i_1,\dots,i_k$ we get a partition into groups of numbers $\pi$ where $\pi$ is a collection of sets of numbers where each set corresponds to the $i_j$ that are the same and the union of all of the elements in all of the sets is all  $1,\dots,m$ and each subset is disjoint.
+Like for example
+ \[
+     (i_1,i_2,\dots,i_{10}) = (1,4,2,3,2,3,4,1,2,2) \qquad \pi = \{\{1,8\},\{4,6\},\{2,7\},\{3,5,9,10\}\}
+\] 
+\[
+    \sum_{i_1,\dots,i_k=1}^{n} A_{i_1,\dots,i_k} = \sum_{\pi \in P(k)}^{} \sum_{i_1,\dots,i_k|_{\pi}}^{}A_{i_1,\dots,i_k}
+\] 
+for example
+\[
+    \pi = \{\{1,3\},\{2\}\} \qquad 4,2,4 \;\; 2,3,2 \text{ valid} \qquad 1,2,3 \; 1,1,1 \text{ not valid}
+\] 
+The free indices is the number of disjoint sets in $ \pi$ so in the above the example the free indices is $2$.
+\[
+    \sum_{\pi \in P(k)}^{}\sum_{j_1,\dots,j_\pi, \text{distinct}}^{} A_{i_1,\dots,i_k|_{\pi,J}}
+\] 
+\end{document}

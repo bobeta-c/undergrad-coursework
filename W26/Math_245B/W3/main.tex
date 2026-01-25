@@ -1,0 +1,250 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Reminder}
+$\mu$ and $\nu$ are Radon measures
+\section{Theorem [ Lebesgue's decomposition ] } There are Radon measures  $\nu_{abs}$ and  $\nu_s$ such that  $\nu = \nu_{abs} + \nu_s$.
+$\nu_{abs} << \mu$ and $\nu_s \perp \mu$ and for every $A \subset \mathbb{R}^{d}$ $\mu$-measurable $\nu_{abs}[A] = \int_{A}^{}D_\mu \nu(x) \mu(dx)$.
+\[
+    \nu_{abs}[A] = \int_{A}^{} D_\mu \nu_{abs} d \mu
+\] 
+Proof: We assume without loss of generality that $\mu$ and $\nu$ are finite. Let $B$ be a Borel set minimizing the folowing problem
+ \[
+     \inf_{C}\{\nu[C] : C \subset \mathbb{R}^{d} \text{ Borel } \mu[C^{c}] = 0\}
+\] 
+Set $\nu_{abs} = \nu|_B$ and $\nu_s = \nu|_{B^{c}}$. Consider the following radon measure. Then 
+\[
+    \nu_{abs} << \mu
+\] 
+By assumption $\mu[B^{c}] = 0$ and $\mu_s[B] = \mu[B \cap B^{c} ] 0$ and so $\mu \perp \nu_s$.
+We claim that $\nu_{abs} << \mu$. Proof of the claim. we want to show that $\mu[E] = 0 \implies \nu_{abs}[E] = 0$.
+Let $E \subset \mathbb{R}^{d}$ be such that $\mu[E] = 0$. Let $E' \subset \mathbb{R}^{d}$ be a borel set such that $E \subset E'$ and $\mu[E] = \mu[E']$. Replacing $E$ by $E'$ if necessary,
+we assume wlog that  $E$ is Borel. Let
+\[
+    \mathcal{E} = \{c \subset \mathbb{R}^{d} \text{ Borel } | \mu[C^{c}] = 0\}
+\] 
+by assumption $E^{c} \in \mathcal{E}$. But
+\[
+    \nu[B] = \nu[B \cap E] + \nu[B \cap E^{c}] > \nu[B \cap E^{c}] \text{ unless $\nu[B \cap E] = 0$.}
+\] 
+and so, $\nu[B \cap E] = 0$ otherwise we will have that  $\nu[B] > \nu[B \cap E^{c}] $ which contradicts the minimality property of $B$ since $\mu[(B\cap E^{c})^{c}] = 0$. so
+\[
+    0 = \nu[B \cap E] = \nu_{abs}[E]
+\] 
+we claim that
+\[
+D_\mu \nu_s = 0 \qquad \mu \;\; a.e
+\] 
+Proof of the claim: Since $\mu[B^{c}] = 0$ it suffices to show that the measure $\mu[B \cap \{D_\mu \nu_s > 0\}] = 0$. For each $\alpha > 0$
+\[
+    C_\alpha := B \cap \{D_\mu \nu_s \ge \alpha\} \subset B \implies 0 = \nu_s[C_\alpha] \ge \alpha \mu[C_\alpha] \implies \mu[C_\alpha] = 0  \;\; \forall \alpha > 0
+\] 
+Thus proves that the measure $\mu[\{D_\mu \nu_s > 0\} \cap B] = 0$ and concludes the proof of the claim.\\
+Let $A \subset \mathbb{R}^{d}$ be $\mu $-measurable.We have that 
+\[
+    D_\mu\nu = D_\mu \nu_{abs} + D_\mu \nu_s = D_\mu \nu_{abs} \qquad \mu \;\; a.e
+\] 
+since
+\[
+    \nu[B_r(x)] = \nu_{abs}[B_r(x)] + \nu_s[B_r(x)]
+\] 
+By the Radon-Nikodym Theorem
+\[
+    \nu_{abs}[A] = \int_{A}^{} D_\mu \nu_{abs} d \mu = \int_{A}^{}D_\mu \nu d \mu
+\] 
+
+\section{def}
+\emph{
+    If $f : \mathbb{R}^{d} \rightarrow [-\infty,\infty]$ is $\mu$-measurable and $p > 0$ we say that  $f$ is $p$-locally summable with respect to  $\mu$ and write $f \in L^{p}_{loc}( \mathbb{R}^{d}, \mu)$
+    if $x_kf \in L^{p}( \mathbb{R}^{d}, \mu)$ for every $k \subset \mathbb{R}^{d}$ compact
+}
+\\
+\emph{
+    Notation If $E \subset \mathbb{R}^{d}$ and $\mu[E] > 0$, we write $\int_{E}^{}f d \mu = \frac{1}{\mu[E]} \int_{E}^{}f d \mu$ where the first integral has a line through it
+}
+\section{Lemma}
+\emph{
+    Let $f \in L_{loc}^{1}( \mathbb{R}^{d}, \mu)$ then for $\mu$ almost every $x \in \mathbb{R}^{d}$ 
+    \[
+    f(x) = \lim_{r\to 0} \frac{1}{\mu(B_r(x))}\int_{B_r(x)}^{}f d\mu
+    \] 
+}
+Proof. We prove the result for $f^{\pm}$ where $f^{\pm} = \max\{0,\pm f\}$. This means we can assume $f \ge 0$. Set
+ \[
+     \nu[A] = \inf_B \{\int_{B}^{}f d \mu : B \subset \mathbb{R}^{d} \text{ is Borel and } A \subset B\}
+\] 
+Note that $\nu$ is a Radon measure and $\nu << \mu$. Furthermore $\nu[B] = \int_{B}^{}f d \mu$ if $B \subset \mathbb{R}^{d}$ is borel.
+By the Radon Nikodym Theorem
+\[
+    \nu[B] = \int_{B}^{}D_\mu \nu d \mu \qquad \text{if $B \subset \mathbb{R}^{d}$ is Borel}
+\] 
+by previous we get
+\[
+D_\mu \nu = f \qquad \mu \;\; a.e
+\] 
+if
+\[
+\int_{A}^{}f = 0 \qquad \forall A \implies f = 0
+\] 
+Thus $D_\mu \nu(x) = \lim_{r\to 0} \frac{\nu[B_r(x)]}{\mu[B_r(x)]} = \lim_{r\to 0} \frac{1}{\mu[B_r(x)]} \int_{B_r(x)}^{}f d \mu$
+
+\section{Friday}
+Reminder  $\mu$ and $\nu$ are Radon measures. If  $f \in L^{1}_{loc}( \mathbb{R}^{d}, \mu)$ then $\lim_{r\to 0^{+}} \frac{1}{B_r(x)} \int_{B_r(x)}^{}f d \mu = f(x)$ $\mu$ almost everywhere.
+\\
+Corollary:
+\emph{
+    Let $p \in [1, +\infty)$ and $f \in (L^{p}( \mathbb{R}^{d}, \mu))$ Then
+    \[
+        (*) \qquad \lim_{r\to 0^{+}} \frac{1}{\mu(B_r(x))}\int_{B_r(x)}^{}|f-f(x)|^{p}d \mu = 0 \qquad \mu \text{a.e}
+    \] 
+}
+Set $g_x(y) = |f(y)-f(x)|^{p}$ $g_x \in L^{1}_{loc}$ and the theorem holds for $y \in R^{d} \setminus N_x$ where $\mu[N_x] = 0$.\\
+Proof: Let $(r_i)_{i=1}^{\infty}$ be a dense subset of $ \mathbb{R}$. Set $A_i = \{x \in \mathbb{R}^{d}: \lim_{r\to 0^{+}} \frac{1}{\mu[B_r(x)]}\int_{B_r(x)}^{}|f-r_i|^{p} d \mu = |f(x)-r_i|^{p}\}$ and let
+\[
+    N_i = \mathbb{R}^{d} \setminus A_i \qquad N = \bigcup_{i=1}^{\infty}N_i
+\] 
+Since $\mu[N_i] = 0$ then $\mu[N] = 0$. Let $x \in \mathbb{R}^{d} \setminus N$ we want to show that for every $\epsilon > 0$
+\[
+    \limsup_{r\to 0^{+}} \frac{1}{\mu[B_r(x)]}\int_{B_r(x)}^{}|f-f(x)|^{p}\mu(dy) \le \epsilon
+\] 
+Choose $i$ such that  $|f(x)-r_i| < 2^{-p}\epsilon$. We have $|f-f(x)|^{p} \le 2^{p-1}(|f-r_i|^{p}+|r_i - f(x)|^{p}) \le 2^{p-1}(|f-r_i|^{p}+ \epsilon) \le 2^{p-1}|f(x)-r_1|^{p} + \frac{\epsilon}{2}$ 
+we have if $p \ge 1$ then $z \rightarrow |z|^{p}$ is convex and so 
+\[
+|a+b|^{p} \le c_p (|a|^{p} + |b|^{p})
+\] 
+We have that 
+\[
+\frac{1}{\mu(B_r(x))}\int_{B_r(x)}^{}|f-f(x)|^{p}d \mu \le 2^{p-1}\frac{1}{\mu(B_r(x))}\int_{B_r(x)}^{} |f(x)- r_1|^{p} d \mu + \frac{\epsilon}{2}
+\] 
+since $x \not\in N$ this implies that 
+ \[
+\limsup_{r\to 0^{+}}\frac{1}{\mu(B_r(x))}\int_{B_r(x)}^{}|f-f(x)|^{p} d \mu \le \frac{\epsilon}{2}
+\] 
+\\
+\emph{
+    Definition: when $(*)$ holds and  $p=1$ we call  $x$ a Lebesgue point of $f$ with respect to $\mu$.
+}
+
+\section{Exercise}
+\emph{
+    Let $E \subset \mathbb{R}^{d}$ be a $\mu$-measurable set. Then
+    \[
+        \lim_{r\to 0^{+}} \frac{\mu[E \cap B_r(x)] }{\mu[B_r(x)]} = 
+        \begin{cases}
+            1 & \mu \;\; a.e. \text{ on $E$}\\
+            0 & \mu \;\; a.e. \text{ on $E^{c}$ }
+        \end{cases}
+    \] 
+}
+Proof: Let $f = 1_E$ then
+ \[
+     \frac{1}{\mu(B_r(x))} \int_{ B_r(x)}^{}|f-f(x)|^{p} d \mu =  \frac{1}{\mu[B_r(x)]}
+     \begin{cases}
+         \int_{B_r(x)}^{}(1-f) d \mu = \mu[B_r(x)] - \mu[E \cap B_r(x)] & x \in E\\
+         \int_{B_r(x)}^{}f d \mu = \mu[B_r(x) \cap E] & x \not\in E
+     \end{cases}
+\] 
+\\
+Notation:
+\begin{enumerate}
+    \item If $f: \mathbb{R}^{d} \rightarrow \mathbb{R}^{d}$ then $\spt(f) = \overline{\{x \in \mathbb{R}^{d}: f(x) \ne 0\}}$
+    \item $C_c( \mathbb{R}^{d}, \mathbb{R}^{d})  = \{f \in C( \mathbb{R}^{d}, \mathbb{R}^{d}) : \spt(f) \text{ is compact}\}$
+\end{enumerate}
+Let $p \in [1, \infty]$ and set $p' = \frac{p}{p-1}$ and $\frac{1}{p} + \frac{1}{p'} = 1$. The Riesz Representation says
+If you take $(L^{p}( \mathbb{R}^{d}. \mu))' = L^{p'}( \mathbb{R}^{d}, \mu)$ if $p < +\infty$. Rephrased if 
+\[
+    L : L^{p}( \mathbb{R}^{d}, \mu) \rightarrow \mathbb{R} \qquad \text{ is linear and continuous}
+\] 
+Then $L$ can be represented via an element $g \in L^{p'}( \mathbb{R}^{d}, \mu)$
+\[
+L(f) = \int_{ \mathbb{R}^{d}}^{}f g d \mu = \langle f, g \rangle_\mu
+\] 
+counter example when $p = \infty$ and $L : L^{\infty}( \mathbb{R}^{d}, \mu)$ $|Lf| \le c ||f||_{L^{\infty}}$ for all $f$ and we cannot find $g \in L^{1}( \mathbb{R}^{d}, \mu)$ such that $L(f) = \int_{ \mathbb{R}^{d}}^{}fg d \mu$ 
+\[
+L(f) = f(0)
+\] 
+Topology on $C_c( \mathbb{R}^{d}, \mathbb{R}^{D})$ We say that $(f_k)_k \subset C_c( \mathbb{R}^{d}, \mathbb{R}^{D}) $converges to $f \in C_c( \mathbb{R}^{d}, \mathbb{R}^{D}) $ if there exists
+$R > 0$ such that 
+ \[
+     \spt (f_k) \subset B_R(0) \text{ and } \limsup_{k\to +\infty} ||f-f_k||_{C( \mathbb{R}^{d}, \mathbb{R}^{D})} = 0
+\] 
+Note that $\spt f \subset B_R(0)$ and $f \in C_c( \mathbb{R}^{d}, \mathbb{R}^{D})$
+\section{Definition}
+\emph{
+    We say that a linear map $L : C_c( \mathbb{R}^{d}, \mathbb{R}^{D})$ is continuous if 
+    \[
+        ||L|_{C(B_n(0), \mathbb{R}^{d})} || < +\infty \forall n
+    \] 
+    for all $n$ there exists $c_n$ such that
+    \[
+        |Lf| \le c_n ||f||_{C( \mathbb{R}^{d}, \mathbb{R}^{d})}
+    \] 
+    If the suppoort of $f$ is a subset of $B_n(0)$
+}
+Example: Let $\sigma : \mathbb{R}^{d} \rightarrow S^{D-1} = \{x \in \mathbb{R}^{d} : ||x|| = 1\}$ be $\mu$-measurable and define
+\[
+    (**) \qquad L(f) = \int_{ \mathbb{R}^{d}}^{}\langle \sigma, f \rangle d \mu \qquad \langle \sigma, f \rangle = \sum_{i=1}^{D}f_i \sigma_i
+\] 
+Then $L$ is linear and if $\spt f \subset B_n(0)$ then 
+\[
+    |L(f)| \le \int_{B_n(0)}^{}||\sigma(x)||||f(x)|| d \mu \le ||f||_{C( \mathbb{R}^{d}, \mathbb{R}^{D})} \mu[B_n(0)]
+\] 
+our goal will be to show that $(**)$ gives the complete lsit of  $(c_c( \mathbb{R}^{d} , \mathbb{R}^{D}))^{*}$
+\\
+Assume $D = 1$ then
+ \[
+L(f) = \int_{}^{}f d \nu
+\] 
+\end{document}

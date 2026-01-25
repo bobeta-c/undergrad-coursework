@@ -1,0 +1,259 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 171}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Exercise 1.1}
+\solution{
+    Consider the probability
+    \[
+        \mathbb{P}(X_{n+1} = i | X_{n} = j, X_{n-1} = i_{n-1}, \dots, X_0 = i_0) = p(i,j)
+    \] 
+    However consider
+    \[
+    \mathbb{P}(X_3 = 0 | X_2 = 1, X_1 = 2) = \frac{1}{2}
+    \] 
+    since if $X_2 = 1, X_1 = 2$ then $Y_0 = 1, Y_1 = 1, Y_2 = 0$ so $Y_3$ can be either $1$ or  $0$ with equal probability
+    and so  $X_3$ can be either $1$ or  $0$ with equal probability. However,
+    \[
+    \mathbb{P}(X_3 = 0 | X_2 = 1, X_1 = 0) = 0
+    \] 
+    since in this scenario we must have $Y_0 = 0, Y_1 = 0, Y_2 = 1$ with $Y_3$ being either $1$ or $0$ with equal probability thus
+    $X_3 = 1 $ or $2$ with equal probability. Therefore  $X_n$ does not depend only on  $X_{n-1}$ and the sequence is not a markov chain
+}
+
+\section{Exercise 1.2}
+\solution{
+    We need to compute
+    \[
+        p(i,j) = \mathbb{P}(X_{n+1} = j | X_n = i)
+    \] 
+    if $i = 5$ then  $j = 4$ with probability 1. Similalry if  $i=0$ then  $j=1$ with probability  $1$.
+    if $i \in [1,4]$ then  $ \mathbb{P}(X_{n+1} =i-1) = \frac{i}{5}\frac{i}{5}$ and $ \mathbb{P}(X_{n+1} = i+1) = \frac{5-i}{5}(\frac{5-i}{5})$ with all the other probability being that $X_{n+1} = X_n$
+    Then
+    \[
+    P :=
+    \begin{pmatrix} 0 & 1 & 0 & 0 & 0 & 0\\
+    \frac{1}{25} & \frac{8}{25} & \frac{16}{25} & 0 & 0 & 0 \\
+    0 & \frac{4}{25} & \frac{12}{25} & \frac{9}{25} & 0 & 0\\
+    0 & 0 & \frac{9}{25} & \frac{12}{25} & \frac{4}{25} & 0\\
+    0 & 0 & 0 & \frac{16}{25} & \frac{8}{25} & \frac{1}{25}\\
+    0 & 0 & 0 & 0 & 1 & 0
+    \end{pmatrix} 
+    \] 
+    and
+    \[
+        p(i,j) = P_{i,j}
+    \] 
+}
+
+\section{Exercise 1.3}
+\solution{
+    The probabilities of the rolls are
+    \begin{align*}
+        2 & \qquad\frac{1}{16}\\
+        3 & \qquad\frac{2}{16}\\
+        4 & \qquad\frac{3}{16}\\
+        5 & \qquad\frac{4}{16}\\
+        6 & \qquad\frac{3}{16}\\
+        7 & \qquad\frac{2}{16}\\
+        8 & \qquad\frac{1}{16}
+    \end{align*}
+    grouping by value modulo 6 we have the probabilities for the increase as follows
+    \begin{align*}
+        0 & \qquad\frac{3}{16}\\
+        1 & \qquad\frac{2}{16}\\
+        2 & \qquad\frac{2}{16}\\
+        3 & \qquad\frac{2}{16}\\
+        4 & \qquad\frac{3}{16}\\
+        5 & \qquad\frac{4}{16}
+    \end{align*}
+    putting these into a matrix we get
+    \[
+    P := \frac{1}{16}
+    \begin{pmatrix} 
+        3 & 2 & 2 & 2 & 3 & 4\\
+        4 & 3 & 2 & 2 & 2 & 3\\
+        3 & 4 & 3 & 2 & 2 & 2\\
+        2 & 3 & 4 & 3 & 2 & 2\\
+        2 & 2 & 3 & 4 & 3 & 2\\
+        2 & 2 & 2 & 3 & 4 & 3
+    \end{pmatrix} 
+    \] 
+}
+
+\section{Exercise 1.4}
+for each human $X$ let $X =1$ signify  $X$ is a homeowner and  $X = 0$ mean  $X$ is a renter and $n$ be the $n$-th decade then
+\[
+    \mathbb{P}(X_{n+1} = 1| X_n = 0) = \frac{12}{100}
+\] 
+\[
+    \mathbb{P}(X_{n+1} = 0 | X_n = 0) = \frac{88}{100}
+\] 
+\[
+    \mathbb{P}(X_{n+1} = 0 | X_n = 1) = \frac{6}{100}
+\] 
+\[
+    \mathbb{P}(X_{n+1} = 1 | X_n = 1) = \frac{94}{100}
+\] 
+so the transition matrix is
+\[
+P :=
+\begin{pmatrix} 
+    \frac{88}{100} & \frac{12}{100} \\
+    \frac{6}{100} & \frac{94}{100}
+\end{pmatrix} 
+\] 
+Now $X$ has starting distribution $\begin{pmatrix} \frac{64}{100} & \frac{36}{100} \end{pmatrix} $ in 1990.
+THen $XP = \begin{pmatrix} .5848 & .4152 \end{pmatrix} $ is the distribution in $2000$
+and $XP^2 = \begin{pmatrix} .539536 & .460464 \end{pmatrix} $ is the distribution in $2010$ so in conclusion, 
+in $2010$  $46$ percent of households were homeowners
+
+\section{Exercise 1.5}
+
+First lets construct the transition matrix
+ \[
+     P_{i,j} = p(i,j)
+\] 
+\[
+ P =
+ \begin{pmatrix} 1 & 0 & 0 & 0 & 0\\
+     .6 & 0 & .4 & 0 & 0\\
+     0 & .6 & 0 & .4 & 0\\
+     0 & 0 & .6 & 0 & .4\\
+     0 & 0 & 0 & 0 & 1
+ \end{pmatrix} 
+\] 
+then we can compute $p^{3}(1,4)$ and $p^{3}(1,0)$ in two different ways
+first we can compute $P^{3}$ 
+\[
+P^{3} = \begin{pmatrix} 
+    1 & 0 & 0 & 0 & 0\\
+    0.744 & 0 & 0.192 & 0 & 0.064\\
+    0.36 & 0.277 & 0 & 0.192 & 0.16\\
+    0.216 & 0 & 0.288 & 0 & 0.496\\
+    0 & 0 & 0 & 0 & 1
+\end{pmatrix} 
+\] 
+reading directly we get
+\[
+p^{3}(1,4) = 0.064
+\] 
+and
+\[
+p^{3}(1,0) = 0.744
+\] 
+we can also compute directly
+\[
+    p^{3}(1,4) = \mathbb{P}(X_4 = 4 | X_1 = 1) = \sum_{}^{} \mathbb{P}(X_2 = k | X_1 =1) \mathbb{P}(X_3 = j | X_2 = k) \mathbb{P}(X_4 = 4 | X_3 = j)
+\] 
+over all possible combinations of $k,j$
+\[
+= \mathbb{P}(X_2=2|X_1=1) \mathbb{P}(X_3=3|X_2=2) \mathbb{P}(X_4=4 |X_3=3) = p(1,2)p(2,3)p(3,4) = .4^{3} = .064
+\] 
+additionally we can compute $p^{3}(1,0)$ by computing all possible paths from $1$ to $0$ in three steps. The first is that  $X_2 = 0$ and it stays there,
+the second is $1-2-1-0$ and those are the only paths their probabilities are computed and summed
+ \[
+ \mathbb{P}(X_2 = 0 | X_1 = 1) + \mathbb{P}(X_2 = 2| X_1=1) \mathbb{P}(X_3 = 1| X_2 = 2) \mathbb{P}(X_4 = 0 | X_3 = 1) 
+\]\[
+=p(1,0) + p(1,2)p(2,1)p(1,0) = .6 + .4 * .6 * .6 = .744
+\] 
+so our answers coincide.
+
+\section{Exercise 1.6}
+Let state A be 1, state B be 2, and state C be 3 then we construct the transition matrix
+\[
+P =
+\begin{pmatrix} 0 & \frac{1}{2} & \frac{1}{2} \\
+    \frac{3}{4} & 0 & \frac{1}{4}\\
+    \frac{3}{4} & \frac{1}{4} & 0
+\end{pmatrix} 
+\] 
+Lets compute the higher powers to answer the rest of the question
+\[
+    P^{2} = \begin{pmatrix}
+.75 & .125 & .125\\
+.1875 & .4375 & .375\\
+0.1875 & 0.375 & 0.4375
+\end{pmatrix}
+\qquad P^{3} =
+\begin{pmatrix} 0.1875 & 0.40625 & 0.40625\\
+    0.609375 & 0.1875 & 0.203125\\
+    0.609375 & 0.203125 & 0.1875
+\end{pmatrix} 
+\] 
+assuming the taxicab driver begins at the airport at time 0 the probability he is at the airport at time 2 
+is $0.75$ and he is at the other hotels with equal probability  $0.125$. The probability he is at
+hotel  $B$ or state 2 at time $3$ is $0.40625$
+
+\section{Exercise 1.7}
+I map the states as follows  $(RR,RS,SR,SS) \rightarrow (1,2,3,4)$ and create the transition matrix
+\[
+P =
+\begin{pmatrix} 0.6 & 0.4 & 0 & 0\\
+    0 & 0 & 0.6 & 0.4\\
+    0.6 & 0.4 & 0 & 0\\
+    0 & 0 & 0.3 & 0.7
+\end{pmatrix} 
+\qquad P^2 =
+\begin{pmatrix} 
+    0.36 & 0.24 & 0.24 & 0.16\\
+    0.36 & 0.24 & 0.12 & 0.28\\
+    0.36 & 0.24 & 0.24 & 0.16\\
+    0.18 & 0.12 & 0.21 & 0.49
+\end{pmatrix} 
+\] 
+if $X_1 = (SS)$ where day 1 is monday, then we can compute $X_3 = (0,0,0,1) P^2 = (0.18,0.12,0.21,0.49)$ so the probability that it rains on
+Wednesday is $0.18 + 0.21 = 0.39$
+
+\end{document}

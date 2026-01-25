@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 171}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[export]{adjustbox}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Exercise 1.8}
+\solution{
+    \begin{enumerate}
+        \item \includegraphics[page=1,width = 0.8\textwidth, valign=t]{n.pdf}
+            we have 
+            \[
+                \rho_{1,1} \le 1 - p(1,2) = 0.7
+            \] 
+            so $1$ is transient
+             \[
+                 \rho_{3,3} \le 1 - p(3,1)p(1,2) = 1 - .5 .3 = 0.85
+            \] 
+            so $3$ is transient similarly by looking at the graph we can see that 5 communiacates with 2 but 2 does not communicate with 5
+            so 5 is transient. 2 only communicates with 4 which also communicates with 2 so 2 is recurrent and 4 by the same reasoning is recurrent. The only irreducible sets can only contain recurrent nodes
+            and the set $\{4,2\}$ is closed since the two communicate with each other and it is irreducible.
+        \item \includegraphics[page=2,width =0.8\textwidth,valign=t]{n.pdf}
+            3 communicated with 6 which doesnt communicate with 3 by the diagram. similarly 2 communicates with 5 which does not communicate with it so the two are transient. 
+            1,4,5, and 6 all communicate with one another by the graph so they form an irreducible closed set.
+        \item \includegraphics[page=3,width =0.8\textwidth,valign=t]{n.pdf}
+            no nodes communicate 3 and 3 communicates with other nodes so it is transient. 2 and 4 communicate only with eachother and they form a irreducible closed set. 1 and 5 also
+            only communicate with eachother and form a different closed set.
+        \item \includegraphics[page=4,width =0.8\textwidth,valign=t]{n.pdf}
+            no nodes communicate with 3 and it communicates with 5 so it is transient. 3 commmunicates with 6 but 3 is transient and 6 communicates with 4 so 6 is transient.
+            similarly 1,4 and 2,5 communicate only with eachother and form irreducible closed sets.
+        \item \includegraphics[page=5,width =0.8\textwidth,valign=t]{n.pdf}
+            1 is strongly recurrent and forms its own irreducible closed set. 3 and 5 communicate iwth others that do not communicate with them and are transient. 2 and 4 only communicate with eachother and form
+            an irreducible closed set.
+    \end{enumerate}
+}
+
+\section{Exercise 1.9}
+\solution{
+    \begin{enumerate}
+        \item Let
+            \[
+                A = \begin{pmatrix} 0.5 & 0.4 & 0.1 \\ 0.2 & 0.5 & 0.3 \\ 0.1 & 0.3 & 0.6 \end{pmatrix} 
+            \] 
+            we want to find $\pi$ such that
+            \[
+            \pi A = \pi
+            \] 
+            and
+            \[
+                \pi \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix} = \begin{pmatrix} 1 \end{pmatrix} 
+            \] 
+            or
+            \[
+                \begin{pmatrix} \pi_1 & \pi_2 & \pi_3 \end{pmatrix}  \begin{pmatrix}  -0.5 & 0.4 & 1 \\ 0.2 & -0.5 & 1 \\ 0.1 & 0.3 & 1\end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \end{pmatrix} 
+            \] 
+            solving using inverse we get
+            \[
+                \pi = \begin{pmatrix} \frac{11}{47} & \frac{19}{47} & \frac{17}{47} \end{pmatrix} 
+            \] 
+        \item Let
+            \[
+                A = \begin{pmatrix} 0.5 & 0.4 & 0.1 \\ 0.3 & 0.4 & 0.3 \\ 0.2 & 0.2 & 0.6 \end{pmatrix} 
+            \] 
+            then by the same reasoning as before we want to solve
+            \[
+                \pi \begin{pmatrix} -0.5 & 0.4 & 1 \\ 0.3 & -0.6 & 1\\ 0.2 & 0.2 & 1 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 1 \end{pmatrix} 
+            \] 
+            giving
+            \[
+                \pi = \begin{pmatrix} \frac{1}{3} & \frac{1}{3} & \frac{1}{3} \end{pmatrix} 
+            \] 
+        \item 
+            Let
+            \[
+                A = \begin{pmatrix} 0.6 & 0.4 & 0 \\
+                    0.2 & 0.4 & 0.4 \\
+                    0 & 0.2 & 0.8
+                \end{pmatrix} 
+            \] 
+            so again we solve
+            \[
+                \pi \begin{pmatrix} -0.4 & 0.4 & 1 \\ 0.2 & -0.6 & 1 \\ 0 & 0.2 & 1 \end{pmatrix}  = \begin{pmatrix} 0 & 0 & 1 \end{pmatrix} 
+            \] 
+            which gives
+            \[
+                \pi = \begin{pmatrix} \frac{1}{7} & \frac{2}{7} & \frac{4}{7} \end{pmatrix} 
+            \] 
+    \end{enumerate}
+}
+
+\section{Exercise 1.11}
+\solution{
+    Using the same calculation as the previous problem we solve
+    \[
+        \pi \begin{pmatrix} -0.8 & 0.4 & 1 \\ 0.1 & -0.4 & 1 \\ 0.2 & 0.6 & 1 \end{pmatrix}  = \begin{pmatrix} 0 & 0 & 1 \end{pmatrix} 
+    \] 
+    to get
+    \[
+        \pi = \begin{pmatrix} \frac{1}{7} & \frac{4}{7} & \frac{2}{7} \end{pmatrix} 
+    \] 
+    calculating we get
+    \begin{align*}
+        \pi(1)p(1,2) &= \frac{4}{70}\\
+        \pi(1)p(1,3) &= \frac{4}{70}\\
+        \pi(2)p(2,1) &= \frac{4}{70}\\
+        \pi(2)p(2,3) &= \frac{12}{70}\\
+        \pi(3)p(1,3) &= \frac{4}{70}\\
+        \pi(3)p(3,2) &= \frac{12}{70}
+    \end{align*}
+    from this we can easily verify that the distribution satisfies the detailed balance condition.
+}
+
+\section{Exercise 1.12}
+\solution{
+    \begin{enumerate}
+        \item for exercise 1.2 we compute the transition matrix
+            \[
+                P = \begin{pmatrix} 0 & 1 & 0 & 0 & 0 & 0\\
+                    \frac{1}{25} & \frac{8}{25} & \frac{16}{25} & 0 & 0 & 0\\
+                    0 & \frac{4}{25} & \frac{12}{25} & \frac{9}{25} & 0 & 0\\
+                    0 & 0 & \frac{9}{25} & \frac{12}{25} & \frac{4}{25} & 0\\
+                    0 & 0 & 0 & \frac{16}{25} & \frac{8}{25} & \frac{1}{25}\\
+                    0 & 0 & 0 & 0 & 1 & 0
+                \end{pmatrix} 
+            \] 
+            solving as before we get the stationary distribution
+            \[
+                \pi = \begin{pmatrix} \frac{1}{252} & \frac{25}{252} & \frac{25}{63} & \frac{25}{63} & \frac{25}{252} & \frac{1}{252} \end{pmatrix} 
+            \] 
+            which makes sense since the mass is concentrated around the middle.
+        \item For exercise 1.3 we have the transition matrix
+            \[
+            P = \frac{1}{16}\begin{pmatrix} 
+                3 & 2 & 2 & 2 & 3 & 4\\
+                4 & 3 & 2 & 2 & 2 & 3\\
+                3 & 4 & 3 & 2 & 2 & 2\\
+                2 & 3 & 4 & 3 & 2 & 2\\
+                2 & 2 & 3 & 4 & 3 & 2\\
+                2 & 2 & 2 & 3 & 4 & 3
+            \end{pmatrix} 
+            \] 
+            repeating the same process we get
+            \[
+                \pi = \begin{pmatrix} \frac{1}{6} & \frac{1}{6} & \frac{1}{6} & \frac{1}{6} & \frac{1}{6} & \frac{1}{6} \end{pmatrix} 
+            \] 
+            uniform distribution. This makes sense because of the transition invariance imposed by the problem.
+        \item For exercise 1.7 we have
+            \[
+            P = \begin{pmatrix} 
+                0.6 & 0.4 & 0 & 0 \\
+                0 & 0 & 0.6 & 0.4 \\
+                0.6 & 0.4 & 0 & 0\\
+                0 & 0 & 0.3 & 0.7
+            \end{pmatrix} 
+            \] 
+            and we get
+            \[
+                \pi = \begin{pmatrix} \frac{9}{29} & \frac{6}{29} & \frac{6}{29} & \frac{8}{29} \end{pmatrix} 
+            \] 
+    \end{enumerate}
+}
+
+\section{Exercise 4.1}
+\emph{
+    Recall the Ehrenfest chain on $\Omega = \{0,1,\dots,N\}$ with transition probabilities
+     \[
+    p(0,1) = p(N,N-1) = 1 \qquad p(i,i-1) = 1 - p(i,i+1) = \frac{i}{N}
+    \] 
+    find the distribution that satisfies the detailed balance condition.
+}
+\solution{
+    First we create the matrix
+    \[
+    P = \begin{pmatrix} 
+        0 & 1 & 0 & \dots & 0 & 0\\
+        \frac{1}{N} & 0 & \frac{N-1}{N} & \dots & 0 & 0\\
+        0 & \frac{2}{N} & 0 & \dots & 0 & 0\\
+        0 & 0 & \frac{3}{N} & \dots & 0 & 0\\
+        \vdots & \vdots& \vdots & \ddots & \vdots & \vdots\\
+        0 & 0 & 0 & \dots & 1 & 0
+    \end{pmatrix} 
+    \] 
+    Lets write some equations
+    \begin{align*}
+        \pi(k-1)p(k-1,k) &= \pi(k)p(k,k-1)\\
+        \pi(k-1)\frac{N-k+1}{N} &= \pi(k) \frac{k}{N}\\
+        \pi(k-1) &= \pi(k) (\frac{k}{N-k+1})\\
+        \pi(N-1) &= \pi(N)N\\
+        \pi(N-2) &= \pi(N-1)\frac{N-1}{N-N+2} = \pi(N)N\frac{N-1}{2}\\
+        \pi(N-3) &= \pi(N-2)\frac{N-2}{3}=\pi(N)\frac{N}{1}\frac{N-1}{2}\frac{N-2}{3}\\
+        \pi(N-k) &= \pi(N) \frac{N!}{(N-k)!k!} = \pi(N) \binom{N}{k}
+    \end{align*}
+    we also have
+    \begin{align*}
+        \sum_{k=0}^{N}\pi(N-k) &= 1\\
+        \pi(N)\sum_{k=0}^{N}\binom{N}{k} &= 1\\
+        \pi(N) 2^{N} &= 1\\
+        \pi(N) &= \frac{1}{2^{N}}\\
+        \pi(N-k) &= \binom{N}{k} 2^{-N}
+    \end{align*}
+}
+
+\end{document}

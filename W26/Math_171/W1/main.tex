@@ -1,0 +1,153 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{intro}
+Stochastic = random, Proces = sequence of things
+SP = sequence of random things
+Independent identically distributed random variables, $X_1,X_2,\dots,x_n,\dots$
+Ex Partial sum of IID Rvs:
+\[
+S_0 = 0, S_1 = X_1, S_2 = X_1 + X_2, \dots, S_n = \sum_{i=1}^{n}X_ii, \dots
+\] 
+\[
+    S_n = S_{n-1} + x_n
+\] 
+if $X_n \in \{0,1\}$ then  $S_n = S_{n-1}$ or  $S_n = S_{n-1} + 1$ we can say
+ \[
+     \frac{S_n}{n} \rightarrow \mathbb{E}[X_1]
+\] 
+by SLLN almost sure
+\[
+    \frac{S_n - n \mathbb{E}[x_1]}{\sqrt{n}\sqrt{Var(X_1)}} \rightarrow^{d} N(0,1)
+\] 
+"simple model of dependence Given data at present, the future is independent of the past"\\
+Andrei Markov: Markov chain in 1906
+\[
+X_0,x_1,X_2,\dots,X_n,\dots
+\] 
+\[
+    (*)  \;\;\;  \mathbb{P}(X_{n+1} = j|X_n = i_n, X_{n-1} = i_{n-1}, \dots, X_1 = i_1, x_0 = i_0) = \mathbb{P}(X_{n+1} = j| X_n = i_n)
+\] 
+Any SP $\{X_n : n \ge 0\}$ satisfying  $(*)$ for all  $n \ge 0$ all  $j,i,i_{n-1},\dots,i_0$is called a Markov chain.
+"Time-homogenous MC": RHS of $(*)$ does not depend on time so it is equal to  $p(i,j)$\\
+$p(i,j)$ is called the transition probability of $X_n$
+ \[
+\mathbb{P}(X_2 = j | X_1 = i ) = p(i,j)
+\] 
+\[
+\mathbb{P}(X_2 = j | X_0 = i) = \sum_{k}^{} \mathbb{P}(X_2 = j, X_1 = k | X_0 = i)
+\] 
+\[
+ = \sum_{k}^{} \mathbb{P}(X_2 = j | X_1 = k, X_0 = i) \mathbb{P}(X_1 = k | X_0 =i) = \sum_{k}^{}p(k,j)p(i,k)
+\] 
+Conditions:
+\[
+\begin{cases}
+    0 \le p(i,j) \le 1 \\
+    \sum_{j}^{}p(i,j) = 1
+\end{cases}
+\]
+Example (Gambling):\\
+Fair game equal probablity to win $\$1$ or lose  $\$1$. You continuou playing until
+\begin{enumerate}
+    \item you lose all your money
+    \item you gained $N$ dollars
+\end{enumerate}
+Predict money $X_n$ after the  $n$ round.\\
+$p(i,i+1) = \frac{1}{2} = p(i,i-1)$ given $1 \le i \le N-1$\\
+$p(0,0) = 1 = p(N,N)$\\
+Finite state MC. $\{0,1,2,\dots,N\}$ only  $(n+1)^2$ transition probabilities.\\
+What if $X_0 \sim \mu_0$ $ \mathbb{P}(X_0 = i) = \mu_0(i)$
+$\mu_1(j) = \mathbb{P}(X_1 = j | X_0) = \sum_{i}^{}\mu_0(i) \mathbb{P}(X_1 = j| X_0 = i) =\sum_{i}^{}\mu_0(i) p(i,j)$
+\[
+\mu = (\mu_0(1),\mu_0(2),\dots,\mu_0(N))
+\] 
+\[
+    \mu_1(j) = \mu_0 * P(j-\text{th column}) = \mu_0 \circ P=  \mu_0 P
+\] 
+$P_{i,j} = p(i,j)$
+
+\section{Gene mutation}
+DNA sequence $\{A,T,G,C\}^{d}$ 
+notation  $d_H(D_1,D_2) = \sum_{i=1}^{d}1_{D_1(i) \ne D_2(i)}$.
+$X_n = d_H(X_n, D_0)$ $X_n$ lies in  $\{0,1,2,\dots,d\}$
+$p(d,d-1) = 1, p(0,1) = 1$
+\[
+p(i,i+1) = ? \qquad p(i,i-1) = ? \qquad 1 \le i \le d-1
+\] 
+\[
+    p(i,i-1) = \mathbb{P}(d_H(D_{N+1},D_0) = i-1 | D_H(D_n, D_0) = i) = \frac{i}{d}
+\] 
+since there are $i$ elements that are wrong and so their proportion is $\frac{i}{d}$
+\[
+    p(i,i+1) = \frac{d-i}{d}
+\] 
+
+\section{Branching Process}
+$p_k : k = 0,1,\dots$
+\[
+\sum_{k=0}^{\infty}p_k = 1 \qquad p_k \ge 0
+\] 
+where $p_k = \mathbb{P}(\text{each parent gives birth to $k$ offsprint})$ each parent gives birth independently according to this model.
+$X_n = \text{total number of children at generation $n$ }$ 
+$z \sim (p_k)_{k=1}^{\infty}$
+\[
+    X_{n+1} = \sum_{k=1}^{X_n}Z_{n,k}
+\] 
+we have $Z_{n,k}$ is the number of kids the  $k$-th kid has in the  $n$-th generation
+ \[
+     p(i,j) = \mathbb{P}(X_{n+1} = j | X_n = i) = \mathbb{P}(\sum_{k=1}^{i}Z_{n,k} = j)
+\] 
+
+\end{document}

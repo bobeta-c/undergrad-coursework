@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Holomorphic Functions}
+\emph{A domain is a connected non empty open subset of $ \mathbb{C}$}
+Let $\Omega$ be a domain $F : \Omega \rightarrow \mathbb{C}$ and $z \in \Omega$
+$f$ is holomorphic at $z$ if
+\[
+ \lim_{h\to 0, h \in \mathbb{C} \setminus \{0\}} \frac{f(z+h) - f(z)}{h} = f'(z) \;\; \text{exists}
+\] 
+the value $f'(z)$ is called the derivative of  $f$ at $z$. we say $f$ is holomorphic in $\Omega$ if  $f$ 
+is holomorphic at $z$ for all $z \in \Omega$. Do not assume that  $z \rightarrow f'(z)$ is continuous.
+\emph{ $f$ is entire if $f$ is holomorphic on $ \mathbb{C}$ }
+\\
+Example: $f(z) = z$ or  $f(z) = a_0 + a_1z + \dots + a_nz^{n}$ $a_j \in \mathbb{C}$.
+$f(z) = \overline{z}$ is not holomorphic at any $z$, 
+\[
+\lim_{h\to 0} \frac{\overline{z} + \overline{h} - \overline{z}}{h} = \lim_{h\to 0} \frac{\overline{h}}{h}
+\] 
+the limit odes not exist.
+
+\section{Theorem 2.1}
+Let $f$ and $g$ by holomorphic in $\Omega$. Then
+ \begin{enumerate}
+     \item $f + g$ is holo
+     \item  $fg$ is holo
+     \item  $\frac{f}{g}$ where $g(z) \ne 0$  is holomorphic
+     \item $f : \Omega \rightarrow U$, $g : U \rightarrow \mathbb{C}$, $f,g$ holomorphic then  $g \circ f$ is holomorphic on  $\Omega$ and
+          $(g \circ f)'(z) = g'(f(z))f'(z)$
+\end{enumerate}
+Notation  $G(h) = o(h)$, $h$ is real if  $\lim_{h\to 0} \frac{G(h)}{h} = 0$, $G(h) = O(h)$ if  $|\frac{G(h)}{h}|$ bounded for $\{|h| < \delta \}$.
+$f$ is holomorphic at $z$ if and only if
+\[
+f(z+h) = f(z) +f'(z)h + o(h)
+\] \\
+proof of $(d)$\\
+Fix $z$, $f(z + h) = f(z) + f'(z)h + o(|h|)$,  $g(f(z+h)) = g(f(z) + f'(z)h + o(|h|))$ 
+\[
+g(f(z+h))= g(f(z))  + g'(f(z))(f'(z)h + o(h)) + o(|f'(z)h + o(|h|)|)
+\] 
+\[
+= g(f(z)) + g'(f(z))f'(z)h + o(h)g'(f(z)) + o(h)f'(z)
+\] 
+so
+\[
+g(f(z+h)) = g(f(z)) + g'(f(z))f'(z)h + o(h)
+\] 
+
+\section{corollary}
+\[
+p(z) = a_0 + a_1z + \dots + a_nz^{n}
+\] is holomorphic for all $z$ 
+\[
+R(z) = \frac{P(z)}{Q(z)} \]
+$P,Q$ polynomials is holomorphic for all $\{z \in \mathbb{C}: Q(z) \ne 0\}$ 
+
+\section{Holomorphic functions versus differentiable maps}
+$\Omega \subset \mathbb{C}$  domain $F : \Omega \rightarrow \mathbb{R}^2$
+Definition \emph{$F$ is differentiable at $P_0 = (x_0,y_0) \in \Omega$ if there exists real linear
+    $I : \mathbb{R}^2 \rightarrow \mathbb{R}^2$ so that
+    \[
+    F(P) =  F(P_0) + I(P - P_0) + o( |P- P_0|)
+    \] 
+}
+Ex: $f$ holomorphic, $F(x,y) = f(x + iy)$ is differentiable
+ \[
+f(z) = f(z_0) + f'(z)(z-z_0) + o(|z-z_0|)
+\] 
+\[
+    I(x,y) = \begin{pmatrix} \alpha & -\beta \\ \beta & \alpha \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} 
+\] 
+\[
+f'(z) = \alpha + i\beta
+\] 
+
+\section{Lemma}
+\emph{
+Let $J : \mathbb{R}^2 \rightarrow \mathbb{R}^2$  be a linear transformation. 
+\[
+    J \begin{pmatrix} x \\ y \end{pmatrix}  = \begin{pmatrix} a & b \\ c & d \end{pmatrix}  \begin{pmatrix} x \\ y \end{pmatrix} 
+\] 
+then $J$ is complex linear if and only if $a = d$ $c = -b$ \\
+}
+Proof:  $T(z) = iz$ has matrix
+ \[
+     \begin{pmatrix} 0 & 1 \\ -1 & 0 \end{pmatrix} 
+\] 
+$J$ complex linear if and only if $JT = TJ$
+
+\section{Power Series}
+$\alpha_n \in \mathbb{C}$
+\[
+\sum_{n=0}^{\infty}\alpha_n
+\] 
+converges if $\exists s \in \mathbb{C}$
+\[
+S_n = \sum_{i=0}^{n}\alpha_i
+\] 
+\[
+\forall \epsilon > 0 \; \exists N > 0 \rightarrow n > N \implies |S_n - s| < \epsilon
+\] 
+\begin{enumerate}
+    \item $\sum_{}^{}\alpha_n$ converges implies $\alpha_n \rightarrow 0$
+    \item $\alpha_n = a_n + i b_n$ $\sum_{}^{}\alpha_n$ converges $\iff$  $\sum_{}^{}a_n, \sum_{}^{}b_n$ converges
+    \item $\sum_{}^{}|\alpha_n| < \infty \implies  \sum_{}^{}\alpha_n$ converges
+    \item $M_n \ge 0, \sum_{M_n < \infty}^{}$ and $|\alpha_n| \le M_n \implies \sum_{}^{}\alpha_n$ converges
+\end{enumerate}
+A power series is a series of the form
+\[
+    \sum_{n=0}^{\infty}\alpha_n z^{n} \qquad \alpha_n \in \mathbb{C}
+\] 
+\section{Theorem 3.1}
+\emph{
+    Let $\sum_{}^{}\alpha_n z^{n}$ be a powerseries. Then there exists $ R \in [0,+\infty]$, so that
+    \begin{enumerate}
+        \item $|z| < R \implies \sum_{}^{}|\alpha_n| |z|^{n} < \infty$ 
+        \item $|z| > R \implies$ the series diverge
+        \item $\frac{1}{R} = \limsup_{n \to \infty}|\alpha_n|^{\frac{1}{n}}$
+    \end{enumerate}
+}
+\emph{ Lim sup:\\
+    $T = \limsup_{} a_n$ if $a_n > T$  if $\forall \epsilon > 0$ $a_n > T + \epsilon$ only finitely many times, $a_n > T - \epsilon$ infinitely often.\\
+    $A_k := \{ a_n : n \le k\} \subset [0,\infty)$ $A_{k+1} \subset A_k$, let $\gamma_k = \sup A_k$ then $\limsup_{}a_n = \lim_{k\to \infty}\gamma_k = \inf_{k \in \mathbb{N}} \gamma_k = \inf_{k \in \mathbb{N}} \sup_{n \ge k} a_n$
+}
+We have $\sum_{}^{}\alpha_n z^{n}$ \\
+Proof of THeorem 3.1:\\
+Define $ R $ by $(c)$. Suppose  $|z| < s < R$ then  $|\alpha_n|^{\frac{1}{n}} < \frac{1}{2}$ except for finitely many $n$ so
+ \[
+|\alpha_n| |z^{n}| \le \left(\frac{|z|}{s}\right)^{n}
+\] 
+except for finitely many $n$. By the m test 
+\[
+\sum_{}^{}|\alpha_n| |z|^{n} < \infty
+\] 
+by $(3)$ the series converges.\\
+For $(b)$
+suppose  $ |z| > U >  R$ then $ |z^{n}\alpha_n| \ge (U^{n})(\frac{1}{U})^{n} = 1$ infinitely often and so the series diverges.\\
+Note that on $\{|z| < s < R\}$ the series converges uniformly. so the limit is continuous\\
+
+$e^{z} = \sum_{n=0}^{\infty}\frac{z^{n}}{n!}$ 
+\[
+\cos(z) = \frac{e^{iz} + e^{-iz}}{2} = \sum_{n=0}^{\infty}\frac{z^{2n}}{(2n)!} \qquad \sin(z) = \frac{e^{iz} - e^{-iz}}{2} = \sum_{n=0}^{\infty}\frac{z^{2n+1}}{(2n+1)!}
+\] 
+\[
+e^{iz} = \cos(z) + i\sin(z)
+\] 
+
+\section{Theorem 3.2}
+\emph{
+    Assume $\sum_{}^{}\alpha_n z^{n}$ converges in $\{|z| < R\}, 0 < R \le +\infty$. 
+    Define 
+    \[
+    f(z) = \sum_{n=0}^{\infty}\alpha_n z^{n} \qquad |z| < R
+    \] 
+    then $f$ is holomorphic on $\{|z| < R\}$ and  $f'(z) = \sum_{n=0}^{\infty}n\alpha_nz^{n-1}$ \\
+}
+Proof:\\
+Let $|z| < r < R$ Then  Theorem 3.1 implies  $\sum_{}^{}|\alpha_n| r^{n} < \infty$. By Calculus
+$\lim_{n\to \infty} n^{\frac{1}{n} = 1}$ because $\frac{\log n}{n} \rightarrow 0$.
+Therefore
+\[
+\sum_{n=1}^{\infty}n |\alpha_n| r^{n-1} < \infty
+\] 
+\[
+    g(z) = \sum_{n=0}^{\infty}n\alpha_n z^{n-1} \qquad \text{converges in $|z| \le r$}
+\] 
+Fix  $N$.  $f(z) = \sum_{n=0}^{N}\alpha_n z^{n} + \sum_{n=N+1}^{\infty}\alpha_n z^{n} = S_N(z) + E_N(z)$.\\
+$\frac{S_N(z + h) - S_N(z)}{h} \rightarrow_{h \to 0} S_N'(z) = \sum_{n=0}^{k}n\alpha_n z^{n-1}$.\\
+Let $|h| < r - |z|$ 
+ \[
+     \frac{f(z+h) - f(z)}{h} - g(z) = \left(\frac{S_N(z+h) - S_N(z)}{h} - S_N'(z)\right) + \left(S_N'(z) - g(z)\right) + \frac{E_n(z+h) - E_n(z)}{h}
+\] 
+\[
+ = A + B + C
+\]  
+given $\epsilon > 0, \exists N$ such that $\exists \delta$ with $|h| < \delta \implies |A+ B + C| < 3\epsilon$ \\
+On $C$ $(\alpha^n - \beta^{n} = \alpha^{n-1} + \alpha^{n-2}\beta + \dots + \beta^{n-1})(\alpha- \beta)$ therefore
+\[
+    \frac{|E_n(z+h) - E_n(z)|}{h} \le \sum_{n=N+1}^{\infty} |\alpha_n| \left| \frac{(z+h)^{n}-(z)^{n}}{h}\right| \le \sum_{n=N+1}^{\infty}n|\alpha_n|r^{n-1} < \epsilon
+\] 
+if $N$ is picked larger than $N_\epsilon$.\\
+On $B$. 
+\[
+S_n'(z) - g(z)| = |\sum_{n=N+1}^{\infty}n\alpha_n z^{n-1}| \le |\sum_{n=N+1}^{\infty}n\alpha_n r^{n-1}| < \epsilon
+\] 
+if $N > N_1(\epsilon)$ \\
+Fix $N > N_\epsilon, N_1(\epsilon)$ there exists $\delta_N$ so that $|h| < \delta_N$ implies $|\frac{S_N(z+h) - S_N(z)}{h} - S_n'(z)| \le \epsilon$ Therefore 
+\[
+|A + B + C| < 3\epsilon
+\] 
+if $N$ is large enough
+
+\end{document}

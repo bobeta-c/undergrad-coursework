@@ -1,0 +1,358 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Exercise 1.1}
+\emph{
+    Let $\mathcal{S}$ be a semialgebra on $X$ and let $ \mathcal{A}$ be the collection of subsets of $X$ 
+    which consist of finite unions of elements of $ \mathcal{S}$.
+    Show that $\mathcal{A}$ is an algebra on  $X$
+}
+\solution{
+    We must show that $ \mathcal{A}$ satisfies the definition of an algebra. First it contains the empty set and the entire set $X$ since
+    it contains  $ \mathcal{S}$ which is a semi-algebra. 
+     \begin{enumerate}
+         \item Let $A, B \in \mathcal{A}$ then $A = \bigcup_{i=1}^{n}A_i, B = \bigcup_{j=1}^{m}B_j$ where $A_i,B_j \in \mathcal{S}$ for all  $i,j$. and
+             \[
+                 A \cap B = (\bigcup_{i=1}^{n}A_i) \cap (\bigcup_{j=1}^{m}B_j) = \bigcup_{i=1}^{n}(A_i \cap \bigcup_{j=1}^{m}B_i) = \bigcup_{i=1}^{n}\bigcup_{j=1}^{m}(A_i \cap B_j)
+             \] 
+             which is the finite union of elements of $\mathcal{S}$ since  $\mathcal{S}$ is closed under finite intersection by being a semi-algebra and so $A \cap B \in \mathcal{A}$
+         \item Let  $A \in \mathcal{A}$ be the finite union of  $A_i$ as before then
+             \[
+                 A^{c} = \bigcap_{i=1}^{n}A_i^{c} = \bigcap_{i=1}^{n}(\bigcup_{j=1}^{m}A_{i,j})
+             \] 
+             where $A_{i,j} \in  \mathcal{S}$ and $\bigcup_{j=1}^{m}A_{i,j} = A_i^{c}$  so each $A_i^{c}$ is in $ \mathcal{A}$ and since $ \mathcal{A}$ is closed under finite intersection we have that $ A^{c} \in \mathcal{A}$ 
+         \item Lastly using demorgans laws we have that  $ \mathcal{A}$ is closed under finite union.
+    \end{enumerate}
+}
+
+\section{Exercise 1.2}
+\emph{
+    Suppose $\mathcal{S}$ is a semialgebra on  $X$ and $\mu$ is a finitely additive function on $\mathcal{S}$.
+    Suppose  $E_1,\dots,E_n \in \mathcal{S}$ are disjoint $F_1,\dots,F_m \in \mathcal{S}$ are disjoint and $\bigcup_{i=1}^{n}E_i \in \mathcal{S}$
+    \begin{enumerate}
+        \item Show that if $\bigcup_{i=1}^{n}E_i = \bigcup_{j=1}^{m}F_j$ then
+            \[
+            \sum_{i=1}^{n}\mu(E_i) = \sum_{j=1}^{n}\mu(F_j)
+            \] 
+        \item Show that $ \mu $ extends uniquely to a finitely additive set function on the set $ \mathcal{A}$ defined in Exercise 1.1
+    \end{enumerate}
+}
+
+\solution{
+    \begin{enumerate}
+        \item
+            Im going to prove it in the stronger case where we do not assume that $\bigcup_{i=1}^{n}E_i \in \mathcal{S}$
+            we have that $E_i = \sqcup_{j=1}^{m} E_i \cap F_j$ and likewise $F_j = \sqcup_{i=1}^{n} F_j \cap E_i$
+            \[
+                \sum_{i=1}^{n}\mu(E_i) = \sum_{i=1}^{n}\mu(\bigsqcup_{j=1}^{m}E_i \cap F_j) = \sum_{i=1}^{n}\sum_{j=1}^{m} \mu(E_i \cap F_j) = \sum_{j=1}^{m}\sum_{i=1}^{n}\mu(E_i \cap F_j) = \sum_{j=1}^{m} \mu(F_j)
+            \] 
+            since all terms are disjoint where we used finite additivity. Also note that all the intersections are in $\mathcal{S}$ since it is a semi-algebra.
+        \item We extend $\mu$ to all of $ \mathcal{A}$. Let $A \in \mathcal{A}$ then $A = \bigcup_{i=1}^{n}A_i$ 
+            I claim that $A$ is a disjoint union of elements in $ \mathcal{S}$. First if $A = A_1 \cup A_2$ then
+            \[
+                A = A_1 \sqcup (A_2 \setminus A_1) = A_1 \sqcup (A_2 \cap A_1^{c}) = A_1 \sqcup (A_2 \cap (\bigsqcup_{j=1}^{n} B_j)) = A_1 \sqcup (\bigsqcup_{j=1}^{n}(B_j \cap A_2))
+            \] 
+            is the disjoint union of sets in $\mathcal{S}$ where we used the fact that complements are disjoint unions of sets in  $\mathcal{S}$.
+            Inductively if we have that for all sequences of length  $k$  $\bigcup_{i=1}^{k}A_i$ can be written as a disjoint union then consider a sequence of $k+1$ elements  $A_1,\dots,A_{k+1}$ this can be rewritten as
+            \[
+                \bigsqcup_{j=1}^{n}B_j \cup (A_{k+1} \cap (\bigcap_{i=1}^{k}A_i^{c})) = \bigsqcup_{j=1}^{n}B_j \sqcup (A_{k+1} \cap (\bigcap_{i=1}^{k}\bigsqcup_{l=1}^{n_i} G_{i,l}) 
+            \] 
+            \[
+                = \bigsqcup_{j=1}^{n}B_j \sqcup (\bigcap_{i=1}^{k}\bigsqcup_{l=1}^{n_i}(G_{i,l} \cap A_{k+1})) = \bigsqcup_{j=1}^{n}B_j \sqcup \bigsqcup_{1 \le l_1 \le n_1} \dots \bigsqcup_{1 \le l_k \le n_k} (A_{k+1} \cap G_{1,l_1} \cap G_{2,l_2} \cap \dots \cap G_{k,l_k})
+            \] 
+            so Now that we have established that $A = \bigsqcup_{i=1}^{N}S_i$ where $S_i \in \mathcal{S}$ are disjoint we define
+             \[
+            \mu(A) = \sum_{i=1}^{N}\mu(S_i)
+            \] 
+            and by the first part of this exercise this value is independent of the decomposition of $A$ into disjoint sets of $\mathcal{S}$ even if $A \not\in \mathcal{S}$.
+            For finite additivity let $A, B \in \mathcal{A}$ be disjoint then we have shown that $A = \bigsqcup_{i=1}^{n}A_i, B = \bigsqcup_{j=1}^{m}B_j$ and we have
+            \[
+                \mu(A) + \mu(B) = \sum_{i=1}^{n}A_i + \sum_{j=1}^{m}B_i = \mu(\bigsqcup_{i=1}^{n}A_i \sqcup \bigsqcup_{j=1}^{m}B_i) = \mu(A \cup B)
+            \] 
+            For uniqueness assume for the sake of contradiction that there exists $\nu$ on  $\mathcal{A}$ such that  $\mu = \nu$ on $\mathcal{S}$ and the function is finitely additive. Let  $A \in \mathcal{A}$ be such that $\mu(A) \ne \nu(A)$ then $A = \bigsqcup_{i=1}^{N}S_i$ with $S_i \in \mathcal{S}$
+            and we have
+             \[
+                 \mu(A) = \mu(\bigsqcup S_i) = \sum_{i=1}^{N}\mu(S_i) = \sum_{i=1}^{N}\nu(S_i) = \nu(\bigsqcup_{i=1}^{N}S_i) = \nu(A)
+            \] 
+            so they must agree. 
+    \end{enumerate}
+}
+
+\section{Exercise 1.3}
+\emph{
+    Assume $\mathcal{A}$ is an algebra on $X$ and  $\mu_0: \mathcal{A} \rightarrow [0,+\infty]$ is such that
+    \begin{enumerate}
+        \item $\mu_0(\emptyset) = 0$
+        \item $E,F \in \mathcal{A}$ and $E \cap F = \emptyset$ implies $\mu(E \cup F) = \mu_0(E) + \mu_0(F)$.
+        \item If $\{E_i\}_{i=1}^{\infty} \subset \mathcal{A}$ is such that $\cup_{i=1}^{\infty}E_i \in \mathcal{A}$ then $\mu_0(\cup_{i=1}^{\infty}E_i) \le \sum_{i=1}^{\infty}\mu_0(E_i)$.\\
+    \end{enumerate}
+    Define
+    \[
+        \mu^{*}(A) := \inf_{\{E_i\}_{i=1}^{\infty}} \left \{ \sum_{i=1}^{\infty}\mu_0(E_i) : \{E_i\}_{i=1}^{\infty} \subset \mathcal{A}, A \subset \bigcup_{i=1}^{\infty}E_i \right \}
+    \] 
+    Show that $\mu^{*}$ is an outer measure on $X$, $\mu^{*}$ coincides with $\mu_0$ on $\mathcal{A}$ and every element of $\mathcal{A}$ is $\mu^{*}$-measurable
+}
+\solution{
+    We have that $\mu^{*}$ is well defined on all of $2^{X}$ since $X \in \mathcal{A}$. we must show that $\mu^{*}$ is countably sub-additive. 
+    Let $\{A_i\}_{i=1}^{\infty} \subset 2^{X}$ be a countable collection of sets in $X$. It suffices to show that
+    \[
+        \mu^{*}(\bigcup_{i=1}^{\infty}A_i) \le \sum_{i=1}^{\infty}\mu^{*}(A_i) + \epsilon
+    \] 
+    for all $\epsilon > 0$. Fix $\epsilon > 0$. Then for each $A_i$ there exists  $\{E_{i,j}\}_{j=1}^{\infty} \subset \mathcal{A}$ such that 
+    \[
+        \mu^{*}(A_i) \ge \sum_{j=1}^{\infty}\mu_0(E_{i,j}) - \frac{\epsilon}{2^{i}}
+    \] 
+    and
+    \[
+        \bigcup_{j=1}^{\infty}E_{i,j} \supset A_i
+    \] 
+    so
+    \[
+        \bigcup_{i=1}^{\infty}\bigcup_{j=1}^{\infty}E_{i,j} \supset \bigcup_{i=1}^{\infty}A_i
+    \] 
+    and
+    \[
+        \mu^{*}(\bigcup_{i=1}^{\infty}A_i) \le \sum_{i=1}^{\infty}\sum_{j=1}^{\infty}\mu_0(E_{i,j}) \le \sum_{i=1}^{\infty}(\mu^{*}(A_i) + \frac{\epsilon}{2^{i}}) \le \sum_{i=1}^{\infty}\mu^{*}(A_i) + \epsilon
+    \] 
+    additionally $\mu^{*}(\emptyset) = 0$ since the sequence $\emptyset, \emptyset, \dots$ is a cover of  $\emptyset$ and  $\mu_0(\emptyset) = 0$ and since $\mu_0$ outputs nonnegative values the infimum must be zero.\\
+    Next to show that $\mu^{*}$ coincides with $\mu_0$ on $ \mathcal{A}$. Let $A \in \mathcal{A}$ then we have
+    \[
+    \mu^{*}(A) \le \mu_0(A)
+    \] 
+    since $A \subset A$ so the sequence $A, \emptyset, \emptyset, \dots$ covers  $A$.
+    Before I conclude, quickly I show that if $A \subset B$ $A,B \in \mathcal{A}$ then $\mu_0(A) \le \mu_0(B)$ indeed $B = B \setminus A \cup A$ so  $\mu_0(B) = \mu_0(B \setminus A) + \mu_0(A) \implies \mu_0(B) \ge \mu_0(A)$.
+    Now if $\{E_i\}_{i=1}^{\infty} \subset \mathcal{A}$ is such that $A \subset \bigcup_{i=1}^{\infty}E_i$ then by $(c)$ 
+     \[
+         \sum_{i=1}^{\infty}\mu_0(E_i) \ge \sum_{i=1}^{\infty}\mu_0(E_i \cap A) \ge \mu_0(\bigcup_{i=1}^{\infty}(E_i \cap A)) = \mu_0(A)
+    \] 
+    so the infimum over all collections of $E_i$ must be greater than  $\mu_0(A)$ and we have
+    \[
+    \mu^{*}(A) \ge \mu_0(A)
+    \] 
+    putting the two directions together we get
+    \[
+    \mu^{*}(A) = \mu_0(A)
+    \] 
+    Lastly let $A \in \mathcal{A}$ we wish to show that $A$ is $\mu^{*}$-measurable. For this we must show
+    \[
+    \mu^{*}(B) \ge \mu^{*}(B \setminus A) + \mu^{*}(B \cap A)
+    \] 
+    for all $B \subset X$. Fix $\epsilon > 0$ and let $\{E_i\}_{i=1}^{\infty} \subset \mathcal{A}$ be a cover of $B$ such that
+     \[
+    \mu^{*}(B) \ge \sum_{i=1}^{\infty}\mu_0(E_i) - \epsilon
+    \] 
+    Each $E_i = E_i \setminus A \sqcup E_i \cap A$ and  $\mu_0(E_i) = \mu_0(E_i \setminus A) + \mu_0(E_i \cap A)$ since $A$ is in $ \mathcal{A}$ so we can separate this cover into two covers.
+    $\{E_i \setminus A\}_{i=1}^{\infty} \subset \mathcal{A}$ is a cover of $B \setminus A$ and  $\{E_i \cap A\}_{i=1}^{\infty} \subset \mathcal{A}$ 
+    is a cover of $B \cap A$
+    \[
+    \mu^{*}(B) \ge \sum_{i=1}^{\infty}\mu_0(E_i) -\epsilon = \sum_{i=1}^{\infty}\mu_0(E_i \setminus A) + \sum_{i=1}^{\infty}\mu_0(E_i \cap A) - \epsilon \ge \mu^{*}(B \setminus A) + \mu^{*}(B \cap A) - \epsilon
+    \] 
+    and since $\epsilon$ is arbitrary we conclude
+    \[
+    \mu^{*}(B) \ge \mu^{*}(B \setminus A) + \mu^{*}(B \cap A)
+    \] 
+    our desired result, thus $A$ is $\mu^{*}$-measurable.
+}
+
+\section{Exercise 1.4}
+\emph{
+    Let $\mathcal{S}$ be a semialgebra on  $X$ and assume  $\mu_0: \mathcal{S} \rightarrow [0,+\infty]$ is such that
+    $\mu_0(\emptyset) = 0$ show that if $\mu_0$ is finitely additive and countably sub-additive then so is also its extension
+    to the algebra $ \mathcal{A}$ generated by taking all finite unions of sets from $\mathcal{S}$.
+}
+\solution{
+    In Exercise $1.2$ we showed already that  $\mu$ the extension to $ \mathcal{A}$ is finitely additive, we must now show that
+    $\mu$ is countably subadditive. Let $\{A_i\}_{i=1}^{\infty} \subset \mathcal{A}$ be a collection of sets such that $\bigcup_{i=1}^{\infty}A_i = A \in \mathcal{A}$. We have shown
+    in Exercise 1.2 that each $A_i = \bigsqcup_{j=1}^{n_i}E_{i,j}$ where each $E_{i,j} \in \mathcal{S}$. Additionally $A = \bigsqcup_{k=1}^{K}S_k$ with each $S_k \in \mathcal{S}$ then we have
+    \[
+        \mu(S_k) = \mu(\bigcup_{i=1}^{\infty} A_i \cap S_k) = \mu(\bigcup_{i=1}^{\infty}\bigcup_{j=1}^{n_i}E_{i,j} \cap S_k) \le \sum_{i=1}^{\infty}\sum_{j=1}^{n_i}\mu(E_{i,j} \cap S_k) = \sum_{i=1}^{\infty}\mu(A_i \cap S_k)
+    \] 
+    this holds for each $k$ so
+    \[
+    \mu(A) \le \sum_{i=1}^{\infty}(\sum_{k=1}^{K}\mu(A_i \cap S_k)) = \sum_{i=1}^{\infty}\mu(A_i \cap A) = \sum_{i=1}^{\infty}\mu(A_i)
+    \] 
+}
+
+\section{Exercise 1.5}
+\emph{
+    Let $ \mathcal{A}, \mathcal{M} \subset 2^{X} $ be such that $\mathcal{M}$ is a monotone class
+    and  $ \mathcal{A}$ is an algebra. Show that if $ \mathcal{A} \subset \mathcal{M}$ then $\sigma( \mathcal{A}) \subset \mathcal{M}$.
+}
+\solution{
+    Define $m( \mathcal{A})$ to be the intersection of all monotone calsses on $X$ which contain $ \mathcal{A}$
+    \begin{enumerate}
+        \item Let $\mathcal{M}0$ be a monotone class. Consider  $\mathcal{M}_0^{'} := \{E^{c}: E \in \mathcal{M}_0 $.
+            Let $(A_n)_{n=1}^{\infty}, (B_n)_{n=1}^{\infty} \subset \mathcal{M}_0^{'}$ be such that
+            $A_n \subset A_{n+1}$ and $B_{n+1} \subset B_n$ for all $n$.
+            We then have that $(A_n^{c})_{n+1}^{\infty}, (B_n^{c})_{n+1}^{\infty} \subset \mathcal{M}_0$ 
+            with $A_{n+1}^{c} \subset A_n^{c}$ and $B_n^{c} \subset B_{n+1}^{c}$ so we have that
+            \[
+                \bigcap_{n=1}^{\infty}A_n^{c}, \bigcup_{n=1}^{\infty}B_n^{c} \in \mathcal{M}_0
+            \] 
+            which implies that
+            \[
+                \bigcup_{n=1}^{\infty}A_n = (\bigcap_{n=1}^{\infty}A_n^{c})^{c} \in \mathcal{M}_0^{'}
+            \] 
+            and
+            \[
+                \bigcap_{n=1}^{\infty}B_n = (\bigcup_{n=1}^{\infty}B_n^{c})^{c} \in \mathcal{M}_0^{'}
+            \] 
+            so $\mathcal{M}_0^{'}$ is a monotone class.
+            Let $ A \in m( \mathcal{A})$ assume for contradiction that $ A^{c} \not\in m( \mathcal{A})$ then there exists a monotone class $  \mathcal{M} \supset \mathcal{A}$ containing $A$ but not $ A^{c}$. 
+            Since $ \mathcal{A}$ is an algebra $ \mathcal{M}^{'}$ contains $ \mathcal{A}$ as a subset and contains $ A^{c}$ but not $A$ thus  $ A$ cannot be in  $m( \mathcal{A})$ a contradiction. Therefore
+            $m( \mathcal{A})$ is closed under complements.
+        \item Fix $E \subset X$ and consider $\mathcal{M}_E := \{C \in m(A): C \cap E \in m( \mathcal{A})\}$.
+            Let $(A_n)_{n=1}^{\infty}, (B_n)_{n=1}^{\infty} \subset \mathcal{M}_E$ be increasing and decreasing sequences of sets respectively.
+            We have that $(A_n \cap E)_{n=1}^{\infty}$ and $(B_n \cap E)_{n=1}^{\infty}$ are in $m( \mathcal{A})$ and are also increasing and decreasing sequences.
+            \[
+                \bigcup_{n=1}^{\infty}(A_n) = C \in m( \mathcal{A}) \qquad \bigcup_{n=1}^{\infty}(A_n \cap E) = E \cap (\bigcup_{n=1}^{\infty} A_n) = E \cap C \in m( \mathcal{A})
+            \] 
+            Thus $C \in  \mathcal{M}_E$
+            SImilarly
+            \[
+                \bigcap_{n=1}^{\infty}(B_n) = D \in m( \mathcal{A}) \qquad \bigcap_{n=1}^{\infty}(B_n \cap E) = E \cap \left(\bigcap_{n=1}^{\infty}B_n\right) = E \cap D \in m( \mathcal{A})
+            \] 
+            and so $D \in \mathcal{M}_E$ so  $\mathcal{M}_E$ is a monotone class
+        \item Fix  $ E \in \mathcal{A}$.  Then $ \mathcal{M}_E$ contains  $ \mathcal{A}$ since for each $ A \in \mathcal{A}$ $ A \cap E \in \mathcal{A}$ so $ A \cap E \in m( \mathcal{A})$ thus $ \mathcal{M}_E$ is a monotone 
+            class that contains  $ \mathcal{A}$ and so $m( \mathcal{A}) \subset \mathcal{M}_E$.
+            Let $G \in m( \mathcal{A})$ and $A \in \mathcal{A}$ then since $m( \mathcal{A}) \subset \mathcal{M}_A$ we have $ G \in \mathcal{M}_A \;\; G \cap A \in m( \mathcal{A})$  $A \in \mathcal{M}_G$. Since this holds for arbitrary $ A \in \mathcal{A}$ we have
+            \[
+                \mathcal{A} \subset \mathcal{M}_G
+            \] 
+            and so
+            \[
+                m( \mathcal{A}) \subset \mathcal{M}_G
+            \] 
+            for all $G \in m( \mathcal{A})$. additionaly
+            \[
+                \mathcal{M}_G \subset m( \mathcal{A})
+            \] 
+            by definition so we conclude that
+            \[
+                \mathcal{M}_G = m( \mathcal{A})
+            \] 
+            for all $G \in m( \mathcal{A})$. Now let $A, B \in m( \mathcal{A})$ then $B \in \mathcal{M}_A \implies A \cap B \in m( \mathcal{A})$ so that $m( \mathcal{A})$ is closed under intersection.
+        \item We now have that $m( \mathcal{A})$ is closed under intersection and complement so that it is itself an algebra. It is also a monotone class. To show that
+            it is a sigma algebra we must show that it is closed under arbitrary unions. Let $(A_i)_{i=1}^{\infty} \subset m( \mathcal{A})$ construct $G_i = \bigcup_{j=1}^{i} A_i$ then each $G_i \in m( \mathcal{A})$ since $m( \mathcal{A})$ is an algebra.
+            Additionally $G_n \subset G_{n+1}$ and since $m( \mathcal{A})$ is a monotone class
+            \[
+                \bigcup_{n=1}^{\infty}G_n \in m( \mathcal{A})
+            \] 
+            so $m( \mathcal{A})$ is a sigma algebra. Thus $\sigma( \mathcal{A}) \subset m( \mathcal{A}) \subset \mathcal{M}$ and we have our intended result.
+    \end{enumerate}
+}
+
+\section{Exercise 1.6}
+\emph{
+    Let $ \mathcal{A} \subset 2^{X}$ be an algebra and let $\mu, \nu$ be finite measures on $ \sigma ( \mathcal{A})$. Show that
+    \[
+        \mu = \nu \;\;\;\text{on $ \mathcal{A}$} \qquad \implies \qquad \mu = \nu \;\; \text{on} \;\; \sigma( \mathcal{A})
+    \] 
+    Show that the result remains true if $\mu(X) = \infty$ and there exists $\{X_n\}_{n=1}^{\infty} \subset \mathcal{A}$ such that
+    $X = \bigcup_{n=1}^{\infty}X_n$ and $\mu(X_n) < \infty$
+}\\
+\solution{
+    let $\mathcal{M} := \{A \in \sigma( \mathcal{A}) : \mu[A] = \nu[A]\}$ then
+    $ \mathcal{A} \subset \mathcal{M}$. Let $(A_n)_{n=1}^{\infty}, (B_n)_{n=1}^{\infty} \subset \mathcal{M}$ be such that
+    $A_n \subset A_{n+1}, B_{n+1} \subset B_n$. For the $A_n$'s define  $G_n := A_n \setminus (\bigcup_{i=1}^{n-1}A_i)$ with $G_1 = A_1$
+    Then
+    \[
+        \mu(\bigcup_{n=1}^{\infty}A_n) = \mu(\bigsqcup_{n=1}^{\infty}G_n) = \sum_{n=1}^{\infty} \mu(G_n) = \lim_{m\to \infty} \sum_{n=1}^{m}\mu(G_n) = \lim_{m\to \infty}\mu(A_m)
+    \] 
+    similarly
+    \[
+        \nu(\bigcup_{n=1}^{\infty}A_n) = \lim_{n\to \infty}\nu(A_n)
+    \] 
+    but since $\mu(A_n) = \nu(A_n)$ since they are in $\mathcal{M}$ we conclude that
+     \[
+         \mu(\bigcup_{n=1}^{\infty}A_n) = \nu(\bigcup_{n=1}^{\infty}A_n)
+    \] 
+    For the $B_n$'s if we can show that
+     \[
+         \mu(\bigcap_{n=1}^{\infty}B_n \cap \bigcup_{i=1}^{j}(X_i)) = \nu(\bigcap_{n=1}^{\infty}B_n \cap \bigcup_{i=1}^{j}(X_i))
+    \] 
+    then we have that
+    \[
+        \mu(\bigcap_{n=1}^{\infty}B_n) = \mu(\bigcup_{j=1}^{\infty} (\bigcap_{n=1}^{\infty}B_n \cap \bigcup_{i=1}^{j}X_i)) = \nu(\bigcup_{j=1}^{\infty}(\bigcap_{n=1}^{\infty}B_n \cap \bigcup_{i=1}^{j}X_i)) = \nu(\bigcap_{n=1}^{\infty}B_n)
+    \] 
+    by the previous part. Using subadditivity we have that
+    \[
+        \mu(\bigcup_{i=1}^{j}X_i) \le \sum_{i=1}^{j}\mu(X_i) < \infty
+    \] 
+    with the same holding for $\nu$ so it suffices further to prove the statements about the  $B_n$'s under the condition that  $B_1$ has finite measure.
+    With this assumption Define
+    \[
+    H_n = B_1 \setminus B_n
+    \] 
+    then
+    \[
+    H_1 \subset H_2 \subset \dots
+    \] 
+    so we have
+    \[
+        \mu(\bigcup_{n=1}^{\infty}H_n) = \lim_{n\to \infty}\mu(H_n) = \lim_{n\to \infty}(\mu(B_1) - \mu(B_n)) = \mu(B_1) - \lim_{n\to \infty}\mu(B_n)
+    \] 
+    but
+    \[
+        \mu(\bigcup_{n=1}^{\infty}H_n) = \mu(\bigcup_{n=1}^{\infty}(B_1 \cap B_n^{c}) = \mu(B_1 \cap \bigcup_{n=1}^{\infty}B_n^{c}) = \mu(B_1 \setminus \bigcap_{n=1}^{\infty}B_n) = \mu(B_1) - \mu(\bigcap_{n=1}^{\infty}B_n)
+    \] 
+    equating the two equations, subtracting off the $\mu(B_1)$ since it is finite we get
+    \[
+        \lim_{n\to \infty}\mu(B_n) = \mu(\bigcap_{n=1}^{\infty}B_n)
+    \] 
+    and since by assumption $\mu(B_n) = \nu(B_n)$ and with the above equation holding for both we get that.
+    $\bigcap_{n=1}^{\infty}B_n \in \mathcal{M}$. Thus $\mathcal{M}$ is a monotone class and by the last exercise  $\sigma( \mathcal{A}) \subset \mathcal{M}$ that is, for every  $A \in \sigma( \mathcal{A})$ $\mu(A) = \nu(A)$ thus we have our desired conclusion.
+}
+
+\end{document}

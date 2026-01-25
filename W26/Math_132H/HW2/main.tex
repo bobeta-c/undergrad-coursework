@@ -1,0 +1,289 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Exercise 1.14}
+\emph{
+    Suppose $\{a_n\}_{n=1}^{N}$ and $\{b_n\}_{n=1}^{N}$ are two finite sequences of complex numbers.
+    Let $B_k = \sum_{n=1}^{k}b_n$ denote the partial sums of the series $\sum_{}^{}b_n$ with $B_0 = 0$.
+    Prove the summation by parts formula
+    \[
+        \sum_{n=M}^{N}a_nb_n = a_NB_N - a_MB_{M-1} - \sum_{n=M}^{N-1}(a_{n+1}-a_n)B_n
+    \] 
+}
+\solution{
+    By letting $c_n = a_n - a_{n-1}$ and  $C_n = a_n = \sum_{k=1}^{n}c_n$ we can rewrite what we are trying to prove as
+    \[
+        \sum_{n=M}^{N}C_nb_n = C_NB_N - C_MB_{M-1} - \sum_{n=m}^{N-1}c_{n+1}B_n
+    \] 
+    and we can assume without loss of generality that $a_0 = 0$ or define it to be so.
+    expanding sums we get
+    \[
+        \sum_{n=M}^{N}\sum_{k=1}^{n}c_kb_n = \sum_{k=1}^{N}\sum_{j=1}^{N}c_kb_j - \sum_{k=1}^{M}\sum_{j=1}^{M-1}c_kb_j - \sum_{n=M}^{N-1}\sum_{k=1}^{n}c_{n+1}b_k
+    \] 
+    and moving terms so that everything is positive we now try to prove
+    \[
+        \sum_{k=1}^{N}\sum_{j=1}^{N}c_kb_j = \underbrace{\sum_{n=M}^{N}\sum_{k=1}^{n}b_nc_k}_{(a)} + \underbrace{\sum_{k=1}^{M}\sum_{j=1}^{M-1}c_kb_j}_{(b)} + \underbrace{\sum_{n=M}^{N-1}\sum_{k=1}^{n}c_{n+1}b_k}_{(c)}
+    \] 
+    Now, by drawing a picture it is clear that these sums are the same, however I will verify it here.
+    Let $(i,j)$ be an index representing $c_i b_j$ such that  $1 \le i,j \le N$. Then there are three cases. If  $i \le M, j \le M-1$ then the term
+    is in $(b)$
+    and it is not in the other two sums since $j < M $ so it is not in  $(a)$ and $i < M+1$ so it is not in  $(c)$.
+    If $j \ge M$ and  $i \le j$ then  $c_ib_j \in (a)$ by inspection and it is clearly not in  $(b)$ since  $j > M-1$ and it is not in  $(c)$ since $i \le j$.
+    Lastly if $i \ge M+1$ and  $j < i$ then  $c_ib_j $ is  $(c)$ by similar reasoning as before and likewise the terms arent in  $(a)$ or  $(b)$ so we conclude that the 
+    three different partial sums partition the set of all possible indices and so the left and right sides are the same.
+}
+
+\section{Exercise 1.16}
+\emph{
+    Determine the radius of convergence of the series $\sum_{n=1}^{\infty}a_nz^{n}$ when:
+    \begin{enumerate}
+        \item $a_n = (\log n)^2$
+        \item $a_n = n!$
+        \item  $a_n = \frac{n^2}{4^{n} + 3n}$ 
+        \item $a_n = \frac{(n!)^{3}}{(3n)!}$
+    \end{enumerate}
+}
+\solution{
+    \begin{enumerate}
+        \item We can use Hadamard's formula on $a_n = (\log n)^2$ we have $\frac{1}{R} = \limsup_{n\to \infty} (|a_n|)^{\frac{1}{n}} = \limsup_{n\to \infty}(\log n)^{\frac{2}{n}} = 1$ 
+            Since $\log n > 1$ for large  $n$ and the power is positive so it is greater than or equal to 1 and since  $(\log n)^2 < n$ for large $n$ we get it is less than or equal to $1$ so it is  $1$ and so  $ R = 1$
+        \item Again we consider
+            \[
+            \frac{1}{R} = \limsup_{n\to \infty} (n!)^{\frac{1}{n}} = +\infty
+            \] 
+            so the radius of convergence for this series is 0
+        \item 
+            For this one we recognize that
+            \[
+            \limsup_{n\to \infty}\left(\frac{n^2}{4^{n}+3n}\right)^{\frac{1}{n}} = \frac{1}{4}
+            \] 
+            and taking reciprocal we get $R = 4$
+        \item using the approximation we get
+            \begin{align*}
+                \frac{ (n!)^{3}}{(3n)!} &\approx \frac{(nc^{n+\frac{1}{2}}e^{-n})^{3}}{c(3n)^{3n+\frac{1}{2}}e^{-3n}}\\
+                                        &= \frac{c^{3}e^{-3n}n^{3n+\frac{3}{2}}}{c3^{3n+\frac{1}{2}}n^{3n+\frac{1}{2}}e^{-3n}}\\
+                                        &= c^2n3^{-(3n+\frac{1}{2})}\\
+                                        &= nc^23^{-\frac{1}{2}}(3^{-3})^{n}
+            \end{align*}
+            so taking $n$-th roots we get
+             \[
+            \limsup_{n\to \infty}(a_n)^{\frac{1}{n}} \approx 3^{-3}
+            \] 
+            so $R = 3^{3} = 27$
+    \end{enumerate}
+}
+
+\section{Exercise 1.18}
+\emph{
+    Let $f$ be a power series centered at the origin. Prove that $f$ has a power series expansion around any point in its disc of convergence.
+}
+\solution{
+    Let $f(z) = \sum_{n=1}^{\infty}a_nz^{n}$ with radius of covergence $R$ then let  $z_0$ be a point in $D_R(0)$ the open disc of radius  $R$ centered at 0. we have
+    \[
+    f(z) = \sum_{n=0}^{\infty}a_n(z_0 + (z-z_0))^{n} = \sum_{n=0}^{\infty}a_n\sum_{k=0}^{n}\binom{n}{k}(z_0)^{n-k}(z-z_0)^{k}
+    \] 
+    We can swap the order of summation because for $|z| < R$ the inside converges absolutely
+    \[
+    f(z) = \sum_{k=0}^{\infty}\left(\sum_{n=k}^{\infty}\binom{n}{k}(z_0)^{n-k}a_n\right)(z-z_0)^{k}
+    \] 
+    We know that the original series converges if $|z| < R$ so we need
+     \[
+    |z_0 - (z-z_0)| < R \implies |z-z_0| < R - |z_0|
+    \] 
+    so the radius of convergence is at least $R - |z_0|$
+}
+
+\section{Exercise 1.20}
+\emph{
+    Expand $(1-z)^{-m}$ in powers of $z$. Here $m$ is a fixed positive integer. Also show that if
+    \[
+        (1-z)^{-m} = \sum_{n=0}^{\infty}a_nz^{n}
+    \] 
+    then one obtains the following asymptotic relation for the coefficients:
+    \[
+    a_n \sim \frac{1}{(m-1)!}n^{m-1} \qquad n \rightarrow \infty
+    \] 
+}
+\solution{
+    $f(0) = 1$,  $f'(z) = m(1-z)^{-m-1}$ $f'(0) = m$  $f^{(2)}(z) = m(m+1)(1-z)^{-(m+2)}$ 
+    in general
+    \[
+    f^{(n)}(z) = \frac{(m+n-1)!}{(m-1)!}(1-z)^{-(m+n)} \qquad f^{(n)}(0) = \frac{(m+n-1)!}{(m-1)!}
+    \] 
+    so we get
+    \[
+    f(z) = \sum_{n=0}^{\infty}\frac{(m+n-1)!}{(m-1)!n!}z^{n}
+    \] 
+    we want to show that
+    \[
+        \frac{(m+n-1)!}{(m-1)!n!} \sim \frac{1}{(m-1)!}n^{m-1}
+    \] 
+    this is true if 
+    \[
+        \frac{(m+n-1)!}{n!} \sim n^{m-1}
+    \] 
+    but we have
+    \[
+        \frac{(m+n-1)!}{n!} = (m+n-1)(m+n-2)\dots(n+1) = n^{m-1} + O(n^{-m_2})
+    \] 
+    so in the limit they approach eachother
+}
+
+\section{Exercise 1.21}
+\emph{
+    Show that for $|z| < 1$ one has
+     \[
+    \frac{z}{1-z^2} + \frac{z^2}{1-z^{4}} + \dots + \frac{z^{2^{n}}}{1-z^{2^{n+1}}} + \dots = \frac{z}{1-z}
+    \] 
+    and
+    \[
+    \frac{z}{1+z} + \frac{2z^2}{1+z^2} + \dots + \frac{2^{k}z^{2^{k}}}{1+z^{2^{k}}} + \dots = \frac{z}{1-z}
+    \] 
+    Justify any change in the order of summation
+}
+\solution{
+    For the first sum we have
+    \[
+    \sum_{n=0}^{\infty}\frac{z^{2^{n}}}{1-z^{2^{n+1}}}
+    \] 
+    We try to write this as a telescoping sum
+    \[
+        \frac{z^{2^{n}}}{1-z^{2^{n+1}}} = x - \frac{1}{1-z^{2^{n+1}}}
+    \] 
+    \[
+    z^{2^{n}} = (1-z^{2^{n+1}})x - 1
+    \] 
+    \[
+    x = \frac{1+z^{2^{n}}}{1-z^{2^{n+1}}} = \frac{1+z^{2^{n}}}{(1-z^{2^{n}})(1+z^{2^{n}})} = \frac{1}{1-z^{2^{n}}}
+    \] 
+    so our original sum is
+    \[
+    \sum_{n=0}^{\infty}\left(\frac{1}{1-z^{2^{n}}} - \frac{1}{1-z^{2^{n+1}}}\right)
+    \] 
+    so the m-th partial sum is
+    \[
+        \frac{1}{1-z} - \frac{1}{1-z^{2^{m+1}}}
+    \] 
+    as $m \rightarrow \infty$ this converges to
+    \[
+    \frac{1}{1-z} - 1 = \frac{z}{1-z}
+    \] 
+    our desired result.
+    For the second series we similarly want to find $x_k$ such that
+     \[
+         x_k - x_{k+1} = \frac{2^{k}z^{2^{k}}}{1+z^{2^{k}}}
+    \] 
+    we try $x_k = \frac{2^{k}z^{2^{k}}}{1-z^{2^{k}}}$
+    then
+    \begin{align*}
+        x_k - x_{k+1} &= \frac{2^{k}z^{2^{k}}}{1-z^{2^{k}}} - \frac{2^{k+1}z^{2^{k+1}}}{1-z^{2^{k+1}}}\\
+                      &= \frac{2^{k}z^{2^{k}}}{1-z^{2^{k}}} - \frac{2^{k+1}z^{2^{k+1}}}{(1-z^{2^{k}})(1+z^{2^{k}})}\\
+                      &= \frac{2^{k}z^{2^{k}}+2^{k}z^{2^{k+1}} - 2^{k+1}z^{2^{k+1}}}{1-z^{2^{k+1}}}\\
+                      &= 2^{k}\frac{z^{2^{k}} - z^{2^{k+1}}}{(1-z^{2^{k}})(1+z^{2^{k}})}\\
+                      &= 2^{k}z^{2^{k}}\frac{(1-z^{2^{k})}}{(1-z^{2^{k}})(1+z^{2^{k}})}\\
+                      &= \frac{2^{k}z^{2^{k}}}{1+z^{2^{k}}}
+    \end{align*}
+    as desired thus by telescoping, our  $m$-th term is
+    \[
+    \frac{z}{1-z} - \frac{2^{m+1}z^{2^{m+1}}}{1-z^{2^{m+1}}}
+    \] 
+    the ending term converges to 0. since the bottom of the fraction converges to 1 and the top goes to zero since $|z| < 1$  and $z$ to the power of an exponential shrinks faster than the exponential growth of  $2^{m}$
+    thus the limit is
+    \[
+    \frac{z}{1-z}
+    \] 
+    as required.
+}
+\section{Exercise 23}
+\emph{
+    Consider the function $f$ defined on $ \mathbb{R}$ by
+    \[
+    f(x) = 
+    \begin{cases}
+        0 & x \le 0\\
+        e^{-\frac{1}{x^2}} & x >0
+    \end{cases}
+    \] 
+    Prove that $f$ is indefinitely differentiable on $ \mathbb{R}$ and that $f^{(n)}(0) = 0$ for all $n \ge 1$. Conclude
+    that  $f$ does not have a converging power series expansion for $x$ near the origin.
+}
+\solution{
+    It suffices to check for differentiability at the origin since for $x < 0$ all derivatives are 0 
+    and for  $x > 0$ the function  $e^{-\frac{1}{x^2}}$ is smooth and indefinitely differentiable.
+    Additionally its derivative is always a linear combination of $e^{-\frac{1}{x^2}}$ terms divided by polynomials. and so
+    \[
+    \lim_{x\to 0^{+}}\frac{f^{(n)}(x)}{x} = \lim_{x\to 0^{+}}f^{(n)} = 0
+    \] 
+    and similarly
+    \[
+    \lim_{x\to 0^{-}}\frac{f^{(n)}(x)}{x} = \lim_{x\to 0^{-}}f^{(n)} = 0
+    \] 
+    and so
+    \[
+    f^{(n)}(0) = \lim_{h\to 0} \frac{f^{(n-1)}(-h) + f^{(n)}(h)}{h} = 0
+    \] 
+    for all $n$.
+    Assume for contradiction there exists an expansion that converges in a radius $ r >0$ around the origin
+     \[
+    \sum_{n=0}^{\infty}a_nx^{n}
+    \] 
+    then by theorem $2.6$ since  $f$ is also a power series on $ \mathbb{C}$ we have that the derivates
+    \[
+    f^{(m)}(x) = \sum_{n=m}^{\infty}n(n-1)\dots(n-m+1)a_nz^{n-m}
+    \] 
+    however by plugging in $0$ we get that $a_n = 0$ for all  $n$ and so  $f = 0$ in the ball around  $0$ however  $e^{-\frac{1}{x^2}}$ is strictly greater than $0$ for all  $x > 0$ and which is a contradiction. Thus no power series is possible
+}
+
+\end{document}

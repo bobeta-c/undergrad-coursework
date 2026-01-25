@@ -1,0 +1,118 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\[
+\mathbb{P}_i(A) = \mathbb{P}(A | X_0=i)
+\] 
+\[
+    \mathbb{E}_i[\cdot] = \mathbb{E}[ \cdot | X_0=i]
+\] 
+need to be able to verify whether $\{T = n\}$ or not given  $(X_0,\dots,X_n)$ \\
+\emph{
+    Definition: Stopping problem $\{T = n\}$ is measurable with respect to  $(X_0,X_1,\dots,X_n)$
+    in other words $\{T = n\}$ can be determined by the data given so far. \\
+}
+Example: Hitting time:
+$\sigma_C := \min\{n \ge 0: X_n \in C\}$
+Example First return time:
+\[
+    T_i := \min\{n > 0: X_n = i\}
+\] 
+$k$-th return time
+\[
+    T_i^{(k)} := \min\{n > T_i^{(k)}+1:X_n = i\}
+\] 
+
+\section{Theorem Strong Markov Property}
+If $X$ is a discrete time Markov Chain, $T $ is a stopping time for  $X$, then Markov Properrty holds at  $T$.
+Given $T = n, X_T = i$  $(X_{T+k})_{k \ge 1}$ is independent of  $(X_k)_{k \le T-1}$ behaves likes  $(X_k)_{k \ge 1}, X_0 =i$\\
+Proof (sketch $X_{T+1}$)
+\[
+    \mathbb{P}(X_{T+1} = j | X_T = i, T=n, X_{T-1} = i_{T-1},\dots,X_0=i_0) = \frac{\mathbb{P}(X_{T+1}  =j , T=n, X_{T-1} = i_{T-1},\dots,X_0=i_0)}{ \mathbb{P}(T=n,X_{T-1}=i_{T-1},\dots X_0 = i_0}
+\] 
+Numerator 
+\[
+    = \mathbb{P}(X_{n+1}=j,T=n,X_n=i,X_{n-1} = i_{n-1},\dots,X_0=i_0)
+\] 
+By choosing only meaningful path we can get rid of the condition $T = n$ to get
+ \[
+     = \mathbb{P}(X_{n+1} =j, X_n = i,X_{n-1} = i_{n-1},\dots,X_0=i_0) = \mathbb{P}(X_{n+1} = j | X_{n} = i, \dots X_0=i_0) \mathbb{P}(X_n = i, \dots, X_0=i)
+\] 
+so we conclude our intended result
+\[
+    \mathbb{P}(X_{T+1} = j| X_t = i, T=n, X_{T-1} = i_{T-1}\dots,X_0=i_0) = p(i,j)
+\] 
+
+\section{}
+\[
+    T_i = \min\{n \ge 1 : X_n = i\}
+\] 
+\[
+    \mathbb{P}_i(T_i < \infty) = \rho_{ii}
+\] 
+\[
+    \rho_{ij} = \mathbb{P}_i(T_j < \infty)
+\] 
+from theorem
+\[
+    \mathbb{P}_i(T_n^{(k)} < \infty) - \rho_{i,i}^{k} = 
+    \begin{cases}
+        1 & \rho_{ii} = 1 wp 1\\
+        0 & \rho_{ii} < 1 wp 1
+    \end{cases}
+\] 
+if $\rho_{ii} < 1$ call $i$ a transient state
+if  $\rho_{ii} = 1$ call it a recurrent state
+\end{document}

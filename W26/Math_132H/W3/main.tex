@@ -1,0 +1,245 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Theorem 5.2}
+\emph{
+    $f$ holomorphic in disc $D$ then  $\exists F$ holomorphic in  $D$, $F'(z) = f(z) \forall z \in D$.
+    $F(z) = \int_{\gamma_z}^{}f(w)dw$
+}
+\section{Corollary 5.3}
+\emph{
+    $f$ holomorphic in a disc $D$, $\gamma$ piecewise smooth simple closed curve $\mathcal{V} \subset D$ then
+    \[
+        \int_{\mathcal{V}}^{}f(z)dz = 0
+    \] 
+}
+\\
+\emph{
+    A domain $\Omega$ is star shaped if $\exists z_0 \in \Omega$ such that $\forall z \in \Omega, [z_0,z] \subset \Omega$. $[z,z_0] =\{tz+(1-t)z_0 : 0 \le t \le 1$.
+}
+\section{Theorem 5.4}
+\emph{
+    $f$ holo in a domain $\Omega, D$ is a disc with  $\overline{ D} \subset \Omega$ then
+    \[
+        \frac{1}{2\pi i} \int_{\substack{\partial D \\ \text{counter clockwise}}}^{}\frac{f(w)}{w-z}dw =
+    \begin{cases}
+        f(z) & z \in D\\
+        0 & z \not\in D\\
+        \text{undefined} & z \in \partial D
+    \end{cases}
+    \] 
+}
+
+\section{Theorem 5.5}
+\emph{
+    Assume $f(z)$ is holomorphic in a domain  $\Omega$, then for all  $z_0 \in \Omega$ $f$ has a power series expansion
+    \[
+    \sum_{n=0}^{\infty}a_n(z-z_0)^{n} = f(z) \qquad |z-z_0| < r
+    \] 
+    whenever $r < d(z,\partial \Omega) = \inf_{w \in \partial D} |z_0 - w|$
+}
+Proof: We know for $|z-z_0| < r \implies f(z) = \frac{1}{2\pi i} \int_{|\zeta - z_0| = r}^{}\frac{f(\zeta)}{\zeta - z_0} d \zeta$.
+\\$|z-z_0| < |\zeta - z_0| \forall \zeta \in \partial D$ so
+\[
+\frac{1}{\zeta - z} = \frac{1}{(\zeta - z_0) - (z-z_0)} = \frac{1}{\zeta - z_0}(1 - \frac{z-z_0}{\zeta - z_0})^{-1}
+\] 
+\[
+= \sum_{n=0}^{\infty}\frac{(z-z_0)^{n}}{(\zeta - z_0)^{n+1}}
+\] 
+so
+\[
+f(z) = \frac{1}{2 \pi i}\int_{\zeta - z_0| = 1}^{}f(\zeta) \sum_{n=0}^{\infty}\frac{1}{(\zeta - z_0)^{n+1}}(z-z_0)^{n}d \zeta
+\] 
+\[
+f(z) = \sum_{n=0}^{\infty}\left(\frac{1}{2\pi i}\int_{|\zeta - z_0| = r}^{} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}}d\zeta\right) (z-z_0)^{n}
+\] 
+because
+\[
+    \sum_{n=0}^{\infty}\frac{(z-z_0)^{n}}{(\zeta-z_0)^{n+1}} \quad \text{converges uniformly when $|\zeta-z_0| = r$}
+\] 
+
+\section{Corollary 5.6}
+\emph{
+    $f$ holomorphic on a domain $\Omega$ iff  $f$ analytic on  $\Omega$. (has power series expansion at any point)
+}
+
+\section{Work exercise 5.7 in notes}
+
+\section{Corollary 5.8}
+\emph{
+    $f$ holomorphic in a domain $\Omega \implies f \in C^{\infty}$ in $\Omega$ and for all  $n$ and all  $z \in |\Omega|$
+     \[
+    f^{(n)}(z) = \frac{n!}{2\pi i}\int_{\partial D}^{}\frac{f(\zeta)}{(\zeta - z)^{n+1}}d \zeta \qquad z \in D \subset \overline{ D} \subset \Omega
+    \] 
+}
+Proof by induction. Assume it holds for $n-1$ ,  $n \ge 1$ 
+ \[
+     \frac{f^{(n-1)}(z+h) - f^{(n-1)}(z)}{h} = \frac{(n-1)!}{2\pi i}\int_{\partial D}^{}f(\zeta)\frac{1}{h}\left(\frac{1}{(\zeta - (z+h))^{n}} - \frac{1}{(\zeta - z)^{n}}\right)d \zeta
+\] 
+let $A_h(\zeta)$ be the thing inside the large parens\\
+Lemma:
+\emph{
+    $A_h(\zeta) \rightarrow \frac{n}{(\zeta - z)^{n+1}}$ uniformly in $\zeta \in \partial D$ if $z \in D$
+}\\
+Once  we prove this we can use uniform convergence to conclude the theorem.\\
+Proof
+\[
+\alpha^{n} - \beta^{n} = (\alpha-\beta)(\alpha^{n-1} + \alpha^{n-2}\beta + \dots + \alpha\beta^{n-2} + \beta^{n-1})
+\] 
+\[
+\alpha = \frac{1}{(\zeta - (z+h))} \qquad \beta = \frac{1}{z - \zeta}
+\] 
+\[
+A_h(\zeta) = \frac{1}{h}(\frac{1}{\zeta - (z+h)} - \frac{1}{\zeta - z})\left(\sum_{k=0}^{n-1}\frac{1}{(\zeta-z)^{k}}\frac{1}{(\zeta - (z+h))^{n-1-k}}\right)
+\] 
+
+\section{Friday}
+\emph{
+    $f$ holomorphic on domain $\Omega$ then  $f$ has a power series
+    \[
+    f(z) = \sum_{n=0}^{\infty}a_n(z_0)(z-z_0)^{n}
+    \] 
+    converging in $\{z : [z-z_0| < d(z_0, \partial \Omega)\}$
+    and 
+    \[
+    a_n = \frac{1}{2\pi i} \int_{|z-z_0| = r}^{}\frac{f(z)}{(z-z_{0})^{n+1}}dz \qquad 0 < r < d(z_0, \partial \Omega)
+    \] 
+}
+the corollary\\
+\emph{
+    $f$ holomorphic in  $\Omega$ if and only if  $f$ analytic in $\Omega$
+}\\
+Corollary 5.8\\
+\emph{
+    \[
+    f^{(n)}(z) = \frac{n!}{2\pi i} \int_{ \partial D}^{} \frac{f(\zeta)}{(\zeta - z)^{n+1}} d \zeta , z \in D \subset \overline{ D} \subset \Omega
+    \] 
+}
+
+\section{ Corollary 5.9 (Cauchy's Inequalities)}
+\emph{
+    $f$ holomorphic in  $\Omega$,  $z \in \Omega$ and 
+    $r < d(z, \partial \Omega)$ Then
+    \[
+    |f^{(k)}(z)| \le \frac{k!}{k!}{R^{k}} \sup_{|w-z| = R} |f(w)|
+    \] 
+}
+
+\section{ Corollary 5.10 (Liouville's Theorem)}
+\emph{
+    A bounded entire function is constant.
+}
+\section{Corollary 5.11 Fundamental Theorem of Algebra }
+\emph{
+    if $p(z)$ is a polynomail of degree $n \ge 1$ then there exists  $z_0 \in \mathbb{C}$ such that $p(z_0) = 0$
+}\\
+Proof: Suppose not, then $\frac{1}{p(z)}$ is entire, therefore constant since it is bounded since $\lim_{z\to \infty}|p(z)| = +\infty$.
+
+\section{Theorem 5.12 Uniqueness of Analytic Continuation}
+\emph{
+    Let $f(z)$ be holomorphic in a domain  $\Omega$. And let  $\{a_n\}_{n=1}^{\infty}$ be a sequence of points
+    in $\Omega$. 
+    \begin{enumerate}
+        \item $a_n \rightarrow a \in \Omega$ as $n \rightarrow \infty$ and $a_n \ne a \forall n$
+        \item $f(a_n) = 0$ for all  $n$
+    \end{enumerate}
+    then $f =0 $ in  $\Omega$
+}
+\\
+Corollary if we have $f = g $ on  $a_n$ then  $f = g$ in  $\Omega$ \\
+Proof:
+\begin{enumerate}
+    \item $\exists r > 0$ so that  $f = 0$ on  $\{|z-a| < r\}$. Suppose not, then 
+         \[
+             f(z)= \sum_{n=n_0}^{\infty}\alpha_n(z-a)^{n}  \qquad \alpha_{n_0} \ne 0
+        \] 
+        then $f(z)=(z-a)^{n_0}g(z)$ with $g(a) = \alpha_{n_0} \ne 0$ and $g(a_n) = 0 \forall n$ and  $g$ is continuous so  $g(a) = 0$ a contradiction
+    \item Connectedness argument.
+         $\Omega$ is connected so if  $U \subset \Omega$ and $U$ is open and  $U \ne \emptyset$ and  $\Omega \setminus U$ is open then  $U = \Omega$.\\
+         Let  $U = \{z \in \Omega:  \exists r = r(z) > 0, f = 0 \text{ on }\{|w-z|<r_z\} \subset \Omega\}$.
+         $a \in U$ by the previous argument and  $U$ is open by definition.
+         Take $w \in \overline{ U}$ then thereis a sequence of points $\{w_n\}_{n=1}^{\infty}$ approaching $w$ with  $f(w_n) = 0$so by previous argument  $f(w) = 0$ so $U$ is closed and open in  $\Omega$ and so it is equal to  $\Omega$ since  $\Omega$ is connected.
+\end{enumerate}
+
+\section{lemma}
+\emph{
+    An open set  $\Omega$ is pathwise connected if 
+    $\exists z_0 \in \Omega$ so that for all $z \in \Omega$ ther exists a simple curve  $\gamma_z \subset \Omega$ $\gamma_z$ connnecting $z_0$ to $z$
+     $\gamma_z(t)$ is continuous.
+     $\Omega$ is connected if and only if  $\Omega$ is pathwise connected.
+}
+Proof: Assume $\Omega$ is path connected but not connected then  $\Omega = U \cup V$  $U, V $ open  $U \cap V = \emptyset, U \ne \emptyset, V \ne \emptyset$.
+THen there exists a path and it is connected since it is the continuous image of a connected set ( an interval in  $ \mathbb{R}$). But
+$\gamma =(\gamma \cap U) \cup (\gamma \cap V)$ so $\gamma$ is not connected a contradiction.\\
+Now assume that $\Omega$ is connected. Choose  $z_0 \in \Omega, z \in \Omega$ let $U = \{w \in \Omega: \exists \gamma_w, \gamma_w(0) = z_{0}, \gamma_w(1)=w, \gamma_w \subset \Omega\}$ $U$ is nonempty since it contains  $z_0$ and $U$ is an open set since open balls are pathwise connected.  $U$ is closed since if  $z \in \overline{ U}$ then there is a path to sometihing nearby  since $\Omega$ is open.
+So  $U$ is open and closed in  $\Omega$ and so  $U = \Omega$.
+
+\section{Theorem}
+Recall Cauchy's inequalities.  $f$ holomorphic on  $\Omega$ and  $R < d(z, \partial \Omega), z \in \Omega$ 
+then
+\[
+|f^{(n)}(z)| \le \frac{n!}{R^{n}}M(R)
+\] 
+\[
+    M(R) = \sup_{|w-z| \le R} |F(w)|
+\] 
+I claim that if $ R_1 < R_2$ then $M(R_1) \le M(R_2)$ and equality holds if and only if $f$ is constant
+\\
+Theorem(Maximum Modulus Thoerem)\\
+\emph{
+    Let $D = \{z: |z-z_0|< R\}$ $D \subset \overline{ D} \subset \Omega$ and $f $ holo on  $\Omega$
+    then $|f(z)| \le \sup_{\partial D}|f(w)|$ for all $z \in D$ and equality holds if and only if  $f$ is constant.
+}
+
+\end{document}

@@ -1,0 +1,378 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Reminder}
+Let $\mu: 2^{X} \rightarrow [0,+\infty]$
+\begin{enumerate}
+    \item $ \mu $ outer measure: if $\{A_k\}_{k=1}^{\infty} \subset 2^{X}$ and $A \subset \bigcup_{k=1}^{\infty}A_k$ then
+        \[
+            \mu[A] \le \sum_{k=1}^{\infty}\mu[A_k]
+        \] 
+        \\$mu[\emptyset] = 0$ 
+    \item If $\mu$ is an outer measure and $A_k \subset A_{k+1}$ for all $k$ then
+        \begin{enumerate}
+            \item Case 1 $A_k \in \Sigma(\mu)$ for all $k \implies \mu[\bigcup_{k=1}^{\infty}A_k] - \lim_{k\to \infty}\mu[A_k]$
+            \item Case 2 $A_k$ not necessarily in  $\Sigma(\mu)$ be $\mu$ is regular, then Case 1 still holds.
+        \end{enumerate}
+\end{enumerate}
+in the sequel $F$ is a collection of nondegenerate closed balls in  $ \mathbb{R}^{d}$. 
+Let $A$ be the centers of the balls in  $F$
+\\
+Reminder: A set theory result: Besicourith's covering lemma. If
+\[
+    \sup_{B \in F} \text{diam}(B) < +\infty
+\] 
+then there exist families $G_1,\dots,G_{N_d}$, each one of them made of countably
+many disjoint balls of $F$ such that  $A \subset \bigcup_{i=1}^{N_d} \bigcup_{B \in G_i} B$.
+Let $\mu$ be a Borel regular measure on $ \mathbb{R}^{d}$.\\
+Goal [A measure theory result] Assume $F$ is a fine cover of $A$. We do not necessarily assume
+that the supremum of the diameters is less than $+\infty$. We want to show that for every $ O \subset \mathbb{R}^{d}$ open there exist
+a countable family $G$ of disjoint ball in $F$ such that
+\[
+    \mu[(A \cap O) \setminus (\bigcup_{B \in G}B)] = 0
+\] 
+and $B \subset O$ for all $ B \in G$.
+This will be true if  $\mu[A] < +\infty$.
+Recall $N_d > 1$ is an integer
+\section{Exercise}
+Let  $\theta \in (1-\frac{1}{N_d}, 1)$ and $O \subset \mathbb{R}^{d}$ be an open set. Show that
+$\exists B_1,\dots,B_m \in F$ such that $B_1,\dots,B_m \subset O$ and $\mu[A \cap O \setminus (B_1\cup\dots\cup B_m] \le \theta \mu[A \cap O]$ $(2)$
+
+Step 1 $B_1,\dots, B_m$ such that $(2)$ holds.
+Step 2, Replace $O$ by  $O_1 \setminus ( B_1 \cup \dots \cup B_{m_1}) $ - open set since each $B_i$ is closed.
+Apply the exercise to $O_1$ to find $B_{m_1+1},\dots,B_{m_2} \subset O_1$, $B_{m_1+1},\dots,B_{m_2} \in F$ such that
+\[
+    \mu[A \cap O_1 \setminus(B_{m_1+1}\cup\dots\cup B_{m_2})] \le \theta \mu[A \cap O_1 \setminus (B_1\cup\dots\cup B_{m_1})] \le \theta^2 \mu[A \cap O]
+\] 
+\[
+    \mu[A \cap O \setminus (B_1\cup\dots\cup B_{m_k}] \le \theta^{k}\mu[A \cap O]
+\] 
+so by considering $\bigcup_{i=1}^{\infty}B_i$ our goal would be a corollary.
+\\
+Solution: Let $F_1 = \{ B \in F: \text{diam}(B) \le 1, B \subset O\}$ Define $A_1$ to be the centers of the balls in $F_1$ then $A_1 = A \cap O$ since $F$ is a fine cover of  $A$
+$A \cap O$ is the centers of the balls in $F_1$. By the
+besicovitch covering lemma there are families $G_1,\dots,G_{N_d}$ each one of them made of countably many disjoint balls in $F_1$ such that
+$A \cap O \subset \bigcup_{i=1}^{N_d} \bigcup_{B \in G_i} B$ \\
+Since $\mu$ is outer
+\[
+ \mu[A \cap O] \le \sum_{i=1}^{N_d} \mu\left[(\bigcup_{B \in G_i} B) \cap (A \cap O) \right]
+\] 
+hence there exists $i \in \{1,\dots,N_d\}$ such that 
+\[
+  \mu[(A \cap O) \cap \bigcup_{B \in G_i} B] \ge \frac{1}{N_d} \mu[A \cap O] > (1-\theta) \mu[A \cap O]
+\] 
+write $G_i = \{B_k\}_{k=1}^{+\infty}$ 
+We conclude that
+\[
+    \lim_{k\to +\infty} \mu[A \cap O \cap (B_1 \cup\dots\cup B_k)] > (1-\theta) \mu[A \cap O]
+\] 
+since  $(B_1 \cup \dots \cup B_k)$ is measurable
+\[
+    \mu[A \cap O] = \mu[A \cap O \setminus (B_1 \cup \dots \cup B_k )] + \mu[A \cap O \cap (B_1 \cup \dots \cup B_k)]
+\] 
+There exists $K$ such that
+ \[
+     \mu[A \cap O \cap (B_1 \cup \dots \cup B_K)] > (1-\theta) \mu[A \cap O]
+\] 
+\[
+    \mu[A \cap O] > \mu[A \cap O \setminus (B_1 \cup \dots \cup B_K)] + (1-\theta)\mu[A \cap O]
+\] 
+so
+\[
+    \mu[A \cap O \setminus(B_1 \cup \dots \cup B_K)] < \theta \mu[A \cap O]
+\] 
+
+\section{Corollary}
+If $\mu[A]$ is finite, then there exist $\{B_k\}_{k=1}^{+\infty} $ a family of disjoint balls in $F$ such that each ball  $B_k \subset O$ and
+$\mu[A \cap O \setminus \bigcup_{k=1}^{\infty}B_k] = 0 $
+
+\section{Differentiation of measure}
+In the sequel, $\mu$ and $\nu$ are Radon measure on  $ \mathbb{R}^{d}$. Our goal, show that
+$\nu = \nu_{\text{abs}} + \nu_{\text{sing}}$ where $\nu_{\text{abs}} << \mu$ and $\nu_{\text{sing}} \perp \mu$.
+Furthermore we have an explicit representation of $\nu_{\text{abs}} = D_\mu \nu \mu$.
+\[
+    D_\mu \nu  \qquad \text{function}
+\] 
+Recall that $B_r(a) $ is the closed ball of center  $a$ radius $r$. For $x \in \mathbb{R}^{d}$, define 
+\[
+\overline{ D}_\mu^{\nu}(x) = 
+\begin{cases}
+    \limsup_{r\to 0^{+}} \frac{\nu[B_r(x)]}{\mu[B_r(x)]} & \text{if $\mu[B_\epsilon(x)] > 0$ for all $\epsilon > 0$}\\
+    +\infty & \text{if $\exists$ $\epsilon_0$ such that $\mu[B_{\epsilon_0}(x)] = 0$}
+\end{cases}
+\]
+and
+\[
+f_r(x) =
+\begin{cases}
+    \frac{\nu[B_r(x)]}{\mu[B_r(x)]} & \text{if $\mu[B_r(x)] > 0$ }\\
+    +\infty &  \mu[B_r(x)] = 0
+\end{cases}
+\] 
+we similarly define $\underline{D_\mu \nu}(x)$  by replacing $\limsup_{r\to 0^{+}}$ by $\liminf_{r\to 0^{+}}$ in the above definition.\\
+\emph{
+    Def: We say that $\nu$ is differentiable with respect to $\mu$ and $x \in \mathbb{R}^{d}$ if
+    \[
+        \overline{D_\mu \nu }(x) = \underline{D_\mu^{\nu}}(x) < +\infty
+    \] 
+    In this case, we set
+    \[
+    D_\mu \nu (x) := \overline{D_\mu^{\nu}}(x)
+    \] 
+}
+Example
+\[
+    f : \mathbb{R}\rightarrow \mathbb{R} \qquad f = f^{+} - f^{-} \qquad f^{\pm} = \max\{0, \pm f\} \qquad f \ge 0
+\] 
+if $f$ is differentiable at $x$ then $f'(x) = \lim_{r\to 0^{+}} \frac{f(x+r)-f(x-r)}{2r} = \lim_{r\to 0^{+}}\frac{\nu[B_r(x)]}{\mu[B_r(x)]}$  if $\nu[A] = \int_{A}^{}f'dx$
+and $\mu[A] = \mathcal{L}^{1}(A)$\\
+Goal: Show that $D_\mu \nu (x)$ exists $\mu$ almost everywhere.
+\section{Lemma}
+\emph{Let $\alpha \in (0,+\infty)$ and let $A \subset  \mathbb{R}^{d}$ (not necessarily measurable with respect to $\mu $ or $\nu$).
+    \begin{enumerate}
+        \item if $A \subset \{x \in \mathbb{R}^{d} : \underline{D_\mu}\nu(x) \le \alpha\}$ Then $\nu[A] \le \alpha \mu[A]$
+        \item if $A \subset \{x \in \mathbb{R}^{d}: \overline{D_\mu}\nu(x) \ge \alpha\}$ then $\nu[A] \ge \alpha \mu[A]$
+    \end{enumerate}
+}
+Proof: We only prove $(ii)$ it suffices to show that  $\forall \epsilon \in (0,\alpha)$ $\nu[A] > (\alpha-\epsilon) \mu[A]$.
+Set $O$ be an arbitrary open set containing $A$.
+\[
+    \nu[A] = \inf\{\nu[O] : A \subset O, \;\; O \; \text{open}\}
+\] 
+Let 
+\[
+F = \{B_r(x) : B_r(x) \subset O, x \in A, \nu[B_r(x)] \ge (\alpha-\epsilon)\mu[B_r(x)]\}
+\]
+Let $a \in A$ by condition of  $A$ in part (ii) we have
+ \[
+     \frac{\nu[B_r(a)]}{\mu[B_r(a)]} \ge \alpha - \epsilon \qquad \text{for $r \in (0,\delta_\epsilon)$}
+\] 
+so note that $F$ is a fine cover for $A$.
+IF I can prove that $\nu[A \cap B_n(0)] \ge \alpha \mu[A \cap B_n(0)]$ or
+\[
+    \nu|_{B_n(0)}[A] \ge \alpha \mu|_{B_n(0)}[A]
+\] 
+so without loss of generality, replacing $(\mu,\nu)$ by $(\mu|_{B_n(0)}, \nu|_{B_n(0)})$ we may assume that $\mu$ and $\nu$
+are finite measures.
+We can apply a corollary of the Besicovitch's covering lemma to obtain a countable  family $G$ of disjoint balls  $\{B_k\}_{k=1}^{\infty}$ in $F$
+such that
+ \[
+     \mu[A \setminus (\bigcup_{k=1}^{\infty}B_k)] = \mu[A \cap O \setminus (\bigcup_{k=1}^{\infty}B_k)] = 0
+\] 
+hence since $\bigcup_{k=1}^{\infty}B_k$ is $\mu$-measurable.
+\[
+    \mu[A] = \mu[A \cap (\bigcup_{k=1}^{\infty}B_k)] + \mu[A \setminus (\bigcup_{k=1}^{\infty} B_k] \le \sum_{k=1}^{+\infty} \mu[B_k]
+\] 
+\[
+    \le \sum_{k=1}^{+\infty}\frac{1}{\alpha-\epsilon} \nu[B_k] = \frac{1}{\alpha-\epsilon}\nu[\bigcup_{k=1}^{\infty}B_k] \le \frac{\nu[O]}{\alpha-\epsilon}
+\] 
+since this holds for arbitrary $O \supset A$ open set and $\nu$, we conclude that
+ \[
+     \mu[A](\alpha-\epsilon) \le \nu[A]
+\] 
+\\ Goal: show that $D_\mu \nu$ exists a.e. and is $ \mu $-measurable.
+Set 
+ \[
+     I = \{x \in \mathbb{R}^{d} : \overline{D_\mu \nu}(x) = +\infty\} \qquad J = \{x \in \mathbb{R}^{d} : \underline{D_\mu \nu}(x) < \overline{ D_\mu \nu}(x)\}
+\] 
+Exercise show that $\mu[I] = \mu[J] = 0$. Solution for $\alpha \in (0,+\infty)$ set $I_\alpha = \{x \in \mathbb{R}^{d} : \overline{D_\mu \nu}(x) \ge \alpha\}$.
+By previous lemma
+\[
+    \nu[I \cap B_n(0)]] \ge \alpha\mu[I \cap B_r(0)]
+\] 
+Letting  $\alpha \rightarrow +\infty$ we conclude that $\mu[I \cap B_n(0)] = 0$ for all $n$ and so  $\mu[I] = 0$.
+For $a < b$ real number set 
+ \[
+     J(a,b) = \{x \in \mathbb{R}^{d}: \underline{D_\mu \nu}(x) \le a < b \le \overline{D_\mu \nu}(x)\}
+\] 
+Assume $\mu$ and $\nu$ are finite. By the  previous lemma
+\[
+    b\mu[J(a,b)] \le \nu[J(a,b)] \le a \mu[J(a,b)]  \implies \mu[J(a,b)] = 0
+\] 
+but
+\[
+    J = \bigcup_{a,b \in \mathbb{Q}, a < b} J(a,b)
+\] 
+and so
+\[
+\mu[J] = 0
+\] 
+
+\section{Friday}
+Recall: $ \mu $ and $\nu $ are Radon measures on $ \mathbb{R}^{d}$ \\
+\emph{
+    $f : \mathbb{R}^{d} \rightarrow [-\infty,\infty]$ is upper semicontinuous if $\limsup_{x\to x_0} f(x) \le f(x_0)$. Equivalently
+    $f^{-1}(-\infty,t)$ is an open set for every $t \in \mathbb{R}$.
+}
+Example: we use Fatou's lemma to show that if  $r > 0$ then $x \rightarrow \mu[B_r(x)]$ is upper semicontinuous. Hence
+for $f_r$ defined below is Borel
+\emph{
+    \[
+    f_r(x) = 
+    \begin{cases}
+        \frac{\nu[B_r(x)]}{\mu[B_r(x)]} & \mu[B_r(x)] >0\\
+        +\infty & \mu[B_r(x)] = 0
+    \end{cases}
+    \] 
+} 
+Let $t_0 \in f^{-1}[-\infty,t)$ if $x$ is close to  $x_0$ $f(x) \le f(x_0) + \delta < t$ so it is open.
+Reminder
+\[
+    I = \{x \in \mathbb{R}^{d} : \overline{D_\mu \nu}(x) = +\infty\} \qquad J = \{x \in \mathbb{R}^{d}: \underline{D_\mu \nu}(x) < \overline{D_\mu \nu}(x)\}
+\] 
+We proved that $\mu[I] = \mu[J] = 0$. If $x \not \in I \cup J$
+ \[
+     \lim_{r\to  0^{+}}f_r(x) = \limsup_{k\to +\infty}f_{\frac{1}{k}}(x)
+\] 
+but $\lim_{k\to +\infty}f_{\frac{1}{k}} : \mathbb{R}^{d} \rightarrow [0,+\infty]$ is Borel since it is the countable limit of Borel function.
+Hence
+\[
+\lim_{r\to 0^{+}}f_r
+\] 
+is $\mu$-measurable.
+\section{Theorem Radon - Nikodym Theorem}
+\emph{
+    Suppose that $A \subset \mathbb{R}^{d}$ is $ \mu $-measurable and $\nu << \mu$ Then
+    \[
+        \nu[A] = \int_{A}^{} D_\mu \nu(x) \mu(dx)
+    \] 
+}\\
+Proof: Claim 1: Every $\mu$-measurable  set is $\nu$-measurable. Let  $M \subset \mathbb{R}^{d}$ be $ \mu $-measurable and assume $\mu[M] < +\infty$. Since
+$\mu$ is Borel regular there exists $ B \subset \mathbb{R}^{d}$ Borel such that $M \subset B$ and $\mu[B] = \mu[M]$.
+Setting $N = B \setminus M$ we have that  $\mu[N] = 0$. And so, by absolute continuity $\nu(N) = 0$. Since  $M = B \setminus N$ we conclude that  $M$ is $\nu$ measurable.
+We want to write
+\[
+    A = \bigcup A_m \qquad A_m  \subset \{a_m \le D_\mu \nu \le b_m\}
+\] 
+With $a_m > 0$
+\[
+    a_m \mu[A_m] \le \nu[A_m] \le b_m \mu[A_m]
+\] 
+Claim 2: if $A \subset \{x \in \mathbb{R}^{d}: D_\mu \nu(x) = 0\}$ Then the theorem is true.
+\\Proof of claim 2. Obviously $\int_{A}^{}D_\mu \nu(x)\mu(dx) = 0$. It remains to show that $\nu[A] = 0$. For every  $\alpha > 0$, $A \subset \{x \in \mathbb{R}^{d}: D_\mu\nu(x) \le \alpha\}$
+so $\nu[A] \le \alpha \mu[A]$ for all $\alpha$ so $\nu[A] = 0$ since we can asssume  WLOG  $\mu[A] < +\infty$ otherwise $\nu[A \cap B_r(0)] \le \alpha \mu[A \cap B_r(0)] $
+so $\nu[A \cap B_m(0)] = 0$ for all  $m \in \mathbb{N}$ hence $\nu[A] = 0$.\\
+Claim 3 : The theorem holds if $A \subset \{x \in \mathbb{R}^{d} : D_\mu \nu(x) > 0\}$. Proof:
+Let $t \in (1, +\infty)$ and for $m \in \mathbb{Z}$ set
+\[
+    A_m = \{t^{m} < D_\mu \nu(x) \le t^{m+1} \} \qquad m \in \mathbb{Z}
+\] 
+\[
+    t^{m}\mu[A_m] \le \nu[A_n] \le t^{m+1}\mu[A_m]
+\] 
+since
+\[
+    A = \bigcup_{m \in  \mathbb{Z}} A_m
+\] 
+We conclude that
+\[
+    \sum_{m \in \mathbb{Z}}^{} t^{m}\mu[A_m] \le \nu[A] = \sum_{m \in \mathbb{Z}}^{}\nu[A_m] \le \sum_{m \in \mathbb{Z}}^{}t^{m+1}\mu[A_m]
+\] 
+\[
+    \frac{1}{t} \sum_{m \in \mathbb{Z}}^{}t^{m+1}\mu[A_m] \le \nu[A] \le t \dots
+\] 
+On $A_m$ 
+ \[
+    1 \le  \frac{D_\mu \nu(x)}{t^{m}} \le t \implies t^{m}\int_{A_m}^{}1d \mu \le \int_{A_m}^{}D_\mu \nu(x) \mu(dx) \le t^{m+1}\int_{A_m}^{}d \mu
+\] 
+hence by 2 and 3
+\[
+  \frac{1}{t}\int_{A}^{}D_\mu\nu(x)dx = \sum_{m \in \mathbb{Z}}^{}\frac{1}{t}\int_{A_m}^{} D_\mu\nu(x)\mu(dx) \le \nu[A] \le \sum_{m \in \mathbb{Z}}^{}t \int_{A}^{} D_\mu\nu(x)\mu(dx) = t \int_{A}^{} D_\mu \nu(x)\mu(dx)
+\] 
+Letting $t$ go to $1^{+}$ we conclude our proof.
+
+\section{Corollary}
+\[
+\int_{ \mathbb{R}^{d}}^{}f d\nu = \int_{ \mathbb{R}^{d}}{}f D_\mu \nu d \mu \qquad f \in L^{1}( \mathbb{R}^{d})
+\] 
+Proof
+\[
+\int_{ \mathbb{R}^{d}}^{}f D_\mu \nu d \mu = \int_{ \mathbb{R}^{d}}^{} f \frac{d \mu}{d \nu} d \nu = \int_{ \mathbb{R}^{d}}^{}f d \nu
+\] 
+
+\section{Exercise}
+Assume $\mu$ and $\nu$ are finite. Let  $F = \{B \subset \mathbb{R}^{d} : B \text{ Borel } \mu[B^{c}] = 0\}$.
+Show that
+\[
+    \inf_{B \in F} \nu[B]
+\] 
+admits a minimizer.
+Solution: Let $(A_n)_n \subset F$ be a sequence such that 
+\[
+    \inf_{B \in F} \nu[B] = \lim_{n\to \infty}\nu[A_n]
+\] 
+Set
+\[
+    B_n = A_1 \cap \dots \cap A_n \implies B_n^{c} = A_1^{c} \cup \dots \cup A_n^{c} \implies \mu[B_n] = 0 \implies B_n \in F
+\] 
+furthermore
+\[
+    \nu[B_n] \le \nu[A_n]
+\] 
+and so
+\[
+    \inf_{B \in F} \nu[B] = \lim_{n\to \infty}\nu[B_n] = \nu[B]
+\] 
+since $B_{n+1} \subset B_n$ setting $B = \bigcap_{n=1}^{+\infty}B_n$ we have that 
+\[
+    \nu[B^{c]} = \nu[\bigcup_{n=1}^{\infty}B_n^{c}] \le \sum_{n=1}^{+\infty}\mu[B_n^{c}] = 0
+\] 
+and so
+\[
+B \in F
+\] 
+
+
+\end{document}

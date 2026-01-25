@@ -1,0 +1,286 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\[
+A \in \sigma(X_1,\dots,X_n)
+\] 
+\[
+\tilde A = \pi \circ A, \qquad \pi(1,\dots,n,n+1,\dots,2n) = (n,n+1,\dots,2n,1,2,\dots,n)
+\] 
+$E \in \mathcal{E}$
+\[
+\mathbb{P}(\vec X \in E \triangle A ) = \mathbb{P}(\vec X \in E \triangle \tilde A)
+\] 
+For example $X_1,X_2$ iid
+\[
+    \mathbb{P}(X_1 > X_2) = \tilde {\mathbb{P}}(X_2 > X_1) =^{\text{i.i.d}} \mathbb{P}(X_2 > X_1)
+\] 
+\[
+    \mathbb{P}(\vec X \in E \triangle A) = \tilde{ \mathbb{P}}\left( \pi \circ \vec X \in E \triangle A\right) = \tilde{ \mathbb{P}} (\vec X \in E \triangle \tilde A) =^{\text{i.i.d}} \mathbb{P}(\vec X \in E \triangle \tilde A)
+\] 
+Let $ \mathbb{P}(\vec X \in E \triangle A) = \mathbb{P}(\vec X \in E \triangle \tilde A) = \delta$ but $A \perp \tilde A$ implies
+ \[
+     \mathbb{P}(E) = o(\delta) \;\; \text{or} \;\; 1 - o(\delta)
+\] 
+for all $\delta$ so we get
+\[
+    \mathbb{P}(E) = 0 \;\; \text{or} \;\; 1
+\] 
+impleis the $H-S$  $0-1$ Law
+
+\section{Week 2}
+Tightness + convergence in Probability implies convergence in $L_1$. For all $\epsilon > 0$ there
+exists $M$ such that
+ \[
+     \sup_{n} \mathbb{P}(|X_n| > M) = \sup_{n} \mathbb{E}(1_{|X_n|} > M) \le \epsilon
+\] \\
+Uniformly integrable , $\forall \epsilon > 0$ there exists $M$ such that 
+ \[
+     \sup_{n} \mathbb{E}(|X_n| 1_{|X_n| > M}) \le \epsilon
+\] 
+
+\section{Theorem}
+\emph{
+    $\{X_n\} : \Omega \rightarrow (S, \mathcal{S})$ $(S, \mathcal{S})$ is a Polish space.
+    Tight:  $\forall \epsilon > 0 \;\; \exists \; \text{compact} \; K \rightarrow \sup_{n} \mathbb{P}(X_n \in K) \le \epsilon$.
+    Tight $\iff$ relatively compact wrt Weak topologoy or equivalently  $\exists \; X, n_k$ such that  $X_{n_k} \rightarrow X $ in distribution.
+}\\
+Proof when $ S = \mathbb{R}$: \\
+Tight $\implies$ subsequence\\
+$\{X_n\}$ random variables 
+$F_{X_n}(a) = \mathbb{P}(X_n \le a)$
+Recall $X_n \rightarrow X$ in distribution iff $\forall a$ if  $f_X(a)$ is a cont point then  $F_{X_n}(a) \rightarrow F_X(a)$.
+$ \mathbb{Q} \subset \mathbb{R}$. $q_1,q_2,\dots$ $n_1,n_2,\dots$ such that
+$F_{X_{n_1(k)}}(q_1) \rightarrow a_1$ and $F_{X_{n_l(k)}}(q_l) \rightarrow a_l$ and $n_l(k) \subset n_{l-1}(k)$ subsequence of the previous subsequence
+then $F_{X_{n_k(k)}}$ converges for each $q_i$ simplify and rewrite as  $n_k$. Let  $f : \mathbb{Q} \rightarrow [0,1]$ be such that $f(q_i) = a_i$ we then extend this function to a function on all of $ \mathbb{R}$ and we use tightness
+to
+
+\section{Wednesday}
+Continuing on tightness $\iff$ relatively compact on weak topology.
+For any subsequene, exists  sub-sub sequence converging to $X$ in distribution. We proved the forward direction yesterday so, today we will prove the
+other direction. If not tight then there exists $\epsilon$ and $X_{n_k}$ such that  $ \mathbb{P}(|X_{n_k}| > k) \ge \epsilon$. If $X_{n_{k_m}} \rightarrow^{d} X$ in distribution contradiction in tail.
+$\exists M $ such that  $ \mathbb{P}(|X| \ge M) \le \frac{\epsilon}{2}$
+\[
+    \liminf_{  } \mathbb{P}(|X_{n_{k_m}}| \ge M) \ge \epsilon
+\] 
+
+\section{Lemma}
+\emph{
+$\{X_n\}$ If  $\exists \phi: \mathbb{R}^{+} \rightarrow \mathbb{R}$ 
+\[
+    \lim_{a\to +\infty}\phi(a) = +\infty \qquad \sup_{n}\mathbb{E} \phi(|X_n|) < \infty
+\] 
+then
+\[
+    \{X_n\} \text{ is tight}
+\] 
+}
+Proof: $\forall K, \exists M $ such that $\phi(a) \ge K$ for $a \ge M$ this implies
+\[
+    \phi(a) \ge k 1_{a \ge M}
+\] 
+\[
+    \mathbb{E}1_{|X_n| \ge M} \le \frac{1}{K} \mathbb{E} \phi(|X_n|) \le \frac{1}{K} \sup_n \mathbb{E} \phi(X_n) \le \epsilon
+\] 
+if we pick $K$ large enough\\
+Example: 
+\begin{enumerate}
+    \item $X_n \sim B(n,\frac{1}{n})$. 
+        \[
+        \mathbb{E}|X_n| = \mathbb{E}X_n = 1
+        \] 
+        so the sequence is tight. The limit is Poisson(1)
+    \item Let $\{\xi_k\}$ be i.i.d random variables with  $ \mathbb{E}\xi_i = 0$ $Var(\xi_i) =  1$
+         \[
+             X_{n} := \frac{\sum_{k=1}^{n}\xi_k}{\sqrt{n}}
+        \] 
+        \[
+        \mathbb{E}X_n^2 = 1
+        \] 
+        so $\{X_n\}$ is tight. And converges to normal 0,1.
+\end{enumerate}
+
+\section{Uniformly integrable}
+\[
+    \lim_{M\to+\infty }(\sup_n \mathbb{E}X_n 1_{|X_n| \ge M}) = 0
+\] 
+Later we show that Uniform integrability and in probability if and only if in $L_1$
+
+\section{Lemma} $\{X_n\}$. 
+\emph{
+    If $\exists \phi$ $ \mathbb{R} \rightarrow \mathbb{R}$ such that
+    \[
+    \lim_{a\to +\infty}\frac{\phi(a)}{a} = +\infty
+    \] 
+    and
+    \[
+        \sup_{n} \mathbb{E} \phi(|X_n|) < \infty
+    \] 
+    then $\{X_n\}$ is uniformly integrable
+} 
+Proof for all $k$ there exists $M$ such that $\phi(a) \ge ka$ for $a \ge M$ then $\phi(a) \ge ka 1_{a \ge m}$ and
+\[
+    \mathbb{E}|X_n|1_{|X_n|\ge M} = \frac{1}{k} \mathbb{E}k|X_n|1_{|X_n|\ge M} \le \frac{1}{k} \mathbb{E} \phi(|X_n|) \le \frac{1}{k} \sup_{n} \mathbb{E} \phi(|X_n|) \sim \epsilon
+\] 
+
+\section{Lemma UI + Prob implies $L_1$}
+$L_1 \implies$ in probability we learned in 275 A. Let $X_n \rightarrow X$ in $L_1$ so all functions live in $ L_1$
+\[
+ \mathbb{E}|X_n - X| \rightarrow 0
+\] 
+so
+for all  $\epsilon$ there exists $N$ such that $ \mathbb{E}|X_n-X| \le \epsilon$ for all $n \ge N$.\\
+there exists $M$ such that $ \mathbb{E}|X|1_{|X| \ge M} \le \epsilon$ that implies that $ \mathbb{E}|X_n| 1_{|X_n| \ge M} \le 2\epsilon$ for all $n > N$.
+Only finitely many dont satisfy this property so we can find a larger $M'$ that is satisfied for all of the  $X_n$
+So the sequence is uniformly integrable.
+
+\section{Friday}
+UI + in Prob if and only if $L_1$.
+$X_n \rightarrow X$ in $L_1$ iff $X_n \rightarrow X$ in prob and $X_n$ are U.I. Today we need to prove the forward direction.
+First we want to prove that $X$ is in $L_1$
+\[
+    \forall \epsilon, \exists M \rightarrow \sup_n \mathbb{E}|X_n| 1_{|X_n \ge M|} \le \epsilon
+\] 
+but
+\[
+    \sup_n \mathbb{E}|X_n| 1_{|X_n \le M} \le M 
+\] 
+this implies
+\[
+\sup_n \mathbb{E}|X_n| < \infty
+\] 
+\[
+    X_n \rightarrow X \text{ in prob} \implies \exists X_{n_k} \rightarrow X \text{ a.s}
+\] 
+Then by fatou's lemma
+\[
+    \mathbb{E}|X| \le \liminf_{k\to\infty } \mathbb{E}|X_{n_k}| < +\infty
+\] 
+so $X$ is integrable and $X \in L_1$. Now $X_n$ is U.I and  $X$ is in  $L_1$ implies
+\[
+    \forall \epsilon , \exists M \text{ s.t.} \quad \mathbb{E}|X_n| 1_{|X_n| \ge M} \le \epsilon \quad \mathbb{E}|X| 1_{|X| \ge M} \le \epsilon
+\] 
+goal
+\[
+\lim_{ } \mathbb{E}|X_n - X| = 0
+\] 
+\[
+    \mathbb{E}|X_n - X| = \mathbb{E}|X_n - X|1_{|X_n|, |X| \le M} + \mathbb{E}|X_n - X|1_{|X_n| \text{ or } |X| \ge M}
+\] 
+\[
+    Y_n = |X_n - X| 1_{|X_n|,|X| \le M}
+\] 
+\[
+Y_n \rightarrow 0
+\] 
+in probability and $|Y_n| \le 2M$ almost sure. so
+ \[
+\lim_{n\to \infty} \mathbb{E}Y_n = 0
+\] 
+for the second part
+\[
+    \mathbb{E}|X_n-X| 1_{|X_n| \text{ or } |X| \ge M} \le \mathbb{E} 2 \max (|X_n|, |X|) 1_{\max(|X_n|,|X|) \ge M}
+\] 
+\[
+    \le 2 \mathbb{E} |X_n| 1_{|X_n| \ge M} + 2 \mathbb{E} |X| 1_{|X| \ge M} \le 4 \epsilon
+\] 
+if we pick $M$ large enough. so we conclude that
+\[
+\mathbb{E}|X_n - X| \rightarrow 0
+\] 
+
+\section{Another Definition of UI}
+\emph{
+    \begin{enumerate}
+        \item 
+            \[
+            \sup_n \mathbb{E}|X_n| < \infty
+            \] 
+        \item $\forall \epsilon$ $\exists \delta$ such that if $ \mathbb{P}(A) \le \delta$ then $\sup_n \mathbb{E} |X_n| 1_A \le \epsilon$
+    \end{enumerate}
+}
+
+\section{Moment Method}
+\emph{
+    Lemma:  $\{X_n\}$. For all  $k \in \mathbb{N}$
+    \[
+    \mathbb{E}|X_n^{k}| \rightarrow \alpha_k < \infty
+    \] 
+    then for all $n_k$ there exists  $n_{k_m}$ and  $Y$ such that  $X_{n_{k_m}} \rightarrow^{d} Y$ and
+    \[
+    \mathbb{E}|Y^{k}| = \alpha_k
+    \] 
+    Furthermore, if there is only one random variable having $\{\alpha_k\}$ as its moments (uniqueness) then
+    \[
+        \exists Y \text{ such that } \mathbb{E}Y^{k} = \alpha_k \;\;\; X_n \rightarrow^{d} Y
+    \] 
+}
+\[
+G(t) = \sum_{k}^{}\frac{m_k}{k}e^{tk}
+\] 
+Proof Part A implies part B
+ \[
+     X_n \rightarrow^{d} X \iff \forall n_k \exists n_{k_m} \;\; X_{n_{k_m}} \rightarrow^{d} X
+\] 
+Proof part B $\{X_n\}$ are tight.  $ \sup_n \mathbb{E} X_n^2 <\infty$ so use $\phi(x) = x^2$ implies that $\{X_n\}$ is tight. which implies
+the first part of the theorem of the existence of subsequential limits. We now need to prove that for all $k$  $  \mathbb{E}Y^{k} = \alpha_k$ 
+We have 
+\[
+    Z_{n_{k_m}} \rightarrow Z \;\; \text{a.s} \qquad Z_{n_{k_m}} \sim X_{n_{k_m}}, Y \sim Z
+\] 
+\[
+    \mathbb{E}Z_{n_{k_m}}^{k} \rightarrow \mathbb{E}z
+\] 
+
+\end{document}

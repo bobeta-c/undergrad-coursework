@@ -1,0 +1,240 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Exercise 1.1}
+\emph{
+    Describe geometrically the sets of points $z$ in the complex plane
+}
+\solution{
+    \begin{enumerate}
+        \item $|z-z_1| = |z-z_2|$ A straight line passing through $(z_1+z_2)$
+        \item $\frac{1}{z} = \overline{z}$. If $z = a + ib$ then  $\frac{1}{z} = \frac{a-ib}{a^2 + b^2}$ and $\overline{ z} = a-ib$.
+            Setting the two equal we see that the $z$ that satisfy this are all those such that $a^2 + b^2 = 1$ or the ones htat sit on the unit circle of radius one. The points
+            $z = e^{i\theta}$ for some $\theta$ real number.
+        \item $\Re(z) = 3$ the line going straight up that passes through  $z = 3$ and includes all  $z$ of form $z = 3 +ib$ for any  $b$ real.
+        \item  $\Re(z) > c$ the open half plane to the right whose border is defined as the line  $\Re(z) = c$ as before.
+        \item $\Re(az + b) > 0$ where  $a,b \in \mathbb{C}$ if we look at $a = re^{i\theta}$ then this is taking the half plane $\Re(z) > 0$, rotating it by angle $\theta$ and then shifting it
+            by the real part of $b$.
+        \item  $|z| = \Re(z) + 1$ rewriting  $z = a +ib$ we get that this is the equation
+             $a = \frac{b^2}{2} -\frac{1}{2}$ which we recognize as a quadratic equation, so this is a parabola.
+         \item $\Im(z) = c$ with  $c \in \mathbb{R}$. A horizontal line in the plane that passes through $z = ic$
+    \end{enumerate}
+}
+\section{Exercise 1.2}
+\emph{
+    let $\langle \cdot , \cdot \rangle$ denote the usual inner product in $ \mathbb{R}^2$.
+    Define a Hermitian inner product $(\cdot, \cdot)$ in  $ \mathbb{C}$ by 
+    \[
+        (z,w) = z \overline{w}
+    \] 
+    Show that
+    \[
+        \langle z, w \rangle = \frac{1}{2}\left[(z,w) + (w,z)\right] = \Re(z,w)
+    \] 
+}
+\solution{
+    If $z = x_1 + iy_1$ and $w = x_2 + iy_2$ then
+    \[
+    \langle z, w \rangle = x_1x_2 + y_1y_2
+    \] 
+    and
+    \[
+        (z,w) = x_1x_2  + y_1y_2 -i(x_1y_2 -y_1x_2) \qquad (w,z) = x_1x_2 + y_1y_2 -i(y_1x_2 - y_2x_1)
+    \] 
+    adding them together we get
+    \[
+        \frac{1}{2}[(z,w) + (w,z)] = x_1x_2 + y_1y_2 = \Re(z,w) = \langle z, w \rangle
+    \] 
+}
+
+\section{Exercise 1.4}
+\emph{
+    Show that it is impossible to define a total ordering on $ \mathbb{C}$. One cannot find a relation $\succ$ between complex numbers
+    so that
+     \begin{enumerate}
+         \item For any two complex numbers $z,w$ one and only one of the following is true:  $z \succ w, w\succ z$ or  $z = w$. 
+         \item For all $z_1,z_2,z_3 \in \mathbb{C}$ the relation $z_1 \succ z_2$ implies $z_1 + z_3 \succ z_2 + z_3$
+         \item for all $z_1,z_2,z_3 \in \mathbb{C}$ with $z_3 \succ 0$ then $z_1 \succ z_2$ implies $z_1z_3 \succ z_2z_3$
+    \end{enumerate}
+}
+\solution{
+    Assume for contradiction that such a $\succ$ relation exists. Assume further that  $i \succ 0$. Then
+    we get by $(iii)$
+     \[
+         i^2 \succ i 0 \implies -1 \succ 0
+    \] 
+    repeating further we get
+    \[
+    -i \succ 0 \qquad 1 \succ 0
+    \] 
+    however
+    \begin{align*}
+        -1 \succ 0\\
+        -1 + 1 \succ 1\\
+        0 \succ 1
+    \end{align*}
+    this contradicts $1 \succ 0$ so our second assumption must be false. Therefore if a relation exists
+    it must satisfy  $0 \succ i$. It also must satisfy  $0 \succ -1$ for if we assume  $-1 \succ 0$ then we can say $-1 + 1 \succ 0 + 1$ which implies $0 \succ 1$ and
+    we can also say that  $-1 \cdot -1 \succ -1 * 0$ so  $1 \succ 0$ which is a contradiction. Thus we must have both  $0 \succ i$ and $0 \succ -1$ and  $1 \succ 0$ and $-i \succ 0$.
+    However
+    \[
+    -i \succ 0 \implies 0 * -i \succ i * -i \implies 0 \succ 1
+    \] 
+    a contradiction. Thus it is impossible to define a total ordering on $ \mathbb{C}$
+}
+
+\section{Exercise 1.7}
+\emph{
+    \begin{enumerate}
+        \item Let $z,w$ be two complex numbers such that  $\overline{z}w \ne 1$. Prove that
+            \[
+                \left | \frac{w-z}{1-\overline{w}z} \right | < 1 \qquad \text{if $|z| < 1$ and  $|w| < 1$}
+            \] 
+            and also that
+            \[
+                \left | \frac{w-z}{1- \overline{w}z} \right| = 1 \qquad \text{if $|z| = 1$ or  $|w| = 1$}
+            \] 
+        \item Prove that for a fixed $w$ in the unit disc $ \mathbb{D}$, the mapping
+            \[
+            F : z \rightarrow \frac{w-z}{1-\overline{w}z}
+            \] 
+            satisfies
+            \begin{enumerate}
+                \item $F$ maps the unit disc to itself and is holomorphic
+                \item $F$ interchanges $0$ and $w$ 
+                \item $|F(z)| = 1$ if  $|z| = 1$
+                \item  $F : \mathbb{D} \rightarrow \mathbb{D}$ is bijective
+            \end{enumerate}
+    \end{enumerate}
+}
+\solution{
+    let $w = r_2e^{i\theta_2}$ and $z = r_1e^{i\theta_1}$ then we can write it as
+    \[
+    \left | \frac{r_2e^{i\theta_2} - r_1e^{i\theta_1}}{1 - r_1r_2e^{i(\theta_1-\theta_2)}} \right | = \left| e^{i\theta_1} \frac{r_2e^{i(\theta_2-\theta_1)} - r_1}{1 - r_1r_2e^{-i(\theta_2-\theta_1)}} \right|
+    \] 
+    and since rotation does not affect magnitude we can get rid of the $e^{i\theta_1}$ without affecting the total. Additionalyl $\tilde w = r_2e^{i(\theta_2 - \theta_1)}$ is in the unit disc since its magnitude is unchanged. So we can assume that $z$ is real
+    so it now suffices to show for all  $|r| \le 1$ 
+     \[
+    |w-r| \le |1-\overline{w}r|
+    \] 
+    or, squaring both sides equivalently
+    \[
+        (r-w)(r-\overline{w}) \le (1-rw)(1-r\overline{w})
+    \] 
+    but
+    \[
+        (r-w)(r-\overline{w}) = r^2 - r \overline{w} - rw + w \overline{w} = r^2 - r(w + \overline{w}) + |w|^2
+    \] 
+    and
+    \[
+        (1-rw)(1-\overline{rw}) = 1 - r \overline{w} - rw + r^2 w \overline{w} = 1 - r(w + \overline{w}) + r^2 |w|^2
+    \] 
+    we want to show
+    \[
+    r^2 - r(w + \overline{w}) + |w|^2 \le 1 - r(w + \overline{w}) + r^2 |w|^2
+    \] 
+    or equivalently
+    \[
+    r^2 + |w|^2 \le 1 + r^2|w|^2 
+    \] 
+    and moving it all to one side
+    \[
+    0 \le 1 + r^2|w|^2 - r^2 - |w|^2 = (1-r^2) - |w|^2(1-r)^2 = (1-r^2)(1-|w|^2)
+    \] 
+    but since we assumed that $r \le 1$ and  $|w| \le 1$ we see that the inequality holds with equality holding only if  $|r| = 1$ or  $|w| = 1$ as given.\\
+    For part $(b)$ Fix  $w$ in the unit disc. then since  $|F(z)| \le 1$ we have that the image of  $F$ under  $z \in \mathbb{D}$ is in  $\mathbb{D}$.
+    Additionally $F$ is holomorphic since it is the ratio of two holomorphic functions. It is holomorphic on the set $1 - \overline{w}z \ne 0$. which is satisfied by $z = w$ if  $|w| =1$ and is not satisfied within the unit disc otherwise.
+    Additionally $F(0) = w$ and  $F(w) = 0$ trivially. As proven in the previous part  $|F(z)| = 1$ if  $|z| = 1$. Assume now that  $|w| < 1$ then consider
+     \[
+    F \circ F = id
+    \] 
+    manually check
+}
+
+\section{Exercise 1.8}
+\emph{
+    Suppose $U$ and $V$ are open sets in the complex plane. Prove that if $f : U \rightarrow V$ and $g : V \rightarrow \mathbb{C}$
+    are two functions that are differentiable as functions of two real variables, and $h = g \circ f$ then
+     \[
+    \frac{\partial h}{\partial z} = \frac{\partial g}{\partial z} \frac{\partial f}{\partial z} + \frac{\partial g}{\partial \overline{z}} \frac{\partial \overline{f}}{\partial z}
+    \] 
+    and
+    \[
+        \frac{\partial h}{\partial \overline{z}} = \frac{\partial g}{\partial z} \frac{\partial f}{\partial \overline{ z}} + \frac{\partial g}{\partial \overline{ z}} \frac{\partial \overline{ f}}{\partial \overline{ z}}
+    \] 
+}
+\solution{
+    We have
+    \[
+        \frac{\partial h}{\partial z} = \frac{1}{2}(\frac{\partial h}{\partial x} + \frac{1}{i}\frac{\partial h}{\partial y})
+    \] 
+    where
+    \[
+        \frac{\partial h}{\partial x}(x,y) = \lim_{r\to 0} \frac{h(x+r,y)-h(x,y)}{r}
+    \] 
+}
+\end{document}
+
+\section{Exercise 1.9}
+\emph{
+    Show that in polar coordinates, the Cauchy-Riemann equations take the form
+    \[
+        \frac{\partial u}{\partial r} = \frac{1}{r} \frac{\partial v}{\partial \theta} \qquad \frac{1}{r} \frac{\partial u}{\partial \theta} = -\frac{\partial v}{\partial r}
+    \] 
+    Use these equations to show that the logarithm function defined by
+    \[
+        \log z = \log r + i\theta \qquad z = re^{i\theta} \text{ with } -\pi < \theta < \pi
+    \] 
+    is holomorphic in the region $r > 0$ and  $-\pi < \theta < \pi$
+}

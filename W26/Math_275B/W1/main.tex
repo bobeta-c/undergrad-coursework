@@ -1,0 +1,198 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Kolomogorov 0-1 Law}
+\emph{
+    For independent $\{X_i\}_{i=1}^{\infty}$ if $A \in \mathcal{T}$ then  $ \mathbb{P}(A) = 0$ or  $ \mathbb{P}(A) = 1$\\
+}
+(try to prove $A \perp A$.  $ \mathbb{P}(A) = 1, \text{or}, \mathbb{P}(A) = 0 \implies A \perp \mathcal{F}$. If $A \perp A \implies \mathbb{P}(A) = \mathbb{P}(A)^2$.
+$ \mathcal{T}$ the tail sigma algebra
+ \[
+     \bigcap_{n=1}^{\infty}\sigma(X_n,X_{n+1},\dots)
+\] 
+\[
+    \mathcal{T} \perp \sigma(X_1,X_2) \qquad \mathcal{T} \perp \mathcal{F}_n = \sigma(X_1,\dots,X_n)
+\] 
+want to show
+\[
+    \mathcal{F} = \sigma(X_1,\dots,X_n,\dots) = \sigma(\bigcup_{n=1}^{\infty} \mathcal{F}_n)
+\] 
+\[
+    \mathcal{T} \perp \mathcal{T} \impliedby \mathcal{T} \perp \mathcal{F} \impliedby? \;\; \mathcal{T} \perp \bigcup_{n=1}^{\infty} \mathcal{F}_n
+\] 
+We know $\mathcal{T} \perp (\bigcup_{n=1}^{\infty} \mathcal{F}_n$ does this imply $\mathcal{T} \perp \sigma(\bigcup_{n=1}^{\infty}\mathcal{F}_n)$ $\pi-\lambda$ again
+\begin{enumerate}
+    \item show that $\bigcup_{n=1}^{\infty} \mathcal{F}_n$ is a $ \pi $-system
+    \item $\{B : B \perp \mathcal{T}\}$ is a  $\lambda$-system
+    \item $\pi-\lambda \implies \sigma(\bigcup_{n=1}^{\infty} \mathcal{F}_n \perp \mathcal{T}$
+\end{enumerate}
+
+\section{Percolation}
+Infinite lattice $ \mathbb{Z}^2$
+$0 \le p \le 1$  $X_e \sim \text{Bern}(p)$ if it is zero the edge is destroyed if it is 1 the edge is maintained
+$ \mathbb{P}( C_{\infty} \text{exists})$ the probability that there is a connected component that it is infinitely large $|CP| = +\infty$.
+This is a function of $p$ Let  $A = \exists CP_{\infty}$ then $A \perp X_{e_1}, X_{e_2}$ $A \in \mathcal{T}$ so  $f(p) = 0$ or $f(p) = 1$ The jump point is
+when  $d = 2, p_c = \frac{1}{2}$ 
+
+\section{H-S 0-1 Law}
+Hewitt Savage
+\[
+    A := \{\lim_{n\to \infty}\frac{S_n}{\sqrt{n}} \le a\}, \qquad A \in \mathcal{T}
+\] 
+\[
+S_n = \sum_{i=1}^{n}X_i
+\] 
+\[
+    \tilde{A} := \{ \lim_{}S_n \le a\} \qquad \tilde A \not\in \mathcal{T}
+\] 
+\[
+\lim_{n\to \infty}S_n(X_1,\dots,X_n,\dots) = \lim_{n\to \infty} S_n(X_2,X_1,X_3,\dots,X_n,\dots)
+\] 
+This limit function is symmetric for example
+\[
+\sum_{i=1}^{\infty}X_i \qquad \sum_{i,j}^{}X_iX_j
+\] 
+\[
+\vec X := (X_1,\dots,X_n,\dots)
+\] 
+\[
+    \vec X : (\Omega, \mathcal{F}) \rightarrow ( \mathbb{R}^{\infty}, \mathcal{R}^{\infty})
+\] 
+\emph{ Definition:\\
+$A \in \mathcal{R}^{\infty}$  is symmetric $\iff$  $\forall i < j$ $(a_1,a_2,\dots,a_n,\dots) \in A \implies (a_1,\dots,a_j, \dots, a_i, \dots, a_n, \dots) \in A$
+}\\
+What about antisymmetric like determminant\\
+\emph{
+    H-S 0-1 Law:\\
+    If $\{X_i\}_{i=1}^{\infty}$ are i.i.d R.V.  $A \in \mathcal{R}^{\infty}$ is symmetric then $  \mathbb{P}(\vec X \in A) = 0$ or $1$
+}
+Example
+\[
+    \mathbb{P}(\lim_{n\to \infty}S_n \le a) = 0 \;\; \text{or} \;\; 1
+\] 
+.
+If $X_i$ are i.i.d r.v. if  $E \in \mathcal{E} \subset \mathcal{F}^{\infty}$ $E$ is exchangable then  $ \mathbb{P}(\vec X \in E) = 0$ or $1$
+\section{Lemma}
+\emph{
+$X_i$ i.i.d,  $ \mathbb{P}(X_1 = 0) \ne 1$ then 
+\[
+    \limsup_{n\to \infty} S_n = -\infty \;\; \text{or} \;\; +\infty
+\] 
+}\\
+Proof: $\forall$ fixed  $L \in \mathbb{R}$
+\[
+    \mathbb{P}(\limsup_{n\to \infty}S_n \le L) = 0 \;\; \text{or} \;\; 1 = g(L)
+\] 
+If  $g(L)$ is sconstant 0 or 1 then we are done.  otherwise $\exists L_c$ such that  $g(L) = 1$ when $ L < c$  $g(L) = 0$ when  $ L > L_c$ then
+ \[
+     \limsup_{n\to \infty} S_n = L_c \qquad \text{a.s.}
+\] 
+Assume $\exists L_c$ such that  $\limsup_{ n\to \infty } S_n = L_c$ almost sure. $\limsup_{n\to \infty}S_n  = X_1 + \limsup_{n\to \infty}\tilde S_n$ 
+\[
+    (\tilde X_1, \tilde X_2, \dots) = (X_2, X_2,\dots)
+\] 
+\[
+    \tilde {\vec X} \sim^{d} \vec X
+\] 
+so
+\[
+\limsup_{n\to \infty} S_n = X_1 + \limsup_{n\to \infty} S_n
+\] 
+so
+\[
+    L_c = X_1 + L_c  \qquad \text{a.s.}
+\] 
+so
+\[
+    X_1 = 0 \qquad \text{a.s}
+\] 
+contradiction.
+\section{Proof of H-S Law}
+\[
+    E \subset \mathcal{E} \subset \mathcal{F}^{\infty}
+\] 
+then for any $\epsilon > 0$ there exists $n, A \in \mathcal{F}_n$ such that 
+$ \mathbb{P}(E \triangle A) < \epsilon$ 
+\emph{
+    Lemma: $ \mathcal{A}$ is an algebra, $ \mathcal{F} = \sigma( \mathcal{A})$. 
+    \[
+    \forall B \in \mathcal{F} \;\;\; \delta > 0 \;\; \exists \; A \in \mathcal{A} \rightarrow \mathbb{P}(A \triangle B) < \delta
+    \] 
+    Proof using $\pi-\lambda$ 
+    $ \mathcal{P} := \mathcal{A}$
+    $ \mathcal{L} := \{ B \in \mathcal{F}: \forall \delta , \exists A \in \mathcal{A}, \mathbb{P}(A \triangle B) < \delta\}$
+    Then $\mathcal{P} \subset \mathcal{L}$ 
+    \begin{enumerate}
+        \item $B \in \mathcal{L}, B^{c} \in \mathcal{L}$ since $ \mathcal{A}$ is closed under complement
+        \item $\bigoplus_{i=1}^{\infty} B_i \in \mathcal{L}$ Fix $\delta$ cut off the tail so that the head is all the probability except for $\frac{\delta}{3}$ and find $A \in \mathcal{A}$ that approximate the first $B_i$ then the union of these  $A_i$ is close to the first  $B_i$
+    \end{enumerate}
+}
+$A \in \mathcal{F}_n$ $ A \in \sigma(X_1,X_2,\dots,X_n)$
+$\tilde A \in \sigma(X_{n+1},\dots X_n)$ $\tilde A = \Pi \circ A$
+ \[
+\Pi = 
+\begin{cases}
+    X_1 \rightarrow X_{n+1}\\
+    X_2 \rightarrow X_{n+2}\\
+    \dots\\
+    X_n \rightarrow X_{2n}
+\end{cases}
+\] 
+Then
+ \[
+\mathbb{P}(\vec X \in E \triangle \tilde A) = \mathbb{P}(\vec X \in E \triangle A)
+\] 
+
+
+\end{document}

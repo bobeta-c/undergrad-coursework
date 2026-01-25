@@ -1,0 +1,368 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Corollary}
+\emph{
+    If $f(z) = \sum_{n=0}^{\infty}\alpha_n z^{n}$ converges in $\{|z| < R\}, R > 0$,then
+    $f$ is holomorphic in $\{|z| < R\}$ and  $f$ is infinitely differentiable in its radius of convergence and
+    \[
+    f^{(k)}(z) = \sum_{n=k}^{\infty}n(n-1)\dots(n-k+1)\alpha_nz^{n-k}
+    \] 
+    and
+    \[
+    \alpha_n = \frac{f^{(n)}(0)}{n!}
+    \]  
+}\\
+\emph{
+    Definition:\\
+    $f(z)$ is analytic on the domain  $\Omega$ if $\forall z_0 \in \Omega$ $f$ has power series expansion
+    \[
+    \sum_{}^{}\alpha_k(z_0)(z-z_0)^{k}
+    \] 
+    converging in $\{|z-z_0| < \delta_{z_0}\}$ $\delta_{z_0} > 0$
+}
+so $f$ analytic in $\Omega$ implies  $f$ is holomorphic in $\Omega$.
+Ex: 
+ \[
+f(x) =
+\begin{cases}
+    x^{\frac{3}{2}} & x \ge 0 \\
+    0 & x < 0
+\end{cases}
+\] 
+\[
+f'(x) = 
+\begin{cases}
+    \frac{3}{2}x^{\frac{1}{2}} & x \ge 0\\
+    0 & x < 0
+\end{cases}
+\] 
+
+\section{Theorem}
+For $\omega \in \mathbb{C}\setminus \{0\}$ and $D_{\omega} = \{z \in \mathbb{C}: |z-w| < |w|\}$
+Then there exists $g : D_\omega \rightarrow \mathbb{C}$ such that $e^{g(z)} = z$  for all $z \in D_\omega$
+
+\section{Tuesday}
+\emph{
+    Def: A parametized curve is a continuous function $z : [a,b] \rightarrow \mathbb{C}$ $-\infty < a < b < \infty$.
+    It is smooth if $z'(t)$ exists and is continuous and $z'(t) \ne 0$ for all  $a < t < b$ and
+     \[
+    z'(a) = \lim_{t\downarrow 0} \frac{z(a+t) - (a)}{t}
+    \] 
+    $z(t)$ is piecewise smooth if  $z(t)$ is continuous and there exists  $a = a_0 < a_1 < \dots < a_m = b$ and
+    $z'(t)$ is continuous on  $(a_{j-1},a_j)$  $1 \le j \le m$. Left and right derivatives exist at  $a_j$ for all  $j$
+}
+\\
+\emph{
+    Def: $z : [a,b] \rightarrow \mathbb{C}$ and $\tilde z: [c,d] \rightarrow \mathbb{C}$ are equivalent
+    if there exists a map 
+    \[
+        t(s) : [c,d] \rightarrow^{\text{onto}} [a,b]
+    \] 
+    $t'(s) > 0$ so that  $z(t(s)) = \tilde z(s)$
+}
+\\
+Ex:
+\[
+    z_n : (0,2\pi] \rightarrow \mathbb{C}
+\] 
+\[
+z(t)_n(t) = e^{int}
+\] 
+
+The reverse curve of $z : [a,b] \rightarrow \mathbb{C}$ is $z^{-}(t) : [a,b] \rightarrow \mathbb{C}$ but $z^{-}(t) = z(b+a-t)$
+
+Let
+\[
+    \gamma = \{z(t) : a \le t \le b\}
+\] 
+be a parametized line
+\[
+f : \gamma \rightarrow \mathbb{C}
+\] 
+be continuous. Define
+\[
+\int_{\gamma}^{}f(z)dz = \int_{a}^{b}f(z(t))z'(t)dz
+\] 
+
+\section{Lemma 4.1}
+\emph{
+    \begin{enumerate}
+        \item 
+            \[
+            \int_{\gamma}^{}f(z)dz
+            \] 
+            is independent of the equivalent parametization of $\gamma$.
+            $\gamma = z(t)$ $a \le t \le b$
+             $\tilde \gamma = \tilde z(s)$ $c \le s \le d$ then
+              \[
+             \int_{\gamma}^{}fdz = \int_{\tilde \gamma}^{}fdz
+             \] 
+             \[
+                 \frac{d \tilde z}{ds} = \frac{dz}{dt} \frac{dt}{ds}
+             \] 
+         \item 
+             \[
+             \int_{- \gamma}^{}f(z)dz = - \int_{\gamma}^{}f(z)dz
+             \] 
+             \[
+             z(t) = z(t(s)) = \tilde z(s)
+             \] 
+    \end{enumerate}
+}
+
+\section{Wednesday}
+\section{Theorem 4.3}
+$F$ holo in a domain $\Omega$. Assume  $F'(z)$ is continuous in  $\Omega$. Let $\gamma = \{z(t) : a \le t \le b\}$ piecewise
+smooth parametized curve.
+\[
+\int_{\gamma}^{}F'(z)dz = F(z(b)) - F(z(a))
+\] 
+\section{Corollary}
+If $F'$ is continuous and  $\gamma$ is closed i.e. $z(b) = z(a)$ then
+ \[
+\int_{\gamma}^{}F'(z)dz = 0
+\] 
+If $F' = 0$ on  $\Omega$ then  $F$ is constant. Ex:  $T$ is a solid triangle and $T \subset \Omega$.
+Triangle is oriented counter clockwise. Then
+\[
+\int_{\partial T}^{}p(z)dz = 0
+\] 
+for all polynomials $p$
+
+\section{Cauchy integral theorem}
+\emph{
+    Let $ D$ be a disc.  $\gamma$ piecewise smooth simple closed curve. $\gamma \subset D$. $f$ holomorphic in $D$  implies
+     \[
+    \int_{\gamma}^{}f(z)dz = 0
+    \]
+}
+$f(z) = \frac{1}{z}$ is holomorphic in $ \mathbb{C} \setminus \{0\}$ but $\int_{ \gamma}^{}f(z)dz \ne 0$ $\int_{0}^{2\pi}e^{-i\theta}e^{i\theta}d\theta = 2\pi$
+\\
+\emph{
+    $f$ holomorphic on domain $\Omega \implies f'$ is continuous in  $\Omega$
+}
+\\
+\emph{
+    $f$ holomorphic implies $f$ is analytic (i.e. has powerseries experession at all points)
+}
+\\
+\emph{
+    if $\Omega$ is a domain and  $f$ is holomorphic on $\Omega$.  $D = \{z : |z-z_0r < r\} \subset \Omega$ then $f|_{D}$ determins  $f$
+}
+\\
+\emph{
+    normal families arguments (compactness)
+}
+
+\section{Theorem (goursot)}
+\emph{
+    Let $T$ be a closed solid triangle contained in a domain  $\Omega$ and let  $f$ be holomorphic on $\Omega$.
+    Then
+    \[
+    \int_{\partial T}^{}f(z)dz = 0
+    \] 
+}
+\\Proof:
+Write $T^{0} = T$ $T_{J_1}^{1}, j=1,2,3,4$  are formed by connecting the midpoints of sides of $T^{0}$.
+each $T_{J_1}^{(1)}$ gives rise to $T_{j_1,j_2}^{(2)}$
+ for $j_2=1,2,3,4$ and so we subdivide each other traingle into four parts via the same technique.
+ In general $T_{j_1,\dots,j_N}^{(N)}$ gives rise to $T_{j_1,\dots,j_N,j_{N+1}}^{(n+1)}$.
+ THen
+ $l(\partial T_{j_1,\dots,j_n}^{(n)} = 2^{-m} l(\partial T^{0})$ orean each 
+ $\partial(T_{j_1,\dots,j_n}^{(n)})$ coounter clockwise.
+ then
+ \[
+     \int_{\partial T^{0}}^{}f(z)dz = \sum_{j=1}^{4}\int_{\partial T_{j}^{(1)}}^{}f(z)dz
+ \] 
+
+so
+\[
+    \int_{\partial T_{\vec j}^{(n)}}^{} = \sum_{j_{n+1}}^{4}\int_{\partial T_{\vec j,j_{n+1}}^{(n+1)}}^{}f(z)dz
+\] 
+Assume that
+\[
+\left|\int_{\partial T}^{}f(z)dz\right| = \alpha > 0
+\] 
+then exists $j_1$ such that $\left | \int_{\partial T_{j_1}^{1}}^{}f(z)dz \right| > \frac{\alpha}{4}$.
+THen there exists $j_1,j_2,\dots,j_n$ such that
+\[
+    \left | \int_{\partial T_{j_1,\dots,j_n}^{(n)}}^{}f(z)dz \right| \ge \frac{\alpha}{4^{n}}
+\] 
+by math 131
+ \[
+     \bigcap_{n=1}^{\infty}T_{j_1,j_2,\dots,j_n}^{n} =\{z_0\}, z_0 \in \Omega
+\] 
+$f(z) = f(z_0) + f'(z_0)(z-z_0) + o(|z-z_0|)$ $R(z) = f(z) - p(z)$ with  $p(z) = f(z_0) + f'(z_0)(z_-z_0)$. then
+\[
+    \sup_{T^{(n)}_{j_1,\dots,j_n}}|R(z)| \le \epsilon 2^{-n}
+\] 
+since the max width of $T^{(n)}$ is $2^{-n}$
+if $n \ge n(\epsilon)$\\
+therefore  since the integral of a polynomial is known to be zero around a closed curve
+\[
+    \left |\int_{\partial T_{j_1,\dots,j_n}^{(n)}}^{}f(z)dz \right| = \left | \int_{\partial T_{j_1,\dots,j_n}^{(n)}}^{} R(z)dz\right | \le \epsilon 2^{-n}l(T)2^{-n}
+\] 
+so we get
+\[
+\frac{\alpha}{4^{n}} < \epsilon l(T) \frac{1}{4^{n}}
+\] 
+but $\alpha$ is fixed and we can pick any $\epsilon$ we want therefore
+$\alpha = 0$ so we are done.
+
+\section{Theorem 5.2}
+\emph{
+    If $f(z)$ is holomorphic in an open disc  $D$. 
+    then  $\exists$  $F(z)$ holomorphic in  $D$ with  $F'(z) = f(z)$ in  $D$. NOT TRUE FOR ALL DOMAINS  $\Omega$.
+}
+
+\section{Friday Cauchy integral theorem}
+\emph{
+   $f$ holomorphic in a disc $ D$ and $T$ triangle subset of  $D$ then
+    \[
+   \int_{\partial T}^{}f(z)dz = 0
+   \] 
+}\emph{\\
+   If $f$ is holomorphic in a disc $D$ then there exists $F$ holomorphic in $D$ with  $F'(z) = f(z)$ for all  $z \in D$.
+}\\
+Proof: define $F(z) = \int_{ \gamma_z}^{}f(w)dw$ where $\gamma_z = \{tz + (1-t)z_0: 0 \le t \le 1\}$. $F(z)$ is defined for all  $z \in D$. also  $z_0$ is the center of $D$.
+Also $\sigma := \{tz + (1-t)(z+h): 0 \le t \le 1\}$ I want to show
+\[
+F(z+h) - F(z)
+\] 
+from theorem we have
+\[
+F(z+h) - F(z) + \int_{\sigma}^{}f(w)dw = 0
+\] 
+so
+\[
+    \frac{F(z+h) - F(z)}{h} - f(z) = -\frac{1}{h}\int_{\sigma}^{}f(w)dw - f(z)
+\] 
+RHS
+\[
+=\frac{1}{h}\int_{\sigma}^{}(f(z)-f(w))dw
+\] 
+so
+\[
+    \frac{1}{|h|}|\int_{\sigma}^{}((f(z)-f(w))| \le \frac{1}{|h|}\sup_{w \in \sigma}|f(w)-f(z)| |h|
+\] 
+and the last term goes to zero since $f$ is continuous. We use $f$ is holomorphic to show that the integral around the triangle is zero.
+
+\section{Corollary 5.3}
+\emph{
+    If $f$ is holo on an open disc $D$ and $\gamma$ is a piecewise smooth closed curve in  $D$. THen
+    \[
+    \int_{\gamma}^{}f(z)dz = 0
+    \] 
+    since
+    \[
+    \int_{\gamma}^{}f(z)dz = \int_{\gamma}^{}F'(z)dz = 0
+    \] 
+}
+
+\section{Extensions of the theorem}
+A satr like domain is a domain $D$ such that there exists  $z_0 \in D$ such that for all $z \in D$
+ \[
+     \{tz + (1-t)z_0 : 0 \le t \le 1\} \subset D
+\] 
+Theorem $5.2$ is true for all star shaped domain.
+
+\section{Theorem 5.4 Cauchy integral formula}
+\emph{
+    If $f(z)$ is holomorphic on a domain  $\Omega$ and if  $D$ is a disc with $\overline{D} \subset \Omega$. Then
+    \[
+        \frac{1}{2\pi i} \int_{\partial D \text{counter clockwise}}^{}\frac{f(w)}{w-z}dw = 
+        \begin{cases}
+            f(z) & z \in D\\
+            0 & z \not\in \overline{D}\\
+            \text{undefined} & z \in \partial D
+        \end{cases}
+    \] 
+}\\
+Proof: if $z \not\in \overline{ D}$  us corollary $5.3$ for 
+ \[
+g(w) = \frac{f(w)}{w-z}
+\] 
+and $\gamma = \partial D$. $g(w)$ is holomorphic on  $D$ since  $w-z = 0 $ only when  $w \not\in D$ so the integral is zero.\\
+If  $z \in D$, let $z_0$ be the center of the disc then say $D = \{z : (z-z_0) < R\}$ then there exists $ R' > R$ such that  $\{z : (z-z_0) \le R'\} \subset \Omega$.
+Then
+\[
+    \Omega = \overline{D} \setminus [z,z^{*}], \qquad z^{*} \in \partial \overline{D}
+\] 
+\[
+g(w) = \frac{f(w)}{w-z}
+\] 
+is holomorphic in $\Omega$ 
+Let
+\[
+\gamma = \Gamma_\epsilon + L' + \gamma_\epsilon' + L
+\] 
+but
+\[
+\frac{1}{2\pi i} \int_{\gamma}^{} \frac{f(w)}{w-z}dw = 0
+\] 
+\[
+\frac{1}{2\pi i} \int_{\Gamma_\epsilon}^{}\frac{f(w)}{w-z} dz \rightarrow \frac{1}{2\pi i}\int_{\partial D}^{}\frac{f(w)}{w-z}dw
+\] 
+\[
+\frac{1}{2\pi i} \int_{\gamma_\epsilon}^{}\frac{f(w)}{w-z}dw \rightarrow f(z)
+\] 
+but
+\[
+\int_{L}^{}f + \int_{L'}^{}f \rightarrow 0
+\] 
+since $f$ is continuous
+
+
+\end{document}
