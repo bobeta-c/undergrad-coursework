@@ -1,0 +1,266 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 275A}
+\newcommand{\ced}{Fall 2025}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#8}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{review}
+if $f_n$ uniformly integrable and $f_n \rightarrow f$ in measure
+then $f_n \rightarrow f$ in $L^{1}$ proof in textbook
+
+\section{1.6 Differentiation theorems}
+integration on $ \mathbb{R}$ 
+\\
+fundamental theorem of calculus
+\begin{enumerate}
+    \item  $f : [a,b] \rightarrow \mathbb{R}$ continuous, $F(t) = \int_{a}^{t}f(x)dx$ for all $t$.
+        then $F$ differentiable on  $(a,b)$  and  $F'(x) = f(x)$ 
+    \item if $F : [a,b] \rightarrow \mathbb{R}$ continuously differentiable then  $\int_{a}^{b}F'(t)dt = F(b) - F(a)$
+\end{enumerate}
+Suppose $f(x) = 1_{x \ge 1}$ then  $F(x) = \int_{0}^{x}f(t)dt =  \max(x-1,0)$ and
+$F$ is differentiable if $x \ne 1$.\\
+if  $F(x) = 1_{x \ge 1}$ then  $F'(x) = 0$ almost everywhere. but  $\int_{0}^{2}F'(t)dt = 0 \ne F(2) - F(0) = 1$\\
+What can be salvaged from FTC if one has less regularity?
+
+\section{Lebesgue differentiation theorem 1st version}
+if $f : [a,b] \rightarrow \mathbb{C}, $ absolutely integrable., $F(x) = \int_{[a,x]}^{}f(t)dt$ for $x \in (a,b]$
+then  $F$ is continuous everywhere and differentiable almost everywhere. for all $x \in (a,b]$ and  $y \rightarrow x, y \in (a,b]$ then $\lim_{y\to x}F(y) = F(x)$
+and for almost every $x \in (a,b]$
+ \[
+\lim_{y\to x} \frac{F(y) - F(x)}{y-x} = f(x)
+\] 
+where we ensure $y \ne x $ and  $y \in (a,b]$. In other words the first fundamental theorem of calculus holds
+almost everywhere for absolutely integrable functions
+\solution{
+    Use the dense subclass argument if $f \in L^{1}([a,b]), \epsilon > 0$, there exists $g \in C([a,b])$ such that
+     \[
+         ||f-g||_{L^{1}} = \int_{[a,b]}^{}|f(x)-g(x)|dx < \epsilon
+    \] 
+    first we want to show $F$ is continuous, let $y_n \rightarrow x$ in $[a,b]$, want to show  $F(y_n) \rightarrow F(x)$ or that
+    \[
+        \int_{[a,y_n]}^{}f(t)dt \rightarrow \int_{[a,x]}^{}f(t)dt
+    \] 
+    \[
+        \int_{[a,b]}^{}1_{[a,y_n]}f(t)dt \rightarrow^{?} \int_{[a,b]}^{}f(t) 1_{[a,x]}dt
+    \] 
+    however the convergence is guaranteed by the dominated convergence theorem since everything is dominated by $|f|$.
+    \\
+    The hard part is to show that  $F'(x) = f(x)$ almost everywhere. Fix  $x \in [a,b]$, $x \ne a,b$
+     \[
+         F'(x) = \lim_{y\to x \; y \in (a,b], y \ne x} \frac{F(y) - F(x)}{y-x}  =^{?} f(x)
+    \] 
+    it sufficies to show the right limits and left limits so we focus on the right limts.
+    \[
+    \lim_{y\to x^{+}}\frac{F(y) - F(x)}{y-x}
+    \] 
+    $y = x + h,$  $h > 0$ we want
+     \[
+         \lim_{h\to 0^{+}}\frac{F(x+h) - F(x)}{h} = \frac{\int_{[a,x+h]}^{}f(t)dt - \int_{[a,x]}^{}f(t)dt}{h} = \frac{\int_{[x,x+h]}^{}f(t)dt}{h} =^{?} f(x)
+    \] 
+    want to show 
+    \[
+        \lim_{h\to 0^{+}}\frac{\int_{[x,x+h]}^{}f(t)dt}{h} - f(x) =^{?} 0
+    \] 
+    but
+    \[
+        f(x) = \frac{\int_{[x,x+h]}^{}f(x)dt}{h}
+    \] 
+    so we get
+    \[
+        \lim_{h\to 0^{+}} \int_{[x,x+h]}^{}\frac{f(t)-f(x)}{h}dt
+    \] 
+    we have by triangle inequality
+    \[
+        |\int_{[x,x+h]}^{}\frac{f(t)-f(x)}{h}dt| \le \int_{[x,x+h]}^{}|\frac{f(t)-f(x)}{h}| dt
+    \] 
+    by squeeze it suffices to show that
+    \[
+        \limsup_{h\to 0^{+}} \int_{[x,x+h]}^{}|\frac{f(t)-f(x)}{h}| dt = 0
+    \] 
+    by change of variables $t = x + hy, dt = hdy$ can rewrite as
+    \[
+        \int_{[0,1]}^{}|f(x+hy) - f(x)|dy
+    \] 
+    pick $\lambda > 0$ look at
+    \[
+        \{x : \limsup_{h\to 0} \int_{[x,x+h]}^{}|\frac{f(t)- f(x)}{h}| dt > \lambda\}
+    \] 
+    if we can show this set has measure 0 for all $\lambda > 0$ we are done. Fix $\epsilon > 0$
+    there exists $g \in C([a,b])$ such that  $||f -g||_{L^{1}} < \epsilon$ and we know
+    \[
+        \lim_{h\to 0} \int_{[x,x+h]}^{}|\frac{g(t)-g(x)}{h}|dt = 0
+    \]
+   \[
+       \frac{|f(t) - f(x)|}{h} \le \frac{1}{h}( |f(t) - g(t)|  + |g(t) - g(x)| +  |g(x) - f(x)|)
+   \] 
+   and so when we integrate we get the same inequality.
+   but
+   \[
+       \int_{[x,x+h]}^{}\frac{|g(x)-f(x)|}{h}dt = |g(x) - f(x)|
+   \] 
+   \[
+       \int_{[x,x+h]}^{}\frac{|g(t)-g(x)|}{h}dt \rightarrow 0 
+   \] 
+   as $h \rightarrow 0$ and we hav
+   \[
+       \limsup_{h\to 0^{+}}\int_{[x,x+h]}^{}\frac{|f(t)-f(x)|}{h}dt \le \limsup_{h\to 0^{+}} \int_{[x,x+h]}^{}\frac{|f(t)-g(t)|}{h}dt + |g(x) - f(x)|
+   \] 
+   if lhs is bigger than lambda then either of the two terms on the right is bigger than $\frac{\lambda}{2}$
+   but we have
+   \[
+       \mu(\{x : |g(x) - f(x)| > \frac{\lambda}{2}\}) \le 2\frac{||g-f||_{L^{1}}}{\lambda} \le \frac{2\epsilon}{\lambda}
+   \] 
+   and we can pick $\epsilon$ as small as we wish to get this set arbitrarily small.
+   we have
+   \[
+       \limsup_{h\to 0 } \int_{[x,x+h]}^{}\frac{|f(t)-g(t)|}{h}dt \le \sup_{h} \int_{[x,x+h]}^{}\frac{|f(t)-g(t)|}{h}dt
+   \] 
+   we need to use the Hardy-Littlewood maximall inequality. $f \in L^{1}( \mathbb{R})$ $\lambda > 0$ then
+   \[
+       m(\{x : \sup_{h > 0} \frac{1}{h} \int_{[x,x+h]}^{}|f(t)| dt \ge \lambda\}) \le \frac{||f||_{L^{1}( \mathbb{R})}}{\lambda}
+   \] 
+   if we prove this inequality we prove that the other term is violated one a set of measure less than $\frac{2\epsilon}{\lambda}$ and we are done so it suffices to prove this inequality.
+}
+
+\section{1D lebesgue diff thm:}
+
+\[
+    f \in L^{1}[a,b], F(x) = \int_{[a,x]}^{}f(t)dt \implies F \text{cts, diff. a.e,}
+\] 
+for almost every $x \in (a,b]$  $\frac{d}{dx}F(x) = f(x)$
+\[
+    \frac{1}{h}\int_{x}^{x+h}f(t)dt \rightarrow f(x), h \rightarrow 0^{+}, \text{a.e.}
+\] 
+"measurable functions are almost continuous"
+Hardy-Littlewood maximal inequality 1D, one-sided $f \in L^{1}( \mathbb{R}), \lambda > 0$
+\[
+    m(\{x : \sup_h \frac{1}{h}\int_{x}^{x+h}|f(t)|dt \ge \lambda \}) \le \frac{\int_{}^{}|f|}{\lambda}
+\] 
+
+\section{Rising sun lemma}
+\emph{
+    \[
+        F : [a,b] \rightarrow \mathbb{R} \text{cts}
+    \] 
+    then $\exists$ at most countably many disjoint interals  $(a_n,b_n) \subset [a,b]$ such that
+    \begin{enumerate}
+        \item on each $(a_n,b_n)$ either  $F(a_n) = F(b_n)$ or $a_n = a$,  $F(b_n) \ge F(a_n)$
+        \item if  $x \not\in (a_n,b_n)$, $x \in [a,b]$ for any  $n$ then  $F(y) \le F(x)$ for all  $x \le y \le b$
+    \end{enumerate}
+}
+skip the proof for now
+but rising sun implies HL max inequality which implies lebesgue differentiation theorem
+\[
+    F(x) = \int_{[a,x]}^{}|f(t)|dt - \lambda(x-a)
+\] 
+then $F(x)$ is continuous so we can apply rising sun lemma suppose that  $x$ does not lie in the intervals
+described in the lemma, then for any $h> 0$ $F(x+h) \le F(x)$ if you rearrange
+\[
+    \frac{1}{h}\int_{[x,x+h]}^{}|f(t)|dt \le \lambda
+\] 
+so the set where this is big is less than or equal to  $\sum_{}^{}|b_n - a_n|$
+for any $a_n,b_n$ not  $a_n = a$ then 
+ \[
+     F(b_n) = F(a_n) \implies \int_{[a_n,b_n]}^{}|f(t)|dt - \lambda(B_3 - a_3)
+\] 
+\[
+    \int_{[a,b]}^{}|f(t)dt \ge \int_{\bigcup [a_n,b_n]}^{}|f(t|dt = \lambda \sum_{}^{}(b_n - a_n)
+\] 
+
+\section{Lebesgue differentiation thm}
+\[
+f \in L^{1}( \mathbb{R}^{d})
+\] 
+\emph{
+    for almost every $x$ 
+    \[
+        \lim_{r\to 0} \frac{1}{m(B(x,r))}\int_{B(x,r)}^{}f(t)dt = f(x)
+    \] 
+    and additionally
+    \[
+        \frac{1}{m(B(x,r))} \int_{B(x,r)}^{} |f(t) - f(x)| dt \rightarrow 0 \text{as $r \rightarrow 0$}
+    \] 
+}
+this proof is also derived from a HL max inequality on
+\[
+    m(\{x : \sup_{r} \frac{1}{m(B(x,r))}\int_{B(x,r)}^{}|f(t)|dt > \lambda\}) \le C_d \frac{\int_{}^{}|f|dt}{\lambda}
+\] 
+where $C_d$ is a constant depending only on  $d$.
+Covering lemma
+\section{Covering lemma}
+\emph{
+    $B_1, \dots, B)n$ balls in $ \mathbb{R}^{d}$ (not necessarily disjoint) then there exists
+    a subcollection $B_1', \dots, B_m'$ which are disjoint that 
+    \[
+        \bigcup_{i=1}^{n}B_i \subset \bigcup_{j=1}^{m}3B_j'
+    \] 
+}
+
+Question? under what conditions $f : [a,b] \rightarrow \mathbb{R}$ can we saythat $\int_{[a,b]}^{}f'(t)dt = f(b) - f(a)$ we know this holds if $f \in C^{1}$
+Suppose $f$ is monotone increasing on $[a,b]$ then  $f$ is continuous almost everywhere except on a countable set. $f$ is also differentiable almost everywhere (rising sun lemma on $f(t) - \lambda t$).
+so we can integrate $\int_{}^{}f'(t)$ we get
+\[
+    \int_{[a,b]}^{}f'(t)dt \le f(b) - f(a)
+\] 
+uses fatou's lemma.
+
+counter example, cantor function "devil's staircase" continuous monotone increasing, differentiable almost everywhere  $f'(t) = 0$
+
+\section{absolute continuity}
+$f$ is absolutely continuous if for every $\epsilon$ there exists $\delta > 0$ such that if $I_1,I_2,\dots,I_n$ disjoint intervals
+with $\sum_{}^{}|I_i| \le \delta$ then it implies $\sum_{}^{}|f(I_i)| \le \epsilon$
+if $f$ is abs continuous then $f$ is differentiable almost everywhere and
+\[
+    \int_{[a,b]}^{}f'(t)dt = f(b) - f(a)
+\] 
+if $f$ is integrable and $F(x) = \int_{[0,x]}^{}f(t)dt$ is absolutely continuous
+\end{document}

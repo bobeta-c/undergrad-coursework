@@ -1,0 +1,274 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\iter}{int}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+$\mu$ is a Radon measure on $ \mathbb{R}^{d}$ \\
+\emph{
+    Definition: Let $O \subset \mathbb{R}^{d}$ be an open set
+    \begin{enumerate}
+        \item if $1 \le p < +\infty$ we say that $(f_j)_{j=1}^{+\infty} \subset L^{p}(0, \mu)$  converges weakly to $f$
+            in  $L^{p}(0,\mu)$ if $f \subset L^{p}(O,\mu)$ and $\lim_{j\to +\infty}\int_{O}^{}f_j g d \mu = \int_{ O}^{}fg d \mu$ for all $g \in L^{\frac{p}{p-1}}(O, \mu)$.
+            This is equivalent to saying that the limit $\lim_{j\to +\infty}L(f_j) = L(f) \forall L \in (L^{p}(\Omega ,\mu))^{*}$ since by riesz representation theorem evey continuous linear map can be represented in this way.
+        \item We say that $(f_j)_{j=1}^{\infty}$ converges weak* to $f \in L^{\infty}(O, \mu)$ if $f \in L^{\infty}(O, \mu)$
+            and 
+            \[
+            \lim_{j\to +\infty}\int_{O}^{}f_j g d \mu = \int_{O}^{}fg d \mu \forall g \in L^{1}(O, \mu)
+            \] 
+            this is another way of saying that $\lim_{j\to +\infty}L_{f_j}(g) = L_f(g) \forall g \in L^{1}(O, \mu)$
+            and $L_{f_j} \in (L^{1}(O,\mu))^{*}$
+   \end{enumerate}
+}
+
+\section{Theorem Weak and weak* compactness in $L^{P}$-spaces}
+\emph{
+    Let $1 < p \le +\infty$
+and let $(f_j)_{j=1}^{\infty}$ be a bounded sequence in $L^{p}( \mathbb{R}^{d}, \mu)$.
+\begin{enumerate}
+\item    
+If $1 < p < +\infty$ then there exists a subsequence $(f_{j_i})_{i=1}^{\infty}$ and $f \in L^{p}( \mathbb{R}^{d}, \mu)$ such that 
+$(f_{j_i})_{i=1}^{\infty}$ converges weakly to $f$ in $L^{p}( \mathbb{R}^{d}, \mu)$, we write $f_{j_i} \rightharpoonup f$  in $ L^{p}( \mathbb{R}^{d}, \mu)$.
+\item
+    If $p = +\infty$ then there exists a subsequence $(f_{j_i})^{+\infty}_{i=1}$ and $f \in L^{\infty} ( \mathbb{R}^{d}, \mu) $ such that
+    $(f_{j_i})^{\infty}$ converges weak * to $f$ in $L^{\infty}( \mathbb{R}^{d}, \mu)$. We write $f_{j_i} \overset{*}{\rightharpoonup} f$ in $L^{\infty} ( \mathbb{R}^{d}, \mu)$
+\end{enumerate}
+}
+Since it suffices to prove the theorem for $(f_j^{\pm})_{j=1}^{\infty}$ we may assume that $f_j \ge 0$. For  $A \subset \mathbb{R}^{d}$ $\mu $-measurable, we set
+\[
+    \nu_j[A] = \int_{ \mathcal{A}}^{}f_j d \mu
+\] 
+for $A \subset \mathbb{R}^{d}$, we set
+\[
+    \nu_j[A] = \inf\left\{ \nu_j[B] : A \subset B, B \text{ is $\mu $-measurable}\right\}
+\] 
+one checks that $\nu_j$ is a Radon measure. If  $A \subset \mathbb{R}^{d}$ is bounded and $\mu$-measurable
+then 
+\[
+    \nu_j[A] = \int_{ \mathbb{R}^{d}}^{}1_{A} f_j d \mu \le ||f_j||_{L^{p}} ||1_A||_{L^{\frac{p}{p-1}}}
+\] 
+by Holder inequality.
+Set
+ \[
+     M = \sup_j ||f_j||_{L^{p}} < \infty
+\] 
+so
+\[
+    (1) \qquad    \nu_j[A] \le M \left(\mu[A]\right)^{\frac{p-1}{p}}
+\] 
+By the weak* compactness of measure (1) implies there exists a subsequence $(\nu_{j_i})_{i=1}^{\infty}$ and a radon measure $\nu$ such that
+ \[
+     (2) \qquad \nu_{j_i} \overset{*}{\rightharpoonup} \nu \qquad \text{ as $i \rightarrow +\infty$ }
+\] 
+if $O \subset \mathbb{R}^{d}$ is open and bounded then $\nu[O] \le \liminf_{i\to +\infty } \nu_{j_i}[O]  \overset{(1)}{\le} M \mu[O]^{\frac{p-1}{p}}$
+$(2) \implies \nu << \mu$ by Arahat theorem if $p \ne 1$. By the Radon-Nikodym theorem, setting $f = D_\mu \nu$ we have
+\[
+    \nu[A] = \int_{ A}^{}f d \mu \qquad \forall A \subset \mathbb{R}^{d} \text{ $ \mu $-measurable}
+\] 
+then
+\[
+    \int_{B_r(x)}^{}f d \mu \le M (\mu[B_r(x)])^{\frac{p-1}{p}}
+\] 
+and if we are in $L^{\infty}$ case we are done since $f(x) \le M $  $\mu$-almost everywhere by the lebesgue point theorem.
+We claim that if $1 < p < +\infty$ then $f \in L^{p}( \mathbb{R}^{d}, \mu)$. then
+\[
+    \int_{}^{} fg d \mu \le ||f||_{L^{p}} ||g||_{L^{q}} \le ||f||L^{p}
+\] 
+if $||g||_{L^{q}} \le 1$. If we set
+ \[
+     g = \frac{f|f|^{p-2}}{||f||_{L^{p}}^{p-1}}
+\] 
+then
+\[
+    ||g||^{q}_{L^{q}} = \int_{}^{}\frac{(||f||^{p-1})^{q}}{||f||_{L^{p}}^{(p-1)q}} d \mu = \int_{}^{} \frac{|f|^{p}}{||f||^{p}_{L^{p}}} d \mu = 1
+\] 
+so then if $q = \frac{p}{p-1}$
+\[
+    ||f||_{L^{p}} = \sup_g \{ \int_{ \Omega}^{}f g d \mu : ||g||_{L^{q}} \le 1\}
+\] 
+if $p = 1$ then the above is equal to
+ \[
+     \sup_{g \in C_c( \mathbb{R}^{d})} \left\{ \int_{ \Omega}^{} fg d \mu : ||g||_{L^{q}} \le 1\right\}
+\] 
+
+\section{Wednesday}
+our of scope:
+\emph{
+    The following are equivalent
+    \begin{enumerate}
+        \item Zorn's Lemma
+        \item Axiom of choice
+            \[
+            O_\alpha \ne \emptyset, \alpha \in I
+            \] 
+        \item 
+            Every set has a totally ordered relation such that every non empty set admits a least element.
+    \end{enumerate}
+}
+end out of scope\\
+a partial ordering on a set $S \ne \emptyset$ is  $O \subset S \times S$ such that $(x,y) \in O, (y,z) \in O \implies (x,z) \in O$\\
+\emph{
+    Definition: Let $( P , \le)$ be an ordered set
+    \begin{enumerate}
+        \item We say that $Q \subset P$ is totally ordered if for every $x,y \in Q$ either
+             $x \le y$ or  $y \le x$. We say that $Q$ is a chain
+         \item We say that  $x$ is an upper bound for  $Q \subset P$ if $y \le x$ for all  $y \in Q$
+         \item We say that $M \in P$ is a maximal element if whenever  $x \in P$ and  $M \le x$ we have  $x = M$
+         \item We say that  $(P, \le)$ is inductive if every totally ordered set has an upper bound.
+    \end{enumerate}
+}
+
+\section{Zorn's Lemma}
+\emph{
+    If $(P, \le)$ is an inductive ordered set then  $P$ has a maximal element
+}
+
+\section{Theorem (Hahn-Banach; Part I)}
+Let $E$ be a vector space and $p : E \rightarrow [0,+\infty)$ be such that $p(x + y) \le p(x) + p(y)$
+nd $p(\lambda x) = \lambda p(x)$ for all $x,y \in E$ and  $\lambda \ge 0$. Let $G \subset E$ be a vector space
+and let $g : G \rightarrow \mathbb{R}$ be a linear function such that $g \le p|_G$ then there exists
+ \[
+f : E \rightarrow \mathbb{R}
+\] 
+linear such that $f|_G = g$ and  $f \le p$ on  $E$.
+\\
+Proof: Let 
+ \[
+     P = \{ (h,H) : H \subset E \text{ is a vecetor space and $h: H \rightarrow \mathbb{R}$ is linear $h \le p|_H$ and $h|_G = f$}\} 
+\] 
+$P$ nonempty since  $(g, G) \in P$. If  $(h_1, H_1), (h_2, H_2) \in P$ we say that $(h_1 ,H_1) \le (h_2, H_2)$ if 
+$H_1 \subset H_2$ and $h_2|_{H_1} = h_1$. One checks that $(P, \le)$ is an ordered set.
+I clai m that  $(P ,\le)$ is inductive
+Proof of the claim: Let  $Q = (h_i,H_i)_{i \in I}$ be a chain in  $P$ set  $H = \bigcup_{i=I} H_i$ then  $H$ is a vector space and for any $x \in H$ we set  $h(x) = h_i(x)$ if  $x \in H_i$.
+Then $h$ is a well defined linear function.
+If $x \in H$ then  $x \in H_i$ for some  $i$ and so  $h(x) = h_i(x) \le p(x)$. In sumary  $(h,H) \in P$ and is an upper bound for $Q$. This proves the claim that  $(P, \le)$ is inductive.\\
+By Zorn's lemma, $(P , \le)$ has a maximmal element $(f, F)$ we claim that  $F = E$ Proof the claim, assume
+on the contrary that there exists $x_0 \in E \setminus F$. Set $D = F +  \mathbb{R} x_0 = \text{span}\{F, x_0\}$ for each $\alpha \in \mathbb{R}$ we define $h_\alpha : D \rightarrow \mathbb{R}$ by
+\[
+h_\alpha(x + tx_0) = f(x) + t\alpha
+\] 
+one checks that $h_\alpha: D \rightarrow \mathbb{R}$ is linear. To obtain that $(h_\alpha, D) \in P$ it remains to show that
+\[
+h_\alpha(x + t x_0) \le p(x + tx_0) \qquad \forall x \in F \forall t \in \mathbb{R}
+\] 
+As an exercise one checks that it suffices to show that $p(x - x_0) \le f(x) + \alpha \le p(x + x_0)$ for every $x \in F$
+equivalent to 
+ \[
+     (2) \qquad  -p(x-x_0) - f(x)\le \alpha \le p(y + x_0) - f(y) \qquad \forall x,y \in F
+\] 
+we want to find $\alpha$ such that $(2)$ holds. We have to show that $f(y) - f(x) \le p(y+x_0) + p(x - x_0)$ but
+\[
+f(y) + f_9x) = f(x+y) \le p(x + y) \le p(x - x_0) + p(x_0+ y)
+\] 
+which concludes the proof. Let $\alpha \in [a,b]$ where $a = \sup_{x} f(x) - p(x-x_0), b = \inf_{y} p(y+x_0) - f(y)$ 
+We have that $h_\alpha \le p|_D$ and so $(f,F) \le (h_\alpha,D)$ and $(f,F) \ne (h_\alpha, D)$ a contradiction. Thus $F = E$.
+
+\section{Friday}
+We assume that $ \mathcal{X}$ is a metric space. Notation Let $G \subset \mathcal{X}$
+\begin{enumerate}
+    \item $x \in \mathcal{X}$ and $r > 0$  $B_r(x)$ is the closed ball, $D_r(x)$ is the open ball
+    \item The interior of $G$ is $G^{\circ}$ is the set of $x \in \mathcal{X}$ such that there exists $r >0$ such that  $D_r(x) \subset G$
+    \item The closure of $G$ is $\overline{ G}$ is the set of $x \in X$ such that for every  $r > 0$  $D_r(x) \cap G \ne \emptyset$
+\end{enumerate}
+Exercise:
+Show that $\overline{G} = ((G^{c})^{\circ})^{c}$. Solution let $x \in \mathcal{X}$ then $x \in ((G^{c})^{\circ})^{c}$ if and only if $x \not\in (G^{c})^{\circ}$ 
+if and only if $\forall r > 0$  $D_r(x) \not\subset G^{c}$ if and only if $\forall r > 0, D_r(x) \cap G \ne \emptyset$  $\iff x \in \overline{ G}$.
+
+\section{Theorem (Bowre's Thm)} 
+Further assume that $ \mathcal{X}$ is complete. Let $( \mathcal{X}_n)_{n=1}^{\infty}$ be a sequence of closed subsets of $ \mathcal{X}$.
+If $ \mathcal{X}^{\circ}_n = \emptyset$ for all $n$, then $\left(\bigcup_{n=1}^{\infty}X_n\right)^{\circ} = \emptyset$.
+\\
+let $O_n = \mathcal{X}_n^{c}$ then $\iter(O_n^{c}) = \emptyset$ and $(\iter(O_n^{c}))^{c} = \mathcal{X}$.
+Let $G = \bigcap_{n=1}^{\infty}O_n$. In light of the above exercise, we are to show that $\overline{G} = X$. This means that for ever $W \subset \mathcal{X}$ open, $W \cap G \ne \emptyset$ our goal.
+Fix  $W \subset \mathcal{X}$ open nonempty. By assumption $\overline{O_n} = \mathcal{X}$ and so, $W \cap O_1 \ne \emptyset$ since $W \cap O_1$ is an open set there exists $x_1 \in \mathcal{X}$ and $r_1 > 0$ such that
+$B_{r_1}(x_1) \subset W \cap O_1$ since $D_{r_1}(x_1) \cap O_2 \ne \emptyset$ we use again the fact that $\overline{O_2} = \mathcal{X}$  to inferthat $D_{r_1}(X_1) \cap O_2 \ne \emptyset$ so choose $x_2 \in \mathcal{X}$ and $r_2 > 0$
+such that $B_{r_2}(x_2) \subset D_{r_1}(x_1) \cap O_2$ with $r_2 < \frac{r_1}{2}$ repeating the operation inductively we construct $x_{n+1} \in \mathcal{X}, \frac{r_n}{2} > r_{n+1} > 0$ such that
+\[
+    B_{r_{n+1}}(x_{n+1}) \subset D_{r_n}(x_n) \cap O_n \subset \dots \subset W 
+\] 
+the $(x_n)_n$ is cauchy. For $p > n$ integer  $x_{n+p} \in B_{r_n}(x_n)$ , since  $r_{n+1} < \frac{r_n}{2} < \frac{r_1}{2^{n}}$ we conclude that $(x_n)_n$ is a cauchy sequence, since $ \mathcal{X}$ is complete so there exists a limit $x \in \mathcal{X}$.
+Note that $x \in B_{r_n}(x_n) \subset W, O_n$ for all  $n$ $x \in G \cap W$ hence $G \cap W \ne \emptyset$ which proves that  $\overline{ G} = \mathcal{X}$.
+
+\section{Notation}
+If $ \mathcal{X}, \mathcal{Y}$ are normed spaces, we denote by $L( \mathcal{X}, \mathcal{Y})$ the set of $ T : \mathcal{X} \rightarrow \mathcal{Y}$ which are linear and continuous. If $T \in L( \mathcal{X}, \mathcal{Y})$ we set
+\[
+    ||T||_{L( \mathcal{X}, \mathcal{Y})} = \sup_{x \in \mathcal{X}} \{ ||Tx||_y : ||x||_{|X|} \le 1 \}
+\] 
+
+\section{Theorem Uniform Boundedness}
+Suppose that $ \mathcal{X}, \mathcal{Y}$ are Banach spaces.
+Let $(T_i)_{i \in I} \subset L( \mathcal{X}, \mathcal{Y})$  be such that   $e(x) := \sup_{i \in I} ||T_i x||_{ \mathcal{Y}} < +\infty$ for all $x \in \mathcal{X}$ $(x \in B_{ \mathcal{X}}$ closed unit ball in $ \mathcal{X})$.
+Then there exists $t > 0$ such that
+ \[
+     \sup_{i \in I} ||T_i||_{L( \mathcal{X}, \mathcal{Y})} \le C
+\] 
+Proof: For each $n \in \mathbb{N}$ we set $ \mathcal{X}_n = \{x \in \mathcal{X}: \sup_{i \in I} |T_i x| \le n\}$ note that $ \mathcal{X}_n$ is closed as intersection
+of closed sets and by assumption
+\[
+    \bigcup_{n=1}^{\infty} \mathcal{X}_n = \mathcal{X} \implies \iter( \bigcup_{n=1}^{\infty}  \mathcal{X}_n ) \ne \emptyset
+\] 
+by Bawre's theorem there exists $n_0$ such that $\iter( \mathcal{X}_{n_0}) \ne \emptyset$. Choose $x \in  \mathcal{X}_{n_0}$ and $r_0 > 0$ such that $B_{r_0}(x_0) \subset \mathcal{X}_{n_0}$ this means that
+$||T_i(x_0 + r_0 z)||_{ \mathcal{Y}} \le n_0$  for all $ i$ for all $z \in B_{ \mathcal{X}}$ where  $B_{ \mathcal{X}}$ is the closed unit ball in $ \mathcal{X}$.
+Hence 
+ \[
+     r_0 || T_i(z) ||_{ \mathcal{Y}} \le n_0 + ||Y_i(x_0) ||_{ \mathcal{Y}} \le n_0 + e(x_0) \qquad \forall z \in B_{ \mathcal{X}} \forall i \in I
+\] 
+and so
+\[
+    r_0 \sup_{i \in I} ||T_i||_{L( \mathcal{X}, \mathcal{Y})} \le n_0 + e(x_0)
+\] 
+
+
+\end{document}

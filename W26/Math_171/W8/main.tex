@@ -1,0 +1,171 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Wednesday}
+Discrete state space, finite or countably infinite continuous time markov property, for any $t_1<t_2<\dots<t_n< t$ and $i,i_1,\dots,i_n,$
+$s > 0$
+\[
+    \mathbb{P}(X_{t+s} = j | X_t = i) = \mathbb{P}(X_{t+s} = j | X_t = i, X_{t_n} = i_n, X_{t_{n-1}} = i_{n-1}, \dots, X_{t_1} = i_1) = p_s(i,j)
+\] 
+Chapman kolmogorov equations
+\[
+    P_{t+s}(i,j) = \sum_{k}^{}p_t(i,k)p_s(k,j)
+\] 
+define transition rate
+\[
+q(i,j) = \lim_{t\to 0} \frac{p_t(i,j)}{t}
+\] 
+if it exists. Given rates $(q(i,j), j \ne i)$ you assign independent exponential clock to each transition, each has rate  $q(i,j)$
+so you have rate  $q(i,1)$ to jump to state 1 and so on, whichever hits first you go to that state.
+The total rate for leaving  $i$ is
+\[
+\text{exp}(\sum_{j : j \ne i}^{}q(i,j))
+\] 
+and the probability that the $i-j$ clock ticks is proportional to its rate.
+The transition probability from  $i \rightarrow j$ is
+\[
+\frac{q(i,j)}{\lambda(i)}
+\] 
+for all $j \ne i$ think of  $X_t$ as embedding in  $ Y_n$
+ \[
+Y_n : DTMC
+\] 
+with transition probability $u(i,j) = \frac{q(i,j)}{\lambda_i}$, $j \ne i$. Then  $X_0 = Y_0$ $X_t = Y_0$ for $t < \text{exp}(\lambda(Y_0))$ then
+$X_t = Y_1$ for $\text{exp}(\lambda(Y_0) \le t < \text{exp}(\lambda(Y_0)) + \text{exp}(\lambda(Y_1))$ and so on.
+Assume $\lambda(i)$ is finite for all $i$. If  $\Lambda = \sup_i \lambda(i) < \infty$ then the rate
+for leaving is $\Lambda$. We can construct another embedded discrete time markov chain
+with transition probability  $v(i,j) = \frac{q(i.j)}{\Lambda}$ and $v(i,i) = 1 = \frac{\lambda(i)}{\Lambda}$ \\
+We use the kolmogorov's backward/forward equations. in the finite state space case
+\[
+p_t' = Qp_t \qquad p_t' = p_tQ \implies p_t = e^{tQ} = e^{tU D U^{-1}} = U e^{tD} U^{-1}
+\] 
+if we want $\pi = \pi p_t \implies \pi^{C} Q = 0$ and detailed balance condition:
+\[
+\pi(i)q(i,j) = \pi(j)q(j,i)
+\] 
+\[
+\pi^{D}(p-I) = 0
+\] 
+where $\pi^{C}$ is the continuous stationary distribution and $\pi^{D}$ is the stationary distribution
+\[
+\pi^{C}(i) = \pi^{D}(i) \frac{1}{\lambda(i)}
+\] 
+limiting behavior: Irreducibility: any $i,j$ there is a sequence of intermediate states  $i=x_0,x_1,\dots,x_n=j$ such that
+\[
+    q(x_k,x_{k-1}) > 0  \qquad 1 \le k \le n
+\] 
+thereom if $X_t$ is irreducible and has a stationary distribution  $\pi$ then
+\[
+\lim_{t\to \infty}p_t(i,j) = \pi(j) \qquad \forall i
+\] 
+\section{Theorem: Ergodic theorem}
+Under the same conditions
+\[
+\lim_{t\to \infty} \frac{1}{t} \int_{0}^{t}f(X_s)ds = \sum_{i}^{}\pi(i) f(i)
+\] 
+Exit distribution and Exit time we use the connection between $X_t$ and  $Y_n$ then the exist distribution is the same as  $Y_n$
+ \[
+h(i) = \mathbb{P}_i(\sigma_A < \sigma_B)
+\] 
+then
+\[
+\begin{cases}
+    h(i) = 1 & i \in A\\
+    h(i) = 0 & i \in B\\
+    h(i) = \sum_{j\ne i}^{}u(i,j)h(j) & i \not\in A \cup B
+\end{cases}
+\] 
+Let
+\[
+Q = 
+\begin{pmatrix} 
+    A & (A \cup B)^{c} & B\\
+      &  & & A\\
+    \text{rows that sum to $v$ } & R & & (A \cup B)^{c} \\
+      &  & & B
+\end{pmatrix} 
+\] 
+if 
+ \[
+ R \vec h = -
+ \begin{pmatrix} \vdots \\ \sum_{j \in A}^{}Q(i,j) \\ \vdots  \end{pmatrix}  = - \vec v
+\] 
+for $i \in (A \cup B)^{c}$.\\
+For exist time
+\[
+    g(i) + \mathbb{E}_i[\sigma_A] 
+\] 
+\[
+g(i) = \frac{1}{\lambda_i} + \sum_{j \ne i}^{}u(i,j) g(j) \qquad g(i) = 0, i \in A
+\] 
+this is equivalent to
+\[
+R \vec g = -\vec 1 \implies \vec g = -R^{-1}\vec 1
+\] 
+here
+\[
+    \begin{pmatrix} & A & A^{c} \\ A & & \\ A^{c} & & R \end{pmatrix} 
+\] 
+since
+\[
+    g(i) = \sum_{j \in A^{c}}^{} \mathbb{E}_i[L_j(\sigma_A)]  = -\sum_{j \in A^{c}}^{} R^{-1}(i,j) = -( R^{-1} \vec 1)(i)
+\] 
+where
+\[
+L_j(\sigma_A) = \int_{0}^{\sigma_A} 1(X_s = j) ds
+\] 
+
+
+
+\end{document}

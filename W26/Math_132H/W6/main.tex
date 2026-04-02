@@ -1,0 +1,187 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+
+\section{Monday}
+David Beers\\
+Simple connectivity. Define $ \mathbb{C}^{*} = \mathbb{C} \cup \{\infty\}$ as the extended complex plane.
+We say that $U \subset \mathbb{C}^{*}$ is open if $U \cap \mathbb{C}$ is open in $ \mathbb{C}$ and
+$\infty \in U \implies \exists R > 0$ such that $\{|z| > R\} \cap \mathbb{C} \subset U$\\
+\emph{
+    Def: A domain $\Omega \subset \mathbb{C}^{*}$ is simply connected if $ \mathbb{C}^{*} \setminus \Omega$ is connected
+}
+
+\section{Lemma 6.10}
+Let $\gamma : [a,b] \rightarrow \mathbb{C}$ , $-\infty < a < b < \infty$ be a piecewise smooth closed curve.
+$\gamma \subset \Omega \subset \mathbb{C}$, $\Omega$ be a domain. Let $f(z)$ be holomorphic on $\Omega$
+with $f(z) \ne 0 \forall z \in \gamma$. Then
+ \[
+\frac{1}{2\pi i} \int_{\gamma}^{} \frac{f'(z)}{f(z)}dz = N \in \mathbb{Z}
+\] 
+Here $N$ tells us the number of times  $\gamma$ wraps around 0.\\
+Proof: Choose 
+ \[
+a = t_0 < t_1 < \dots < t_n = b
+\] 
+so that for $j = 0,1,\dots,n-1$ there exists disc $D_j \subset \Omega$ such that
+\[
+    \gamma_j = \{\gamma(t) : t_j \le t \le t_{j+1}\} \subset D_j
+\] 
+and
+\[
+f(z) \ne 0 \forall z \in D_j
+\] 
+By lemma 6.9
+\[
+\frac{1}{2\pi i} \int_{ \gamma}^{}\frac{f'(z)}{f(z)} dz = \sum_{j=1}^{n-1}\frac{1}{2\pi i} \int_{ \gamma_j}^{} \frac{f'(z)}{f(z)}dz
+\] 
+Let $q_j(z)$ be a choice of  $\log f(z)$ on  $D_j$ with constants chosen such that  $q_1(\gamma(t_1)) = q_0(\gamma(t_1)$, $q_2(\gamma(t_2)) = q_1(\gamma(t_2)) \dots q_{n-1}(\gamma(t_{n-1})) = q_{n-2}(\gamma(t_{n-1}))$.
+Then
+\[
+    \frac{1}{2\pi i} \int_{ \gamma}^{} \frac{f'(z)}{f(z)}dz  \frac{1}{2\pi i} \sum_{j=0}^{n-1} q_j(\gamma(t_{j+1})) - q_j(\gamma(t_j)) = \frac{1}{2\pi i}(q_{n-1}(\gamma(t_n)) - q_0(\gamma(t_0)))
+\] 
+we claim that the last term is equal to $2\pi i N$ so that the result is $N$.
+
+\emph{
+    Definition: Let $\gamma$ be a piecewise smooth closed curve in $ \mathbb{C}$ and let $a \in \mathbb{C} \setminus \gamma
+        $ then by Lemma 6.10
+    \[
+        \frac{1}{2\pi i} \int_{ \gamma}^{}\frac{dz}{z-a} =  N \in \mathbb{Z}
+    \] 
+    where $N$ is the winding numbera of $\gamma$ around $a$ Notice that the integral is continuous as a function of  $a \in \mathbb{C} \setminus \gamma$
+}
+
+\section{Theorem 6.11}
+Let $\Omega$ be a domain in  $ \mathbb{C}$ then the following are equivalent.
+\begin{enumerate}
+    \item $\Omega$ is simply connected
+    \item For all holomorphic  $f$ on $\Omega$ there exists  $F$ holomorphic on  $\Omega$ such that  $F' = f$.
+    \item For all holo  $f$ on $\Omega$ such that  $f(z) \ne 0$ for all  $z \in \Omega$ there exists  $q$ holomorphic such that  $f = e^{q}$ on $\omega$
+    \item  $\forall $ piecewise smooth closed curves  $\gamma \subset \Omega$ and all $f$ holomorphic
+        \[
+        \int_{\gamma}^{}f(z) dz = 0
+        \] 
+    \item for all piecewise closed smooth curves $\gamma$ and all $a \not\in \Omega$
+         \[
+        \int_{\gamma}^{}\frac{dz}{z-a} = 0
+        \] 
+\end{enumerate}
+first $a \implies e$. We may assume  $\Omega \ne \mathbb{C}$. Fix $\gamma \subset \Omega$ and $a \not\in \Omega$. let  $R > |a|$
+then  $\{|z| = R\} \not\subset \Omega$ then 
+\[
+    \mathbb{C}^{*} \setminus \Omega = \{\{|z| < R \setminus \Omega\} \cup \{ |z| > R \setminus \Omega\} \cup \{\infty\}\}
+\] 
+is not connected. Take $ R > \sup_{z \in \gamma} |z|$ and $b \in \mathbb{C} \setminus \Omega, |b| = R$
+Now for $e \implies d$ we use RUnge's theorem.
+let  $f(z)$ be analytic on  $\Omega$. Let  $\epsilon >0$ then let $R(z)$ be a rational function with poles not in  $\gamma$ such that
+\[
+    \sup_{\gamma} |f(z) - R(z)| < \frac{\epsilon}{l(\gamma)}
+\] 
+by partial fractions
+\[
+    R(z) = P(z) + \sum_{j=1}^{N}\sum_{k=1}^{n} \frac{c_{j,k}}{(z-z_j)^{k}}
+\] 
+with $z_j \not\in \gamma$.
+By  $e$ 
+ \[
+\int_{\gamma}^{\frac{dz}{z-z_j}} = 0
+\] 
+and $P(z)$ and  $\frac{c_{j,k}}{(z-z_j)^{k}}$ for $k \ge 2$ has a primitive defined everywhere except $z_j$
+Therefore $\int_{\gamma}^{}R(z)dz = 0$ so
+\[
+|\int_{\gamma}^{}f(z)dz| < \epsilon \qquad \forall \epsilon
+\] 
+now for $d \implies b$.
+Fix  $f $ holomorphic in $\Omega$ and fix  $z_0 \in \Omega$. For $z \in \Omega$ path connected there exists a piecewise smooth curve $\gamma$ going from $z_0 $ to $z$.
+If $\gamma_1$ and $\gamma_2$ are any two such curves, then by $(d)$ 
+ \[
+\int_{\gamma_1}^{}f(z)dz = \int_{\gamma_2}^{}f(z) dz
+\] 
+Then define
+\[
+F(z) = \int_{\gamma_1}^{}f(w)dw
+\] 
+as in theorem 5.2 and so $F' = f$
+Now $b \implies c$. Use  $b$ to find
+ \[
+     F' = \frac{f'}{f} \qquad \text{i.e.} F = \log f  iff f = e^{F}
+\] 
+as in lemma $6.9$.\\
+Now $c \implies a$ assume that  $\Omega$ is not simply connected then  $ \mathbb{C}^{*} \setminus \Omega = K_1 \cup K_2$ where $K_1,K_2$ are nonempty closed sets with $K_1 \cap K_2 = \emptyset$.
+Recall from theorem 6.6 and its proof that there is a  piecewise smooth simple closed curve $\gamma \subset \Omega$, $\gamma$ consisting
+of vertical and horizontal segments of length $2^{-N}$ such that for some $a \in K_1$
+ \[
+\frac{1}{2\pi i} \int_{\gamma}^{}\frac{1}{z-a}dz = 1
+\] 
+then $f(z) = \frac{1}{z-a}$ is holomorphic on $\Omega$ but
+ \[
+\int_{\gamma}^{}\frac{f'}{f} \ne 0
+\] 
+
+\section{wednesday}
+$f$ analytic defined on a punctured disk
+\[
+    \{0 < |z-z_0| < R\}  \qquad R > 0
+\] 
+we say that $f$ has an isolated singularity at $z_0$
+\[
+f(z) = \sum_{n=-\infty}^{\infty} a_n(z-z_0)^{n}
+\] 
+there are three case
+\begin{enumerate}
+    \item $a_n = 0 \qquad \forall n < 0$ if and only if  $f(z) = \sum_{n=0}^{\infty}a_n(z-z_0)^{n}$ we say that
+        $f$ has a removable singularity at $z_0$. Theorem 7.1(Riemann's removable singularity theorem) $a_n =0 \forall n < 0$ if and only if $f$ is bounded on $\{0 < |z-z_0| < \frac{R}{2}\}$
+\end{enumerate}
+
+\end{document}

@@ -1,0 +1,305 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+Assumption: $L: C_c( \mathbb{R}^{d}, \mathbb{R}^{D}) \rightarrow \mathbb{R}$ is a linear function such that for every $K \subset \mathbb{R}^{d}$ compact, we can find $l_k > 0$ such that
+ \[
+     |L(f)| \le l_k ||f||_{C( \mathbb{R}^{d}, \mathbb{R}^{D})}
+\] 
+for all $f \in C_c(K, \mathbb{R}^{D})$. Goal show that there exists a Borel measure $\mu$ on $ \mathbb{R}^{d}$ and $\sigma : \mathbb{R}^{d} \rightarrow S^{D-1}$ 
+$\mu$-measurable such that
+\[
+Lf = \int_{ \mathbb{R}^{d}}^{} \langle f, \sigma \rangle d \mu = \sum_{i=1}^{D}\int_{ \mathbb{R}^{d}}^{}f_i \sigma_i d \mu = \sum_{i=1}^{D}L_i(f)
+\] 
+$D = 1 \stackrel{?}{\implies} D$ general.
+Let $\{e_1,\dots,e_d\}$ be the canonical orthonormal basis of $ \mathbb{R}^{D}$. Then $L(f) = L(\sum_{i=1}^{D}\langle f, e_i \rangle e_i) = \sum_{i=1}^{D}L(\langle f, e_i \rangle e_i)$.
+Let $L_i(g) = L(ge_i), g \in C_c( \mathbb{R}^{d})$. Assume we can prove the result for $D = 1$. This means there exists $\nu_i^{+}, \nu_i^{-}$ Borel measures such that
+\[
+    L_i(g) = \int_{ \mathbb{R}^{d}}^{}g d \nu_i^{+} - \int_{ \mathbb{R}^{d}}^{}g d \nu_i^{-} = \int_{ \mathbb{R}^{d}}^{}g a_i d \nu_i \qquad a_i : \mathbb{R}^{d} \rightarrow \{-1,1\}
+\] 
+since if $\sigma : \mathbb{R}^{d} \rightarrow \{-1,1\}$ then $\nu_i^{+} = 1_{\sigma = 1} \nu_i$ and $\nu_i^{-} = 1_{\sigma = -1}\nu_i$.\\
+Set $\nu = \sum_{i=1}^{D} \nu_i \implies \nu_i << \nu \implies L_i(g) = \int_{ \mathbb{R}^{d}}^{}g D_\nu(a_i \nu_i) d \nu$ Thus 
+ \[
+L(f) = \sum_{i=1}^{D}L_i(\langle f , e_i \rangle ) = \sum_{i=1}^{D}\int_{ \mathbb{R}^{d}}^{} \langle f, e_i \rangle D_\nu(a_i \nu_i) d \nu = \sum_{i=1}^{D} \int_{ \mathbb{R}^{d}}^{} \langle f, e_i D_\nu(a_i \nu_i) \rangle d \nu = \int_{ \mathbb{R}^{d}}^{} \langle f, \tilde \sigma \rangle d \nu
+\] 
+\[
+= \int_{ \mathbb{R}^{d}}^{} \langle f, \frac{\tilde \sigma}{ || \tilde \sigma ||} \rangle ||\tilde \sigma|| d \nu = \int_{ \mathbb{R}^{d}}^{} \langle f, \sigma \rangle d \mu
+\] 
+where
+\[
+\tilde \sigma = \sum_{i=1}^{D}e_i D_\nu(a_i\nu_i)
+\] 
+In conclusion the Riesz representation theorem on $C_c( \mathbb{R}^{d})$ implies that theorem on $C_c( \mathbb{R}^{d}, \mathbb{R}^{D})$.
+Assume in the sequel that $D=1$ and  $L \ne 0$. Construction of  $\mu $. If $V \subset \mathbb{R}^{d}$ is Open, we set 
+\[
+    \mu[V] = \sup_{f}\{ L(f) : f \in C_c( \mathbb{R}^{d}) , \spt(f) \subset V, ||f||_{C_c} \le 1\}
+\] 
+if $A \subset \mathbb{R}^{d}$ is arbitrary we set
+\[
+    \mu[A] = \inf_{V}\{\mu[V] : A \subset V, V \text{ open }\}
+\] 
+Check that if $f \in C_c( \mathbb{R}^{d})$ then
+\[
+    (1) \qquad |L(f)| \le \int_{ \mathbb{R}^{d}}^{}|f| d \mu
+\] 
+by $(1)$  $L$ has a linear extension to $L^{1}( \mathbb{R}^{d}, \mu)$ which we continue to denote by $L$
+ \[
+     |\overline{L}(f)| \le \int_{ \mathbb{R}^{d}}^{}|f| d \mu \forall f \in L^{1} ( \mathbb{R}^{d}, \mu) \qquad \overline{L} : L^{1} ( \mathbb{R}^{d}, \mu) \rightarrow \mathbb{R}
+\]
+
+\section{math 245A}
+\emph{
+    Let $1 \le p < +\infty$, $\mu$ be a measure on $ L : L^{p}( \mathbb{R}^{d}, \mu) \rightarrow \mathbb{R}$.
+    $L$ is continuous if and only if $\exists g \in L^{p'} ( \mathbb{R}^{d}, \mu) $ such that $Lf = \int_{ \mathbb{R}^{d}}^{}fg d \mu_{0}$ for all $f \in L^{p}( \mathbb{R}^{d}, \mu)$.
+    Here $p' = \frac{p}{p-1}$ (False when $p = +\infty$). Riesz representation theorem on $ L^{p}$ space 
+}
+By the Riesz Representation on $L^{p}$ space $(2)$ implies there exists  $\sigma \in L^{\infty}( \mathbb{R}^{d}, \mu)$ such that
+\[
+\overline{L}(f) = \int_{ \mathbb{R}^{d}}^{}f \sigma d \mu \forall f \in L^{1} ( \mathbb{R}^{d}, \mu)
+\] 
+Check that if $V \subset \mathbb{R}^{d}$ is open
+\[
+    \mu[V] = \int_{ \mathbb{R}^{d}}^{} |\sigma| d \mu
+\] 
+Hence for $\mu$ a.e. $x$ we have
+\[
+    |\sigma(x)| = \lim_{r\to 0^{+}} \frac{1}{\mu[B_r(x)]}\int_{B_r(x)}^{}|\sigma| d \mu = \lim_{r\to 0^{+}}\frac{\mu[B_r(x)]}{\mu[B_r(x)]} = 1
+\] 
+by Lebesgue point and by 2.
+
+\section{Outside the Scope of 245B}
+\emph{
+    Definition: Let $ \mathcal{X}$ be a metric space. We call $ \mathcal{X}$ locally compact if for every $x_0 \in \mathcal{X}$
+    there exists an open set $O$ containing $ x_0$ such that the closure of $O$ is compact,  $\overline{ O}$.
+}
+\\
+Theorem: Riesz Representation Theorem\\
+\emph{
+    Let $ \mathcal{X}$ be a locally compact metric space and let $L: C_c( \mathcal{X}) \rightarrow \mathbb{R}$ be a linear function such that
+    for every $K \subset \mathcal{X}$ compact, there exists $l_K > 0$ such that  $|L(f)| \le l_k ||f||_{C( \mathcal{X})}$ for all $f \in C_c(K)$.
+    If  $L(F) \ge 0$ for all  $f \in C_c( \mathcal{X})$ such that  $f \ge 0$ then there exists a Radon measure $\mu$ on $ \mathcal{X}$ such that
+    \[
+    L(f) = \int_{ \mathcal{X}}^{}f d \mu \qquad \forall f \in C_c( \mathcal{X})
+    \] 
+}
+Note that $L^{p}(\Omega, \mu)$ is not locally compact for $|| \cdot ||_{L^{p}}$ but $1 < p < +\infty$ $L^{p}(\Omega, \mu)$ and $f_n \rightarrow^{d} f$ weak convergence if and only if
+\[
+\lim_{n\to \infty}L(f_n) = L(f) \qquad \forall L : (L^{p}(\Omega))^{*} \rightarrow \mathbb{R}
+\] 
+and
+\[
+\frac{1}{p} + \frac{1}{p'} = 1
+\] 
+and
+\[
+    \overline{\{f_i\}_{i=1}^{\infty}} = L^{p'}(\Omega, \mu)
+\] 
+we can define
+\[
+    D(g,g_n) = \sum_{}^{}\frac{1}{2^{i} (1 + ||f_i||_{L^{p'}})} \left|\int_{\Omega}^{}f_i(g-g_n) d \mu\right|
+\] 
+and
+\[
+D(g,g_n) \rightarrow 0 \iff \lim_{n\to \infty} \int_{}^{}f_i(g-g_n) d \mu = 0 \;\; \forall i
+\] 
+where we used Holder inequality somewhere.\\
+Remark: $\mu$ is a measure on $\Omega$. Let  $f \in L^{\infty}(\Omega, \mu), g \in L^{1}(\Omega, \mu)$, $p = \infty, p' =1$ then $\frac{1}{p} + \frac{1}{p'} = 1$
+then
+\[
+    |fg| \le ||f||_{L^{\infty}}||g|| \qquad a.e.
+\] 
+and equality iff $|f| = ||f||_{L^{\infty}}$ on $\{g \ne 0\}$ and
+ \[
+     |\int_{\Omega}^{} fg d \mu | \le \int_{\Omega}^{}|fg| d \mu \le \int_{\Omega}^{}||f||_{L^{\infty}} |g| d \mu
+\] 
+with equality in the first terms if and only if $\pm fg = |fg|$.
+\\
+Assume $1 < p < +\infty$ and $p' = \frac{p}{p-1}$ so that $\frac{1}{p} + \frac{1}{p'} = 1$ then
+\[
+t \rightarrow f(t) = -\ln t 
+\] 
+is convex so
+\[
+-\log(\frac{1}{p}x + \frac{1}{p'}y) \le -\frac{1}{p}\log x - \frac{1}{p'} \log y \qquad x,y > 0
+\] 
+\[
+= -\log (x^{\frac{1}{p}}y^{\frac{1}{p'}})
+\] 
+you clonclude that
+\[
+x^{\frac{1}{p}}y^{\frac{1}{p}} \le \frac{x}{p} + \frac{y}{p}
+\] 
+observe that if $a,b \ge 0$ then  $ab \le \frac{a^{p}}{p} + \frac{b^{p}}{p'}$ and equality holds if and only if $a^{p} = b^{p'}$
+Theorem Holder's inequality let $1 < p < +\infty$ if $f \in L^{p}(\Omega, \mu)$ and $g \in L^{q}(\Omega, \mu)$ then $fg \in L^{1}(\Omega, \mu)$ and
+\[
+    ||fg||_{L^{1}} \le ||f||_{L^{p}} ||g||_{L^{q}}
+\] 
+and equality holds iff there exists $\alpha, \beta \in \mathbb{R}$ such that $\alpha f = \beta g$. If $||f||_{L^{p}} =0$ or $||g||_{L^{q}} = 0$ we are done so assume that 
+the norms are both greater than 0. Then 
+\[
+    \frac{\left|\int_{\Omega}^{}fg\right|}{||f||_{L^{p}}||g||_{L^{q}}}\le \frac{\int_{\Omega}^{}(fg) d \mu}{||f||_{L^{p}} ||g||_{L^{q}}} =\int_{\Omega}^{}\left|\frac{f}{||f||_{L^{p}}} \frac{g}{||g||_{L^{q}}}\right| \le \int_{\Omega}^{}\frac{1}{p} \frac{|f|^{p}}{||f||^{p}_{L^{p}}} + \frac{1}{q} \frac{|g|^{q}}{||g||^{q}_{L^{q}}} = \frac{1}{p} + \frac{1}{q} = 1
+\] 
+\section{Theorem: Jensen's Inequality} Let $J: \mathbb{R} \rightarrow \mathbb{R}$ be convex and let $\mu$ be a measure on $\Omega$
+such that  $0 \le \mu[\Omega] < +\infty$. If $f \in L^{1}(\Omega, \mu)$ then
+\[
+J(\frac{1}{\mu(\Omega)}\int_{\Omega}^{}f d \mu) \le \int_{\Omega}^{} J(f) d \mu 
+\] 
+if $J$ is strictly convex then equality holds if and only if  $f = \frac{1}{\mu[\Omega]}\int_{\Omega}^{}f d \mu$ $\mu$-almost everywhere.\\
+Proof: Set $t_0 = \frac{1}{\mu[\Omega]} \int_{ \Omega}^{}f d \mu$. THere exists $p_0 \in \mathbb{R}$ such that
+\[
+J(t) \ge p_0(t-t_0) + J(t_0) \qquad \forall t \in \mathbb{R}
+\] 
+thus
+\[
+J(f) \ge p_0(f - t_0) + J(t_0)
+\] 
+\[
+    \frac{1}{\mu[\Omega]} \int_{\Omega}^{} J(f) d \mu \ge \frac{1}{\mu[\Omega]}\int_{\Omega}^{}(p_0 (f - t_0) + J(t_0)) d \mu = p_0(t_0-t_0) + J(t_0) = J( \frac{1}{\mu[\Omega] } \int_{\Omega}^{}f d \mu)
+\] 
+\section{Theorem}
+If $1 \le p \le \infty$ then $L^{p}(\Omega, \mu)$ is a Banach space.
+If $1 \le p < +\infty$ then $L \in (L^{p}(\Omega, \mu))^{*} = L^{p'}(\Omega, \mu)$ where $\frac{1}{p} + \frac{1}{p} = 1$, there exists $g \in L^{p'} \in L^{p'}(\Omega, \mu) : L(f) = \int_{\Omega}^{}fg d \mu$ for all $f \in L^{p}(\Omega, \mu)$
+
+\section{Definition}
+Let $(\mu_n)_{n=1}^{\infty} \cup \{\mu_{\infty}\}$ be a sequence of Borel measures on $ \mathbb{R}^{d}$.
+We say that $(\mu_n)_n$ converges to $\mu_{\infty}$ in the sense of distribution if
+\[
+    (2) \qquad    \lim_{n\to +\infty} \int_{ \mathbb{R}^{d}}^{}\phi d \mu_n = \int_{ \mathbb{R}^{d}}^{}\phi d \mu_{\infty}
+\] 
+for all $\phi \in C_c^{\infty}( \mathbb{R}^{d})$ (also true for $C_c( \mathbb{R}^{d})$.
+And we can define
+\[
+    L_\mu : C_c^{\infty} ( \mathbb{R}^{d}) \rightarrow \mathbb{R} \qquad L_\mu \phi = \int_{ \Omega}^{} \phi d \mu
+\] 
+We write $\mu_n \rightharpoonup \mu_{\infty}$
+We say that $\mu_n$ converges to $\mu_{\infty}$ narrowly if $(2)$ holds for all   $\phi \in C_b( \mathbb{R}^{d})$ (bounded and continuous) and we say $\mu_n \rightarrow \mu_{\infty}$.
+
+\section{Theorem}
+Let $(\mu_n)_n$ be a sequence of Radon measures on $ \mathbb{R}^{d}$
+\begin{enumerate}
+    \item $\mu_n \rightharpoonup \mu_\infty$
+    \item  $\lim_{n\to \infty}\mu_n[K] \le \mu_{\infty}[K]$ and $\liminf_{n\to \infty}\mu_n[O] \ge \mu_{\infty}[O]$ for all $ K \subset \mathbb{R}^{d} $ compact and $O \subset \mathbb{R}^{d}$ open
+    \item \[
+            \lim_{n\to \infty} \mu_n[B] = \mu_{\infty}[B]
+    \] 
+    for all $B \subset \mathbb{R}^{d}$ Borel and bounded set such that $\mu_{\infty}[ \partial B) = 0$
+\end{enumerate}
+
+\section{Theorem [Weak compactness of Radon measures]}
+\emph{
+Let $(\mu_n)_{n=1}^{\infty}$ be a sequence of Radon measures on $ \mathbb{R}^{d}$ such that for each $ K \subset \mathbb{R}^{d}$ compact
+\[
+    M_k := \sup_{n} \mu_n(K) < +\infty
+\] 
+Then there exists a Radon measure $\mu$ and a subsequence $(\mu_{n_k})_{k=1}^{\infty}$ such that $\mu_{n_k} \rightharpoonup \mu$ as $k \rightarrow +\infty$.
+}\\
+Proof: If $l > 0$, since  $B_l(0)$ is compact we have that
+ \[
+     \sup_n \mu_n|_{B_l(0)}[ \mathbb{R}^{d}] = \sup_n \mu_n[B_l(0)] = M_{B_l(0)} < +\infty
+\] 
+it suffices to show the theorem for $\left(\mu_n|_{B_l(0)}\right)_n$ and use a diagonalization argument
+to obtain the proof in full generality. THerefore in the sequel, we assume that $M = \sup_{n} \mu_N( \mathbb{R}^{d}) < +\infty$.
+By exercise 3.5 of Homwework assignment 3, there exists a countable family $S_0 := (\phi_j)_{j=1}^{\infty}$ dense in $C_c( \mathbb{R}^{d})$. Note that
+$ (\phi_j)_{j=1}^{\infty} \cup (\phi_j^{+})_{j=1}^{\infty} \cup (\phi_j^{-})_{j=1}^{\infty}$ is also dense in $ C_c( \mathbb{R}^{d})$ and so we can assume without loss of generality that if $\phi_j \in S_0$
+then $\phi_j^{\pm} \in S_0$ for each $j \in \mathbb{N}$
+\[
+    (1)   \qquad  \left | \int_{ \mathbb{R}^{d}}^{} \phi_j d \mu_n \right | \le  || \phi_j ||_{C_c( \mathbb{R}^{d})}M
+\] 
+thanks to $(1)$ we can use the diagonal sequence argument to conclude that there is a subsequence  $(\mu_{n_k})_{k=1}^{\infty}$ such that
+\[
+    (2) \qquad a_j := \lim_{k\to \infty} \int_{ \mathbb{R}^{d} }^{} \phi_j d \mu_{n_k}   \text{ exists for all $j \in \mathbb{N}$}
+\] 
+Let $S = \text{span}(S_0)$.\\
+Claim: the function $L : \sum_{j=1}^{n}\lambda_j \phi_j \rightarrow \sum_{j=1}^{N}\lambda_j a_j$ is well defined for 
+If $\lambda_1,\dots,\lambda_N \in \mathbb{R}$ 
+Assume
+\[
+\sum_{j=1}^{N}\lambda_j \phi_j = 0
+\] 
+then
+\[
+    \sum_{j=1}^{N}\lambda_j a_j = \sum_{j=1}^{N}\lambda_j \lim_{k\to \infty} \int_{ \mathbb{R}^{d}}^{}\phi_j d \mu_{n_k} = \lim_{k\to \infty}\int_{ \mathbb{R}^{d}}^{} \sum_{j=1}^{N}\lambda_j \phi_j d \mu_{n_k} = 0
+\] 
+this proves the claim and shows that $(3) \quad L( \sum_{j=1}^{N}\lambda_j \phi_j) = \lim_{k\to \infty} \int_{ \mathbb{R}^{d}}^{}\sum_{j=1}^{N}\lambda_j \phi_j d \mu_{n_k}$ .\\
+Using the definition of $M$, $(3)$ implies that
+ \[
+     (4) \qquad |L(\phi)| \le ||\phi||_{C_c( \mathbb{R}^{d})} M \qquad \forall \phi \in S
+\] 
+if $f \in C_c( \mathbb{R}^{d}) $then $||f - \phi_i||_{C_c( \mathbb{R}^{d})} \rightarrow 0 $ with $\phi_i \in S$ and so $L(f) = \lim_{i \to \infty}L(\phi_i)$.
+By $(4)$ $L$ admits a unique linear extension to $\overline{ S} = C_c( \mathbb{R}^{d})$ which we continue to denote by $L$ such that 
+ \[
+     |L(\phi)| \le M ||\phi||_{C_c( \mathbb{R}^{d})} \qquad \forall  \phi \in C_c( \mathbb{R}^{d})
+\] 
+By the Riesz representation theorem $(5) \implies $ that there exists a radon measure  $\mu$ and $\sigma \in L^{\infty} ( \mathbb{R}, \mu)$
+such that $|\sigma| = 1$ and 
+$\lim_{j\to \infty} L(\psi_j) = L(\psi) = \int_{ \mathbb{R}^{d}}^{} \psi \sigma d \mu$ for all $\psi \in C_c( \mathbb{R}^{d})$.
+and $(\psi_j)_j \subset S_0$ converges to $\psi$ and 
+ \[
+     (5) \qquad  L(\psi_j) = \lim_{k\to +\infty} \int_{ \mathbb{R}^{d}}^{} \psi_j d \mu_{n_k}
+\] 
+2. Claim: If $\psi \in C_c( \mathbb{R}^{d}) $ and $\psi \ge 0$ then  $L(\psi) \ge 0$, let  $(\phi_j)_j \in S_0$ be such that $\lim_{j\to +\infty} ||\psi - \phi_j||_{C_c( \mathbb{R}^{d})} = 0$.
+If $\psi \ge 0$ then 
+ \[
+     ||\psi - \phi_j^{+} ||_{C_c( \mathbb{R}^{d})} \le ||\psi - \phi_j||_{C_c( \mathbb{R}^{d})}
+\] 
+buy by $(5)$  $L( \phi_j^{+}) \ge 0$, hence $0 \le \lim_{j\to +\infty}L( \phi_j^{+}) = L(\psi)$ which proves the claim.\\
+3. By claim 2  $\mu \{\sigma = -1\} = 0$ assume $K \subset \{\sigma = -1\}$ and $\mu[K] > 0$ then we choose $\psi$ close to characteristic function and we get a contradiction.
+In summary if $\psi \in C_c( \mathbb{R}^{d})$ then
+\[
+    \lim_{k\to +\infty} \int_{ \mathbb{R}^{d}}^{}\psi d \mu_{n_k} = L(\psi) = \int_{ \mathbb{R}^{d }}^{}\psi d \mu
+\] 
+by the unique extension of $L$ to $C_c( \mathbb{R}^{d})$
+
+
+\end{document}

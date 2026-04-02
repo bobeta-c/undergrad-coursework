@@ -1,0 +1,384 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+\section{monday}
+Let $U, V$ domains in  $ \mathbb{C}$ or $ \mathbb{C}^{*}$ 
+$f : U \rightarrow V$ is a conformal map
+if 
+\begin{enumerate}
+    \item $f$ is holomorphic,
+    \item $f$ is surjective
+    \item $f$ is one-one
+\end{enumerate}
+$f^{-1} : V \rightarrow U$ is also conformal (theorem 9.4)\\
+Example 1:
+Let $U = \mathbb{H} = \{z \in \mathbb{C} : z = x +iy, y > 0\}$ upper half plane.
+$V = \mathbb{D} = \{w : |w| < 1\}$ unit disc.
+\[
+    f: \mathbb{H} \to \mathbb{D} \qquad f(z) = \frac{z-i}{z+i}
+\] 
+we have $f( \mathbb{H}) \subset \mathbb{D}$ $f$ is one-one and onto from $ \mathbb{C}^{*} \rightarrow \mathbb{C}^{*}$.
+and $w = \frac{z-i}{z+i}$ has solutions in $ \mathbb{H}$ if  $|w| < 1$
+ \[
+     (z+i)w = z-i \qquad z(w-1) = -i(w+1) \implies z = -i \frac{w+1}{w-1}
+\] 
+and so $z \in \mathbb{H}$ by some argument.
+Another example Let
+$U = \{1 < |z| < 2\}$ and  $V = \{1 < |w| < 4\}$ and  $f(z) = z^{2}$ $f : U \rightarrow V$ onto but $f$ is  $2-1$ not conformal.
+\\Let
+$U  = \{1 < |z| < 2\} \cap \{\Im(z) > 0\}$, $f(z) = z^2$ then $f$ is conformal on its image.\\
+Example 4.4 Jukovski Map
+$z \in \mathbb{D} \rightarrow \frac{1}{2}(z + \frac{1}{z}) = F(z)$ 
+$F$ is conformal from $\mathbb{D} \rightarrow f(\mathbb{D})$ and $f(\mathbb{D}) = f( \mathbb{C}^{*} \setminus C\}$ where $C$ is the unit circle
+If  $z $ in  $C$ then the image under  $F$ is in the interval $[-1,1]$ so the image of  $ \mathbb{D}$ under $F$ is  $ \mathbb{C}^{*} \setminus [-1,1]$
+
+\section{linear fractional transformations}
+Suppose $T : \mathbb{C}^{*} \rightarrow \mathbb{C}^{*}$ conformal (i.e. meromorphic 1-1 onto) so
+$Tz = \frac{az+b}{cz + d}$, $a,b,c,d \ne C$ and  $ad - bc \ne 0$
+\[
+T(\infty) = 
+\begin{cases}
+    \frac{a}{c} & c \ne 0\\
+    \infty & c = 0
+\end{cases}
+\] 
+\[
+    L = \{T : Tv \text{ are $LFT$}\}
+\] 
+\[
+    \mathbb{C}^{2} = \{ \begin{pmatrix} z_1 \\ z_2 \end{pmatrix} , z_1,z_2 \in \mathbb{C}\}
+\] 
+vector space on $ \mathbb{C}$
+\[
+    \mathbb{C} P^{*} = \{ 1 \text{ (complex) dimensional subspaces of $ \mathbb{C}^{2}$} \}
+\] 
+let $z_1,z_2 \in \mathbb{C}$ not both $0$ and $[z_1,z_2] = \{ \begin{pmatrix} \lambda z_1 \\ \lambda z_2 \end{pmatrix} : \lambda \in \mathbb{C}\}$
+$M : \mathbb{C}P^{*} \rightarrow \mathbb{C}^{*}$ 
+\[
+= 
+\begin{cases}
+    \frac{z_1}{z_2}  & z_2 \ne 0\\
+    \infty & z_2 = 0
+\end{cases}
+\] 
+$M$ is one-one onto.
+Let  $P: \mathbb{C}^2 \rightarrow \mathbb{C}^2$ be a non singuler invertible linear transformation.
+so there exists
+\[
+    \begin{pmatrix} a & b \\ c & d \end{pmatrix} \qquad det \begin{pmatrix}  a & b \\ c & d  \end{pmatrix} \ne 0, a,b,c,d \in \mathbb{C}
+\] 
+such that
+\[
+T \begin{pmatrix} z_1 \\ z_2 \end{pmatrix}  = \begin{pmatrix} az_1 + bz_2 \\ cz_1 + d z_2 \end{pmatrix} 
+\] 
+consider
+\[
+    T([z_1,z_2]) = [w_1,w_2] \quad \begin{pmatrix} w_1 \\w_2 \end{pmatrix}  = \begin{pmatrix} az_1  + bz_2 \\ cz_1 + dz_2 \end{pmatrix} 
+\] 
+Let $GL(2, \mathbb{C}) / ( \mathbb{C} \setminus \{0\}) I$ 
+$A \sim B \iff AB^{-1} \in ( \mathbb{C} \setminus \{0\}) I$
+let 
+\[
+    \begin{pmatrix} a & b \\c & d \end{pmatrix} \rightarrow^{S} \frac{ az + b}{ cz + d}   \in L
+\] 
+$S$ is a group isomorphism of   $GL(2, \mathbb{C}) / ( \mathbb{C} \setminus \{0\})I$ into $L$ with  $T,T' \rightarrow T \circ T'$
+
+\section{Tuesday}
+\[
+    L = \{ Tz = \frac{az + b}{cz + d}, z \in \mathbb{C}^{*}, a,b,c,d \in \mathbb{C}\} = \{f : \mathbb{C}^{*} \rightarrow \mathbb{C}^{*} \text{conformal meromorphic 1-1 onto}\}
+\] 
+\[
+    A = \begin{pmatrix} a & b \\ c& d \end{pmatrix} , B = \begin{pmatrix}  a' & b' \\ c' & d' \end{pmatrix} a'd' - b'c' \ne 0
+\] 
+\[
+T_A = \frac{az + b}{cz + d}, T_B = \frac{a'z + b'}{c'z + d'}
+\] 
+then
+\[
+    T_{AB} = T_A \circ T_B
+\] 
+Corollary:
+\[
+    T_{A^{-}} = (T_A)^{-1}
+\] 
+\[
+    T_A = I \iff A = \begin{pmatrix} \lambda & 0 \\ 0 & \lambda \end{pmatrix} , \lambda \ne 0
+\] 
+Corollary:
+\[
+    T \in L \iff T : \mathbb{C}^{*} \rightarrow \mathbb{C}^{*} \text{ 1-1 onto mermomorphic}
+\] 
+\[
+T'(z) = \frac{ad - bc}{(cz + d)^2} \quad z \ne \infty, Tz \ne \infty
+\] 
+\[
+T(\infty) = \frac{a}{c}
+\] 
+\[
+    T \ne I \implies \text{ T has 1 or 2 fixed points in $ \mathbb{C}^{*}$}
+\] 
+Proof:
+Case 1: $c = 0$, $a \ne d$
+ \[
+T(\infty) = \infty, \quad Tz = \frac{a}{d}z + \frac{b}{d} \quad ad = 1, a \ne 0, d \ne 0
+\] 
+then
+\[
+\frac{a}{d}z + \frac{b}{d} = z \implies z = \frac{-\frac{b}{d}}{1-\frac{a}{d}} = -\frac{b}{a-d} \in \mathbb{C}
+\] 
+Case 2: $c \ne 0$ then  $T(\infty) =  \frac{a}{c} \ne \infty$
+then
+\[
+Tz = z \iff cz^2 + (d-c)z - b) = 0
+\] 
+has 1 or 2 roots.\\
+4. $L$ is "triply transitive"
+\[
+    (z_1,z_2,z_3) \in ( \mathbb{C}^{*})^{3} \text{ distinct}
+\] 
+\[
+(w_1,w_2,w_3) \in ( \mathbb{C}^{*})^{3} \text{ distinct}
+\] 
+then there eixsts unique $T \in L$ such that  $T(z_j) = w_j$  $j = 1,2,3$.
+\[
+Tz = \frac{z_2-z_3}{z_2-z_1} \frac{z-z_1}{z-z_3}
+\] 
+if $(w_1,w_2,w_3) = (0,1,\infty)$ since we can assume this without loss of generality( you can compose them).
+5. $L$ is the group generated by 
+\begin{enumerate}
+    \item translations $z \rightarrow z + a$ $\infty \rightarrow \infty$
+    \item rotations $z \rightarrow e^{i\alpha}z$ $ \alpha \in \mathbb{R}$ and $\infty \rightarrow \infty$
+    \item Dilations $z \to \lambda z$ $\lambda \in \mathbb{R}^{+}, \lambda > 0$ 
+    \item Inversion $z \to \frac{1}{z}$
+\end{enumerate}
+There are 2 cases:
+first $c = 0$ then  $\frac{az + b}{d} = |\frac{a}{d}| \frac{(\frac{a}{d})}{|\frac{a}{d}|} z + \frac{b}{d}$
+this is a rotation followed by dilation followed by translation.
+Case $c \ne 0$
+ \[
+\frac{az+b}{cz + d} = (\frac{1}{cz + d})(\frac{a}{c}(cz + d) - \frac{ad}{c} + b)
+\] 
+\[
+= \frac{a}{c} + (b - \frac{ad}{c}) \frac{1}{cz + d}
+\] 
+Define a circle in  $ \mathbb{C}^{*}$ to be any circle in $ \mathbb{C}$ or $\{\infty\} \cup L$ where $L$ is a line in  $ \mathbb{C}$
+\section{Theorem 10.2}
+$T \in L$  $C$ a circle in $ \mathbb{C}^{*} \implies T(c)$ is a circle  in $ \mathbb{C}^{*}$ \\
+Proof:
+trivial if $T$ is a rotation, translation, or dilation.
+Assume  $Tz = \frac{1}{z}$.
+Case 1: $C = L \cup \{\infty\}$ where $L$ is a line $0 \in L$.  $L$ is determined by where it intersects the unit circle at two points
+and  $T(L)$ is the line that passes through those points after they are reflected about the origin.
+Case 2:  $L$ is a line and  $0 \not\in L$ Let $z^{*} \in L$ with $|z^{*}| = \in\{|z| : z \in L\}$ 
+Then $L = \{\infty\} \{z^{*} + \lambda i z^{*}, \lambda \in \mathbb{R}$ then $T(L) = \{0\} \cup \{\frac{1}{z^{*}}\frac{1}{1+ i \lambda}, \lambda \in \mathbb{R}\}$
+\[
+|\frac{1}{z^{*}} \frac{1}{1+i\lambda} - \frac{1}{2 z^{*}}| = \frac{1}{2|z^{*}|} |\frac{2}{1 + i\lambda} - 1| = \frac{1}{2 |z^{*}|} |\frac{2}{1 _ i\lambda} - \frac{1+ i\lambda}{1 + i\lambda}|
+\] 
+\[
+ =  \frac{1}{2 |z^{*}|} | \frac{1- i\lambda}{ 1 + i \lambda}| = \frac{1}{2 |z^{*}|}
+\] 
+Case 3 $C = \{|z-z_0| = R\}$, $R > 0$  $z_0 \in \mathbb{C}$
+then
+\[
+    T(c) = \{w : |\frac{1}{w} - z_0|^2 = \mathbb{R}^2\}
+\] 
+\[
+\frac{1}{|w|^2} - 2 \Re( \frac{\overline{ z_0}}{w}) |z_0|^2  + (|z_0|^2- R^2) = 0
+\] 
+\[
+\frac{1}{|z_0|^2 - R^2} - \frac{2}{|z_0|^2 - R^2}\Re(\overline{z_0} \overline{w}) + |w|^2 = 0
+\] 
+\[
+|w-\frac{\overline{z_0}}{|z_0|^2 - R^2}|^2 = \frac{|z_0|^2}{(|z_0|^2 - R^2)^2} - \frac{1}{|z_0|^2 - R^2} > 0
+\] 
+
+\section{Wednesday}
+Let $\Omega = \mathbb{C}^{*}, \mathbb{C}$ or $ \mathbb{D} = \{z : |z| < 1\}$.
+Suppose  $f : \Omega \rightarrow U \subset \mathbb{C}^{*}$ a domain in $ \mathbb{C}^{*}$ and $f$ is conformal,  $f$ meromorphic one-one,  onto
+\begin{enumerate}
+    \item If $\Omega = \mathbb{C}^{*}$ the n $U = \mathbb{C}^{*}$ then $f = \frac{az + b}{cz  +d}$, $ad -bc \ne 0$ or  $f \in L$.
+    \item  $\Omega = \mathbb{C} \implies U \ne \mathbb{C}^{*}$, $p \in  \mathbb{C}^{*} \setminus U$ if $U \ne \mathbb{C}$
+        and replace $f$ by $\frac{1}{f(z) - p}$ without loss of generality, $U \subset \mathbb{C}$.
+        Now $f : \mathbb{C} \rightarrow U \subset \mathbb{C}$ conformal.
+        Consider $\{|z| > R\}$ and  $\{|w| < \frac{1}{R}\}$ $g(w) = f(\frac{1}{w})$ so $g$ is holomorphic on  $\{0 < |w| < \frac{1}{R}\}$ 
+        $g$ is holomorphic, open and one-one. The singularity is either removable, essential, or pole. If removable $f$ is bounded and entire therefore constant, not possible.
+        If $g$ has an essential singularity it is also impossible since the image in the neighborhood of 0 is dense in the whole plain but the map is open so it cannot be one-one.
+        Therefore $g$ has a pole at 0. so
+        \[
+        g = \frac{1}{w^{N}(a_0 +a_1w + \dots )}
+        \] 
+        $g$ is $N \to 1$ in a neighborhood of  $0$ therefore $N = 1$ so  $f$ has a pole at infinity simple pole. so $f$ extends  $ \mathbb{C}^{*}$ to $ \mathbb{C}^{*}$ and $\infty \rightarrow \infty$
+        so $f(z) = az + b$. Therefore $U  = \mathbb{C}$ 
+    \item If $\Omega = \{|z| < 1\}$. Let  $|\alpha| < 1$ and take
+        \[
+        Tz = e^{i \theta} \frac{z -\alpha}{1-\overline{\alpha}z}
+        \] 
+        $\theta \in \mathbb{R}$.
+        $T\alpha = 0$.
+        If $|z| = 1$ then  $|z-\alpha| = |z-\alpha||\overline{z}| = |1- \alpha \overline{ z}|$ and so $ |T(z)| = 1$.
+        Let  $M = \{T : Tz = e^{i\theta}\frac{z-\alpha}{1-\overline{\alpha}z}, \theta \in \mathbb{R}, \alpha \in \mathbb{D}\}$
+        $M \subset L$
+\end{enumerate}
+
+\section{Theorem 10.3}
+Schwarz Lemma:
+$f : \mathbb{D} \rightarrow \mathbb{D}$ holomorphic and $f(0) = 0$  then  $|f(z)| \le |z|$ and  $|f'(0)| \le 1$.
+and equality in either of the above at any point $z_0 \in z$ implies $f(z) = e^{i \theta}z$ for some constant $\theta \in \mathbb{R}$\\
+Proof
+\[
+f(z) = zg(z)
+\] 
+\[
+|f(z)| \le 1 \implies |g(z)| \le \frac{1}{|z|} , \quad |z| < 1
+\] 
+If $|z| < R < 1$ then $|g(z)| \le \frac{1}{R}$ tends to 1 as $R$ goes to 1,
+therefore
+ \[
+|g(z)| \le 1
+\] 
+and $g(0) = f'(0)$ and  $|f(z)| \le |z|$.For b equality implies  $|g(z_0)| = 1$ for some $z_0 \in \mathbb{D}$
+and so it attains its maximum and so $g$ is constant by maximum principle so  $g(z) = e^{i\theta}$ for some $\theta \in \mathbb{R}$.
+
+\section{Theorem 10.4}
+Assume $f : \mathbb{D} \to \mathbb{D}$  $f$ is holomorphic, 1-1, onto- conformal.
+Then $f \in M$, i.e. there exists  $\alpha \in D$, $e^{i\theta} \in \partial D$ such that
+\[
+f(z) = e^{i\theta} \frac{z-\alpha}{1-\overline{\alpha}z}
+\] 
+Let $\alpha = f(0)$ and set $Tz = \frac{z-\alpha}{1-\overline{\alpha}z}$ and consider $g = T \circ f$ sends  $ 0$ to 0.
+Then $|g(z)| \le |z|$ and  $g^{-1} : \mathbb{D} \to \mathbb{D}$ and $g^{-1}(0) = 0$ and
+$|g^{-1}(\omega)| \le |\omega|$ by 10.3 so $|g(z)| = |z|$ and  $g(z) = e^{i\theta}z$ 
+and so $f = T^{-1}$ and  $ T^{-1} = \frac{z + \alpha}{1 + \overline{\alpha}z}$
+
+\section{Corollary}
+Suppose $T: \mathbb{D} \to \mathbb{D}$ is conformal map then
+ \begin{enumerate}
+     \item $T$ extends to be a 1-1 continuous map from $\overline{ \mathbb{D}} \to \overline{\mathbb{D}}$ 
+     \item given $a,b \in \mathbb{D}$ different then there exists  $T \in M$ such that  $T(a) = b$ so  $M$ is transitive
+\end{enumerate}
+
+\section{Friday}
+Riemann mapping theorem theorem 11.1
+\[
+    \mathbb{C}^{*}, \mathbb{C}, \mathbb{D} = \{z : |z| < 1\}
+\] 
+$\Omega \sim \tilde \Omega$ where  $\Omega, \tilde \Omega$ domains in  $ \mathbb{C}$
+if there exists $g : \Omega \to \tilde \Omega$ holomorphic 1-1 onto.
+If  $\Omega \subset \mathbb{C}^{*}$ is a domain and  $\{ \mathbb{C}^{*} \setminus \Omega$ has at least 2 points
+and $\Omega$ is simply connected then there exists $\phi : \Omega \to \mathbb{D}$ conformal onto $ \mathbb{D}$\\
+Proof: 
+First is a local form of schwarz lemma and the second is properties of normal families. Weierstrass theorem theorems 6.2 and 6.3.
+Let
+\[
+    M = \{ e^{i \theta} \frac{z-\alpha}{1- \overline{\alpha}z} : \theta \in \mathbb{R}, |\alpha| < 1\}
+\] 
+is the set of conformal mappings from $ \mathbb{D} \to \mathbb{D}$\\
+Lemma 11.2:  $f : \mathbb{D} \to \mathbb{D}$ holomorphic. Then
+ \[
+     |f'(z)|  \le \frac{1- |f(z)|^2}{1 - |z|^2} \quad z \in \mathbb{D}
+\] 
+and equality holds at some $z \in \mathbb{D}$ if and only if  $f \in M$.\\
+Proof: Fix  $z_0 \in \mathbb{D}$ let $S(z) = \frac{z + z_0}{1- \overline{z_0}z}$ then $S(0) = z_0$ and $S \in M$.
+Let
+ \[
+     T(w) = \frac{w - f(z_0)}{1 - \overline{f(z_{0})}w}
+\] 
+\[
+T'(z) = \frac{(1- \overline{\alpha}z) + \overline{\alpha}(z-\alpha)}{(1- \overline{\alpha}z)^2}
+\] 
+\[
+T'(0) = 1 - |\alpha|^2 \quad T'(\alpha)  = \frac{1}{1- |\alpha|^2}
+\] 
+for general $T \in M$ and in this case swap  $\alpha$ for $f(z_{0})$
+let
+\[
+g(z) = T \circ f \circ S
+\] 
+so $g(0) = 0$ and  $g : \mathbb{D} \to \mathbb{D}$
+ \[
+|g'(0)| \le 1
+\] 
+\[
+|g'(0)| = |T'(f(z_0))||f'(z_0)||S'(0)| = |f'(z_0)| \frac{1- |z_0|^2}{1 - |f(z_0)|^2} \le 1
+\] 
+so we get
+\[
+|f'(z_0)| \le \frac{1- |f(z_0)|^2}{1 - |z_0|^2}
+\] 
+equality implies $g = T \circ f \circ S$ is in  $M$ and so  $f$ is in $M$.\\
+Normal families
+$\{f_n\}_{n=1}^{\infty}$ sequences of holomorphic functions in a domain $\Omega \subset \mathbb{C}$ and $f : \Omega \to \mathbb{C}$ function.
+\[
+    f_n \to f(z) \quad \text{ uniformly on all compact subsets of $\Omega$}
+\] 
+implies that $f$ is holomorphic on $\Omega$ and  $f_n^{(k)} \to f^{(k)}$ uniformly on compact subsets of $\Omega$
+We clalim  $f_n$ one-one for all  $n $ implies  $f$ is one-one or  $f$ is constant.
+Claim 2: If there exists $M < \infty$ such that $|f_n(z)|  \le M$ for all  $n,z$ then  $\{f_n\}$ has a subsequence  $\{f_{n_j}\}$ converging uniformly
+on every compact subset $A$ of  $\Omega$.\\
+Lemma 11.3: $\Omega, \{f_n\}$ as above then  $f_n$ is 1-1 function,  $f_n \to f$ uniformly in compact  $ K \subset \Omega$ then $f$ is 1-1 or  $f$ is constant.\\
+Proof: Assume that $f$ non constant $f(z_0) = f(z_1)$ for $z_0, z_1 \in \Omega$ we can create two discs around $z_1,z_0$ in $\Omega$ and a  $\gamma$ that connects $z_0,z_1$ such that on $\gamma$ $f$ does not equal to  $f(z_0)$ or $f(z_1)$ on $\gamma$
+and so we can create a curve surrounding the curve $f(z_0)$ on the map call $\sigma$.
+then
+\[
+\frac{1}{2\pi i} \int_{\sigma}^{} \frac{f'(z)}{f(z) - f(z_0)}dz = 2
+\] 
+but
+\[
+\frac{1}{2\pi i} \int_{ \sigma}^{} \frac{f_n'(z)}{f_n(z) - f_n(z_0)}dz = 1
+\] 
+and the integral converges by uniform convergence on compact domain so this is a contradiction thus $f(z_0) \ne f(z_1)$ \\
+Lemma 11.4: 
+Let $\{f_n\}$ be a sequence of holomorphic functions on a domain  $\Omega$ and assume there exists a finite number  $M$ such that  $\sup_{\Omega}|f_n(z)| \le M$ for all  $n$.
+Then there exists  $(n_j)_{j=1}^{\infty}$ subsequence such that $f_{n_j} \to f$ for some  $f$ converging uniformly on all compact  $K \subset \Omega$
+\end{document}

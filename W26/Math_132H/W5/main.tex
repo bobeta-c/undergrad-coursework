@@ -1,0 +1,288 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+
+\section{recap}
+\[
+f(z) = \int_{a}^{b}F(z,t) dt
+\] 
+
+\section{Schwarz Reflection Principle}
+\emph{
+    Suppose $\Omega$ domain,  and  $\Omega \subset \{z : z = x + iy, y > 0\}$ and define $\overline{ \Omega} = \{\overline{z}: z \in \Omega\}$ 
+    then $f$ holomorphic on $\Omega$ implies  $g(z) = \overline{f(\overline{z})}$ is holomorphic on $\overline{\Omega}$ 
+    \[
+    f = \sum_{n=0}^{\infty}a_n (z-z_0)^{n}
+    \] 
+    in a disc $D$ and
+    \[
+        \overline{f(\overline{z})} = \overline{\sum_{n=0}^{\infty}\overline{a_n}(\overline{z} - \overline{z_0})^{n}}
+    \] 
+}
+Definition:
+\emph{
+A domain $\Omega \subset \mathbb{C}$ is symmetric about $ \mathbb{R}$ if $z \in \Omega \implies \overline{z} \in \Omega$. And $\Omega = \Omega^{+} \cup \Omega^{-} \cup (\Omega \cap \mathbb{R})$
+}
+\section{Theorem 6.5}
+\emph{
+    Assume
+    \begin{enumerate}
+        \item $f^{+}$ holo in $\Omega^{+}$, $f^{-}$ holo in $\Omega^{-}$ 
+        \item $f^{+}$ has continuous extension to $ \mathbb{R} \cap \overline{\Omega^{+}}$.
+        \item $f^{-}$ has continuous extension to $ \mathbb{R} \cap \overline{\Omega^{-}}$ 
+        \item $f^{+} = f^{-}$ oin $ \mathbb{R}$
+    \end{enumerate}
+    then
+    \[
+    f(z) = 
+    \begin{cases}
+        f^{+}(z) & z \in \Omega^{+} \cup (\overline{\Omega^{+}} \cap \mathbb{R})\\
+        f^{-}(z) & z \in \Omega^{-} \cup (\overline{\Omega^{-}} \cap \mathbb{R})
+    \end{cases}
+    \] 
+}
+Proof by morera's theorem, take a triangle anywhere if it crosses the boundary then you can simplify the curve to a trapezoid
+
+\section{Corrolary}
+\emph{
+    Assume $f$ is real on $ E$.
+    $\Omega \subset  D := \{z : |z| < 1\}$, and $E \subset \partial D, E = \partial D \cap \overline{\Omega}$, $0 \not\in \Omega$ 
+    $\tilde \Omega = \{\frac{1}{\overline{ z}} : z \in \Omega$,
+    and $f$ holomorphic on $\Omega$, continuous on $\Omega \cup E$
+    define 
+    \[
+    g(z) = \overline{f(\frac{1}{z})} \qquad z \in \tilde \Omega
+    \] 
+    take $f $ in  $\Omega \cup E$ and  $g \in \tilde \Omega \cup E$ and define
+     \[
+    F(z) =
+    \begin{cases}
+        f(z) & z \in \Omega \cup E\\
+        g(z) & z \in \tilde \Omega \cup E
+    \end{cases}
+    \] 
+    is holomorphic on $\Omega \cup \tilde \Omega \cup E$.
+}
+Cnosider a triangle $T$ crossing the boundary $E$ and split the integral aroudn it is equal to three integrals two of which go to zero and one that crosses the boundary  $E$. the one that crosses,
+two sides go to 0 and the other 2 cancel each other out.
+
+\section{Wednesday}
+\emph{
+    $f$ continuous on $[a,b] \subset \mathbb{R}$ then $\exists$ sequence of polynomails  $P_n(z)$ so that
+     \[
+         \lim_{n\to \infty} \sup_{x \in [a,b]} |f(x) - p_n(x)| = 0
+    \] 
+}
+let
+\[
+    A( \overline{ D}) = \{f \text{ continuous on $\overline{ D}$ and holmorphic in $D$}\} 
+\] 
+\[
+    P( \overline{ D}) = \{f \text{ cont in $\overline{ D}$}: \exists \text{ polynomials $P_n(z) \rightarrow f(z)$ uniformly in $\overline{ D}$ } \}
+\] 
+we will prove $P( \overline{ D}) = A( \overline{ D})$ .
+We know that $P( \overline{ D}) \subset A( \overline{ D})$.
+Assume $F(z)$ is continuous on  $\overline{ D}$ and holomorphic in $ D$.
+$0 < r < 1$ is small then  $F(rz)$ is holomorphic on  $|z| < \frac{1}{r}$ and 
+\[
+F(rz) = \sum_{k=0}^{\infty}\alpha_k (rz)^{k} = \sum_{k=0}^{\infty}(\alpha_k r^{k})z^{k}
+\] 
+and
+\[
+\sum_{}^{}|\alpha_k r^{k}| < \infty
+\] 
+Let
+\[
+S_m(z) = \sum_{k=0}^{n}(\alpha_kr^{k})z^{k}
+\] 
+Also $F$ is uniformly continuous on $  \overline{ D}$ so there exists $r < 1$
+\[
+\sup_D |F(rz) - F(z)| < \epsilon
+\] 
+so
+\[
+|F(rz) - \sum_{k=0}^{n}\alpha_kr^{k}z^{k}| < \epsilon
+\] 
+if $n$ is large, so we can combine the two to say that the distance between the polynomial and $F$ is small.
+
+
+\section{Theorem Weierstrass 2}
+\emph{
+    $K \subset \mathbb{C}$  compact then polynomials in $z$ and  $\overline{ z}$, i.e. $(10z^2 + z \overline{z}^{9} + 200 \overline{z}^{4})$ are dense in $C(K) = \{f : K \rightarrow \mathbb{C}, f \text{ continuous}\}$
+}
+Let $T = \{|z| = 1\}$ then  $\overline{z} = \frac{1}{z}$, if $f$ is continuous on  $ T^{1}, \epsilon > 0 \implies$ there exists
+\[
+S(z) = \sum_{k=-n}^{N}\alpha_k z^{k}
+\] 
+such that
+\[
+    \sup_{T^{1}}|S_n(z) - f(z)|  < \epsilon
+\] 
+given $K$ compact subset of  $ \mathbb{C}$ what is $P(K)$( the set of limits of polynomials converging uniformly in  $ K$ and what is
+\[
+    R(K) = \{f  \in C(K): \exists  R_n(z) \text{ rationa with no poles in $K$}, \sup_{K}|P_n(z) - f(z)| \rightarrow 0\}
+\] 
+exampmle: Annulus $0 < R_0 < R_1 < \infty$ chooose $R_0 < r_0 < r_1 < R_1$.
+Lemma: $f$ holo on $A = \{R_0 < |z| < R_1$ and $r_0 < |z| < r_1$ implies
+\[
+f(z) = \frac{1}{2\pi i}\int_{|z| = r_1}^{} \frac{f(\zeta)}{\zeta - z} d \zeta -\frac{1}{2\pi i} \int_{ |z|  = r_0}^{} \frac{f(\zeta)}{\zeta - z} d\zeta
+\] 
+Divide the annulus into 6 regions.
+\[
+    Q_\alpha = \{r_0 \le |w| \le r_1 : \frac{\alpha}{2\pi 6} \le \text{arg } w \le \frac{\alpha + 1}{w\pi 6}
+\] 
+fix $z \in Q_j^{\odot}$ then there exists open  $w_\alpha \supset Q_j$ such that $w_j \subset A$ 
+\[
+F(z) = \sum_{\alpha=1}^{6} \frac{1}{2\pi i} \int_{\partial Q_j}^{} \frac{f(\zeta)}{\zeta - z} d \zeta = f(z)
+\] 
+this proves the lemma and we can say
+\[
+    f(z) = \sum_{k=-n_0}^{n_1}\alpha_k z^{k} \qquad \text{ on $ r_0 < |z| < r_1$}
+\] 
+with
+\[
+n \ge 0 \qquad \alpha_n = \frac{1}{2\pi i} \int_{ |\zeta| = r_1}^{}\frac{f(\zeta)}{\zeta^{n}} d\zeta
+\] 
+\[
+n < 0 \qquad a_n = \sum_{|\zeta|= r_0}^{}\zeta^{n}f(\zeta)d \zeta
+\] 
+
+\section{Runge's Theorem}
+Let $K \subset \mathbb{C}$ be compact and let $f(z)$ be a function holomorphic on $\Omega \supset K$ open.
+Then there exists a sequence  $ R_n$ of rational functions, poles not on  $K$ such that
+ \[
+     \sup_{K} |R_n(z) - f(z)| \xrightarrow{n \to \infty} 0
+\] 
+
+\section{Friday}
+THeorem 6.6.
+Let $K \subset \Omega \subset \mathbb{C}$ $K$ compact and  $\Omega$ open. Let $f$ holomorphic on $\Omega$. Then
+for all  $\epsilon > 0$ there exists rational function $R(z) = \frac{P(z)}{Q(z)}$ so that
+\[
+    \sup_{z \in K} |f(z) - R(z)| < \epsilon
+\] 
+Proof:
+Lemma 6.7: Let $\gamma$ be a piecewise smooth curve in $ \mathbb{C}$ and let $g(\zeta)$ be continuous on  $\gamma$ and set
+\[
+G(z) = \int_{\gamma}^{}\frac{g(\zeta)}{\zeta-z}d \zeta
+\] 
+and let $K$ be a compact subset of $ \mathbb{C} \setminus \gamma$ then for all $\epsilon > 0$ there exists $ R(z)$ of the form
+ \[
+     R(z) = \sum_{j=1}^{n}\frac{g(\zeta_j)}{(\zeta_j -z)}(\zeta_{j+1}-\zeta_j) \qquad \zeta_j \in \gamma
+\] 
+so that
+\[
+    \sup_{z \in K} |G(z) - R(z)| < \epsilon
+\] 
+Proof: Let $\gamma = \{\zeta(t) : 0 \le t \le 1\}$ let $\delta > 0$ small
+\[
+    0 = t_0 < t_1 < \dots < t_n = 1, \qquad t_{j+1} - t_j < \delta
+\] 
+and
+\[
+\zeta_j = \gamma(t_j)
+\] 
+\[
+    d = \inf_{z \in K, \zeta \in \gamma} |\zeta - z| > 0 = d(\gamma,K)
+\] 
+then
+\[
+G(z) - R(z) = \sum_{j=1}^{n}\left(\int_{\gamma_j}^{}\frac{g(\zeta)}{\zeta-z}d\zeta - \int_{\gamma_j}^{}\frac{g(\zeta_j)}{\zeta_j-z}d\zeta\right) = \sum_{j=1}^{n} \int_{\gamma_j}^{}\left(\frac{g(\zeta)}{\zeta-z} - \frac{g(\zeta_j)}{(\zeta_j-z)}\right)d\zeta
+\] 
+\[
+    |G(z) - R(z)| \le \sum_{j=1}^{n}\sup_{z \in K, \zeta \in \gamma_j} \left|\frac{g(\zeta)}{\zeta-z} - \frac{g(\zeta_j}{\zeta_j - z}\right| L(\gamma_j)
+\] 
+we can choose $\delta$ to make the supremum less than arbitrary $\frac{\epsilon}{L(\gamma)}$ so the total is less than epsilon.\\
+Proof of theorem: $K$ cpt containied in $\Omega$ open and  $\delta = \inf_{z \in K, \zeta \in \partial \Omega} |z - \zeta| > 0$.
+Choose $N \in \{1,2,\dots\}$  $\sqrt{2}2^{-N} < \delta$ Consider the grid $S$ of squares in  $ \mathbb{C}$ with corners
+\[
+\frac{j+ki}{2^{N}} \qquad j,k \in \mathbb{Z}
+\] 
+Let $S_0 = \{s \in S: s \cap K \ne \emptyset\}$ let $z \in K \setminus \bigcup_{s \in S_0}\partial s$, then $f(z) = \sum_{S_0)}^{}\frac{1}{2\pi i} \int_{\partial S}^{} \frac{f(\zeta)}{\zeta - z} d \zeta$. Since only one term is nonzero.
+\[
+    L = \{I_j : I_j \text{ is a side of $s \in S_0$}\}
+\] 
+\[
+    L_0 = \{I_j : I_j \subset \partial s \text{ for unique $s \in S_0$}\}
+\] 
+so
+\[
+f(z) = \sum_{L_0}^{}\int_{I_j}^{} \frac{f(\zeta)}{\zeta - z} d\zeta
+\] 
+for all $z \in K$ this has the form therefore lemma implies theorem
+
+\section{Theorem 6.8}
+Let $K \subset \mathbb{C}$ compact and $C \setminus K$ is connected and suppose  $f$ is holomorphic on $\Omega \supset K$ open. Then for all  $\epsilon > 0$
+there exist polynomial $p(z)$ with  $\sup_{z \in K} |f(z) - p(z)| < \epsilon$. WLOG $f(z) = \frac{1}{\zeta - z}$, $\zeta \not\in \mathbb{C} \setminus K$ by runge theorem
+there exists $ R > 0$ such that  $K \subset \{z : |z| < R\}$ if $|\zeta| > R$ and  $z \in K$ then
+ \[
+\frac{1}{\zeta - z} = \sum_{n=0}^{\infty}\frac{z^{n}}{\zeta^{n+1}}
+\] 
+with uniform convergence in $z \in K$. suppose  $\zeta \in \mathbb{C} \setminus K$ $|\zeta| < R$
+But  $ \mathbb{C} \setminus K$ is path connected so there exists $\gamma : [0,1] \rightarrow \mathbb{C} \setminus \Omega$ with $\gamma(0) = \zeta, |\gamma(1)| > R$
+consider $\{t \in [0,1] : \frac{1}{\gamma(t) - z} \in P(K)\}$. we have $\gamma(1) \in U$. \\
+Lemma: suppose that $\frac{1}{w - z} \in P(k)$ and $|\zeta - w| < \frac{1}{2}d(w,K)$ then  $\frac{1}{\zeta - z} \in P(k)$ 
+since
+\[
+-\frac{1}{\zeta - z} = \frac{1}{(w-z)-(\zeta-w)} = \sum_{n=0}^{\infty} \frac{(\zeta-w)^{n}}{(w-z)^{n+1}}
+\] 
+and
+\[
+    \frac{\zeta - w}{w-z} < C < 1
+\] 
+so $U$ is open and closed in $[0,1]$ so  $U = [0,1]$
+
+
+
+\end{document}

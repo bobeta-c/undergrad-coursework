@@ -1,0 +1,128 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+\section{Friday}
+We usually let $X_0$ be a constant for martingale so we can say $ \mathbb{E}[X_n] = X_0 = \mathbb{E}X_0$.\\
+Consider SRW $T = \min\{n : X_n = 5 \text{ or } -5\}$
+ \[
+\mathbb{P}(T < \infty) = 1 \qquad \mathbb{E}T < \infty
+\] 
+what is
+\[
+\mathbb{P}(X_{15} = 5 \text { or } -10) \ge 2^{-15}
+\] 
+then
+\[
+    \mathbb{P}(X_{15} \ne 5 \text{ or } -10 ) \le 1 - 2^{-15}
+\] 
+so for all $k \in (5,-10)$
+\[
+    \mathbb{P}(X_{15} \ne 5 \text{ or } -10 | X_0 = k] \le 1 - 2^{-15}
+\] 
+\[
+    \mathbb{P}(T > 15) \le \mathbb{P}(X_{15} \ne 15 \text{ or } -10) \le 1 - 2^{-15}
+\] 
+so
+\[
+\mathbb{P}(T > 30) = \mathbb{P}(T > 30 | T > 15) \mathbb{P}(T > 15) 
+\] 
+\[
+    \le \max_k \mathbb{P}(T > 30 | X_{16} = k) \mathbb{P}(T > 15) \le (1-2^{-15})(1-2^{-15})
+\] 
+so
+\[
+\mathbb{P}(T > 15 m) \le (1-2^{-15})^{m} \implies \mathbb{P}(T = \infty) = 0
+\] 
+and
+\[
+    \mathbb{E}[T] = \sum_{k}^{} \mathbb{P}(T \ge k) < \infty
+\] 
+Result: $X_0 = 10$ SRW and $T = \min\{n, X_n = 0\}$ then  $P(T < \infty) = 1$a
+\[
+    \mathbb{P}(\text{ arrive 0 before 20}) = \frac{1}{2}
+\] 
+and
+\[
+    \mathbb{P}(\text{arrive 0 before 30}) = \frac{2}{3}
+\] 
+\[
+    \mathbb{P}(\text{arrive 0 before M)}) = \frac{M-10}{M}
+\] 
+so
+\[
+    \mathbb{P}(\text{ arrive 0}) \ge \frac{M-10}{M} = 1
+\] 
+\[
+    Y_n = X_{N \wedge T} \qquad Y_n \rightarrow Y_\infty
+\] 
+martingale convergence theorem
+\section{martingale convergence theorem}
+\[
+    \{X_n\}
+\] 
+is sub martingale and
+\[
+    \sup_{n} \mathbb{E}(X_n^{+}) < \infty
+\] 
+then
+\[
+    X_n \rightarrow X_{\infty}
+\] 
+almost sure for some $X_\infty$
+Let $X_n$ be a simple random walk and $A_n$ predictable, then $\tilde X_n = X_0 + (X \cdot A)_n$ is still martingale
+and  $\tilde X_n \ge 0$  $T_0 = \min\{n : \tilde X_n = 0\}$ and $Y = \tilde X_{n \wedge T}$
+
+\end{document}

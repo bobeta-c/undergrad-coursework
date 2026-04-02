@@ -1,0 +1,106 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+
+Let $\sum_{n=0}^{\infty}\alpha_nz^{n}$ be a powerseries then 
+let
+\[
+\frac{1}{R} = \limsup_{n\to \infty}|\alpha_n|^{\frac{1}{n}}
+\] 
+power series converges uniformly for $z \le r$ for any  $r < R$ and diverges for  $|z| > R$.
+Also
+ \[
+f^{(k)}(z) = \sum_{n=k}^{\infty}n!\beta_n z^{n-k}
+\] 
+with
+\[
+\beta_n = \frac{f^{(n)}(0)}{n!}
+\] 
+$z : [a,b] \to \mathbb{C}$ and $\tilde z : [c,d] \to \mathbb{C}$ are equivalent if there exists
+\[
+    t(s) : [c,d] \to^{\text{onto}} [a,b]
+\] 
+such that $t'(s) > 0$ and  $z(t(s)) = \tilde z(s)$
+and
+ \[
+\int_{\gamma}^{}f(z)dz = \int_{a}^{b}f(z(t))z'(t)dz
+\] 
+\[
+\int_{\gamma}^{}F'(z)dz = F(z(b)) - F(z(a))
+\] 
+
+\[
+\frac{1}{2\pi i} \int_{\partial D}^{} \frac{f(w)}{w-z}dz = f(z)
+\] 
+if $z \in D$ and  $f$ is holo in a domain containing the closure of $D$.
+also
+\[
+f^{(n)}(z) = \frac{n!}{2\pi i} \int_{ \partial D}^{}\frac{f(\zeta)}{(\zeta - z)^{n+1}}d \zeta
+\] 
+\[
+    a^{n} - b^{n} = (a-b)(a^{n-1} + a^{n-2}b +\dots + ab^{n-2} + b^{n-1})
+\] 
+\[
+    |f^{(n)}(a)| \le \frac{n!}{r^{n}}\sup_{|z-a|= r}|f(z)|
+\] 
+\[
+u : \Omega \to \mathbb{C}
+\] 
+is Harmonig if $D = \{|z-z_0| < R\} \subset \overline{ D} \subset \Omega$ and
+\[
+u(z_0) = \frac{1}{2\pi} \int_{0}^{2\pi} u(z_0 + Re^{ i \theta}) d \theta
+\] 
+If $f_n \to f$ uniformly on all compact  $K \subset \Omega$ then $f$ is holomorphic and $f_n^{(k)} \to f^{(k)}$ as well
+
+\end{document}

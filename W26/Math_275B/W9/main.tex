@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{monday}
+Lemma: $\{X_n\}$ is sub-martingale and  $T$ is a stopping time and  $T \le n$ almost sure,
+then
+ \[
+\mathbb{E}X_0 \le \mathbb{E}X_t \le \mathbb{E}X_n
+\] 
+Lemma: $\{X_n\}$ is non-negative sub martingale. 
+$X_n^{*} := \max_{0 \le k \le n} X_k$
+for all $\lambda \ge 0$
+\[
+    \lambda \mathbb{P}(X_n^{*} \ge \lambda) \le \mathbb{E}(X_n 1_{X_n^{*} \ge \lambda})
+\] 
+bound the largest with the last one. Eventually
+\[
+\mathbb{E}(X_n^{*})^{p} \le \frac{p}{p-1} \mathbb{E}|X_n|^{p}
+\] 
+\[
+\mathbb{E}X^{p} \le \int_{}^{}py^{p-1} \mathbb{P} (X > y)dy
+\] 
+Proof of first claim:
+Let $T := \min_k\{1 \le k \le n ,n : X_k \ge \lambda\}$  to be the first time $X_k$ greater than or equal to lambda or just  $n$ 
+$\min\{k : X_k \ge \lambda) \wedge n$. then
+\[
+    \lambda \mathbb{P}(X_n^{*} \ge \lambda) \le \mathbb{E}(X_T 1_{X_n^{*} \ge \lambda}) = \mathbb{E}(X_t) - \mathbb{E}(X_T 1_{X_n^{*} < \lambda})
+\] 
+\[
+    = \mathbb{E}(X_t) - \mathbb{E}(X_n 1_{X_n^{*} < \lambda})
+\] 
+Recall the previous lemma.
+\[
+\mathbb{E}(X_t) \le \mathbb{E}X_n
+\] 
+so
+\[
+    \le \mathbb{E}(X_n) - \mathbb{E}(X_N 1_{X_n^{*} < \lambda}) \le \mathbb{E}(X_n 1_{X_n^{*} \ge \lambda}) 
+\] 
+Application
+\[
+\lambda \mathbb{P}(X_n^{*} \ge \lambda) \le \mathbb{E} X_n
+\] 
+\[
+\mathbb{P}(X_n^{*} \ge \lambda) \le \frac{ \mathbb{E}(X_n)}{\lambda}
+\] 
+Martingale $L_p$ convergence theorem:\\
+$\{X_n\}$ is martingale and
+ \[
+\sup_n \mathbb{E} |X_n|^{p} < \infty
+\] 
+$p > 1$.
+Then $X_\infty$ exists and $X_n \rightarrow X_\infty$ in $L_p$
+\[
+\mathbb{E}|X_n - X_\infty|^{p} \rightarrow 0
+\] 
+\[
+    \mathbb{E}|X_{\infty}^{*}|^{p} < \infty \quad \mathbb{E}|X_\infty|^{p} < \infty
+\] 
+\[
+    X_{\infty}^{*} = \sup_n |X_n|
+\] 
+First
+\[
+    \mathbb{E}|X_\infty^{*}|^{p} = \lim_{n\to \infty} \mathbb{E}|X_n^{*}|^{p} \quad X_n^{*} = \max_{1 \le k \le n} |X_k|
+\] 
+\[
+\le \lim_{n\to \infty}\left(\frac{p}{p-1} \mathbb{E}|X_n|^{p}\right) \le \frac{p}{p-1} \sup_n \mathbb{E}|X_n|^{p}
+\] 
+so both are finite and the rsult is dominated and the convergence follows.
+
+\section{for p = 1} 
+$\{X_n\}$ martingale and  $ \sup_n \mathbb{E}|X_n| < \infty$
+Q: $X_n \rightarrow X_\infty$ in $L_1$?
+If we have $\{X_n\}$ is uniformly integrable then  $X_n \rightarrow X_\infty$ in $L_1$ 
+If there is $\phi$ such that
+\[
+    \frac{\phi(x)}{x} \rightarrow \infty
+\] and
+\[
+\sup_n \mathbb{E} \phi(|X_n|) < \infty
+\] 
+then $X_n$ are uniformly integrable
+
+\section{Topic Levy's Martingale}
+ \[
+     X_n \rightarrow X_\infty \text{ a.s.}
+\] 
+$\{X_n\}$ is martingalealpha function
+ \[
+     \mathbb{E}(\chi(G) | \mathcal{F}_n]
+\] 
+\[
+    X_n = \mathbb{E}[X_{m} | \mathcal{F}_n] \quad m > n
+\] 
+\[
+    X_1 = \mathbb{E}[X_m | \mathcal{F}_1]
+\] 
+Can we use say
+\[
+    X_n = \mathbb{E}[X_\infty | \mathcal{F}_n] ?
+\] 
+No
+
+\section{Wednesday}
+Q: If $\{X_n\}$ is a martingale and  $X_n \to X_\infty$ almost sure when $X_n = \mathbb{E}[X_\infty | \mathcal{F}_n]$\\
+Counter examples: SRW $X_\infty = 0$.
+if $X_n - \mathbb{E}[X_\infty | \mathcal{F}_n] \implies \mathbb{E}X_n = \mathbb{E}X_\infty$\\
+Topic: Levy's Martingale.
+Let $X$ be a random variable and $ \mathbb{E}|X| < \infty$ and $ \mathcal{F}_n \nearrow $ filtration, then
+\[
+    X_n = \mathbb{E}[X | \mathcal{F}_n]
+\] 
+is a martingale. Proof
+\[
+    \mathbb{E}[X_{n+1}| \mathcal{F}_n] = \mathbb{E}[ \mathbb{E}[X | \mathcal{F}_{n+1}] | \mathcal{F}_n] = \mathbb{E}[X | \mathcal{F}_n] = X_n
+\] 
+\section{Lemma}: As above, $\{X_n\}$ is uniformly integrable.\\
+Lemma: If $X$ is random variable on $(\Omega, \mathcal{F}, \mathbb{P})$ and $ \mathbb{E}|X| <\infty$ then $\{X_g = \mathbb{E}[X | g] : g \subset \mathcal{F} \text{ sigma algebra}\}$ is $U.I$\\
+Proof of Lemma: first $|X_g| + | \mathbb{E}[X | g] | \le \mathbb{E}[|X| | g]$
+so for all $g$
+\[
+    \mathbb{E}|X_g| \le \mathbb{E}( \mathbb{E}[|X| | g]) \le \mathbb{E}|X|
+\] 
+So for all $g, K$
+ \[
+\mathbb{P}(|X_g| \ge k) \le \frac{ \mathbb{E}|X|}{k}
+\] 
+remember that UI if for all $\epsilon$ there exists $K$ such that $ \mathbb{E}|X_\alpha| 1_{|X_\alpha| \ge k} \le \epsilon$ for all $\alpha$\\
+SO far we proved that $ \mathbb{E} 1_{|X_g| \ge k} \le \epsilon$ for all $g$.
+Next
+\[
+    \mathbb{E}|X_g|1_{|X_g| \ge k} \le \mathbb{E}[ \mathbb{E}[|X| | g]  1_{|X_g| \ge k}] = \mathbb{E} |X| 1_{|X_g| \ge k}
+\] 
+For all $\delta > 0$ there exists $k$ such that  $ \sup_g \mathbb{P}(|X_g| \le k) \le \delta$.
+For all $\epsilon$, exists $\delta$ such that $\sup_{A, \mathbb{P}(A) < \delta} \mathbb{E}|X|1_{A} \le \epsilon$.
+Therefore Levy martingale uniform integrable.
+\section{Theorem Levy martingale}
+$\{X-n\}$,  $X_n = \mathbb{E}[X | \mathcal{F}_n]$ and $ \mathbb{E}|X|^{p} < \infty$ for som $p \ge 1$ then
+there exists  $X_\infty, X_n \to X_\infty$ almost sure and in $L_p$ and
+ \[
+     X_\infty = \mathbb{E}[X| \mathcal{F}_\infty] \quad F_\infty = \sigma(\bigcup_{ n=1}^{\infty} \mathcal{F}_n)
+\] 
+Levy upward martingale theorem.
+Proof: $ \mathbb{E}|X_n| \le \mathbb{E}[ \mathbb{E}[|X| | \mathcal{F}_n] ] \le \mathbb{E}|X| < \infty$
+so $X_n \to X_\infty$ almost sure by martingale convergence theorem
+and $\{X_n\}$ is Uniformly integrable which implies  $X_n \to X_\infty$ in $L_1$. If $p > 1$ we use martingale  $L_p$ convergence theorem and so we have the same idea and  $X_n \to X_\infty$ in $L_p$ 
+\[
+    \sup_n \mathbb{E}|X_n|^{p} < \infty \implies X_n \to X_\infty \text{ in Lp}
+\] 
+We have $X_n \in \mathcal{F}_\infty$ and so the limit is still measurable with respect to $ \mathcal{F}_\infty$
+Last one: $X_\infty = \mathbb{E}[X | F_\infty]$ we use $\pi-\lambda$
+We need to prove for all $A \in \mathcal{F}_\infty$ $ \mathbb{E}[X_\infty 1_A] = \mathbb{E}[X 1_A]$
+With $\pi-\lambda$ we need to prove that $\forall k, A \in \mathcal{F}_k$
+\[
+    \mathbb{E}[X_\infty 1_A] = \mathbb{E}[x 1_A]
+\] 
+proof: Fix $k, A$
+\[
+    \mathbb{E}[X 1_A] = \mathbb{E}[X_k 1_A]
+\] 
+and
+\[
+    \mathbb{E}[X_{k+1} 1_A] = \mathbb{E}[ \mathbb{E}[X | F_{k+1}] 1_A] = \mathbb{E}[X 1_A]
+\] 
+so for all $n \ge k$
+ \[
+     \mathbb{E}[X_n 1_A] = \mathbb{E}[X 1_A]
+\] 
+Then
+\[
+    \mathbb{E}[X_\infty 1_A] = \mathbb{E}[ \lim_{n\to \infty} X_n 1_A] = \lim_{n\to \infty} \mathbb{E}[X_n 1_A] = \lim_{n\to \infty } \mathbb{E}[X 1_A] = \mathbb{E}[X 1_A]
+\] 
+where we can swap limit since $X_n \to X-\infty$ in $L_1$ so
+\[
+   0 = \lim_{n\to \infty} \mathbb{E}[|X_n - X_\infty|] \ge \lim_{n\to \infty}\mathbb{E}[|X_n 1_A - X_\infty 1_A|] 
+\] 
+If Levy martingale  $X \to \{X_n\}$ and  $X_\infty$ is the limit and $ X_\infty = \mathbb{E}[X | \mathcal{F}_\infty]$
+then $X_n = \mathbb{E}[X_\infty | \mathcal{F}_n]$ now if $X_n \to X_\infty$ when does
+\[
+    X_n - \mathbb{E}[X_\infty | \mathcal{F}_n]
+\] 
+
+
+\end{document}

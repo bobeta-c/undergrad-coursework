@@ -1,0 +1,264 @@
+\documentclass[10pt]{article}
+\usepackage[a4paper,landscape,margin=0.1in]{geometry}
+\usepackage{multicol}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb}
+\usepackage{color,graphicx,overpic}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{bm}
+
+% Cheat Sheet Margins
+\geometry{top=0.1in,left=0.1in,right=0.1in,bottom=0.1in}
+
+% Code Style
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\tiny,
+  keywordstyle=\color{blue}\bfseries,
+  commentstyle=\color{black},
+  stringstyle=\color{red},
+  breaklines=true,
+  frame=single,
+  aboveskip=1pt,
+  belowskip=1pt
+}
+
+% List spacing
+\setlist[itemize]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt}
+\setlist[enumerate]{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt}
+
+% Math shortcuts
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathcal{N}}
+
+\begin{document}
+\scriptsize
+\begin{multicols*}{3}
+
+% ==========================================
+% 1. OPTIMIZATION ALGORITHMS
+% ==========================================
+\section*{1. Optimization Algorithms}
+\textbf{Gradient Descent:} $\theta_{t+1} = \theta_t - \eta \nabla_\theta J(\theta_t)$
+
+\subsection*{SGD + Momentum}
+Accumulate a velocity vector $v$ (exponential moving avg of gradients).
+\begin{align*}
+    v_{t+1} &= \rho v_t + \nabla J(\theta_t) \\
+    \theta_{t+1} &= \theta_t - \alpha v_{t+1}
+\end{align*}
+$\rho$: Friction/decay (typ 0.9). $\alpha$: Learning rate.
+\textit{Benefit:} Powers through local optima/saddle points; reduces oscillation.
+
+\subsection*{RMSProp (Root Mean Square Prop)}
+Adaptive learning rate. Divides by running avg of squared magnitudes.
+\begin{align*}
+    s_{t} &= \beta s_{t-1} + (1-\beta) (\nabla J(\theta))^2 \\
+    \theta_{t+1} &= \theta_t - \frac{\eta}{\sqrt{s_t + \epsilon}} \nabla J(\theta)
+\end{align*}
+$\beta$: Decay rate (typ 0.99). $\epsilon$: Numerical stability ($1e-8$).
+
+\subsection*{Adam (Adaptive Moment Estimation)}
+Combines Momentum (1st moment) and RMSProp (2nd moment).
+\begin{enumerate}
+    \item Update 1st moment: $m_t = \beta_1 m_{t-1} + (1-\beta_1)g_t$
+    \item Update 2nd moment: $v_t = \beta_2 v_{t-1} + (1-\beta_2)g_t^2$
+    \item Bias Correction: $\hat{m}_t = \frac{m_t}{1-\beta_1^t}, \quad \hat{v}_t = \frac{v_t}{1-\beta_2^t}$
+    \item Update: $\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{\hat{v}_t} + \epsilon} \hat{m}_t$
+\end{enumerate}
+Typ: $\beta_1=0.9, \beta_2=0.999$. Requires $3\times$ memory of SGD (params + $m$ + $v$).
+
+\subsection*{Memory Footprint (Week 2)}
+For model with $P$ params (float32 = 4 bytes):
+\begin{itemize}
+    \item \textbf{SGD:} $4P$ (weights) + $4P$ (grads) $= 8P$.
+    \item \textbf{Momentum:} $+4P$ (velocity state) $= 12P$.
+    \item \textbf{Adam:} $+4P$ ($m$) $+4P$ ($v$) $= 16P$.
+    \item \textbf{AdamW:} Same as Adam ($16P$).
+\end{itemize}
+
+% ==========================================
+% 2. CNN FORMULAS & RECEPTIVE FIELD
+% ==========================================
+\section*{2. CNNs \& Receptive Field}
+
+\textbf{Conv Output Size:}
+Input $H \times W$, Kernel $K$, Padding $P$, Stride $S$, Dilation $D$:
+$$ H_{out} = \left\lfloor \frac{H_{in} + 2P - D(K-1) - 1}{S} + 1 \right\rfloor $$
+
+\textbf{Receptive Field (RF) Calculation:}
+Recursive formula for RF size $r_l$ at layer $l$, given previous RF $r_{l-1}$, jump/stride product $j_{l-1}$, kernel size $k_l$, and dilation $d_l$:
+\begin{align*}
+    r_0 &= 1, \quad j_0 = 1 \\
+    j_l &= j_{l-1} \times s_l \\
+    r_l &= r_{l-1} + (k_l - 1) \cdot d_l \cdot j_{l-1}
+\end{align*}
+\textit{Intuition:} RF increases linearly with depth but exponentially if strided/dilated. 
+\textbf{Dilated Conv:} Inserts $d-1$ zeros between filter weights. Expands RF without losing resolution or adding params.
+
+\textbf{Params \& FLOPS (AlexNet Ex):}
+Layer: $C_{in} \to C_{out}$, size $K \times K$.
+\begin{itemize}
+    \item \textbf{Params:} $(K^2 C_{in} + 1) \times C_{out}$
+    \item \textbf{FLOPS:} $2 \cdot H_{out} W_{out} \cdot (K^2 C_{in} C_{out})$
+    \item \textbf{Memory:} $H_{out} \cdot W_{out} \cdot C_{out} \cdot 4$ bytes (activations).
+\end{itemize}
+
+\textbf{ResNet Residual Block:}
+$y = \sigma(x + \mathcal{F}(x))$. 
+Allows $\nabla$ to flow directly ($+1$ term in chain rule). Solves degradation problem where deep nets perform \textit{worse} than shallow ones.
+
+% ==========================================
+% 3. TRANSFORMERS & ATTENTION
+% ==========================================
+\section*{3. Transformers}
+\textbf{Scaled Dot-Product Attention:}
+Inputs: Queries $Q$, Keys $K$, Values $V \in \R^{T \times d_k}$.
+$$ \text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V $$
+Scaling by $1/\sqrt{d_k}$ prevents logits from growing large $\to$ vanishing gradients through softmax.
+
+\textbf{Multi-Head Attention:}
+Projects $Q,K,V$ into $h$ heads. Concatenates outputs.
+Allows attending to different subspaces simultaneously.
+$$ \text{Head}_i = \text{Attn}(QW_i^Q, KW_i^K, VW_i^V) $$
+$$ \text{MultiHead} = \text{Concat}(\text{Head}_1 \dots \text{Head}_h)W^O $$
+
+\textbf{ViT vs CNN:}
+\begin{itemize}
+    \item \textbf{CNN:} Inductive bias for locality + translation invariance.
+    \item \textbf{ViT:} Global interaction ($N^2$). Less bias $\to$ needs more data (JFT-300M).
+    \item \textbf{Positional Emb:} Added to patch embeddings to restore spatial info.
+\end{itemize}
+
+\textbf{Swin Transformer (Hierarchical):}
+partitions image into windows.
+\begin{itemize}
+    \item \textbf{W-MSA:} Attention only within windows. $O(N)$.
+    \item \textbf{SW-MSA:} Shifted Window. Cyclic shift allows cross-window info exchange in next layer.
+    \item Memory Reduction: Global $O(N^2) \to$ Swin $O(N^2/W)$.
+\end{itemize}
+
+% ==========================================
+% 4. GENERATIVE MODELS: DIFFUSION
+% ==========================================
+\section*{4. Diffusion Models (DDPM)}
+Markov chain. Forward adds noise; Reverse removes it.
+
+\subsection*{Forward Process (Fixed)}
+$$ q(x_t | x_{t-1}) = \N(x_t; \sqrt{1-\beta_t}x_{t-1}, \beta_t I) $$
+Closed form to sample $x_t$ at any step from $x_0$:
+Let $\alpha_t = 1 - \beta_t$ and $\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$.
+$$ q(x_t | x_0) = \N(x_t; \sqrt{\bar{\alpha}_t}x_0, (1 - \bar{\alpha}_t)I) $$
+\textbf{Reparameterization:} $x_t = \sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon, \quad \epsilon \sim \N(0,I)$.
+
+\subsection*{Reverse Process (Learned)}
+Approximate $q(x_{t-1}|x_t)$ with $p_\theta(x_{t-1}|x_t)$:
+$$ p_\theta(x_{t-1}|x_t) = \N(x_{t-1}; \mu_\theta(x_t, t), \Sigma_\theta(x_t, t)) $$
+Typically fix $\Sigma_\theta = \beta_t I$ or $\tilde{\beta}_t$.
+Learn mean $\mu_\theta$ by predicting noise $\epsilon_\theta(x_t, t)$.
+
+\subsection*{Algorithm: Training}
+1. Sample $x_0 \sim q(x_0)$.
+2. Sample $t \sim \text{Uniform}(1 \dots T)$.
+3. Sample $\epsilon \sim \N(0, I)$.
+4. Take descent step on:
+$$ \nabla_\theta \| \epsilon - \epsilon_\theta(\underbrace{\sqrt{\bar{\alpha}_t}x_0 + \sqrt{1-\bar{\alpha}_t}\epsilon}_{x_t}, t) \|^2 $$
+
+\subsection*{Algorithm: Sampling (DDPM)}
+1. Sample $x_T \sim \N(0, I)$.
+2. For $t = T, \dots, 1$:
+   Sample $z \sim \N(0, I)$ (if $t>1$, else $0$).
+   $$ x_{t-1} = \frac{1}{\sqrt{\alpha_t}} \left( x_t - \frac{1-\alpha_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon_\theta(x_t, t) \right) + \sigma_t z $$
+
+% ==========================================
+% 5. GENERATIVE MODELS: VAE & GAN
+% ==========================================
+\section*{5. VAEs \& GANs}
+
+\subsection*{VAE (Variational Autoencoder)}
+Objective: Maximize Evidence Lower Bound (ELBO).
+$$ \log p(x) \ge \underbrace{\E_{q(z|x)}[\log p(x|z)]}_{\text{Reconstruction}} - \underbrace{D_{KL}(q(z|x) || p(z))}_{\text{Regularization}} $$
+\begin{itemize}
+    \item \textbf{Encoder} $q_\phi(z|x)$: Outputs $\mu, \sigma$.
+    \item \textbf{Reparameterize:} $z = \mu + \sigma \odot \epsilon$.
+    \item \textbf{Decoder} $p_\theta(x|z)$: Reconstructs $x$.
+    \item \textbf{Blurriness:} $L_2$ recon loss averages modes $\to$ blurry.
+    \item \textbf{VQ-VAE:} Discrete latent codebook. Avoids "posterior collapse" (where decoder ignores $z$).
+\end{itemize}
+
+\subsection*{GAN (Generative Adversarial Net)}
+Minimax Game: $G$ tries to fool $D$; $D$ tries to distinguish.
+$$ \min_G \max_D V(D, G) = \E_{x \sim data}[\log D(x)] + \E_{z \sim p_z}[\log(1 - D(G(z)))] $$
+\textbf{Optimal Discriminator:}
+$$ D^*(x) = \frac{p_{data}(x)}{p_{data}(x) + p_g(x)} $$
+\textbf{Problem:} If $D$ is perfect, $\nabla G \to 0$ (Vanishing Gradients).
+\textbf{Fix (Non-Saturating Loss):} G maximizes $\E[\log D(G(z))]$.
+\textbf{Mode Collapse:} G maps all $z$ to single output mode to fool D.
+
+% ==========================================
+% 6. OBJECT DETECTION
+% ==========================================
+\section*{6. Object Detection}
+\textbf{Pipeline Evolution:}
+R-CNN (External Prop + CNN) $\to$ Fast R-CNN (Shared Feats + RoI Pool) $\to$ Faster R-CNN (RPN + Shared Feats).
+
+\subsection*{IoU (Intersection over Union)}
+$$ \text{IoU} = \frac{\text{Area}(A \cap B)}{\text{Area}(A \cup B)} = \frac{\text{Intersection}}{\text{Area}(A) + \text{Area}(B) - \text{Intersection}} $$
+
+\subsection*{NMS (Non-Max Suppression) Algorithm}
+Input: List of boxes $B$ with scores $S$. Thresh $N_t$.
+1. Select box $b_m$ with max score. Move to Final.
+2. Compare $b_m$ with all other boxes $b_i$.
+3. If $\text{IoU}(b_m, b_i) > N_t$, remove $b_i$.
+4. Repeat until empty.
+
+\subsection*{RoI Pooling vs. RoI Align}
+\textbf{RoI Pool (Fast R-CNN):} Snaps float coordinates to integer grid (quantization). Divides into bins, max pools. \textit{Issue:} Misalignment destroys mask accuracy.
+\textbf{RoI Align (Mask R-CNN):} No snapping. Samples 4 points within each bin using bilinear interpolation.
+$$ f(x,y) \approx \sum_{i,j} w_{ij} f(x_i, y_j) $$
+
+% ==========================================
+% 7. SEGMENTATION & MISC
+% ==========================================
+\section*{7. Dense Prediction}
+\textbf{Semantic:} Label per pixel. \textbf{Instance:} Label + ID. \textbf{Panoptic:} Semantic (stuff) + Instance (things).
+
+\textbf{Transposed Convolution (Upsampling):}
+"Deconvolution". Learns to upsample.
+Strided conv $s>1$ downsamples; Transposed conv $s>1$ inserts $s-1$ zeros, then convs.
+\textit{Artifacts:} Checkerboard patterns if kernel/stride not carefully chosen.
+
+\textbf{Class Activation Map (CAM):}
+Visualizing CNN attention. Req: Global Avg Pool (GAP) $\to$ FC.
+$$ M_{class}(x,y) = \sum_k w_k^{class} \cdot f_k(x,y) $$
+Where $f_k$ is feature map of channel $k$, $w_k$ is FC weight.
+
+\section*{8. RNN vs Transformer Complexity}
+$N$: Seq len, $d$: dim.
+\begin{itemize}
+    \item \textbf{RNN:} Compute $O(N \cdot d^2)$, Sequential $O(N)$. $O(1)$ inference.
+    \item \textbf{Transformer:} Compute $O(N^2 \cdot d)$, Parallelizable. $O(N)$ inference (KV Cache).
+    \item \textbf{Long Range:} RNN forgets (vanishing grad). Transformer attends globally (path length $O(1)$).
+\end{itemize}
+
+\section*{9. Loss Analysis}
+\textbf{Regression:} MSE ($L2$).
+\textbf{Classification:} Cross Entropy.
+\textbf{Gradient sensitivity:} Jacobian $J_{ij} = \frac{\partial y_i}{\partial x_j}$. If $\frac{\partial y}{\partial w} = 10$, output changes $10\times$ faster than weight.
+
+\textbf{Correcting PyTorch CrossEntropy:}
+\begin{lstlisting}
+# Logits shape: (Batch, C, d1...dk)
+# Target shape: (Batch, d1...dk)
+loss = nn.CrossEntropyLoss()(logits, target)
+# Do NOT apply softmax before this.
+# Do NOT view() into 1D unless necessary.
+\end{lstlisting}
+
+\end{multicols*}
+\end{document}

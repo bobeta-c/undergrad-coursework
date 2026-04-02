@@ -1,0 +1,200 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+
+\section{monday}
+Def: A function on a domain $\Omega$ is meromorphic on  $\Omega$ if there
+exists finite or countably inifnitely set  $\{p_1,p_2,\dots,p_n,\dots\} \subset \Omega$ such that
+\begin{enumerate}
+    \item $\{p_1,p_2,\dots,\}$ is discrete, i.e. has no limit points in $\Omega$
+    \item  $f$ is holomorphic on $\Omega \setminus \{p_1,p_2,\dots\}$
+    \item each $p_j$ is a pole of  $f$. In $ 0 < |z-p_j| < \delta_j$ $f = \frac{1}{(z-p_j)^{n_j}}g$ where $g$ is holomorphic on that disc and  $n_j \ge 1$
+\end{enumerate}
+for example $e^{\frac{1}{z}}$ is not meromorphic on $ \mathbb{C}$, or if $f(z) = \frac{p(z)}{q(z)}$ where $p,q$ polynomials and  $q \ne 0$.
+
+\section{Theorem 8.1}
+In any domain $\Omega$
+$q(\Omega) = \{f : \Omega \rightarrow \mathbb{C} \cup \{\infty\}$ $f$ meromorhpic $\}$ is a field
+
+\section{}
+Recall $ \mathbb{C}^{*} = \mathbb{C} \cup \{\infty\}$ and $ U \subset \mathbb{C}^{*}$ is open if $U \cap \mathbb{C}$ is open in $ \mathbb{C}$ and if 
+$ \infty \in U$ then there exists $0 < R < \infty$ such that
+\[
+\{z : |z| > R\} \subset U \cap \mathbb{C}
+\] 
+Let $\Omega$ be a domain in  $ \mathbb{C}^{*}$, let $f : \Omega \rightarrow \mathbb{C}$, $f$ is meromorphic on $\Omega$ if
+$f|_{\Omega \cap C}$ is meromorphic on  $\Omega \cap \mathbb{C}$ and if $\infty \in \Omega$ then there exists $ R > 0$ so that  $w \rightarrow f(\frac{1}{w})$ is meromorphic on $\{|w| < \frac{1}{R}\}$ where $\{|z| > R\} \subset \Omega$
+
+\section{Theorem 8.2}
+$f$ is meromorphic on $ \mathbb{C}^{*}$ if and only if $f(z) = \frac{p(z)}{q(z)}$, $z \in \mathbb{C}$ where $p,q$ polynomials, i.e.  $f$ is a rational function.
+Proof: Let $f(z) = \frac{P(z)}{Q(z)}$ $P,Q$ polynomaisl then
+ \[
+     f(z) = \frac{\Pi_{j=1}^{N}(z-z_j)}{\Pi_{k=1}^{M}(z-p_k)}
+\] 
+let $|z| > \max_{j,k}\{|z_j|,|p_k|\}$ then  
+ \[
+     f(z) =  z^{N-M}\frac{\Pi_{j=1}^{n}(1-\frac{z_j}{z})}{\Pi_{k=1}^{m}(1-\frac{p_k}{z})}
+\] 
+so $f$ is meromorphic on $ \mathbb{C}^{*}$ and $M=N \implies f$ is holomorphic at infinity and  $M > N$ implies
+that  $f$ has pole of order $M-N$ at infinity and $M < N$ implies  $f$ has zero of order $N-M$ at infinity.
+Assume  $f$ is meromorphic on $ \mathbb{C}^{*}$a then there exists $k \subset \mathbb{Z}$ such that
+$g = cz^{K}f(z)$ has no pole nor zero at infinity and we can suppose that $g(\infty) = 1$ then $g$ has finitely many zeros in  $ \mathbb{C}$, $z_1,z_2,\dots,z_n$
+and finitely many poles in $ \mathbb{C}$ at $p_1,p_2,\dots,p_M$ and counted with multiplicities then
+\[
+    g = \frac{\Pi_{j=1}^{N}(z-z_j)}{\Pi_{k=1}^{M}(z-p_k)} \qquad f = cz^{K} g
+\] 
+by the maximum principle since $ \frac{f}{cg}$ is a constant function since it has no poles or zeros on $ \mathbb{C}$
+
+Note that if  $f$ is meromorphic on $ \mathbb{C}^{*} $ then $f$ has a finite number of poles and zeros on $ \mathbb{C}^{*}$ and if $\alpha \in \mathbb{C}$ thn $f - \alpha$ has the same number of zeros and poles
+
+\section{}
+$f$ is holomorphic on a simply connnected domain and $f(z) \ne 0$ for all  $z \in \Omega$ then there exists  $g(z)$ holomorphic on  $\Omega$ such that
+ \[
+f(z) = e^{g(z)}
+\] 
+then $g(z) + 2\pi i n = \log f(z)$ but the $n$ is constant on $ \Omega$. In particular if $0 \ne \Omega$ then  $\log z = \log|z| + i arg(z)$ is well defined.
+
+\section{Open mapping theorem}
+If $f(z)$ is holomorphic in a domain $\Omega$,  $f \ne c$ for some  $c \in \mathbb{C}$ (not constant, then $f$ is an open mapping\\
+Proof: Let $D$ be an open disc, $\overline{ D} \subset U \subset \Omega$, $U$ open.  $D = |z=z_0| < r$  with $r$ such that  $f(z + re^{i\theta}) \ne f(z)$ for all $\theta$, this is possible
+since if not we can create a sequence of points $z_i$ that converge to  $z_0$ and $f(z_i) = f(z_0)$.
+Let 
+\[
+    s = \inf_{|z-z_0| = r}|f(z) - f(z_{0})|
+\]
+this is greater than 0 so we have that the winding number of $f-f(z_0)$ is 1 for everything in $D$ therefore  $f$ is one-one on $D$ and so it is bijective and therefore something
+
+\section{Theorem 9.1}
+\emph{
+    $\Omega$ simply connected domain and  $\gamma$ spiecewise smooth closed curve in $\omega$.  $f$ 
+    meromorphic in  $\Omega$,  $f$ has no zero or pole on  $\gamma$ then
+    \[
+    \frac{1}{2\pi i}\int_{\gamma}^{} \frac{f'(z)}{f(z)}dz = \sum_{z \in f^{-1}(0)}^{}n(z,\gamma) - \sum_{z \text{pole of $f$ }}^{}n(z,\gamma)
+    \] 
+} 
+
+\section{Corollary}
+Let $\Omega$ be a domain on  $ \mathbb{C}^{*}$ 
+$f$ meromorphic on $\omega$ and  $f \ne $constant then  $f(\Omega$) is an open subset of  $ \mathbb{C}^{*}$
+
+\section{Roche's theorem}
+Let $\Omega$ be a domain in $ \mathbb{C}$ and $D = \{z : |z-z_0| < R\}$ and $D \subset \overline{D} \subset \Omega$ and let $f,g$ holomorphic on  $\Omega$.
+Assume, $z \in \partial D \implies 0 < |g(z)| < |f(z)|$ then $f$ and $f +g$ have the same number of zeros in $ D$.\\
+Proof: Let $0 \le t \le 1$ and  $f_t(z) = f(z) + tg(z)$ then  $f_0 = f, f_1 = f + g$. Also $|f_t| > 0$ in  $ \partial D$ Let
+\[
+N_t = \frac{1}{2\pi i} \int_{ \partial D}^{} \frac{f_t'(z)}{f_t(z)}dz \in \mathbb{N}
+\] 
+but $t \rightarrow N_t$ is continuous by math 131.so there is a continuous function from $[0,1]$  into the natural numbers and so  $N_t$ is constant\\
+Example:
+How many zeros does $z^{7} + 4z^{4} + z^{3} + 1$ have in $\{|z| < 1\}$
+Let
+ \[
+     f = z^{7} 4z^{4}, \quad D = \{|z| < 1\}
+\] 
+and
+\[
+g = z^{3} + 1
+\] 
+on $\partial D$, $|f| > 3$ and  $|g| \le 2$ so number of zeros of  $f + g$ is equal to number of zezros of  $f$ inside  $D$
+ \[
+f = z^{4}(z^{3} + 4)j
+\] 
+so number of zeros of $f$ is 4 and so the total number of zeros is 4 in the unit disc.
+\section{Corollary 9.4}
+Corollary of theorem 9.1.
+Let $f(z) = a_N(z-z_0)^{N} + \sum_{n=N+1}^{\infty}a_n(z-z_0)^{n}$, $a_N \ne 0$  on $\{|z-z_0| < R\}$, then there exists $r_1 > 0$ and $r_2 > 0$ so that
+$|w| < r_1 \implies (f(z)-w)$ has at least $N$ zeros counting multiplicities in  $|z-z_0| < r_2$\\
+Proof: there exists $r_2, 0 < r_2 < R$ so that $|f| > 0$ on  $\{|z-z_0| = r_2\}$.
+\[
+    f(\{z : |z-z_0| = r_2\}
+\] 
+$r_1 = \inf\{f(z): |z-z_0| = r_2\}$
+\[
+N(w) =     \frac{1}{2\pi i} \int_{ \partial \{|z-z_0| = r_2\}}^{} \frac{f'(z)}{f(z)-w}dz
+\] 
+this function is integer valued and continuous for $w \in \{|w| < r_1\}$ and so $N(w)$ is constand and  $N(0) = N$  
+\\
+Special case $N = 1$
+ \[
+f(z) = a_1(z-z_0) + \sum_{n=2}^{\infty}a_n(z-z_{0})^{n}
+\] 
+$a_1 = f'(z_0) \ne 0$ take $r_2 > 0$ so that $f \ne 0$ in  $\{0 <|z-z_0| < r_2$ Let $r_1 = \inf_{|z-z_0| = r_2} |f(z)| > 0$
+Let $U = f^{-1}(|w| < r_1)$ then $U$ is open and  $f$ maps  $U$ to  $\{|w| < r_1\}$ and $f$ is  $1-1$ holomorphic
+It is  $1-1$ since
+ \[
+     \frac{1}{2\pi i} \int_{|z-z_0| = r_1}^{} \frac{f'(z)}{f(z) - w} dz = 1, |w| < 1
+\] 
+also $f' \ne 0$ in  $U$ by $1-1$ theorem 9.1
+thus  $f^{-1}: \{|w| < r_1\} \rightarrow U $ is holomorphic since 
+ \[
+\lim_{w'\to w, |w| < r_1}  \frac{f^{-1}(w') - f^{-1}(w)}{w' -w} = \lim_{z'\to z, f(z) = w} \frac{z'-z}{f'(z) - f(z)} = \frac{1}{f'(z)}
+\] 
+We say that $f$ is conformal from $U$ onto  $\{|w| < r_1\}$\\
+Conformal has 2 meanings
+\begin{enumerate}
+    \item $U, V$ domains in  $ \mathbb{C}^{*}$ and $f : U \rightarrow V$, $f$ is  $1-1$ and  $f$ is holomorphic, onto this implies that  $f^{-1} : V \rightarrow U$
+        is also holmoorphic By special case of theorem 9.4. Note that $f$ 1-1 implies  $f'(z) \ne 0$ for all  $z \in U$
+    \item $f$ is angle preserving. Suppose you have  $\gamma_1, \gamma_2$ smooth curves intersecting at $z_0$ at time $0$ on each curve
+        , $\gamma_1'(0)$ and $\gamma_2'(0)$ both not equal to zero form an angle $\alpha$ 
+        \[
+        \alpha = arg(\frac{\gamma_2'(0)}{\gamma_1'(0)})
+        \] 
+        \[
+        \beta = arg\frac{(f \circ \gamma_2)'(0)}{(f \circ \gamma_2)'(0)}
+        \] 
+        if $f$ is conformal at  $z$ then  $\beta = \alpha$
+\end{enumerate}
+a implies b. In pages 108-110 in the lecture notes.if you have two curves in the plane crossing eachother like this
+and $F : \mathbb{R}^2 \rightarrow \mathbb{R}^2$ preserves angles then it is basically a holomorphic function
+\end{document}

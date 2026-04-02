@@ -1,0 +1,7 @@
+Assume the role of a researcher in Probability theory. Provde a proof with the level of detail
+found in Probability: Theory and Examples Rick Durrett. Use only standard theorems from Graduate Probability Theory
+and Stochastic Processess unless otherwise specified. Before writing the formal proof, provide a high-level logical outline
+of the approach. Identify the key theorems (e.g., Dominated Convergence, Optimal stopping time theorem) you intend to use and justify
+why they apply here. Once I approve the sketch, I will ask for the formal Latex. While solving, explicitly state any assumptions
+you are making. If a step requires a non-trivial inequality (e.g., Jensen's or Holder's), explicitly verify that the conditions
+for that inequality are met in this specific context.

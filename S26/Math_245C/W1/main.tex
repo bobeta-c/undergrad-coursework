@@ -1,0 +1,273 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245C}
+\newcommand{\ced}{Spring 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{}
+\date{}
+\maketitle
+
+\section{Monday}
+
+\section{Lusin's Theorem}
+Suppose $\mu $ is a regular Borel measure on $ \mathbb{R}^{d}$,
+$A \subset \mathbb{R}^{d}$ is $\mu $-measurable and $\mu[A] < \infty$ if $f : A \to \mathbb{R}$ is $\mu$-measurable  then
+for every $\epsilon > 0$ there exists $K \subset A$ compact such that $\mu[A \setminus K] < \epsilon$ 
+and $f|_K$ is continuous and you can replace  $ \mathbb{R}^{d}$ by $X$ metric space complete separable.
+Folland(textbook)
+Distributions and weak $L^{p}$-functions.
+Throughout this section $(\Omega, \Sigma, \mu)$ is a measure space Let $\nu := g_\# \mu$ be the push forward measure of $g$ where
+\[
+    \nu[B] = \mu[g^{-1}(B)]
+\] 
+you can also define
+\[
+\mu = g^{*}\nu
+\] 
+where
+\[
+    \mu[A] = \nu[g(A)]
+\] 
+example $\Lambda = (0,+\infty)$
+\section{Definition}
+We define $\lambda_f$ the distribution function of a $\mu$-measurable function $f : \Omega \to [-\infty,\infty]$ by $\lambda_f(\alpha) = \mu\{ \alpha < |f|\} = \mu \{\omega \in \Omega: \alpha < |f(\omega)|\}$
+\[
+= |f|^{-1}(\alpha, +\infty)
+\] 
+so if $g = |f|$ this is the  $\nu$ pullback of these intervals.
+\section{Theorem}
+ \begin{enumerate}
+     \item $\lambda_f$ is monotone, non increasing and right continuous
+     \item if $|f| \le |g|$ then  $\lambda_f \le \lambda_g$
+     \item if $(|f_n|)_n$ increases to  $|f|$ as  $n \to \infty$ then $\lim_{n\to \infty}\lambda_{f_n}(\alpha) = \lambda_f(\alpha)$ for all $\alpha > 0$
+     \item If $f = g + h$ then  $\lambda_f(\alpha) \le \lambda_g(\frac{\alpha}{2}) + \lambda_h(\frac{\alpha}{2})$
+\end{enumerate}
+\[
+    \lambda_{f_1 + \dots + f_n} = \sum_{i=1}^{n} \lambda_{f_i}
+\] 
+if for all $i \ne j$  $\emptyset = \{|f_i| > 0\} \cap \{|f_j| > 0\}$.
+Proof if  $0 < \alpha_1 < \alpha_2$ then
+\[
+    \{\alpha_1 < |f|\} \supset \{\alpha_2 < |f|\}
+\] 
+so
+\[
+\lambda_f(\alpha_1) \ge \lambda_f(\alpha_2)
+\] 
+Since $\lambda_f$ is monotone  nonincreasing to show that it is right continuous it suffices to show
+that
+\[
+\lim_{k\to +\infty} \lambda_f(\alpha + \frac{1}{k}) = \lambda_f(\alpha)
+\] 
+but
+\[
+    \{\alpha < |f|\} = \bigcup_{k=1}^{\infty}\{\alpha + \frac{1}{k} < |f|\}
+\] 
+so
+\[
+    \mu\{\alpha < |f|\} = \lim_{k\to \infty} \mu\{\alpha + \frac{1}{k} < |f|\}
+\] 
+so
+\[
+\lambda_f(\alpha) = \lim_{k\to \infty} \lambda_f(\alpha + \frac{1}{k})
+\] 
+For 3 assume that $|f_n| \uparrow f$ then  $\{\alpha < |f|\}$ if for $\omega, \alpha < |f(\omega)|$ then for some $N$ all  $n > N$  $\alpha < |f_n(\omega)|$
+so
+\[
+    \{\alpha < |f|\} = \bigcup_{n=1}^\infty \{\alpha < |f_n|\} = \bigcup_{n=1}^{\infty}A_n
+\] 
+and each $A_n$ are  $\mu$-measurable so we conclude that
+\[
+    \lambda_f(\alpha) = \lim_{n\to \infty}\lambda_{f_n}(\alpha)
+\] 
+assume $f = g + h$ and  $\alpha > 0$ then $\alpha < |f| \le |g| + |h|$  this implies that
+\[
+\frac{\alpha}{2} < |g|
+\] 
+or 
+\[
+\frac{\alpha}{2} < |h|
+\] 
+so
+\[
+    \{\alpha < |f|\} \subset \{\frac{\alpha}{2} < |g|\} \cup \{\frac{\alpha}{2} < |h|\}
+\] 
+so
+\[
+    \mu\{\alpha < |f|\} \le \mu\{\frac{\alpha}{2} < |g|\} + \mu\{\frac{\alpha}{2} < |h|\}
+\] 
+Remark: Since $-\lambda_f$ is monotone non decreasing and right continuous there exists a Borel measure  $\nu_f$ on  $(0,+\infty)$ such that
+\[
+    \nu_f(a,b] = -\lambda_f(b) - (- \lambda_f(a)) = \lambda_f(a) - \lambda_f(b) = \mu\{a < |f| \le b\} = \int_{\Omega}^{} 1_{(a,b]}(|f|) d \mu
+\] 
+and
+\[
+    \{a < |f|\} = \{a < |f| \le b\} \cup \{b < |f|\}
+\] 
+and so
+\[
+    \lambda_f(a) = \mu\{a < |f| \le b\} + \lambda_f(b)
+\] 
+
+\[
+    \mu[B] = \int_{\Omega}^{}1_B d \mu
+\] 
+\[
+    1_{(a,b]}(|f|) = 1_{|f|^{-1}(a,b]}
+\] 
+
+\section{Wednesday}
+
+Reminder: $(\Omega, \Sigma (M), \mu)$ is a measure space and for $f : \Omega \to [-\infty, +\infty]$ $\mu$-measurable
+\[
+    \lambda_f(\alpha) = \mu\{\alpha < |f| \} \qquad \forall \alpha > 0
+\] 
+Remark (Correction) If $\lambda_f(\alpha) < +\infty$ for all $\alpha > 0$ then there exists a negative borel measure
+$\nu_f$ on  $(0,+\infty)$ such that
+\[
+    \nu_f(a,b] = \lambda_f(b) - \lambda_f(a) \text{if $(a,b] \subset (0,+\infty)$}
+\] 
+we can make it a regular borel measure by setting
+\[
+    (1) \quad   \int_{(0,+\infty)}^{}1_{(a,b]}d \nu_f = \nu_f(a,b] = \lambda_f(a) - \lambda_f(b) =  \int_{\Omega}^{}1_{(a,b]}(|f|) d \mu
+\] 
+this is true by math 245B
+Note that
+\[
+    1_{(a,b]}(|f|) =
+    \begin{cases}
+        0 & |f| \not\in (a,b]\\
+        1 & |f| \in (a,b]
+    \end{cases}
+    = 1_{|f|^{-1}((a,b])}
+\] 
+so
+\[
+    \int_{\Omega}^{}1_{(a,b]}(|f|)d \mu = \mu \{a < |f| \le b\}
+\] 
+Lemma: If $\lambda_f(\alpha) < +\infty$ for all $\alpha > 0$ then  for every $\phi: [0,+\infty) \to [0, +\infty)$ which is Borel measurable
+\[
+\int_{\Omega}^{}\phi(|f|) d \mu = \int_{(0,+\infty)}^{}\phi(\alpha) \nu_f(d \alpha) 
+\] 
+(Here we can replace $\phi \in L^{1}(\nu_f)$ by splitting into positive and negative parts)
+Proof: It suffices to prove the lemma when $\phi = 1_{(a,b]}$ and $(a,b] \subset (0,+\infty)$ this is (1).
+\[
+\int_{\Omega}^{}\phi(|f|) d \mu = \int_{0}^{+\infty}\phi(\alpha) \nu_f(d \alpha) "=" \int_{0}^{+\infty} \phi(\alpha) (-\lambda_f(\alpha))' d \alpha =  \int_{0}^{\infty} \phi'(\alpha) \lambda_f(\alpha) d \alpha
+\] 
+which is saying that $\nu_f = -\lambda_f'(\alpha) d \alpha$ and we take $\phi = 0$ at 0 and infinity and use integration by parts.
+If we can show this holds for all polynomial we can use an approximation argument to show the conclusion.
+\section{Theorem}
+For every $p > 0$, we have
+\[
+\int_{\Omega}^{}|f|^{p} d \mu = p \int_{0}^{+\infty}\alpha^{p-1}\lambda_f(\alpha) d \alpha
+\] 
+Proof: Case 1, there exists $\overline{\alpha} \in (0, +\infty)$ such that $\lambda_f(\overline{\alpha}) = +\infty$ Note that if $\alpha^{*} \in (0, \overline{ \alpha})$ then $\lambda_f(\alpha) = +\infty$ for $\alpha \in (\alpha^{*}, \overline{ \alpha})$
+and so
+\[
+\int_{0}^{+\infty}\alpha^{p-1}\lambda_f(\alpha) d \alpha \ge \int_{\alpha^{*}}^{\overline{\alpha}} \alpha^{p-1} \lambda_f(\alpha) d \alpha = + \infty
+\] 
+and
+\[
+    \int_{\Omega}^{}|f|^{p}d \mu \ge \int_{\{\overline{\alpha} < |f|\}}^{}|f|^{p} d \mu \ge \overline{\alpha}^{p} \lambda_f( \overline{ \alpha) = +\infty}
+\] 
+Case 2: $\lambda_f(\alpha) < +\infty$ for all $\alpha \in (0, +\infty)$ let  $f = 1_A$ and then $f = \sum_{i=1}^{n}\lambda_i 1_{A_i}$ and then $f = \sum_{i=1}^{\infty}\lambda_i 1_{A_i}$ for the finite sum case assume that $A_i \cap A_j = \emptyset$ if  $i \ne j$.
+ \[
+     (2)    |f|^{p} = \sum_{}^{}\lambda_i^{p} 1_{A_i}
+\] 
+Observe that if $f$ is in this form $f = \sum_{i=1}^{n}f_i$ where $f_i$ are such that  $\{|f_i| > 0\} \cap \{|f_j| > 0\} = \emptyset$ for  $i \ne j$
+then  $|f|^{p} = \sum_{i=1}^{n}|f_i|^{p}$ and $\lambda_f = \sum_{i=1}^{n} \lambda_{f_i}$.
+Let us prove the result when $|f_i| = t_i1_{A_i}$ we have for $\alpha > 0$ and $t_i > 0$
+ \[
+     \lambda_{f_i}(\alpha) = \mu\{ \frac{\alpha}{t_i} < 1_{A_i}\} = 
+     \begin{cases}
+         0 & \alpha \ge t_i\\
+         \mu[A_i] & \alpha < t_i
+     \end{cases}
+\] 
+Thus,
+\[
+    (3) \quad    p \int_{0}^{+\infty}\alpha^{p-1} \lambda_{f_i}(\alpha) d \alpha = p \int_{0}^{t_i} \alpha^{p-1} \mu[A_i] d \alpha = t_i^{p} \mu[A] = \int_{\Omega}^{}|f_i|^{p} d \mu
+\] 
+By $(2)$ and  $(3)$
+ \[
+\int_{\Omega}^{}|f|^{p} d\mu = \sum_{i=1}^{n} \int_{\Omega}^{}|f_i|^{p} d\mu = \sum_{i=1}^{n} p \int_{0}^{+\infty} \alpha^{p-1}\lambda_f(\alpha) d \alpha = p \int_{0}^{+\infty} \alpha^{p-1} \lambda_f(\alpha) d \alpha
+\] 
+Change of variables in $ \mathbb{R}^{d}$. Reminder: We call $O \in \mathbb{R}^{d \times d}$ orthogonal if $O^{T}O = I_d = OO^{T}$ 
+If $S \in \mathbb{R}^{d \times d}$ is symmetric then there exists $O \in \mathbb{R}^{d\times d}$ orthogonal and $\Lambda = diag(\lambda_1,\dots,\lambda_d)$ such that
+\[
+S = O^{T} \Lambda O
+\] 
+If $A \in \mathbb{R}^{d \times d}$ then there exists $P \in \mathbb{R}^{d \times d}$ orthogonal and $S \in \mathbb{R}^{d \times d}$ symmetric such that $A = PS$.
+We identiyfy $A$ with  $x \to Ax$
+Set 
+\[
+    B_r(a) = \{x \in \mathbb{R}^{d} : ||x -a||_{l_2} \le r\} \qquad Q_r(a) = [a_1-r,a_1+r] \times \dots \times [a_d - r, a_d + r]
+\] 
+Note that
+\[
+O(B_r(a)) = B_r(O(A))
+\] 
+\[
+    \Lambda Q_r(a) = [\lambda_1 a_1 - r |\lambda_1|, \lambda_1 a_1 + r|\lambda_1|] \times \dots \times [\lambda_d a_d - r |\lambda_d|, \lambda_d a_d + r |\lambda_d|]
+\] 
+\[
+L^{d}(B_r(a)) = L^{d}(O(B_r(a)) \implies L^{d}(E) = L^{d}(O(E))
+\] 
+and
+\[
+L^{d}(\Lambda Q_r(a)) = (2r |\lambda_1|) \dots (2r |\lambda_d|) = |det \Lambda| L^{d}(Q_r(a)) 
+\] 
+\[
+\implies L^{d}(\Lambda E) = |det \Lambda| L^{d}(E)
+\] 
+
+
+\end{document}

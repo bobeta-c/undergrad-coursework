@@ -1,0 +1,184 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+
+\section{monday}
+Let $f$ be holmorphic on $\{0 < |z-z_0| < R\}$
+\[
+    f(z) = \sum_{n=0}^{\infty}a_n (z-z_0)^{n - \sum_{n=1}^{\infty}}a_{-n}(z-z_0)^{-n}
+\] 
+with
+\[
+a_n = \frac{1}{2\pi i} \int_{|\zeta - z_0| = r}^{} \frac{f(\zeta)}{(\zeta - z_0)^{n+1}}d \zeta
+\] 
+\[
+    a_{-k} = \frac{1}{2\pi i} \int_{|\zeta - z_0| = r_1}^{} f(\zeta) |\zeta-z_0|^{k} d\zeta
+\] 
+there are three cases
+\begin{enumerate}
+    \item $a_m = 0 \forall m < 0$ then  $f$ is bounded in $\{|z-z_0| < rs\}$ and there exists $M$ such that
+        $|f(z)| \le M$ for all  $z$ in the disc.
+        $f$ is holomorphic in the dsic
+        In which we say that the singularity is removable.
+    \item Case 2 there exists $N \in \mathbb{N}$ such that $a_m = 0$  for  $m < -N$ and  $a_{-N} \ne 0$
+        so
+         \[
+             f(z) = \frac{a_{-N}}{(z-z_0)^{N}} (1 + \sum_{n=1}^{\infty} \frac{a_{n-N}}{a_{-N}}(z-z_0)^{n})
+        \] 
+        so we get the rational part times a holomorphic function on $|z-z_0| < r_2$.
+    \item Case three $a_n \ne 0 $ for infinitely many  $n < 0$. This is called an essential singularity
+\end{enumerate}
+\section{Theorem 6.2} If $f(z)$ has an essential singularity at $z_0$ then for every $w_0 \in \mathbb{C}$ and for every $\epsilon > 0$ and every $\delta > 0$
+\[
+    f^{-1}(|w-w_0| < \epsilon) \cap \{|z-z_0| < \delta\} \ne \emptyset
+\] 
+proof: Assume false, then there exists $w_0 \in \mathbb{C}$, $\delta > 0$ and $\epsilon > 0$ so that
+\[
+0 < |z-z_0| <  \delta \implies |f(z) - w_0| >  \epsilon
+\] 
+define
+\[
+    g(z) = \frac{1}{f(z) - w_0)}\qquad \{|z-z_0| < \delta\} 
+\] 
+so $|g(z)| \le \frac{1}{\epsilon}$ this implies that $g(z)$ is holomorphic in  $\{|z-z_0| < \delta\}$. and $g(z_0) \ne 0$
+and so $g(z) = \alpha_N(z-z_0)^{N}h(z)$ with $h(z_0) \ne 0$ on our domain
+and so $f(z) = w_0 + \frac{1}{g(z_0} = w_0 + \frac{1}{\alpha_N}\frac{1}{(z-z_0)^{N}} \frac{1}{h(z)}$ oso then $f$ is case 1 or case 2
+
+\section{Theorem Big picard Theorem}
+$f$ has essential singularity at $z_0$  then with at most one exception $f(z) = w$ has infinitely many solutions on  $\{0 < |z-z_0| < R\}$.
+Such as $f(z) = e^{\frac{1}{z}} = \sum_{n=0}^{\infty} \frac{1}{n!}\frac{1}{z^{n}}$
+
+\section{Lemma}
+The set
+\[
+    \{\frac{1}{w} : w = s + it, s \in \mathbb{R} \text{ fixed}, -\infty < t < \infty\} = \{z : |z-\frac{1}{2s}| = \frac{1}{2s}\}
+\] 
+since
+\[
+|\frac{1}{s+it} - \frac{1}{2s}| = \frac{1}{2s}
+\] 
+
+\section{Return to case 2}
+\[
+    f(z) = \frac{a_{-N}{(z-z_0)^{N}}} + \dots + a_0 + a_1(z-z_0) + \dots
+\] 
+with $a_{-N} \ne 0$ 
+then
+\[
+    \frac{a_{-N}}{(z-z_0)^{N}} + \dots + \frac{a_{-1}}{z-z_0}
+\] 
+is the principle aprt of $f$ and $a_{-1}$ is the residue of  $f$ at the pole $z_0$.
+THen
+\section{Theorem 7.3}
+\[
+    a_{-1} = \frac{1}{2\pi i} \int_{|\zeta - z_0| = r}^{}f(\zeta) d \zeta \qquad 0 < r < R
+\] 
+if $a_{-N} = \dots = a_{-2} = 0$,  $a_{-1} = \lim_{z \to z_0}(z-z_0)f(z)$. $a_{-1} = \lim_{z-z_0\to } \frac{1}{N-1( \frac{d}{dz} (z-z_0)^{N-1}f(z))}$
+
+\section{Friday}
+\section{Theorem 7.4}
+\emph{
+    $f$ holmorphic in $\{0 < |x-x_0| < R\}$ then
+    \[
+        \frac{1}{2\pi i} \int_{|x-x_0| = r}^{}f(z) dz = res_{z_0}f
+    \]
+}
+Corollary 7.5\\
+\emph{
+    Suppose $f$ holomorphic in $\Omega \setminus \{z_1,z_2,\dots,z_n\}$ and $\{z_1,z_2,\dots,z_n\} \subset \{|z-z_0| \le R\} \subset \Omega$
+    then
+    \[
+        \frac{1}{2\pi i} \int_{|z-z_0| = R}^{}f(z)dz = \sum_{i=1}^{n}res_{z_i}f
+    \]
+}
+\section{Theorem 7.6}
+\emph{
+    Let $\Omega$ be a simply connected domain,  $f$ holomorphic in $\Omega \setminus \{z_1,\dots,z_n\}$ and $\gamma$ is piecewise smooth simple closed curve
+    in $\Omega$.  $\{z_1,\dots,z_n\} \cap \gamma = \emptyset$ then
+    \[
+        \frac{1}{2\pi i} \int_{ \gamma}^{}f(z)dz = \sum_{j=1}^{n}n(\gamma,z_j) res_{z_j}f
+    \]
+}
+\section{Example}
+\[
+\sum_{i=1}^{\infty}\frac{1}{(u+n)^2} = \frac{\pi^2}{\sin^2(\pi u)}
+\]
+take
+\[
+f(z) = \frac{\pi \cot(\pi z)}{(u+z^2)}
+\]
+has poles where $z = -u$ or  $z = m \in \mathbb{Z}$
+\[
+    res_{-u}f = -\frac{\pi^2}{\sin^2(\pi u)} \qquad res_{n}f = \frac{1}{(n+u)^2}
+\]
+then
+\[
+\frac{1}{2\pi i} \int_{ |z| = N +\frac{1}{2}}^{}f(z)dz = \sum_{|n| \le N}^{}res_n f + res_u f  = \sum_{n=-N}^{N}\frac{1}{(n+u)^2} - \frac{\pi^2}{\sin^2( \pi u)}
+\]
+when $|z| = N + \frac{1}{2}$ then
+\[
+\frac{f}{z} = \pi i \frac{e^{i \pi z} + e^{-i \pi z}}{e^{i\pi z} - e^{-i \pi z}} \frac{1}{(z+u)^2}
+\]
+let
+\[
+w = e^{i \pi z}
+\]
+\[
+|f(z)| \le \frac{C}{|z|^2} \frac{|w + \frac{1}{w}|}{|w - \frac{1}{w}|} \le \frac{C}{|z|^2} \frac{1 + \frac{1}{w^2}}{1 - \frac{1}{w^2}} \le \frac{C}{N^2}
+\]
+so the integral goes to zero which implies that
+\[
+\sum_{n=-\infty}^{\infty}\frac{1}{(u+n)^2} = \frac{\pi^2}{\sin^2 (\pi u)}
+\]
+\end{document}

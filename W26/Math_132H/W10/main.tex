@@ -1,0 +1,212 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+\section{Monday}
+Lemma 11.4:
+Let $\{f_n\}$ be a sequence of holomorphic functions on a domain  $\Omega$ and assume there exists  $M < \infty$ syuch that
+\[
+|f_n(z)| \le M \qquad \forall z \in \Omega, \forall n
+\] 
+then $\{f_n\}$ has a convergent subsequence $\{f_{n_j}\}$. that converges uniformly on every compact $K \subset \Omega$.\\
+Let $A$ be the  set of all dyadic points in $ \mathbb{C}$ then $A \cap \Omega = \{q_1,q_2,\dots,\}$ is countable. 
+Create a sequence $f_{1n}$ such that  $\lim_{n\to \infty}f_{1,n}(q_1) \to f(q_1)$ and from this sequence we take a subsequence $f_{2,n}$ converges at $q_2$. then $f_{n,n}$ converges to  $f(q_i)$ for all  $i \in \mathbb{N}$.
+Also $\{f_n\}$ is equicontinuous in  $K$ for all $K \subset \Omega$ compact.\\
+Equicontinuous, $\forall \epsilon > 0, \forall K \subset \Omega$ compact there exists $\delta$ such that $z,w \in K$ and  $|z-w| < \delta$ implies
+\[
+\sup_n |f_n(z) - f_n(w)| < \epsilon
+\] 
+Let $\eta_k = d(K, \partial \Omega) > 0$ and $z \in K$  $\omega \in \Omega$ and  $|z-w| < \frac{1}{2}\eta_k$.
+Then
+\[
+|f_n(z) - f_n(\omega)| = | \int_{ z}^{w}f_n'(\zeta) d\zeta|
+\] 
+but
+\[
+|f'(z)) |  \le \frac{M}{d(z, \partial \Omega)} \le \frac{2}{\eta_k}M
+\] 
+so
+\[
+|f_n(z) - f_n(\omega)| \le \frac{2M}{\eta}|z-\omega| 
+\] 
+so $f_n$ are equicontinuous on compact sets.
+For all  $K \subset \Omega$ compact $\{f_{n,n}(z)\}$ is cauchy uniformly in  $z \in K$ Let  $\epsilon > 0$
+there exists $N(\epsilon,K)$ such that $m,n \ge N$
+ \[
+     |f_{n,n}(z) - f_{m,m}(z)| < \epsilon
+\] 
+$K$ compact implies there exists $z_1,z_2,\dots,z_N \in K$ such that
+\[
+    K = \bigcup_{i=1}^{N}\{|z-z_i| < \delta\} = \bigcup_{i=1}^{N}B_i
+\] 
+there exists $p_i \in A \cap \Omega$ $p_i \in B_i \subset \Omega$. There exists $n_\epsilon$ such that $1 \le j \le M$
+$n,m > n_\epsilon$ 
+\[
+ |f_{n,n}(p_j) -  f_{m,m}(p_j)| < \epsilon
+\] 
+$z \in K, z \in B(z,\delta_k)$ then
+\[
+ |f_{n,n}(z) - f_{m,m}(z)| \le |f_{n,n}(z) - f_{n,n}(p_j)| + |f_{n,n}(p_j) + f_{m,m}(p_j)| + |f_{m,m}(p_j) - f_{m,m}(z)| < 3\epsilon
+\] 
+so for all $K$ and  $z \in K$ $f_{n,n}(z) \to f(z)$ uniformly in  $K$.\\
+Proof of theorem 11.1\\
+$\Omega \subset \mathbb{C}^{*}$ $\Omega$ is a domain and is simply connected and nonempty and $\#( \mathbb{C}^{*} \setminus \Omega) \ge 2$
+then there exists  $\phi : \Omega \to \mathbb{D}$ conformal. holomorphic 1-1 onto.\\
+Lemma: $\Omega$ a there eists  $\psi : \Omega \to D' \subset \mathbb{D}$ where $D'$ is a domain and  $\psi$ is conformal.
+WLOG  $\infty \not\in \Omega$ and there exists $p \ne \infty, p \not\in \Omega$ take
+\[
+f(z) = \frac{1}{z-p} 
+\] 
+is holomorphic on $\Omega$  $1-1$ onto and nowhere 0 and nowhere infinity. By simple connnectivity.
+Sp there exists  $g$ holomorphic in $\Omega$ such taht
+ \[
+e^{g(z)} = f(z)
+\] 
+then
+\begin{enumerate}
+    \item $g$ is nonconstant, open  map 1-1 on $\Omega$
+        If  $g_9z_1) = g(z_2) \implies e^{g_1} = e^{g_2} \implies f(z_1) = f(z_2)$ not possible
+    \item $g$ is one-one
+    \item for all  $z_1 \in \Omega$ $g(z_1) + 2\pi i \not\in g(\Omega)$ if $g(z) + 2\pi i = g(z_2)$ then $f(z_1) = f(z_2)$  contradiction
+    \item there exists $\delta > 0$ so that for $z_1 \in \Omega$, $\delta$ depends on $z_1$
+        \[
+            g(\Omega) \cap \{B(g(z_1) + 2\pi i, \delta)\} = \emptyset
+        \] 
+        Let $\psi = \frac{1}{g(z) - |g(z_1) + 2\pi i))}$ and 
+        \[
+        |\psi| \le \frac{1}{\delta}
+        \] 
+        end of lemma
+\end{enumerate}
+
+\section{Tuesday}
+\emph{
+    Theorem $\Omega \subset \mathbb{C}^{*}$ simply connected and $\# \mathbb{C}^{*} \setminus \Omega) \ge 2$ then 
+    there exists $\phi : \Omega \to \mathbb{D}$ with $\phi$ holomorphic 1-1 onto.
+}\\
+Lemma 11.5:
+there exists $\psi : \Omega \to D'$ conformal and  $D'$ is simply connected subset of  $\mathbb{D}$.\\
+Fix $z_0 \in \Omega \subset \mathbb{D}$ then
+\[
+\mathcal{A} = \{\phi : \Omega \to \mathbb{D}: \phi \text{ 1-1, holo and } \phi(\Omega) \subset \mathbb{D}, |\phi'(z_0)| \ge (1 - |z_0|^2), \phi(z_0) = 0\}
+\] 
+we have $\mathcal{A} \ne \emptyset$  since if we take 
+\[
+    f_0(z) = \frac{z-z_0}{1-\overline{z_0}z}  \quad f_0'(z_0) = 1 - |z_0|^2 \qquad f_0 \in \mathcal{A}
+\] 
+If $f \in \mathcal{A} \implies |f(z)| < 1 \forall z \in \Omega$
+and  $\mathcal{A}$ is closed under uniform convergence on compact subsets of  $\Omega$
+%why can't the limit have points on the boundary of  $\mathbb{D}$?
+let  $M = \sup_{\phi \in \mathcal{A}} |\phi'(z_0)| \le \frac{1}{d(z_0, \partial \Omega)}$ 
+Take $\{f_n\} \subset \mathcal{A}$ with $f_n'(z_0) \to M$\\
+$\{f_n\}$ has a subsequence converging uniformly on compact sets of  $\Omega$ to  $f \in \mathcal{A}$ and $f'(z_0) = M$
+$U = f(\Omega) \subset \mathbb{D}, 0 \in U$. Assue there exists $\alpha \in \mathbb{D} \setminus U$ and let
+\[
+    T_\alpha = \frac{\alpha - z}{1 - \overline{\alpha}z} \quad T_\alpha : \mathbb{D} \to \mathbb{D}, T_\alpha^{-1} = T_\alpha
+\] 
+and 
+\[
+T_\alpha(0) = \alpha, T_\alpha(\alpha) = 0
+\] 
+Let
+\[
+h = T_\alpha \circ f
+\] 
+and so
+\[
+T_\alpha(U) = V \qquad 0 \not\in V, \alpha \in V
+\] 
+and $V$ is simply connected so there exists $g: V \to \mathbb{D}$ holomorphic such that $(g(z))^2 = z$ on $V$.
+ \[
+     F = T_{g(\alpha)} \circ g \circ T_\alpha \circ f
+\] 
+where
+\[
+    T_\beta = \frac{\beta - z}{1 - \overline{\beta }z} \qquad T_\beta^{-1} = T_\beta \qquad z \in \mathbb{D}
+\] 
+$F$ maps $z_0 \to 0$ since
+ \[
+     T_{g(\alpha)}(g(\alpha)) = 0 \qquad
+\] 
+\[
+    f =  T_\alpha \circ g|_V^{-1} \circ T_{g(\alpha)} \circ F
+\] 
+so
+\[
+    F(\Omega) \subset T_{g(\alpha}(g(V)) 
+\] 
+and
+\[
+    T_{g(\alpha)}^{-1} = T_{g(\alpha)}
+\] 
+so
+\[
+T_g(\alpha) \circ F(\Omega) \subset g(V)
+\] 
+and on $g(V), g^{-1}(w) = w^2$ so
+\[
+f = G \circ F
+\] 
+where
+\[
+    G(w) = T_\alpha(w^2) %shouldnt it be T_\alpha((T_{g(\alpha)}(w))^2)
+\] 
+so by schwarz we have $|G'(0)| < 1$ so $|f'(z_0)| < |F'(z_0)|$ contradiction since $F$ is conformal and does the right things so $F \in \mathcal{A}$
+
+\section{Wednesday}
+
+\[
+\int_{\gamma}^{} \frac{1}{1-|z|^2}ds
+\] 
+
+\end{document}

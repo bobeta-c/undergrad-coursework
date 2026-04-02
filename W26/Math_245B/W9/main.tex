@@ -1,0 +1,372 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\iter}{int}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+Regularization of $L^{p}$-function.\\
+Notation: $\Omega \subset \mathbb{R}^{d}$ and for $\delta > 0$ $\Omega_\delta = \{ x \in \Omega : d(x,\Omega^{c}) > \delta\}$
+\begin{enumerate}
+    \item Given $f : \Omega \rightarrow \mathbb{R}$, $h \in \mathbb{R}^{d}$, we define $\tau_h(F) : \Omega_|h| \rightarrow \mathbb{R}$ by
+        \[
+        \tau_h(f)(x) = f(x + h)
+        \] 
+    \item If $w \subset \mathbb{R}^{d}$, we write $\omega \subset \subset \Omega$ if $\omega$ is bounded
+        and  $\overline{ \omega} \subset \Omega$ 
+    \item If $K \subset \Omega$ is compact, we define the $L^{p}$-variations of $f$ over  $K$ by
+         \[
+             ||\tau_h(f) - f||_{L^{p}(K)} \qquad K \subset \Omega_{|h|}
+        \] 
+\end{enumerate}
+Remark:  
+\[
+    ||\tau_h(f) - f||_{L^{p}(K)^{p}} = \int_{K}^{}|f(x+h) - f(x)|^{p}dx
+\] 
+therefore
+\[
+    \frac{||\tau_h(f) - f)||_{L^{p}}^{p}}{|h|^{p}} = \int_{K}^{} |\frac{f(x+h) - f(x)}{|h|}|^{p} dx
+\] 
+\[
+    F \subset C(K) \text{ is precompact if and only if $F$ is bounded and equicontinuous}
+\] 
+Notation: We define $\overline{ \rho} : \mathbb{R}^{d} \rightarrow [0, +\infty)$ by
+\[
+\overline{ \rho }(x) = 
+\begin{cases}
+    0 & |x|_{l_2} \ge 1 \\
+    e^{-\frac{1}{1-|x|_{l_2}^2}} & |x|_{l_2} < 1
+\end{cases}
+\] 
+we have that $\overline{ \rho} \ge 0, \overline{ \rho}(x) = 0$ if and only if $|x|_{l_2} \ge 1$
+and $\overline{ \rho} \in C^{\infty}( \mathbb{R}^{d})$ we have $|x|_{l_2}^2 = x_1^2 + \dots + x_d^2$ this is the standard modifier function.
+We set, $\rho = \frac{\overline{ \rho}}{|| \overline{ \rho}||_{L^{1}( \mathbb{R}^{d})}}$ so that
+\[
+\int_{ \mathbb{R}^{d}}^{} \rho(x) dx = 1
+\] 
+For $\epsilon > 0$ we define
+\[
+    \rho_\epsilon(y) = \frac{1}{\epsilon^{d}} \rho(\frac{y}{\epsilon}) , \rho_\epsilon \in C^{\infty}( \mathbb{R}^{d}), \rho_\epsilon(y) > 0 \iff |y|_{l_2} < \epsilon
+\] 
+\[
+\int_{ \mathbb{R}^{d}}^{} \rho_\epsilon(y)dy = \int_{ \mathbb{R}^{d}}^{} \rho(\frac{y}{\epsilon}) d(\frac{y}{\epsilon}) = 1
+\] 
+and $\rho_0 = \delta_0$ since..
+Convolution of two function. Let $f,g : \mathbb{R}^{d} \rightarrow [0,+\infty)$ measurable wrt lebesgue.
+then
+\[
+f * g(x) = \int_{ \mathbb{R}^{d}}^{}f(x-y)g(y)dy = g * f(x)
+\] 
+if $f \in L^{p}( \mathbb{R}^{d}), g \in L^{q}( \mathbb{R}^{d})$ then $f * g \in L^{r} ( \mathbb{R}^{d})$ and $||f * g||_{L^{r}} \le ||f||_{L^{p}} ||g||_{L^{q}}$ where
+\[
+1 + \frac{1}{r} = \frac{1}{p} + \frac{1}{q}
+\] 
+when you compute
+\[
+    \lim_{\epsilon\to 0 } \rho_\epsilon * f = f \quad f \in C( \mathbb{R}^{d}), \rho_\epsilon * f \rightarrow f \text{ everywhere}
+\] 
+if $f \in L^{p} (  \mathbb{R}^{d})$ then $||\rho_\epsilon * f - f||_{L^{p}} \rightarrow 0$ and $\rho_\epsilon * f(x) \rightarrow f(x)$ if $x$ is a lebesgue point for  $x$.
+We next state a variant of the arscoli arzela theorem for  $L^p$ function.
+\section{Theorem (M. Riesz - Frechet-Kolmogorov)}
+let  $1 \le p < \infty$ and let $\Omega \subset \mathbb{R}^{d}$ be an open set.
+Let $\omega \subset \subset \Omega$ be bounded and let $F$ be a bounded subset of  $L^{p}(\Omega)$ satisfying the following property
+\begin{enumerate}
+    \item For every $\epsilon > 0$ there exists $\delta > 0$ such that if $h \in  \mathbb{R}^{d}$,  $|h|_{l_2} \le \delta$ then $||\tau_h(f) -f||_{L^{p}(\omega)} \le \epsilon$
+\end{enumerate}
+Then $F_{\omega} = \{f|_{\omega} : f \in F\} $ is precompact in  $L^{p}(\omega)$ (for the strong $L^{p}$ topology).\\
+Proof: since $\omega$ is bounded, it is not a loss of generality to assume that  $\Omega$ is bounded. Since  $L^{p}(\omega)$ is complete
+it suffices to show that the closure of $F_\omega$ in  $L^{p}(\omega)$ is totally bounded. Given $\epsilon > 0$ we are to find
+\[
+f_1,\dots,f_n \in F_\omega
+\] 
+such that
+\[
+    F_\omega \subset \bigcup_{i =1}^{n}B_\epsilon^{L^{p}(\omega)}(f_i)
+\] 
+choose $\delta > 0$ such that $(a)$ holds.
+\begin{enumerate}
+     \item Approximation by smooth functions
+\end{enumerate}
+We claim that if $n > \frac{1}{\delta}$ then $||\rho_{\frac{1}{n}} * f - f||_{L^{p}(\omega)} < \epsilon$.
+We have since $\rho$ integrates to 1
+\[
+    |\rho_{\frac{1}{n}} * f(x) - f(x)|^{p} = |\int_{ \mathbb{R}^{d}}^{} \rho_{\frac{1}{n}}(y)(f(x-y) - f(x)) dy|^{p} \le \int_{ \mathbb{R}^{d}}^{} \rho_{\frac{1}{n}}(y) |f(x-y) -f(x)|^{p} dy
+\] 
+\[
+    = \int_{ \mathbb{R}^{d}}^{} \rho_{\frac{1}{n}}(y)|\tau_{-y}f(x) - f(x)|^{p}dy 
+\] 
+thus
+\[
+    \int_{\omega}^{}|\rho_{\frac{1}{n}} * f(x) - f(x)|^{p}dx \le \int_{ \omega}^{}\int_{ \mathbb{R}^{d}}^{}\rho_{\frac{1}{n}}(y)|\tau_{-y}f(x)-f(x)|^{p}dydx = \int_{ B_{\frac{1}{n}}(0)}^{}\rho_{\frac{1}{n}}(y)dy \int_{ \omega}^{}|\tau_{-y}f(x)-f(y)|^{p}dx
+\] 
+on this ball $|y| \le \frac{1}{n} \le \delta$\\
+Since for $|y| \le \frac{1}{n}$ we have $|y| \le \delta$ we use $(a)$ to infer that
+ \[
+     ||\rho_{\frac{1}{n}} * f - f||^{p}_{L^{p}} \le \int_{ B_{\frac{1}{n}}}^{}\rho_{\frac{1}{n}}(y)\epsilon^{p}dy = \epsilon^{p}
+\] 
+
+\section{Wednesday}
+Reminder
+\begin{enumerate}
+    \item $\rho \in C_c^{\infty}( \mathbb{R}^{d})$, $0 \le \rho_\epsilon(y) = \frac{1}{\epsilon} \rho(\frac{y}{\epsilon})$ and $\rho_\epsilon > 0$ iff $|y|_{l_2} < \epsilon$
+        \[
+        \int_{ \mathbb{R}^{d}}^{}\rho_\epsilon(y)dy = 1
+        \] 
+    \item $1 \le p < +\infty$, $\Omega \subset \mathbb{R}^{d}$ is open, $\omega \subset \subset \Omega$ is bounded, $F \subset L^{p}(\Omega) $ is bounded
+    \item For all $\epsilon > 0$ there exists $\delta \in (0, d(\omega,\Omega^{c}) : h \in \mathbb{R}^{d}, |h|_{l_2} \le \delta \implies ||\tau_h(f) - f||_{L^{p}(\omega)} \le \epsilon$ for all $f \in F$
+\end{enumerate}
+Then $F_\omega$ is precompact in  $L^{p}(\omega)$.\\
+Proof: Fix $\epsilon > 0$. We plan to prove that there exists $f_1,\dots,f_k \in F_\omega$ such that $F_\omega \subset \bigcup_{j=1}^{k}B^{L^{p}(\omega)}_\epsilon(f_j)$
+\begin{enumerate}
+    \item Done: choose $\delta$ such that $(c)$ holds and  $n > \frac{1}{\delta}$ then
+        \[
+            (1b) \qquad ||\rho_{\frac{1}{n}} * f - f||_{L^{p}(\omega)} < \epsilon \quad \forall f \in F_\omega
+        \] 
+    \item Let $D = \sup_{f \in F} ||f||_{L^{p}(\Omega)}$
+    \item Set $H_n = \{\rho_{\frac{1}{n}} * f : f \in F_\omega\}$ we claim that $H_n$ is bounded in  $C(\overline{\omega})$ and equicontinuous.
+        Indeed if $x \in \omega$
+         \[
+             |\rho_{\frac{1}{n}} * f(x)|^{p} =\left| \int_{ B_{\frac{1}{n}}(x)}^{}\rho_{\frac{1}{n}}(x-y)f(y)dy\right|^{p} \le \int_{B_{\frac{1}{n}}(x)}^{a} \rho_{\frac{1}{n}}(x-y)|f(y)|^{p}dy
+        \] 
+        \[
+            \le c_n ||f||_{L^{p}}^{p} \quad C_n = \sup_{x,y} \rho_{\frac{1}{n}}(x-y)
+        \] 
+        use the fact that
+        \[
+        \nabla( \rho * f) = (\nabla \rho) * f
+        \] 
+        similarly
+        \[
+            |\nabla (\rho_{\frac{1}{n}} * f)(x)| = |(\nabla \rho_{\frac{1}{n}}) * f(x)| \le D^{p} c_n^{'} \quad c_n^{'} = \sup_{ \mathbb{R}^{d}} | \nabla \rho_{\frac{1}{n}}|
+        \] 
+        By $2$ and $3$,  $H_n$ is bounded in   $C(\overline{\omega}) $ and equicontinuous.
+        Thus by the Ascoli-Arzela theorem $H_n$ is precompact in  $ C(\overline{\omega})$. Hence, there exist $f_1,\dots,f_k \in F_\omega$ such taht
+        \[
+        H_n \subset \bigcup_{j=1}^{k}B^{L^{p}(\omega)}_\epsilon( \rho_{\frac{1}{n}} * f_1)
+        \] 
+        since the balls in $L^{p}$ are equivalent to the balls in $C(\omega)$ since the measure of  $\omega$ is finite
+        We use $1b$ to conlucde that
+         \[
+             F_\omega \subset \bigcup_{j=1}^{k}B_{2\epsilon}^{L^{p}(\omega)}(\rho_{\frac{1}{n}} * f_j)
+        \] 
+        you can change the center and increase the radius of the ball if these functions are not in $F_\omega$.
+        Hence $\overline{ \mathcal{F}^{L^{p}(\omega)}}$ is totally bounded and complete hence compact.
+
+\end{enumerate}
+
+\section{Exercise}
+Let $\Omega \subset \mathbb{R}^{d}$ be an open bounded set. Suppose that
+\begin{enumerate}
+    \item $\forall \epsilon > 0, \omega \subset \subset \Omega$ open there exists $\delta \in (0, d(\omega, \Omega^{c}))$ such that $h \in \mathbb{R}^{d}$, $|h| < \delta$
+        implies
+        \[
+            ||\tau_h(f) - f||_{L^{p}(\omega)} \le \epsilon
+        \] 
+    \item for all $\epsilon > 0$ there exists $\omega \subset \subset \Omega$ open such that $||f||_{L^{p}(\Omega-w)} \le \epsilon$
+    \item Show that $F$ is precompact in $L^{p}(\Omega)$
+\end{enumerate}
+
+\section{Hilbert spaces}
+Definition: Let $H$ be a vector space. We call $\langle \cdot, \cdot \rangle : H^2 \rightarrow \mathbb{R}$ an inner product
+if
+\begin{enumerate}
+    \item $\langle \lambda_1x_1 + \lambda_2 x_2, y \rangle = \lambda_1 \langle x_1,y \rangle + \lambda_2 \langle x_2, y \rangle$
+    \item $\langle x_1,y \rangle = \langle y,x_1 \rangle$ 
+    \item $\langle x, x \rangle >0$ for $x \in H \setminus \{0_H\}$
+\end{enumerate}
+for all $x_1,x_2,y \in H$.
+In this case $x \to \sqrt{ \langle x, x \rangle} = ||x||$ is a norm .\\
+Def: If $\langle \cdot, \cdot \rangle$ is an inner product on a vector space $H$ and $(H, ||\cdot||)$ is complete
+we call  $(H, \langle \cdot, \cdot \rangle)$ a Hildber space.\\
+Definition: A Banach space E is uniformly convex if for all $\delta > 0$ there exists $\epsilon > 0$ such that
+if $x,y \in B_1^{E}(0)$ and $||x-y||_E \ge \delta$ then $|| \frac{x+y}{2}||_E  \le 1- \epsilon$.\\
+Theorem: If $B$ is a uniformly convex Banach space then $B$ is reflexive.
+Uniform convexity is a geometric property and reflexivity is a topological property
+
+\section{Friday}
+Theorem $H $ is a hilbert space implies  $H$ is reflexive. It suffices tos how that  $H$ is uniformly convex. Let  $x,y \in B_H$ then
+ \[
+||\frac{x+y}{2}||^2 + || \frac{x-y}{2}||^2 = \frac{||x||^2 + ||y||^2}{2} \le 1
+\] 
+if $\epsilon > 0$ and $||x-y|| \ge \epsilon$ then
+\[
+||\frac{x+y}{2}||^2 + \frac{\epsilon^2}{4} \le 1  \qquad || \frac{x+y}{2} ||^2 \le \sqrt{1 - \frac{\epsilon^2}{4}} = 1- \delta
+\] 
+for $0 < \delta < 1$.
+Cauchy-Schwarz inequality: We have
+\[
+|\langle x, y \rangle | \le ||x|| ||y||
+\] 
+for all $x,y \in H$
+ \[
+0 \le ||x \pm y ||^2 = ||x||^2 + ||y||^2 + 2 \langle x, y \rangle
+\] 
+so
+\[
+| \langle x,y \rangle| \le \frac{||x||^2 + ||y||^2}{2}
+\] 
+\[
+| \langle x ,y \rangle| = | \langle \lambda x, \frac{y}{\lambda} \rangle | \le \frac{|| \lambda x||^2 + \frac{1}{ \lambda} ||y||^2}{2} = ||x|| ||y||
+\] 
+Let $C \subset H$ be a non empty closed convex set. Then for every $f \in H$ there exists a unique  $ u \in C$ such that  $||f - u|| \le ||f - v|| $for all  $v \in C$\\
+We set $u = P_C(f)$. Furthermore,  $u$ is characterized by
+ \[
+     (0) \quad
+         \begin{cases}
+             \langle f - u, v - u \rangle \le 0 & \forall v \in C\\
+             u \in C
+         \end{cases}
+\] 
+Proof: 1. Existence. Let $(x_n)_n \subset C$ be such that $||f - x_n|| \le D + \frac{1}{n}$ where $D = \inf_{v \in C} || f - v||$
+Replacing $x_n -f$ by  $x_n$ we can assume that  $f = 0$. Since  $C$ is convex.
+ \[
+D \le ||\frac{x_n + x_m}{2}|| \le \frac{1}{2}( ||x_n|| + ||x_m||) \le D + \frac{1}{2n} + \frac{1}{2m}
+\] 
+so
+\[
+    (1) \quad \lim_{n,m \to \infty} || \frac{ X_n + x_m}{2} || = D
+\] 
+Recall that
+\[
+    (2) \quad || \frac{x_n + x_m}{2}||^2  + || \frac{x_n - x_m}{2} ||^2 = \frac{||x_n||^2 + ||x_m||^2}{2} \le \frac{1}{2}(D + \frac{1}{n})^2 + \frac{1}{2}(D + \frac{1}{m})^2
+\] 
+using $(1)$ and $(2)$ we infer
+ \[
+\lim_{n,m\to \infty} || \frac{x_n - x_m}{2} || = 0
+\] 
+and so $(x_n)$ is a cauchy sequence. Since  $H$ is complete $u := \lim_{n\to \infty}x_n$ exists.
+Since $C$ is closed and $x_n \in C$ we have that  $u \in C$.
+By assumption 
+ \[
+D = \lim_{n\to \infty}|| f - x_n|| = || f- u||
+\] 
+which proves the minimality property. We postpone the proof of uniqueness to a stronger corollary.
+Let $v \in C$ and set  $N(t) = ||  (1-t)u + tv - f||^2 = || u + t(v-u) - f||^2$ for $t \in [0,1]$
+Since  $(1-t)u + tv \in C$ we have  $N(t) \ge N(0) = D$
+\[
+||u-f||^2 + t^2 ||v -u||^2 + 2t \langle u -f, v- u \rangle
+\] 
+thus
+\[
+0 \le \lim_{t\to 0^{+}} \frac{N(t) - N(0)}{t} = 2 \langle u - f, v -u \rangle
+\] 
+hence
+\[
+\langle f -u , v - u \rangle \le 0
+\] 
+conversely, suppose that $(0)$ holds and let  $v \in C$. THen
+ \[
+||v- f||^2 = || v- u + u - f||^2 = || v- u||^2 + || u - f||^2 + 2 \langle v - u, u - f \rangle > ||u - f||^2
+\] 
+unless $ v = 0$.
+Further assume  $C$ is a vector space.
+Then 
+\[
+    (0) \iff \langle f -u, v \rangle \le \langle f - u,u \rangle \quad \forall v \in C
+\] 
+\[
+    \implies \langle f - u, v \rangle = 0 \quad \forall v \in C
+\] 
+Theorem:
+Suppose that $C \subset H$ is closed convex and nonempty. Then $P_c$ is 1-lipschitz.
+ \[
+||P_c(f_1) - P_c(f_2) || \le ||f_1 - f_2|| \quad \forall f_1,f_2 \in H
+\] 
+By $(0)$ 
+ \[
+\langle f_1 - P_c(f_1) , v - P_c(f_1)\rangle \le 0 \quad \langle f_2 - P_c(f_2) , v - P_c(f_2) \rangle \le 0 \quad \forall v \in C
+\] 
+\[
+\implies \langle f_1 - P_c(f_1) , P_c(f_2) - P_c(f_1) \rangle \le 0 \quad \langle f_2 - P_c(f_2) , P_c(f_1) - P_c(f_2) \rangle \le 0
+\] 
+adding up we have 
+\[
+\langle f_1 - P_c(f_1) - f_2 + P_c(f_2) , P_c(f_2) - P_c(f_1) \rangle \le 0 \iff  || P_c(f_1) - P_c(f_2) || \le \langle f_2 - f_1, P_c(f_2) - P_c(f_1) \rangle 
+\] 
+\[
+\le ||f_2 - f_1|| || P_c(f_2) - P_c(f_1) ||
+\] 
+
+\section{Riesz representation}
+Given $\phi \in H'$ there exiss a unique $u \in H$ such that  $\phi(v) = \langle v, u \rangle$ for all $v \in H$.
+Proof: Set  $C = Ker(\phi)$ to avoid trivialities we assume $\phi \ne 0$ identically and so $C \ne H$
+By the above remark,  $ \langle f - P_c(f), v \rangle = 0$ for all $ c \in C$ so  $f = f - P_c(f) + P_c(f)$ where  $f - P_C(f) \in C^{\perp}$.
+If we define 
+\[
+    C^{\perp} = \{v \in H : \langle v, c \rangle = 0, \forall c \in C\}
+\] 
+then we have proved that  $H = C \oplus C^{\perp}$ and note that
+\[
+Ker(\phi) = Ker(Id - P_c)
+\] 
+By assumption $C^{\perp} \ne \{0\}$ let $z \in C^{\perp}$ be such that $||z|| = 1$.
+For any  $v \in H$
+ \[
+v \phi(z)  - z \phi(v) \in C
+\] 
+and so
+\[
+    (3) \quad 0 = \langle v \phi(z) - z \phi(v), z \rangle = \phi(z) \langle v, z \rangle - ||z||^2 \phi(v) 
+\] 
+\[
+\phi(z) \langle v,z \rangle = \phi(v)
+\] 
+setting $u = \frac{z}{\phi(z)}$ we use $(3)$ to infer
+\[
+    \langle v, u \rangle = \phi(v)
+\] 
+Uniqueness is a consequence of the fact that if $\langle u_2 - u_1, v \rangle = 0$ for all $v \in H$ then  $u_1 = u_2$
+
+
+\end{document}

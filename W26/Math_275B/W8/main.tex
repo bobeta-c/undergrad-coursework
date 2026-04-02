@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{martingale convergence theorem}
+Example
+\[
+    \{X_n\}
+\] 
+is martingale simple random walk or smething where you buy stocks and you want to know how many times with $X$ go from  $a$ to  $b$
+before it goes to 0.
+Suppose  $X_n \ge -M$ for any  $n$ almost sure. then
+ \[
+Y_n \ge (\# a \nearrow b) |b-1| - (a +M)
+\] 
+and $ \mathbb{E}Y_n = 0$
+this implies that
+\[
+\mathbb{E}(\# a \nearrow b) \le \frac{a+m}{b-a}
+\] 
+and
+\[
+    \mathbb{E}(\# b \searrow a) \le  \frac{(M-b)}{b-a} \qquad \text{ if } \sup_{n}|X_n| \le M
+\] 
+so for martingale $\{X_n\}$ with uniform lower bound for all $a,b$  $ \mathbb{E}(\# a \nearrow b) < \infty \implies \forall a,b$ $ \# a \nearrow b < \infty$ almost sure.
+\[
+   \mathbb{P}( \bigcap_{a,b \in \mathbb{Q}}\{ \# a \nearrow b < \infty\} ) = 1
+\] 
+if $\limsup_{n\to \infty}X_n > \liminf_{n\to \infty}X_n$ then there exists $a,b \in \mathbb{Q}$ such that $\# a \ne b = +\infty$.
+If for some $\Omega$
+ \[
+\limsup_{n\to \infty} X_n(\omega) > \liminf_{n\to \infty} X_n(\omega)
+\] 
+then for this omega there exists $a,b \in \mathbb{Q}$ such that
+\[
+    \# a \ne b (\{X_n(\omega)\}) = +\infty
+\] 
+so we have
+\[
+\mathbb{P}(\limsup_{n\to \infty} X_n > \liminf_{n\to \infty}X_n) = 0
+\] 
+then we need to know
+\[
+\mathbb{P}(\limsup_{n\to \infty}X_n = +\infty)
+\] 
+but
+\[
+\lim_{k\to \infty} \mathbb{P}(X_n \ge k) = 0
+\] 
+\[
+    \mathbb{E}[X_n] = 0 \implies \mathbb{E}[X_n^{+}] = \mathbb{E}[X_n^{-}] \qquad \mathbb{E}[X_n^{-}] \le M
+\] 
+putting together we get the $\lim_{n\to \infty}X_n$ exists almost sure.
+General case 
+\section{MCT}
+\emph{
+    $\{X_n\}$ is a sub martingale and  $\sup_{n} \mathbb{E}X_n^{+} < \infty$  then
+    \[
+        \lim_{n\to \infty}X_n \rightarrow X_\infty \qquad \text{a.s}
+    \] 
+}
+for simplicity choose $a = 0, b =1$  $\{X_n\}$ is sub martingale then  $X_n^{+}$ is sub martingale
+since if $\phi$ is convex and non decreasing then $\phi(X_n)$ is a sub martingale, in this case $\phi(x) = \max(0,x)$.
+And
+\[
+Y_n = (A \cdot X^{+})_n \qquad Z_n = (B \cdot X^{+})_n  \qquad B_n = 1 - A_n
+\] 
+then $Y_n$ and  $Z_n$ are also sub martingales since  $A_n, B_n \ge 0$ 
+\[
+    \mathbb{E}[Y_n] \ge \mathbb{E}Y_0 = 0, \qquad \mathbb{E}Z_n \ge \mathbb{E}Z_0 = 0
+\] 
+and $Y_n + Z_n = X_n^{+} - X_0^{+}$ so
+\[
+    \mathbb{E}[Y_n] + \mathbb{E}[Z_n] = \mathbb{E}[X_n^{+}] - \mathbb{E}[X_0] \le M
+\] 
+so
+\[
+    \mathbb{E}[Y_n] \le \mathbb{E}[X_{n}^{+}] - \mathbb{E}[X_0^{+}] \le M
+\] 
+and $Y_n \ge \#a \nearrow b (b-a)$ so
+ \[
+     (\# a \nearrow b) < \infty \qquad \text{ a.s.}
+\] 
+Example: POlya's Urn
+\[
+    \{X_n\}
+\] 
+is a martingale and $|X_n| \le 1$ a.s. Start with  $R_0 = B_0 = 1$ and $X_n = \frac{R_n}{R_n + B_n}$ 
+so with martingale convergence theorem there exists $X_\infty$ such that $X_n \rightarrow X_\infty$ almost sure
+we know almost sure convergence implies convergence in distribution so $X_n \rightarrow^{d} X_\infty$
+It is easy to check
+\[
+\mathbb{P}(X_n = \frac{m}{n+2}) = \frac{1}{n+1} \qquad \forall 1 \le m \le n + 1, m \in  \mathbb{Z}
+\] 
+and so $X_\infty \sim^{d} unif[0,1]$.
+How about $L_p$ convergence, i.e.  $ \mathbb{E}|X_n - X_\infty|^{p} \rightarrow 0?$ we know
+$a.s.$ implies in prob implies in distributions and  $L_p$ implies in probability.
+For this question,  $|X_n| \le 1 \implies |X_n - X_\infty| \le 1$ so with BCT we have
+\[
+\mathbb{E}|X_n - X_\infty|^{p} \rightarrow 0
+\] 
+Examples $\{X_n\}$ martingale  $\sup_n |X_{n+1} - X_n| \le M$ for some  $M$ 
+\[
+    A = \{\lim_{n\to  \infty}X_n \in (-\infty,\infty)\} = \{ \limsup_{n\to \infty}X_n = \liminf_{n\to \infty}X_n \in (-\infty,\infty)\}
+\] 
+\[
+    B = \{\limsup_{n\to \infty}X_n = +\infty , \liminf_{ n\to \infty}X_n = -\infty\}
+\] 
+then
+\[
+\mathbb{P}(A \cup B) = 1
+\] 
+in the srw case, $ \mathbb{P}(B) = 1$ Let $K$ be a large number, define
+ \[
+     T = \min\{n : X_n \le -k\}
+\] 
+and let
+\[
+    Y_n = X_{n \wedge T}
+\] 
+then
+\[
+Y_n \ge - - M
+\] 
+so with MCT, $Y_n \rightarrow Y_\infty$ almost sure this implies that $ A \supset \{\inf X_n \ge -k\}$ it holds for any $k \ge 0$ 
+ \[
+     \mathbb{P}(A \cup \{\liminf_{ X_n\to  -\infty\}} = 1) \implies \mathbb{P}(\{\liminf_{n\to \infty} X_n = -\infty\} \triangle A^{c}) = 0
+\] 
+This construction is symmetric so we can say that
+\[
+    \mathbb{P}(\{\limsup_{n\to \infty}X_n = +\infty\} \triangle A^{c}) = 0
+\] 
+so
+\[
+    \mathbb{P}(A \cup B) = 1
+\] 
+In $L_1$ simple random walk, $X_0 = 10$ and  $T = \min\{n: X_n = 0\}$ and  $Y_n = X_{n \wedge T}, Y_n \ge 0, Y_n \rightarrow Y_\infty$ and $Y_\infty = 0$ but $ \mathbb{E}|Y_n - Y_\infty| = \mathbb{E}[Y_n] = 10$
+So there is no $L_1$ convergence.
+\section{ Martingale $L_p$ Convergence theorem}
+Question: $ \mathbb{E}|X_n - X_\infty|^{p} \rightarrow 0$ \\
+Theorem: $\{X_n\}$ is martingale and $\sup_n \mathbb{E} |X_n|^{p}< \infty$ then
+\[
+    \exists X_ \infty \qquad    X_n \rightarrow X_{\infty} \text{ in $L_p$ } p > 1
+\] 
+
+\section{Friday}
+\emph{
+    let $\{X_n\}$ martingale and  $\sup_n \mathbb{E}|X_n|^{p} \le M < \infty$ for $p > 1$ then
+    there exists  $X_{\infty} \in \mathcal{F}_\infty = \sigma(\bigcup \mathcal{F}_n)$ such that $X_n \rightarrow X_{\infty}$ in $L_p$
+    and  $ \mathbb{E}|X_n - X_\infty|^{p } \rightarrow 0$
+}
+Proof: First we have $\sup_n \mathbb{E}|X_n| < \infty$ since $p > 1$
+together with  $\{X_n\}$ martingale implies that there exists  $X_\infty$ such that $X_n \rightarrow X_\infty$ almost sure by the martingale convergence theorem
+\[
+    Y_n = X_n - X_\infty \qquad Y_n \rightarrow 0 \text{ a.s.}
+\] 
+we hope to see that $ \mathbb{E}\sup_n |X_n - X_\infty|^{p} < \infty$ if so we can use dominated convergence to imply that $X_n - X_\infty \rightarrow 0$ in $L_p$
+Take a look at
+ \[
+|X_n - X_\infty|^{p} \le  |X_n|^{p} + |X_\infty|^{p}
+\] 
+so
+\[
+\sup_n |X_n - X_\infty|^{p} \le (\sup_n |X_n|)^{p} + |X_\infty|^{p}
+\] 
+and
+\[
+\mathbb{E} \sup_n |X_n- X|^{p} \le \mathbb{E}(\sup_n |X_n|)^{p} + \mathbb{E}|X_\infty|^{p}
+\] 
+\[
+\mathbb{E} \sup_n |X_n|^{p} < \infty ?
+\] 
+\section{theorem Doob's maximum Inequality}
+if $\{X_n\}$ is a nonnegative sub martingale, $p > 1$ then for  $X_n^{*} := \max_{1 \le k \le n} X_k$ 
+And if $ \mathbb{E}|X_k|^{p} < \infty$ for all $k$
+\[
+\mathbb{E}|X_n^{*}|^{p} \le \frac{p}{1-p} \mathbb{E}|X_n|^{p}
+\] 
+\end{document}

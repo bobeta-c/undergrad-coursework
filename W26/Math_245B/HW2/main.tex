@@ -19,6 +19,7 @@
 \renewcommand*\labelenumii{\theenumii.}
 
 \DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\arginf}{arginf}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -167,7 +168,7 @@ So we conclude as before that the functions are the same almost everywhere.
 
 \section{Exercise 2.6}
 \emph{
-    Let $a < b$ be real numbers and let $F : [a,b] \rightarrow \mathbb{R}$ be a continuous functin
+    Let $a < b$ be real numbers and let $F : [a,b] \rightarrow \mathbb{R}$ be a continuous function
     \begin{enumerate}
         \item Show that the set $A$ of points of differentiablility of $F$ is a Borel set.
         \item Suppose that $F$ is monotone nondecreasing and $\mu_F$ is the associated Lebesgue-Stieltjes measure.
@@ -177,6 +178,258 @@ So we conclude as before that the functions are the same almost everywhere.
             \] 
     \end{enumerate}
     Similar results can be obtained when $F$ is of bounded variations and $\mu_F$ is a signed measure
+}
+\solution{
+    I define two functions
+    \[
+        \overline{D}(x) : (a,b) \rightarrow \overline{\mathbb{R}} \qquad \overline{D}(x) = \limsup_{h\to 0}\frac{F(x+h) - F(x)}{h}
+    \] 
+    and
+    \[
+        \underline{D}(x): (a,b) \rightarrow \overline{ \mathbb{R}} \qquad \underline{D}(x) = \liminf_{h\to 0}\frac{F(x+h) - F(x)}{h}
+    \] 
+    then, the set of points where the two functions agree and are not infinite is the set of continuity points. First I show that
+    $\overline{D}(x)$ is a Borel function. To do this we verify that the preimage of level sets is Borel.
+    \[
+        \{x : \overline{D}(x) \ge L\} = \{x : \inf_{\delta > 0} \sup_{0 < |h| < \delta} \frac{F(x+h) - F(x)}{h} \ge L\}
+    \] 
+    \[
+        = \{x : \forall \delta > 0, \exists 0 < |h| < \delta \frac{F(x+h) - F(x)}{h} \ge L\} = \bigcap_{m=1}^{\infty}\bigcup_{\substack{q\in \mathbb{Q} \\ 0 < |q| < \frac{1}{m}}}^{} \bigcap_{k=1}^{\infty} \{x : \frac{f(x+q)-f(x)}{q} \ge L - \frac{1}{k}\}
+    \] 
+    where we use continuity of $F$ to reduce checking over all  $\delta$ and $h$ to only checking over countably many combinations. This works since the supremums are monotonically decreasing as $\delta$ shrinks so taking a countable subsequence of $\frac{1}{m}$ going to zero achieves the same limit.
+    Additionally since $F$ is continuous we for any point achieving the supremum and any  $\epsilon$ there exists a rational point that is within that epsilon, that is why we added the third term.
+    Since the function 
+    \[
+    \frac{f(x+h)-f(x)}{h}
+    \] 
+    is continuous and therefore borel measurable for any fixed $h > 0$ we conclude that the level sets of $\overline{D}(x)$ are Borel. Similarly, the level sets of $\underline{D}(x)$ are Borel. We then construct the set of differentiable points
+     \[
+        \{x: F'(x) \text{ exists }\} = \{x : \overline{D}(x) = \underline{D}(x)\} \setminus \{x : \overline{D}(x) = +\infty\}
+    \] 
+    after disregarding all points where the up limit is infinite we can take the terms to the other side and conclude that the first set is a level set of $\overline{D}(x) - \underline{D}(x)$ so it is a Borel set. We then conclude that the set of differentiability points is Borel.
+    Now set
+    \[
+    F'(x) =
+    \limsup_{h\to 0} \frac{f(x+h)-f(x)}{h} = \limsup_{r\to 0} \frac{\mu_F(B_r(x))}{\mathcal{L}(B_r(x))}
+    \] 
+    then $\mu_F = \mu_F^{abs} + \mu_F^{s}$ where $\mu_F^{abs} << \mathcal{L}$ and $\mu_F^{s} \perp \mathcal{L}$ and by the Lebesgue decomposition theorem we have
+    \[
+        \mu_F(E) = \int_{E}^{}D_{\mathcal{L}}\mu_F(x)dx + \mu_F^{s}(E)
+    \] 
+    Now if I can show that $\mu_F^{abs} = \mu_F|_{\{F' \ne +\infty\}}$ then the theorem is complete since $F' = D_{\mathcal{L}}\mu_F$ where $F' \ne +\infty$.
+    First I show that
+    \[
+        \mathcal{L}\{x : \overline{D}(x) = +\infty\} = 0
+    \] 
+    indeed for any fixed $n$
+    \[
+        A = \{X : \overline{D}(x) = +\infty\} \cap [-r,r]
+    \] 
+    then by Lemma proved in class
+    \[
+        \mu_F[[-r,r]] = F(r) - F(-r) \ge \mu_F[A] \ge \alpha \mu[A]
+    \] 
+    for all $\alpha$ and so $\mu[A] = 0$ and since this holds for all $r$ by continuity from below of measure we have  $\mu[\{x: \overline{D}(x) = +\infty\}] = 0$.
+    Fix $E$ a borel set in $ \mathbb{R}$ then by letting $B_\infty := \{F' = \infty\}$
+    \[
+    \mu_F(E) = \mu_F(E \setminus B_\infty) + \mu_F(E \cap B_\infty)
+    \] 
+    Consider for any $t \in (1,\infty)$
+    \[
+        \mu_F(E \setminus B_\infty) = \bigcup_{n \in \mathbb{Z}}^{\infty} \mu_F(E \cap \{F' \in [t^{n},t^{n+1})\}) + \mu_F(E \cap \{F' = 0\})
+    \] 
+    On a fixed $n$ we have that
+    \[
+        t^{n} \mathcal{L}(E \cap \{F' \in [t^{n}, t^{n+1})\}) \le \mu_F(E \cap \{F' \in [t^{n}, t^{n+1})\} \le t^{n+1} \mathcal{L}(E \cap \{F' \in [t^{n},t^{n+1})\})
+    \] 
+    so clearly $\mu_F|_{0 < F' < \infty} << \mathcal{L}$. It suffices finally to prove that $\mu_F\{x : F' = 0\} = 0$ indeed
+    \[
+        \mu_F[B_r(0) \cap \{F' = 0\}] \le \alpha \mathcal{L}[B_r(0) \cap \{F' = 0\}] < \infty
+    \] 
+    for all $\alpha > 0$ and so by continuity from below we have
+    \[
+        \mu_F[\{F' = 0\}] = 0
+    \] 
+    thus we have
+    \[
+        \mu[E] = \mu[E \cap \{F' < \infty\}] + \mu[E \cap \{F' = \infty\}] = \int_{E}^{} F'(x) dx + \mu_F[E \cap \{F' = \infty\}]
+    \] 
+}
+
+\section{Exercise 2.7}
+\emph{
+    Let $(\nu_j)_j$ be a sequence of Borel measures on a metric space  $\Omega$ and let  $\mu$ be a Borel measure on $\Omega$. Show that if
+     $\nu_j \perp \mu$ for all $j$ then $\sum_{j=1}^{\infty}\nu_j \perp \mu$.
+}
+\solution{
+    Since each $\nu_j \perp \mu$ there eixsts a sequence $(B_j)_j$ such that  $\mu(B_j) = 0$ and $\nu_j(B_j^{c}) = 0$ Then $\mu(\bigcup_{j=1}^{\infty}B_j) = 0$
+    and $\nu_j((\bigcup_{i=1}^{\infty}B_i)^{c}) = \nu_j(\bigcap_{i=1}^{\infty}B_i^{c}) = 0$ so we conclude that
+    \[
+        \sum_{j=1}^{\infty}\nu_j(\bigcap_{i=1}^{\infty}B_i^{c}) = \lim_{n\to \infty}\sum_{j=1}^{n}\nu_j(\bigcap_{i=1}^{\infty}B_i^{c}) = \lim_{n\to \infty}\sum_{j=1}^{n}0 = 0
+    \] 
+    the desired conclusion.
+}
+
+\section{Exercise 2.8}
+\emph{
+    Let $X = [0,1], \Sigma$  is the  $\sigma$ algebra of Borel subsets of $X, m := \mathcal{L}^{1}|_X$ is the Lebesgue measure on $X$ and  $\mu$
+    is the counting measure.
+    \begin{enumerate}
+        \item Show that $m << \mu$ but there is no $f$ such that $f = \frac{d m}{d \mu}$.
+        \item Show that $\mu$ has no Lebesgue decomposition with respect to $m$
+    \end{enumerate}
+}
+\solution{
+    \begin{enumerate}
+        \item To show that $m << \mu$ Let $A \subset \mathbb{R}^{d}$ be such that $\mu[A] = 0$ then $A = \emptyset$ so we have  $m([A]) = 0$.
+            Assume for contradiction that there existed  $f = \frac{d m}{d \mu}$ then
+            \[
+                0 =  m[\{x\}] \int_{\{x\}}^{}f d \mu = f
+            \] 
+            so $f = 0$ on  $[0,1]$ but this contradicts
+             \[
+                 \frac{1}{2} = m[(0,\frac{1}{2})] = \int_{(0,\frac{1}{2})}^{}f d \mu = \int_{(0,\frac{1}{2})}^{} 0 d \mu = 0
+            \] 
+            so no $f$ exists satisfying the radon nikodym derivative.
+        \item Assume for contradiction $\mu$ had a Lebesgue decomposition $\mu_{abs} + \mu_s$ with $\mu_{abs} << m$ and $\mu_s \perp m$. Then there exists B such that $\mu_s = \mu|_B$ and there exists further $A$ such that $\mu_s[A] = 0$ and $m[A^{c}] = 0$.
+            In particular $A \cap B = \emptyset$ so  $B \subset A^{c}$ and so $m[B] = 0$ and so  $B$ is a null set with respect to lebesgue measure.
+            and if it were that
+            \[
+                \mu[A] = \mu_{acc}[A] + \mu_s[A]
+            \] 
+            But by letting $A = \{x\}$ for any  $x \in B^{c}$ we see that $\mu[A] = 1$ but $\mu_s[A] = 0$ since $A \cap B = \emptyset$
+            and since  $\mu_{acc} << m$ and since $m[A] = 0$ we must have  $\mu_{acc}[A] = 0$ so we get
+            \[
+            1 = 0 + 0
+            \] 
+            a contradiction, thus no decomposition exists.
+    \end{enumerate}
+}
+
+\section{Exercise 2.9}
+\emph{
+    Let $\mu$ be a Radon measure on $ \mathbb{R}^{d}$ and let $r > 0$. Show that  $x \rightarrow \mu(B(x,r))$ is upper semicontinuous in the sense that $\limsup_{y\to x}\mu(B(y,r)) \le \mu(B(x,r))$
+}
+\solution{
+    if $|y-x| < \delta$ then $B(y,r) \subset B(x,r+\delta)$ this implies that
+    \[
+    \limsup_{y\to x}\mu(B(y,r)) \le \mu(B(x,r+\delta))
+    \] 
+    for all $\delta$, letting $\delta \rightarrow 0$ since $\mu$ is Radon we have continuity from above on radius to get
+    \[
+    \mu(B(x,r+\delta)) \rightarrow \mu(B(x,r))
+    \] 
+    so
+    \[
+    \limsup_{y\to x }\mu(B(y,r)) \le \mu(B(x,r+\delta))
+    \] 
+}
+
+\section{Exercise 2.10}
+\emph{
+    Let $\mu$ and $\nu$ be  $\sigma$-finite Borel measures on $ \mathbb{R}^{d}$, which are Borel-regular and such that $\nu << \mu$. Show that
+    if $\lambda := \mu + \nu$ and $f = \frac{d\nu}{d \lambda}$, then $0 \le f \le 1$  $\mu$ a.e. and $\frac{d \nu}{d  \mu} = \frac{f}{1-f}$
+}
+\solution{
+    By definition
+    \[
+        \nu[A] = \int_{A}^{}f d \lambda = \int_{A}^{}f(d \nu + d \mu) = \int_{A}^{}f d \nu + \int_{A}^{}f d \mu
+    \] 
+    If we assume there was a region $A$ such that  $f \in (1,\infty)$ on $A$ we would get a contradiction.
+    Since if $A$ has positive  $\nu$ measure then the lhs would be less than rhs and if  $A$ had no  $\nu$ measure but had positive  $\mu$-measure we would 
+    get that a null set has positive measure another contradiction so it must be that $f \le 1$  $\mu$-a.e.
+    Similarly  $f$ is positive since $\nu$ and  $\mu$ are positive everywhere and so if there was a region
+    such that  $f \in (-\infty,0)$ with positive measure under $\mu$ we would similarly reach a contradiction.
+    Consider $A = \{x : f(x) = 1\}$, since $\mu$ and $\nu$ are  $\sigma$-finite we can assume that $A$ has finite measure wrt both measures.
+    Then we must have
+     \[
+         \mu[A] = 0
+    \] 
+    since 
+    \[
+        \nu[A] = \int_{A}^{}1 d \nu + \int_{A}^{}1 d \mu = \nu[A] + \mu[A]
+    \] 
+    and so $f \in [0,1)$  $\mu$-almost everywhere.
+    Let $g = \frac{d \nu}{d \mu}$ 
+    then
+    \[
+        \nu[A] = \int_{A}^{} g d \mu = \int_{A}^{} f d \nu + \int_{A}^{} f d \mu = \int_{A}^{}fg d \mu + \int_{A}^{}f d \mu
+    \] 
+    since this holds for all $f$ we get that
+     \[
+         g = fg + f \qquad \text{ $\mu$-a.e.}
+    \] 
+    which implies
+    \[
+        g = \frac{f}{1-f} \qquad \text{$\mu$-a.e.}
+    \] 
+    thus completing our proof.
+    \\
+    Alternate solution(not for grading):
+    First note that $\nu << \lambda$.
+    We have $f = \frac{d \nu}{ d \lambda}$
+    \[
+        f(x) = 
+        \begin{cases}
+            \limsup_{r\to 0^{+}} \frac{\nu[B_r(x)]}{\mu[B_r(x)] + \nu[B_r(x)]} & \text{ if $\mu[B_\epsilon(x)] + \nu[B_\epsilon(x)] > 0$ for all $\epsilon > 0$}\\
+            +\infty & \text{ there exists $\epsilon_0$ such that $\mu[B_{\epsilon_0}(x)] + \nu[B_{\epsilon_0}(x)] =0$ }
+        \end{cases}
+    \] 
+    where we use the convention that if the numerator and denominator are both infinite we get 1 since the terms in the numerator are always less than or equal to denominator.
+    then for fixed $r$ we have 
+    \[
+        0 \le f \le 1 \qquad \text{ or } f = \infty
+    \] 
+    We proved in class that the points where the derivative is infinity is a null set with respect to $\mu$ (since null sets with respect to $\lambda$ are null wrt $\mu $ ).
+    Additionaly we show that $f < 1$  $\mu$- almost everywhere since if we let $E_i = \{x : f(x) = 1, x \in B_i\}$ where  $\{B_i\}_{i=1}^{\infty}$ is a collection of finite measure sets wrt $\nu$ whose union is all of $ \mathbb{R}^{d}$
+    \[
+        \nu[E_i] = \int_{E_i}^{}f d\lambda = \int_{E_i}^{}f d \mu + \int_{ E_i}^{} f d \nu = \int_{E_i}^{} d \mu + \int_{E_i}^{} d \nu = \mu[E_i] + \nu[E_i]
+    \] 
+    subtracting from both sides since $\nu[E_i] < \infty$ we get
+    \[
+        0 = \mu[E_i]
+    \] 
+    which implies that $f < 1$  $\mu$-almost everywhere. 
+    \[
+    g = \frac{d \nu}{d \mu} =
+    \begin{cases}
+        \limsup_{r\to 0^{+}}\frac{\nu[B_r(x)]}{\mu[B_r(x)]} & \mu[B_\epsilon(x)] > 0 \forall \epsilon > 0\\
+        +\infty & \exists \epsilon_0 \rightarrow \mu[B_{\epsilon_0}(x)] = 0
+    \end{cases}
+    \] 
+    in class we showed that $g < \infty$  $\mu$ almost everywhere, so it suffices to show that $g = \frac{f}{1-f}$ when $f$ is less than 1 and when the lim sup = lim inf since we also showed that they agree almost everywhere with respect to $\mu$.
+    We have
+    \begin{align*}
+        \frac{f}{1-f} &= \lim_{r\to 0^{+}} \frac{\frac{\nu[B_r(x)]}{\mu[B_r(x)] + \nu[B_r(x)]}}{1 - \frac{\nu[B_r(x)]}{\mu[B_r(x)] + \nu[B_r(x)]}}\\
+                      &= \lim_{r\to 0^{+}}\frac{\nu[B_r(x)]}{\mu[B_r(x)] + \nu[B_r(x)] - \nu[B_r(x)]} \\
+                      &= \lim_{r\to 0^{+}} \frac{\nu[B_r(x)]}{\mu[B_r(x)]}\\
+                      &= g
+    \end{align*}
+    since this holds whever $0 \le f < 1$ it holds $\mu$-almost everywhere and so we conclude.
+}
+
+\section{Exercise 2.11}
+\emph{
+    Let $( \mathbb{R}^{d}, \Sigma, \mu)$ be a finite Borel regular measure space. Let $\mathcal{N}$ be a sub-$\sigma$-algebra
+    of $\Sigma$ and let  $\nu := \mu|_{\mathcal{N}}$. Show that if $f \in L^{1}(\mu)$, then there exists a unique $g \in L^{1}(\mathcal{N})$
+    such that 
+    \[
+    \int_{E}^{}f d \mu = \int_{ E }^{} g d \nu
+    \]
+    for all $E \in \mathcal{N}$
+}
+\solution{
+    First let $f = f^{+} - f^{-}$ with both $f^{\pm} \in L^{1}(\mu)$, then assume $f$ is positive wlog since if not we can construct $g^{+},g^{-}$ and let $g = g^{+} - g^{-}$.
+    Define a new measure $\lambda$ on $\mathcal{N}$ as the following, for any set $E \subset \mathcal{N}$
+    \[
+       \lambda[E] = \int_{E}^{}f d \mu
+    \] 
+    $\lambda$ is a measure since it is countably additive and sends the null set to 0.
+    then $\lambda << \nu = \mu|_{\mathcal{N}}$ since if $\nu[E] = 0$ then the integral is over a null set and is zero so $\lambda[E] = 0$. Thus there exists a function $\tilde f$ measurable with respect to $\mathcal{N}$ such that for all  $E \in \mathcal{N}$
+     \[
+         \int_{E}^{} f d \mu = \lambda[E] = \int_{E}^{}\tilde f d \nu
+    \] 
+    thus we have $g = \tilde f$ satisfies our requirement which is unique since uniqueness if guaranteed by the Radon-Nikodym derivative $\nu$-almost everywhere and in $L^{1}(\nu)$ since $f \in L^{1}(\mu)$ so $\lambda( \mathbb{R}^{d}) <\infty$.
 }
 
 \end{document}

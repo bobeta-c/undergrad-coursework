@@ -1,0 +1,302 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\iter}{int}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+Let $ G, \mathcal{X}, \mathcal{Y}$ be Banach spaces and set
+\[
+    G' = \mathcal{L}(G, \mathbb{R}) \qquad (G^{*} )
+\] 
+Exercise 1: (Hwk Ass 4.1)
+Show that if $x \in G$ then
+ \[
+     ||x||_{G} = \sup_{f} \left\{ |f(x)| :  ||f||_{G^{'}} \le 1\right\}
+\] 
+we are going to define $f_\lambda(tx) = tx \lambda$ for $t \in \mathbb{R}$.\\
+Exercise 2:
+\begin{enumerate}
+    \item let $(T_n)_n \subset L(X, Y)$  be such that $\lim_{n\to \infty} T_nx =: Tx$ exists for all $x \in \mathcal{X}$.
+        Show that $T \in \mathcal{L}( \mathcal{X}, \mathcal{Y})$ and $||T||_{ L ( \mathcal{X}, \mathcal{Y})}  \le \liminf_{n\to \infty} ||T_n||_{ \mathcal{L}( \mathcal{X}, \mathcal{Y})}$
+    \item If $B \subset G$ is such taht $f(B)$ is bounded subset of  $ \mathbb{R}$ for all $f \in G'$, show that  $B$ is bounded in  $G$.
+\end{enumerate}
+Solution. Check that $T$ is linear. If $x \in B_x = \{ z \in \mathcal{X} : ||z||_{ \mathcal{X}} \le 1 \}$
+then
+\[
+    ||Tx||_{ \mathcal{Y}} = \liminf_{n\to \infty} ||T_n x||_{ \mathcal{Y}} \le \liminf_{n\to \infty} ||T_n||_{ \mathcal{L}( \mathcal{X}, \mathcal{Y})} ||x||_{ \mathcal{X}}
+\] 
+maximizing over $B_{ \mathcal{X}}$ we obtain the
+\[
+    \liminf_{n\to \infty} ||T_n||_{ \mathcal{L}( \mathcal{X}, \mathcal{Y}) } \ge ||T || _{ \mathcal{L}( \mathcal{X}, \mathcal{Y})}
+\] 
+for $B \in B$, we define
+ \[
+T_b(f) = f(b) \qquad f \in G'  \qquad T_b : G' \rightarrow \mathbb{R}
+\] 
+we have
+\[
+    C(f) = \sup_{b \in B}  |T_b(f)| = \sup_{b \in B} |f(B)| < \infty
+\] 
+since $f(B)$ is bounded in  $ \mathbb{R}$.
+by the uniform bdness theorem
+\[
+    \infty > \sup_b ||T_b||_{ \mathcal{L}(G', \mathbb{R})} = \sup_{b \in B} \sup_{f} \{|T_b(f)| : ||f||_{G'} \le 1\}
+\] 
+\[
+    = \sup_{b \in B} \sup_{f \in G'} \{|f(b)| : ||f||_{ G'} \le 1\} = \sup_{b \in B} ||b||_G
+\] 
+hence $B$ is bounded in $G$.
+
+\section{Definition}
+Let $Z \ne \emptyset $ and  $ \mathcal{F} \subset 2^{Z}$ a. We call $F$ a topology if $\emptyset, Z \in \mathcal{F}$, $ \mathcal{F}$ is closed under finite interseciton 
+and arbitrary union. We call the elements of $ \mathcal{F}$ open sets. A closed set is the complement of an open set.
+\\
+Problem: Let $Z \ne \emptyset$  $( \mathcal{Y}_i)_{i \in I}$ be topological spaces and $\phi_i : Z \rightarrow \mathcal{Y}_i$.
+Can we find a topology on $Z$ which makes each $\phi_i$ continuous.
+
+\section{Theorem [More general answer]}
+Let $z \ne \emptyset$ and  $ \mathcal{F} \subset 2^{Z}$, $ \mathcal{F} \ne \emptyset$ , then therre exists a unique topology $\tau( \mathcal{F})$ on $Z$ such that
+$\tau( \mathcal{F})$ contains  $ \mathcal{F}$ and every topology on $Z$ which contains  $\mathcal{F}$ also contains  $\tau( \mathcal{F})$. 
+We call $\tau( \mathcal{F})$ the coarsest topology containing $ \mathcal{F}$.\\
+Proof: $2^{ Z}$ is a topology containing $ \mathcal{F}$. The intersection of all topologies containing $ \mathcal{F}$ is also a topology $\tau( \mathcal{F})$ containing $ \mathcal{F}$....
+Equivalently, let $\mathcal{F}_1$ be the collection of sets which are created by finitely many intersections of sets in $ \mathcal{F}$
+\[
+    \mathcal{F}_1 = \{ z_1 \cap \dots \cap z_k : z_1,\dots,z_k \in \mathcal{F}, k \in \mathbb{N}\}
+\] 
+then set $ \mathcal{F}_2$ containing arbitrary unions of elements in $\mathcal{F}_1$ is a topology containing $ \mathcal{F}$.
+\\
+Let $Z, (Y_i)_{i \in I}, (\phi_i)_{i \in I}$ be as in the above problem. Set $F = \bigcup_{i \in I} \{\phi_i^{-1}(V) : V \subset Y_i \text{ open}\}$
+Note that each $ \phi_i$ is a continuous function of $(Z , \tau( F))$ into $Y_i$
+
+$z_n \rightarrow z$ means for all $O$ open set containing  $z$ there exists  $n_0$ such that  $z_n \in O$ for  $n \ge n_0$
+
+\section{Proposition}
+Let $(z_n)_n \subset Z$ then the following are equivalent.
+\begin{enumerate}
+    \item $(z_n)_n$ converges to  $z$
+    \item  $(\phi_i(z_n)) $ converges to $\phi_i(z)$ for all $i \in I$
+\end{enumerate}
+Proof:  since each 
+\[
+\phi_i : Z \rightarrow Y_i
+\] 
+is continuous $(i) \implies (ii)$ conversely, assume that  $(ii)$ holds. Let  $O \subset Z$ be an arbitrray open set containing $z$. Choose  $O_{i_1}, \dots, O_{i_k}$ and
+$\phi_{i_1} \dots \phi_{i_k}$ such that
+\[
+    z \subset \bigcap_{j = 1}^{k} \phi_{i_j}^{-1}(O_{i_j}) \subset O
+\] 
+where each $O_{i_j}$ is open wrt  $Y_{i_j}$ since  $\phi_{i_j}(z) \in O_{i_j}$ and $\lim_{n\to \infty} \phi_{i_j}(z_n) = \phi_{i_j}(z)$ there exists $n_j \in N$ such that
+$\phi_{i_j}(z_n) \in O_{i_j}$ for all $n \ge n_j$. Setting  $\overline{n} = \max\{n_{i_1},\dots,n_{i_k}\}$ we have that
+\[
+    z_n \in \bigcap_{j=1}^{k}\phi_{i_j}^{-1}(O_{i_j}) \qquad \forall n \ge \overline{n}
+\] 
+this proves that $(z_n)_n$ converges to  $z$.\\
+Assume $\phi_i : Z \rightarrow Y_i$ and $\psi : W \rightarrow Z$ we want a necessary and sufficient condition to say that $\psi$ is continuous.
+\section{Exercise}
+Let $W$ and  $Z$ be topological spaces and let $\phi_i : Z \rightarrow Y_i$ be continuous functions, assuming the $Y_i$ are topologicaal space.
+Then  $\psi : W \rightarrow Z$ is continuous iff $\phi_i \circ \psi : W \rightarrow Y_i$ is continuous for all $i \in I$.
+We only need one implication since math 245 B students are bright. The proof is left to them
+
+\section{Wednesday}
+Definition\\
+Let  $E$ be a normed space and $f \in E'$ (continuous and linear) be such that   $f \ne 0$. If
+$\alpha \in \mathbb{R}$ we call  $\{f = \alpha\}$ a hyperplane.\\ 
+Remark if $f \ne 0$ then there exists $x_0 \in E$ such that $f(x_0) \ne 0$, we have that
+$\alpha \frac{x_0}{f(x_0)} \in H_{\alpha}$ and so, $H_\alpha \ne \emptyset$ for all $\alpha$.
+\\
+Exercise 4.6 hwk assignment - Geometric Hahn Banach : form I. Let $E$ be a normed space.
+Adn $A, B \subset E$ be convex nonempty sets. If $A$ is open and $A \cap B = \emptyset$ then there exists $f \in E'$,  $f \ne 0$ and  $\alpha \in \mathbb{R}$ such that
+$A \subset \{f \le \alpha\}$ and $B \subset \{f \ge \alpha\}$. If $A$ is open then $0 \not\in \bigcup_{a \in A} B-a$ an open set.
+
+\section{Theorem [ Geometric Hahn Banach Form II]} Let $E$ be a normed space
+$K, L \subset E$ be convex sets such that $K$ is compact and $L$ is closed. If $K \cap L = \emptyset$ then there exists  $f \in E', f \ne 0, \alpha \in \mathbb{R}, \delta > 0$, such that
+$K \subset \{f \le \alpha - \delta\}$ and $B \subset \{f \ge \alpha + \delta\}$ \\
+Proof: Let $D(0,1)$ be the open ball of radius 1 centered at 0. Set
+ \[
+     K_{\epsilon} = K + \epsilon D(0,1)  \qquad L_\epsilon = L + \epsilon D(0,1)
+\] 
+choose $\epsilon > 0$ such that $K_{\epsilon} \cap L_{\epsilon} = \emptyset$ Since $K_{\epsilon} $ is open there exists $f \in E', \alpha \in \mathbb{R}$ and $f \ne 0$ such that
+\[
+    K_{\epsilon} \subset \{f \le \alpha\} \qquad L_{\epsilon} \subset \{f \ge \alpha\}
+\] 
+\[
+f(x + \epsilon z) \le \alpha \le f(y + \epsilon w) \qquad \forall x \in K, y \in L, z,w \in D(0,1)
+\] 
+so we can say
+\[
+f(x) + \epsilon f(z) \le \alpha \le f(y) + \epsilon f(w)
+\] 
+maximizing over $w$ and $z$ we get
+\[
+    f(x) + \epsilon ||f||_{E'} \le \alpha \le f(y) - \epsilon ||f||_{E'}
+\] 
+set $\delta = \epsilon ||f||_{E'}$ 
+\\
+THe $\sigma(E, E')$ topology and in the future we will talk about the $\sigma(E', E)$ topology. The first is a topology on $E$ the second is a toplogy on $E'$ we do not do  $\sigma(E', E'')$ since we are using the weak and weak* topologies.
+\section{Definition}
+Let $E$ be a Banach space.
+The weak topology on $E$ denoted by  $\sigma(E, E')$ is the coarsest topology for which evey $f \in E'$ is continuous in the norm topology.
+\[
+    E' = \{f: E \rightarrow \mathbb{R}, \text{continous wrt norm and linear}\} \qquad E^{*} = \{f: E \rightarrow \mathbb{R} \text{ linear} \}
+\] 
+Reminder: We solved an exercise showing that $(x_n)_n \in E$ converges to  $x$ for the  $ \sigma(E,E')$ topology if and only if
+\[
+\lim_{n\to \infty} f(x_n) = f(x) \qquad \forall f \in E'
+\] 
+supose $E = L^{p}$ then $E' = L^{p'}$ \\
+
+\section{Exercise}
+Let $(x_n)_n \subset E$ \\
+\begin{enumerate}
+    \item
+        Show that if $(x_n)_n$ converges to  $x$ in  $ E$  then $(x_n)_n$ converges weakly to  $E$.
+    \item Show that if  $(x_n)_n$ converges weakly to  $x$ then $(x_n)_n$ is bounded in  $E$.
+\end{enumerate}
+Solution $(a)$ is a consequence of the fact that every  $O \in \sigma( E, E')$ is an open set for the strong topology.\\
+Solution  $(b)$ if $(x_n)_n$ converges weakly to $x$, by the above exercise $(f(x_n))_n$ is bounded in  $ \mathbb{R}$. By the uniform boundedness theorem, $(x_n)_n$ is bounded in  $E$.
+
+\section{Def}
+\emph{
+    We call a topological space $Z$ a Hausdorff space if for every $x,y \in Z$ such that  $x \ne y$ there exists two disjoint open sets  $V$ and $W$ such that  $x \in V$  $y \in W$
+}
+
+\section{Theorem}
+$\sigma(E, E')$ is a Hausdorf space.\\ Proof: Let $x, y \in E$ be such that  $x \ne y$ Since  $\{x\}$ is compact
+and  $\{y\}$ is closed, there exists by the previous exercise a function  $f \in E'$ such that  $f \ne 0$,  $\alpha \in \mathbb{R}, \delta > 0$ such that
+\[
+f(x) \le \alpha - \delta \qquad \alpha + \delta \le f(y)
+\] 
+therefore let $V = f^{-}((-\infty, \alpha))$ and $W = f^{-}((\alpha ,\infty))$ then $V \cap W = \emptyset$ and each one is open in $\sigma(E, E')$ since  $f$ are continuous.
+We can say $f(x) = \langle f , x \rangle_{E,E'}$ the dual inner product. If $H$ is hilbert then $H' = H$ and if  $y_n \rightharpoonup x$ and  $y_n \rightharpoonup y$ then we cannot say anything about  $\langle x_n, y_n\rangle$ but if we say
+instead that $y_n \rightarrow y$ strongly then we can say convergence holds.
+
+\section{Theorem}
+if $(x_n)_n \subset E$ converges weakly to $x$ and  $(f_n)_n \subset E'$ converges uniformly to $f$ for the
+$||\cdot||_{E'}$ topology, then  $(f_n(x_n))_n$ converges to  $f(x)$
+ \[
+     f_n(x_n) - f(x) = f_n(x_n) - f(x_n) + f(x_n) - f(x)  \le ||f_n - f||_{E'} ||x_n||_{E} + \tilde a
+\] 
+
+\section{Friday}
+Notation: If $(E, || ||_E)$ is a normed space.
+We set
+\[
+    B_1(0)  = \{x \in E : ||x||_E \le 1\} \qquad S_1(0) = \{x \in E: ||x||_E = 1\}\qquad  D_1(0) = \{x \in E: ||x||_E < 1\}
+\] 
+Exercise: Let $E$ be a normed space of dimension  $d < +\infty$. Show that the strong
+topology $\tau_E$ coincides with  $\sigma(E, E')$.\\
+Since  $\sigma(E, E') \subset \tau_E$ it remains to show $\tau_E \subset \sigma(E, E')$.
+If we have $O \in \tau_E$ then  $O = \bigcup_{i \in I} D_{r_i}(a_i)$ if  $b \in O$ we need to show that there exists  $O_b \in \sigma(E, E')$ such that $b \in O_b$ and  $O_b \subset O$
+It suffies to show that if $a \in E$ and  $r > 0$ then there exists  $V \in \sigma(E, E')$ such that $a \in V$ and  $V \subset D_r(a)$.
+Let $\{e_1,\dots,e_d\}$ be a basis of $E$ of unit vectors. Define $p_j : E \rightarrow \mathbb{R}$ by 
+\[
+p_j (\sum_{i=1}^{d} \lambda_i e_i) = \lambda_j
+\] 
+note that if $x = \sum_{i=1}^{d}\lambda_i e_i$ and define $||x||_{l_2}^2 = \sum_{i=1}^{d}\lambda_i^2$ then $|| \lambda||_{l_2} = \sum_{i=1}^{d}p_j^2(x)$\\
+note that
+\[
+    \sum_{j=1}^{d}p_j^2(x) = ||x||_{E,2}^2 \qquad \text{ if for $x = \sum_{i=1}^{d}\lambda_i e_i$ set $||x||_{E,2} = ||\lambda||_{l_2}$}
+\] 
+since the dimension of $E$ is finite, all the norms on $E$ are equivalent and so there exists $c > 0$ such that
+ \[
+     ||\cdot||_E \le c ||\cdot||_{E,2}
+\] 
+assume without loss of generality that there exists $\epsilon > 0, J \subset I$ of finite cardinality such that
+\[
+    V = \bigcap_{j \in J}^{d} \{x \in E: |f_j(x-a)| < \epsilon\} 
+\] 
+where $E' = \{f_j : j \in I\}$ .
+If $x \in V$ then  $||x-a||_{E}^2 \le C^2 ||x-a||_{E,2}^2 = c^2 \sum_{i=1}^{d}p_i^2(x-a) \le dc^2 \epsilon^2$ \\
+It suffices to take $\epsilon$ such that $dC^2 \epsilon^2 < r^2$ to conclude that $V \subset D_r(a)$.
+Shorter proof. Let $\{e_1,\dots,e_d\}$ be a basis of $E$ of unit vector. Define  $\phi : \mathbb{R}^{d} \to E$ by
+\[
+\phi(\sum_{i=1}^{d}\lambda_i e_i) = \begin{pmatrix} \lambda_1,\dots,\lambda_d \end{pmatrix} 
+\] 
+then $\phi^{-1}$ is an isometry of $( \mathbb{R}^{d}, || \cdot ||_{l_2})$ one $(E , ||\cdot||_E)$ and so\\
+\section{Definition}
+\emph{
+    A basis for a topology $\tau$ on  $E$ is a set  $F \subset \tau$ such that
+    every element of $\tau$ can be written as a union of elements in  $F$.
+}\\
+In the sequel we assume that $E$ is a banach space\\
+Exercise: Show that if $dim E = +\infty$  amd $f_1, \dots ,f_d \in E'$ then
+\[
+    \bigcap_{i=1}^{d} Ker(f_i) \ne \{0\}
+\] 
+Solution:\\
+Assume on the contrary that $\bigcap_{i=1}^{d} Ker(f_i) = \{0\}$ Define
+\[
+\phi(x) = (f_1(x), \dots, f_d(x)) \in \mathbb{R}^{d}, x \in E
+\] 
+then
+\[
+    Ker(\phi) = \{0\}
+\] 
+and so $\phi : E \rightarrow \mathbb{R}^{d}$ is oe-one and onto this contradicts dimension of $E = \infty$ .
+
+Remark: $S_1(0) \subset B_1(0) \implies \overline{S_1(0)}^{\sigma(E,E')} \subset \overline{B_1(0)}^{\sigma(E,E')} ?= B_1(0)$.
+Exercise:
+Show that $||\cdot||_E$ is weakly lower semicontinuous.
+Solution: Let  $x \in E$ and let  $(x_n)_n \subset E$ be a sequence converging to $x$. By exercise  $4.1$ there
+exists  $f \in E'$ such that  $||x||+E = ||f||_{E'}$ and
+ \[
+f(x) = ||x||^2_E
+\] 
+we have that
+\[
+||x||^2 = f(x) = \liminf_{n\to \infty} f(x_n) \le \liminf_{n\to \infty} ||f||_{E'} ||x_n|| = ||x||_E \liminf_{n\to \infty} ||x_n||_E
+\] 
+
+\end{document}

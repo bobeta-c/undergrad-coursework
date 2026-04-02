@@ -1,0 +1,170 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+Example 3 players A,C,C A plays B first what is the probability that A is the champion where the champion
+is the player who wins two games in a row first.
+Two states $A \sim JW$ A has just won or  $A \sim JL$ A just lost. or  $A \sim W$ A is waiting did not play last game
+The last state is  $A \sim Ch$ a is champion or  $A \sim Nch$ A is not the champion
+Let
+ \[
+     h(JW) = \mathbb{P}(A \text{will be ch}| JW)
+\] 
+\[
+h(JL) = \mathbb{P}( \dots | JL)
+\] 
+similarly for wait, ch, nch where $h(ch) = 1$ and  $h(nch) = 0$
+ \[
+h(wait) = \frac{1}{2} h(JW)  + \frac{1}{2} h(JL)
+\] 
+\[
+h(JW) = \frac{1}{2} \cdot 1 + \frac{1}{2} h(JL)
+\] 
+\[
+h(JL) = \frac{1}{2} \cdot 0 + \frac{1}{2} h(wait)
+\] 
+solving gives
+\[
+h(JW) = \frac{4}{7}, h(JL) = \frac{1}{7}, h(W) = \frac{2}{7}
+\] 
+and
+\[
+\mathbb{P}(A is ch) = \frac{1}{2}h(JW) + \frac{1}{2}h(JL) = \frac{5}{14}
+\] 
+\[
+\mathbb{P}(A,B | C) = \mathbb{P}(A | B,C) \mathbb{P}(B |C)
+\] 
+\section{Def}
+$(\Omega, \mathcal{F}, \mathbb{P})$ and $\{X_n\}_{n=1}^{\infty}$ are random variables $X_n \in S$ state space countable set
+for any  $n, i_0,\dots,i_n,i_{n+1} \in S$d
+\[
+    \mathbb{P}(X_{n+1} = i_{n+1} | X_n = i_n, X_{n-1} = i_{n-1},\dots,X_0 =i_0) = \mathbb{P}(X_{n+1} = i_{n+1} | X_n = i_n)
+\] 
+
+\section{Wednesday}
+Markov Property.
+\[
+    \forall n, i_0,\dots,i_{n+1}
+\] 
+\[
+    \mathbb{P}(X_{n+1} = i_{n+1} | X_n = i_n \dots X_0 = i_0) = \mathbb{P}(X_{n+1} = i_{n+1} | X_n = i_n)
+\] 
+$S$ state space is countable, usually let  $S = \mathbb{N}, \mathbb{Z}$ iff
+\[
+    \mathbb{P}(X_{n+1} = i_{n+1} | \sigma(X_0,\dots,X_n)) = \mathbb{E}[1_{X_{N+1} = i_{n+1}} | \sigma(X_0,\dots,X_n)]
+\] 
+\[
+    = \mathbb{P}(X_{n+1} = i_{n+1} | \sigma(X_n))
+\] 
+\section{Lemma}
+Future is an event in $\sigma(X_{n+1},X_{n+2},\dots)$ and Past is an event in $\sigma(X_0,\dots,X_{n-1})$ then
+\[
+    \mathbb{P}(\text{future} | X_n = i_n, \text{past}) = \mathbb{P}(\text{future} | X_n = i_n)
+\] 
+Prove
+\[
+    \mathbb{P}(X_{n+1} = j | X_n =i, past) = \mathbb{P}(X_{n+1} = j | X_n = i)
+\] 
+Let $C = \{X_{n+1} = j\}$
+need to prove
+\[
+    \mathbb{E}[1_{C} | X_{n} = i, past] = \mathbb{E}[1_C | X_n =i]
+\] 
+the event $X_n =i, past \in \sigma(X_0,\dots,X_n)$. Recall
+\[
+    \mathbb{E}[Y | A], A \in \mathcal{F} = \frac{\mathbb{E}[Y 1_A]}{ \mathbb{P}(A)} = \frac{ \mathbb{E} \mathbb{E}[Y | \mathcal{F}] 1_A}{ \mathbb{P}(A)}
+\] 
+so Lh.s =
+\[
+    \frac{  \mathbb{E}[\mathbb{E}[1_C | \sigma(X_0,\dots,X_n)] 1_{X_{n} = i} 1_{past}]}{ \mathbb{P}(X_{n}= i, past)}
+\] 
+\[
+    = \frac{ \mathbb{E} \mathbb{E}( 1_C | X_n) 1_{X_{n} = i} 1_{past}}{ \mathbb{P}(X_n = i, past)}
+\] 
+\[
+    = \frac{ \mathbb{E} h(X_n) 1_{X_{n}= i} 1_{past}}{ \mathbb{P}(X_{n} = i, past)}
+\] 
+\[
+    = \frac{h(i) \mathbb{E} 1_{X_{n} = i} 1_{past}}{ \mathbb{P}(\dots)} = h(i) = \mathbb{E}(1_C | X_n = i)
+\] 
+So far
+\[
+    \mathbb{P}(X_{n+1} = j| X_n = i, past) = \mathbb{P}(X_{n+1} = j | X_n = i)
+\] 
+but
+\[
+    \mathbb{P}(X_{n+1} =j | X_n > i, past) \ne \mathbb{P}(X_{n+1} = j | X_n > i)
+\] 
+Example: 
+\[
+\mathbb{P}(X_{n+2} = 3 | X_n = 4, past) = \sum_{j}^{} \mathbb{P}(X_{n+2} = 3, X_{n+1} =j | X_n = 4, past) \]\[
+= \sum_{j}^{} \mathbb{P}(X_{n+2} = 3 | X_{n+1} = j, X_n = 4, past) \mathbb{P}(X_{n+1} = j | X_n = 4, past)
+\] 
+\[
+    = \sum_{j}^{} \mathbb{P}(X_{n+2} = 3 | X_{n+1} = j) \mathbb{P}(X_{n+1} = j | X_n = 4) = \mathbb{P}(X_{n+2} = 3 | X_n = 4)
+\] 
+For general markov chain
+\[
+    \mathbb{P}(X_{n+1} = j | X_n = i) = p_n(i,j) \ne \mathbb{P}(X_{n+2} =j | X_{n+1} = i) = p_{n+1}(i,j)
+\] 
+Time homogeneous markov chain
+\[
+p_n(i,j) = p(i,j) \quad \forall n
+\] 
+
+
+\end{document}

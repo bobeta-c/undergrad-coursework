@@ -1,0 +1,216 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+\DeclareMathOperator{\spt}{spt}
+\DeclareMathOperator{\iter}{int}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#2}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+\emph{
+    $E$ is a Banach space, 
+    \begin{enumerate}
+        \item $B(0,1) = \{x \in E : ||x||_{E} \le 1 \}$,  $D(0,1) = \{x \in E: ||x||_{E}\}$
+            and  $S(0,1) = \{x \in E: ||x||_E = 1\}$
+        \item if  dim  $E$ = $+\infty$ and $f_1, \dots, f_k \in E'$ then $\bigcap_{i=1}^{k}Ker(f_i) \ne \emptyset$
+        \item $||\cdot||_{E}$ is weakly lower semicontinuous
+    \end{enumerate}
+}
+We want to show that the interior of $D(0,1)$ under the weak topology is empty if  dim  $E$ = $+ \infty$ and is the whole set if $dim E < +\infty$ 
+
+\section{Theorem}
+if $dim E = +\infty$ then $\overline{ S(0,1)}^{\sigma(E, E')} = B(0,1)$.
+Proof: since $||\cdot|| $ is weakly lower semicontinuous, $\overline{ B(0,1)}^{\sigma(E, E')} = B(0,1)$.
+Since $S(0,1) \subset B(0,1)$ we infer $Y = \overline{S(0,1)}^{\sigma(E,E')} \subset \overline{ B(0,1)}^{\sigma(E,E')} = B(0,1)$.
+It remains to prove the reverse inclusion and so it remains to prove that the open ball is in the closure.
+It sufciesto show that $D(0,1) \subset Y$ since $B(0,1) = D(0,1) \cup S(0,1)$. We need to show that if  $x_0 \in D(0,1)$ and $ x_0 \in O \in \sigma(E, E')$ then $O \cap S(0,1) \ne \emptyset$.
+Fix  $x_0 \in O \in \sigma(E, E')$ let $\epsilon > 0$ and $f_1,\dots,f_k \in E'$ be such that
+\[
+    \cap_{i=1}^{k}\{x \in E: |f_i(x -x_0)|<\epsilon \} \subset O
+\] 
+let $b \in \cap_{i=1}^{k}Ker(f_i) \setminus \{0_E\}$ thena since $||x_0||_E < 1$ and $\lim_{t\to +\infty}||x_0 + tb|_E = +\infty$ there
+exists $t \in (0, +\infty)$ such that $||x_0 + tb||_E = 1$ set $x = x_0 + tb$ and observe
+\[
+|f_i(x-x_0)| = |f_i(tb)| = 0 \implies x \in O
+\] 
+and so, $x \in S(0,1) \cap \bigcap_{i=1}^{k}\{x \in E: |f_i(x-x_0)| < \epsilon\} \subset S(0,1) \cap O$.
+Let $\tau_E$ denote the strong topology on  $E$. $\sigma(E, E') \subset \tau_E$, $F \sigma(E,E')$ closed implies $F \tau_E$ closed. however
+the converse is true if the set is convex.
+\section{Theorem}
+Let $C \subset \mathbb{E}$ be a nonempty convex set. Then the following are equivalent
+\begin{enumerate}
+    \item $C$ is strongly closed
+    \item $C$ is weakly closed
+\end{enumerate}
+Proof, it suffices to show that $i \implies ii$.
+Assume that  $i$ holds, $C$ is stronlgy closed and so, $V := E \setminus C \in \tau_E$. Let $x_0 \in O$
+We are to find $O \in \sigma(E, E')$ such that $x_0 \in O \subset V$. Since $\{x_0\}$ is compact convex, and $C$ is convex closed, and $\{x_0\} \cap C = \emptyset$ by 
+the hahn banach theorem form II, there exists $\epsilon > 0$, $\delta \in \mathbb{R}, f \in E'$ such that
+$f(x_0) \le \delta - \epsilon$ and $f(x) \ge \delta + \epsilon$ for every $x \in C$ setting   $O = \{f < \delta\}$ we have $O \in \sigma(E, E')$, $O \subset V$ and $x_0 \in O$.
+
+Reminder: if $\tau$ is a topology on $X$, $g : X \rightarrow (-\infty, +\infty]$ is $\tau$ lower semicontinuous 
+if and only if $epi(g) = \{(\alpha,x) \in \mathbb{R} \times X: g(x) \le \alpha\}$ is $ \tau_{ \mathbb{R}} \times \tau$-closed.
+Corollary let $g: E \rightarrow (-\infty, +\infty]$ be a convex function, Then  $g$ is $\tau_E$-lower semicontinuous if and only if it is  $\sigma(E, E')$ lower semicontinuous.
+
+
+\section{Weak * topology}
+Let $E$ be a a Banach space. We denote $(E')'$ by  $E''$. If  $x \in E$ and we define  $J_E(x)$ on  $E'$ by
+ \[
+J_E(x) (f) = f(x) \qquad f \in E'
+\] 
+then $|J_E(x)(f)| \le ||x||_{E} ||f||_{E'}$
+and so $J_E(x): E' \rightarrow \mathbb{R}$ is in $ E''$ and $||J_E(x)||_{E''} \le ||x||_E$
+\\
+Exercise: show that $J_E : E \rightarrow E''$ is an isometry.\\
+SOlution: Clearly $J_E : E \rightarrow E''$ is linear. It remains to show that $||J_E(x)||_{E''} = ||x||_E$.
+Let  $x \in E$. We have  $||J_E(x)||_{E''} = \sup_{f \in E}\{ |J_E(x)(f)| : ||f||_{E'} \le 1\}$
+ \[
+     ||J_E(x)||_{E''} = \sup_{f \in E} \{|f(x)| : ||f||_{E'} \le 1\} = ||x||_{E}
+\] 
+by exercise $4.1$. therefoere  $E \rightarrow E'''$.
+Definition: We call $E$ reflex if $J_E$ is onto $E''$.
+\\
+Definition: We define the weak* topology on $E'$ to be the coarsest topology for which each $J_E(x) : E' \rightarrow  \mathbb{R}$ is continuous.
+If $(f_n)_n \subset E'$ converges weak * to $f$ in $E'$ we write  $f_n \rightharpoonup^{*} f$ in $E'$. This means
+ \[
+\lim_{n\to \infty} f_n(x) = f(x) \qquad \forall x \in E
+\] 
+iff
+\[
+\lim_{n\to \infty}J_E(x)(f_n) = J_E(x)(f) \qquad \forall x \in E
+\] 
+We denote it by $\sigma(E', E)$
+we have $\sigma(E', E), \sigma(E', E''), \tau_{E'}$
+If we take $B_E(0,1)$ it is compact, closed, closed in the topologies.
+What does it mean if $(f_n)_n$  $\sigma(E', E'')$ convges to $f$ then
+\[
+\lim_{n\to \infty} \alpha(f_n) = \alpha(f) \qquad \forall \alpha \in E''
+\] 
+
+\section{Friday }
+Let $E$ be a a Banach space
+If $\epsilon >0$, $x_0 \in E, f_0 \in E'$ we set
+\[
+    V_{x_0}(f_0, \epsilon) = \{f \in E' : |f(x_0) - f_0(x_0) | < \epsilon\}  
+\] 
+Exercise: \begin{enumerate}
+    \item Show that $V_{x_0}(f_0, \epsilon) \subset \sigma(E', E)$
+    \item SHow that the set 
+        \[
+            \{\bigcap_{f_0 \in I} V_{x_0}(f_0, \epsilon): \epsilon > 0, x_0 \in E, I \subset E', \#(I) < +\infty\}
+        \] 
+        forms a basis for $\sigma(E,' E)$
+\end{enumerate}
+Proposition: Show that $\sigma(E', E)$ is a hausdorf space\\
+Proof: Let $f_1, f_2 \in \sigma(E', E)$ be such that $f_1 \ne f_2$.
+Let $x \in E$ be such that  $f_1(x) < f_2(x)$ set $\delta = \frac{f_1(x) + f_2(x)}{2}$
+\[
+    O_1 = \{f \in E', f(x) < \delta\} \qquad O_2 =\{f \in E': f(x) > \delta\}
+\] 
+we have that $O_1,O_2 \in \sigma(E', E)$, $f_1 \in O_1, f_2 \in O_2$ and $O_1 \cap O_2 = \emptyset$.
+Proposition: Let $(f_n)_n \subset E'$ and $f \in E'$
+ \begin{enumerate}
+     \item if $(f_n)_n$ converges strongly to  $f$ then it converges weakly to $f$.
+     \item if  $(f_n)$ converges weakly to  $f$ then it converges weak* to $f$ 
+     \item if $(b)$ holds then  $(f_n)_n$ is bounded and  $||f||_{E'} \le \liminf_{n\to \infty}||f_n|_{E'}$ 
+     \item if (b) holds and $(x_n)_n \subset E$ converges strongly to $x \in E$ then
+          \[
+         \lim_{n\to \infty}f_n(x_n) = f(x)
+         \] 
+\end{enumerate}
+Proof: for $a$ and $b$ we have $\sigma(E', E) \subset \sigma(E', E'') \subset \tau_E$.
+If $(f_n)_n$ converges weak* to  $f$ 
+\[
+\lim_{n\to \infty}f_n(x) = f(x) \forall x \in E
+\] 
+and so, $\sup_{n \in N}f_n(x) < +\infty$ for all $x \in E$.
+By the banach-steinhaus theorem
+\[
+    M := \sup_{n} ||f_n||_{E'} < +\infty
+\] 
+Let $x \in E$ be such that  $||x||_E = 1$ and  $f(x) = ||f||_{E'}$ we have
+ \[
+     ||f||_{E'} = f(x) = \liminf_{n\to \infty} f_n(x) \le \liminf_{n\to \infty} ||f_n||_{E'}
+\] 
+Now assume (b) holds and $(x_n)_n \subset E$ converges to $x$ set  $M = \sup_{n} ||f_n||_{E'} < +\infty$ then
+\[
+|f_n(x_n) - f(x)| \le |f_n(x_n) - f_n(x)| + |f_n(x) - f(x)| \le M||x_n - x||  + |f_n(x) - f(x)| \rightarrow 0
+\] 
+
+Exercise: Let  $\phi_0, \phi_1, \dots ,\phi_n \in E'$ be such that
+\[
+    \bigcap_{i=1}^{n} Ker(\phi_i) \subset Ker(\phi_0)
+\] 
+Show that there exists $\lambda_1, \dots, \lambda_n \in \mathbb{R}$ such that $\phi_0 = \sum_{i=1}^{n}\lambda_i \phi_i$ \\
+solution: Define
+\[
+\psi : E \rightarrow \mathbb{R}^{n+1} \qquad \psi(x) = (\phi_0(x), \phi_1(x), \dots, \phi_n(x))
+\] 
+and denote
+\[
+e_0 = \begin{pmatrix} 1 \\ 0 \\ \vdots \\ 0 \end{pmatrix} , e_1 = \begin{pmatrix} 0 \\1 \\ 0 \\ \vdots \\ 0 \end{pmatrix} , \dots, e_n = \begin{pmatrix}  0 \\ 0 \\ 0 \\ \vdots \\ 1 \end{pmatrix} 
+\] 
+can we claim $e_0 \not\in $ range of $\psi$. assume that
+\[
+\begin{pmatrix} 1, 0, \cdots, 0 \end{pmatrix} = \begin{pmatrix} \phi_0(x), \phi_1(x), \dots, \phi_n(x) \end{pmatrix} 
+\] 
+this contradicts the kernel thing so we must have $e_0 \not\in $range of $\psi$ and the range is covex and is closed since it is finite dimensions.
+We apply the hahn banach theorem form II to $\{e_0\} \cap Range(\psi) = \emptyset$ to obtain $G \in \mathbb{R}^{n+1}'$ and $\alpha \in \mathbb{R}$ such that
+$G(e_0) < \alpha < G(F(x))$ for every $x \in E$. Since $G \circ F \in E'$ is bounded from below then $G \circ F$ is 0 meaning
+ \[
+G(\sum_{i=0}^{n}\phi_i(x)e_i) = 0 = \sum_{i=0}^{n}\phi_i(x)G(e_i)
+\] 
+and by the above $G(e_0) < \alpha < 0$ and so we can conclude that
+\[
+\phi_0 = -\frac{1}{G(e_0)} \sum_{i=1}^{n}G(e_i) \phi_i
+\] 
+\end{document}

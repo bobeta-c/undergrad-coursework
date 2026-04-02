@@ -1,0 +1,141 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 275B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\DeclareMathOperator{\Var}{Var}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\section{Q1}
+Let $(\xi_n)_{n \in \mathbb{N}}$ and $(\zeta_n)_{n \in \mathbb{N}}$ be two independent sequences
+of i.i.d. random variables with distributions:
+\[
+    \mathbb{P}(\xi_n = 1) = \mathbb{P}(\xi_n = -1) = \frac{1}{2} \quad \text{and} \quad \mathbb{P}(\zeta_n = 1) = \mathbb{P}(\zeta_n = 2) = \frac{1}{2}
+\] 
+Define a stochastic process $(X_n)_{n \ge -1}$ by the recurrence relation
+ \[
+     X_n = X_{n-1} + n^{-\alpha} \xi_n X_{n- \zeta_n} \quad n \ge 1
+\] 
+With deterministic initial conditions $X_0 = 1$ and $X_{-1} = 0$.
+Prove that if  $\alpha > \frac{1}{2}$, the sequence $(X_n)$ is almost surely bounded, i.e.,
+ \[
+     \mathbb{P}(\sup_{n \ge 1} |X_n| < \infty) = 1
+\] 
+hint: estimate $ \mathbb{E} X_n^2$
+
+\section{Q2}
+Consider the Bin Packing Problem with $n$ items. Let $L_1,L_2,\dots,L_n$ be independent random variables representing the lengths of these items, where $L_i \in [0,1]$ for all  $i \in \{1,\dots,n\}$.
+Let $B_n$ denote the minimum number of bins required to pack these  $n$ items, such that the total length in each
+bin does not exceed 1. Formally, $B_n$ is defined as:
+ \[
+     B_n = \min\left\{k : \exists \text{ a partition $\{S_j\}_{j=1}^{k}$ of $\{1,\dots,n\}$ s.t.  $\sum_{i \in S_j}^{}L_i \le 1, \forall j \in \{1,\dots,k\}$ } \right\}
+\] 
+Prove that the variance of the bin count satisfies
+\[
+Var(B_n) \le n
+\] 
+hint: consider how the optimal value $B_n$ changes when the length of a single item is modified.
+
+\section{Q3}
+Let  $(\Omega, \mathcal{F}, ( \mathcal{F}_n)_{n \in \mathbb{N}}, \mathbb{P})$ be a filtered probability space.
+Let $(X_n)_{n \in \mathbb{N}}$ and $(Y_n)_{n \in \mathbb{N}}$ be two sequences
+of non-negative, integrable random variables adapted to the filtration $( \mathcal{F}_n)_{n \in \mathbb{N}}$.
+Suppose that for all $n \ge 0,$ the folowing conditional expectation inequality holds:
+ \[
+     \mathbb{E}[X_{n+1} | \mathcal{F}_n] \le X_n + Y_n \text{ a.s.}
+\] 
+Prove that on the event $\{ \sum_{n=0}^{\infty}Y_n < \infty\}$ the sequence $(X_n)$ converges to a finite limit almost surely.
+
+\section{Q4}
+Let $(X_n)_{n \ge 1}$ be a sequence of i.i.d random variables with distribution
+ \[
+\mathbb{P}(X_n = 1) = \mathbb{P}(X_n = -1) = \frac{1}{2}
+\] 
+Define the simple symmetric random walk $(S_n)_{n \ge 0} $ by  $S_0 = 0$ and $S_n = \sum_{k=1}^{n}X_k$ for $n \ge 1$.
+For a fixed positive integer  $a$, define the stopping time
+\[
+    \tau = \inf\{n \ge 0: S_n = a \text{ or } S_n = -2a\}
+\] 
+Task: Rigorously compute the second moment of the exit time:
+\[
+    \mathbb{E}[\tau^2]
+\] 
+Hint it may be helpful to first determine the joint expectation $ \mathbb{E}[\tau S_{\tau}] $ by identifying an appropriate 
+cubic martingale of the form $S_n^{3} - f(n,S_n)$ 
+
+\section{Q5}
+Suppose $K_N$ balls are distributed independently and uniformly at random into  $N$ distinguishable boxes.
+Let $M_N$ denote the random variable representing the number of empty boxes.
+Assume that  $K_N \ge N$ for all  $N$ and that the expected number of empty boxes satisfies the following asymptotic condition for fixed constants  $a > 0$ and  $0 < b < 1$:
+ \[
+     \mathbb{E}[M_N] \sim aN^{b} \quad \text{as } N \to \infty
+\] 
+Task: Prove that
+\[
+    \frac{M_N - \mathbb{E}M_N}{\sqrt{Var(M_N)}} \to^{d} \mathcal{N}(0,1) \quad \text{ as } N \to \infty
+\] 
+
+\section{Q6}
+Let $X_1,X_2,\dots$ be i.i.d. random variables with
+\[
+\mathbb{P}(X_1 = 1) = \mathbb{P}(X_1 = -1) = \frac{1}{2}
+\] 
+and let
+\[
+S_n = \sum_{k=1}^{n} X_k
+\] 
+Define the random closed set
+\[
+    C(\omega) := \left\{x \in \mathbb{R}: \exists n_j \to \infty \text{ such that }  \frac{S_{n_j}(\omega)}{\sqrt{n_j}} \to x\right\}
+\] 
+Prove that there exists a deterministic closed set $F \subset \mathbb{R}$ such that
+\[
+    C(\omega) = F \quad \text{almost surely}
+\] 
+
+\end{document}

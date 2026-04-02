@@ -72,7 +72,7 @@
     \[
         \sum_{n=M}^{N}\sum_{k=1}^{n}c_kb_n = \sum_{k=1}^{N}\sum_{j=1}^{N}c_kb_j - \sum_{k=1}^{M}\sum_{j=1}^{M-1}c_kb_j - \sum_{n=M}^{N-1}\sum_{k=1}^{n}c_{n+1}b_k
     \] 
-    and moving terms so that everything is positive we now try to prove
+    and moving terms we now try to prove
     \[
         \sum_{k=1}^{N}\sum_{j=1}^{N}c_kb_j = \underbrace{\sum_{n=M}^{N}\sum_{k=1}^{n}b_nc_k}_{(a)} + \underbrace{\sum_{k=1}^{M}\sum_{j=1}^{M-1}c_kb_j}_{(b)} + \underbrace{\sum_{n=M}^{N-1}\sum_{k=1}^{n}c_{n+1}b_k}_{(c)}
     \] 
@@ -112,7 +112,7 @@
             and taking reciprocal we get $R = 4$
         \item using the approximation we get
             \begin{align*}
-                \frac{ (n!)^{3}}{(3n)!} &\approx \frac{(nc^{n+\frac{1}{2}}e^{-n})^{3}}{c(3n)^{3n+\frac{1}{2}}e^{-3n}}\\
+                \frac{ (n!)^{3}}{(3n)!} &\approx \frac{(cn^{n+\frac{1}{2}}e^{-n})^{3}}{c(3n)^{3n+\frac{1}{2}}e^{-3n}}\\
                                         &= \frac{c^{3}e^{-3n}n^{3n+\frac{3}{2}}}{c3^{3n+\frac{1}{2}}n^{3n+\frac{1}{2}}e^{-3n}}\\
                                         &= c^2n3^{-(3n+\frac{1}{2})}\\
                                         &= nc^23^{-\frac{1}{2}}(3^{-3})^{n}
@@ -140,7 +140,7 @@
     \] 
     We know that the original series converges if $|z| < R$ so we need
      \[
-    |z_0 - (z-z_0)| < R \implies |z-z_0| < R - |z_0|
+    |z_0 + (z-z_0)| < R \impliedby |z-z_0| < R - |z_0|
     \] 
     so the radius of convergence is at least $R - |z_0|$
 }
@@ -176,7 +176,7 @@
     \] 
     but we have
     \[
-        \frac{(m+n-1)!}{n!} = (m+n-1)(m+n-2)\dots(n+1) = n^{m-1} + O(n^{-m_2})
+        \frac{(m+n-1)!}{n!} = (m+n-1)(m+n-2)\dots(n+1) = n^{m-1} + O(n^{m-2})
     \] 
     so in the limit they approach eachother
 }
@@ -270,16 +270,16 @@
     \[
     \lim_{x\to 0^{-}}\frac{f^{(n)}(x)}{x} = \lim_{x\to 0^{-}}f^{(n)} = 0
     \] 
-    and so
+    and so using an equivalent definition of the derivative we get
     \[
-    f^{(n)}(0) = \lim_{h\to 0} \frac{f^{(n-1)}(-h) + f^{(n)}(h)}{h} = 0
+    f^{(n)}(0) = \lim_{h\to 0} \frac{f^{(n-1)}(-h) + f^{(n)}(h)}{2h} = 0
     \] 
     for all $n$.
     Assume for contradiction there exists an expansion that converges in a radius $ r >0$ around the origin
      \[
     \sum_{n=0}^{\infty}a_nx^{n}
     \] 
-    then by theorem $2.6$ since  $f$ is also a power series on $ \mathbb{C}$ we have that the derivates
+    then by theorem $2.6$ since  $f$ can be interpreted as a power series on $ \mathbb{C}$ we have that the derivates
     \[
     f^{(m)}(x) = \sum_{n=m}^{\infty}n(n-1)\dots(n-m+1)a_nz^{n-m}
     \] 

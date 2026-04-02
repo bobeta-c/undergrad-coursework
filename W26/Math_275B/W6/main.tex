@@ -1,0 +1,190 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{monday martingale}
+$X_n \in \mathcal{F}_n$ $F_n \nearrow$ and  $ \mathbb{E}[ X_{n+1} - X_n | \mathcal{F}_n] = 0$
+Example Simple Random Walk or Polya's urn. There are Red and blue balls each time we select a ball and add a ball of the same color back to the urn.
+$R_0 = r$ and $B_0 = b$ and $ R_n$ is the umber of red balls after time  $n$.
+\[
+B_n = \#B = n - R_n + b + r
+\] 
+and let $X_n := \frac{R_n}{R_n + B_n}  = \frac{R_n}{r + b + n}$ Recall
+\[
+    \mathbb{E}( X_{n+1} | X_n = a) = a \implies \mathbb{E}[X_{n+1} | X_n] = X_n
+\] 
+If we wnat $\{X_n\}$ to be a martingale we need a filtration, we need the  $\mathcal{F}_n$. If we let
+ \[
+\mathcal{F}_n = \sigma( X_n)
+\] 
+and
+\[
+    \mathbb{E}[X_{n+1} | \mathcal{F}_n] = \mathbb{E}[X_{n+1} | X_n] = X_n
+\] 
+but this filtration is not increasing. $ \mathcal{F}_n \subset \mathcal{F}_{n+1}$? This is not the case since
+$X_n \ne f(X_{n+1}$ for some  $f$. We need
+ \[
+ \mathcal{F}_n = \sigma(X_1,\dots,X_n)
+\] 
+we need to prove
+\[
+    \mathbb{E}[X_{n+1} | \mathcal{F}_n] = X_n
+\] 
+suppose $ \mathbb{E}[Y |X_n] = X_n$ $ \mathbb{E}[Y | \mathcal{F}_n]  = X_n$ with $ \mathcal{F}_n = \sigma(X_1\dots, X_n)$ then the second implies the first.
+We need to check
+\[
+    \mathbb{E}[X_{n+1}| \mathcal{F}_n] = X_n \iff \mathbb{E}[X_{n+1} | X_1,\dots,X_n] = X_n \notiff \mathbb{E}[X_{n+1}|X_n] = X_n
+\] 
+Need to prove
+\[
+    \mathbb{E}[X_{n+1} - X_n | X_1,\dots,X_n] = 0
+\] 
+\[
+    \mathbb{E}[\phi(X,Y)|X] = \sum_{k}^{}\phi(X,k) P_{Y|X}(k|X)
+\] 
+so
+\[
+    (X_{n+1} -X_n) | X_1 \dots X_n =
+    \begin{cases}
+        \frac{R_n+1}{R_n + B_n + 1} - \frac{R_n}{R_n + B_n} & \text{with probability $X_n$ }\\
+        \frac{R_n}{R_n + B_n + 1} - \frac{R_n}{R_n + B_n} & \text{ with probability $1- X_n$}
+    \end{cases}
+\] 
+all of this implies
+\[
+    \mathbb{E}(X_{n+1} - X_n | \mathcal{F}_n] = 0
+\] 
+later with Martingale convergence theorem, we have $X_n \rightarrow X_{\infty}$ almost sure and $X_{\infty}$ is random variable. if $R_0 = B_0 = 1$ then $X_\infty \sim unif[0,1]$.\\
+Example Fair gambling
+random variable i.i.id $\xi_k, k \in \mathbb{N}$ and $\xi_k = 1$ or  $-1$ with equal probability
+ \[
+\mathcal{F}_n = \sigma(\xi_1 \dots \xi_n)
+\] 
+and
+\[
+S_n = \sum_{k=1}^{n} \xi_k
+\] 
+is a martingale with $ \mathcal{F}_n$.
+However what if $ \mathbb{E}[S_k] = 0$, then it is still a martingale easy to check. Some "smart guy" invents a strtegy Let
+\[
+    S_n = \sum_{k=1}^{n}A_k \xi_k \qquad A_k \in \mathcal{F}_{k-1}
+\] 
+$S_n$ is still a martingale with respect to  $ \mathcal{F}_n$.
+\[
+    \mathbb{E}[S_{n+1} - S_n | \mathcal{F}_n] = \mathbb{E}[A_{n+1}\xi_{n+1}| \mathcal{F}_n] = A_{n+1} \mathbb{E}[ \xi_{n+1} | \mathcal{F}_n]  = A_{n+1} 0 = 0
+\] 
+this implies
+\[
+    \mathbb{E}[S_n] = \mathbb{E}[ \mathbb{E}[S_n | F_{n-1}]] = \mathbb{E} S_{n-1} = \dots = \mathbb{E}[S_0] = 0
+\] 
+
+\section{Wednesday}
+\emph{
+    $\{X_n\}$ is a martingale w.r.t $\{ \mathcal{F}_n\}$ then for all $m < n$
+     \[
+         \mathbb{E}[X_n | \mathcal{F}_m] = X_m
+    \] 
+}
+From def
+\[
+    \mathbb{E}[X_n | \mathcal{F}_{n-1}] = X_{n=1}
+\] 
+\[
+    \mathbb{E}[X_n | \mathcal{F}_{n-2}] = \mathbb{E}[ \mathbb{E}[X_n | \mathcal{F}_n] | \mathcal{F}_{n-2}] = \mathbb{E}[X_{n-1} | \mathcal{F}_{n-2}] = X_{n-2}
+\] 
+then by induction you prove this is correct for any $n-m$.
+For all  $n$, $E[X_n | \mathcal{F}_0] = X_0$.
+In many cases $ \mathcal{F}_0 = \{\emptyset, \Omega\}$ which would imply that $ \mathbb{E}[X_n] = X_0$.
+Fair gambling 
+\[
+S_n = \sum_{k=1}^{n}\xi_k A_k
+\] 
+where $A_k \in \mathcal{F}_{k-1}$
+
+\section{Lemma}
+If $X_n$ is martingale w.r.t $ \mathcal{F}_n$ and $\phi$ is a convex function, then
+\[
+    \mathbb{E}[\phi(X_{n+1}) | \mathcal{F}_n] \ge  \phi( \mathbb{E}[X_{n+1} | \mathcal{F}_n]) = \phi(X_n)
+\] 
+so
+$Y_n = \phi(X_n)$ is a sub-martingale.\\
+Definition sub martingale:
+$\{Y_n\}, \{ \mathcal{F}_n\}$ $ \mathcal{F}_n \nearrow$
+\begin{enumerate}
+    \item $Y_n \in \mathcal{F}_n$
+    \item $ \mathbb{E}[Y_n] < \infty$
+    \item $ \mathbb{E}[Y_n | \mathcal{F}_{n-1}] \ge Y_{n-1}$ almost sure
+\end{enumerate}
+and super martingale is less than or equal.
+The same identity proved earlier holds with equal sign replaced by less than or equal\\
+If $X_n$ is martingale then  $X_n^2$ is submartingale
+
+\section{Lemma}
+Let $X_n$ be sub martingale. and  $\phi$ convex function and $\phi$ increasing then $\phi(X_n)$ is sub-martingale
+
+\section{Lemma}
+$X_n$ is a martingale wrt  $ \mathcal{F}_n$ and $\{A_n\}$ is "predictable" i.e. for all  $n, A_n \in \mathcal{F}_{n-1}$
+Then $Y_n = (X \cdot A)_n= X_0 + \sum_{k=1}^{n}(X_k - X_{k-1})A_k$ is martingale wrt $ \mathcal{F}_n$ \\
+Proof: we need to check
+\[
+    \mathbb{E}[Y_{n+1}- Y_n | \mathcal{F}_n] = 0
+\] 
+\[
+    = \mathbb{E}[A_{n+1}(X_{n+1}-X_n) | \mathcal{F}_n] = A_{n+1} \mathbb{E}[(X_{n+1} - X_n) | \mathcal{F}_n] = A_{n+1} 0 = 0
+\] 
+
+
+\end{document}

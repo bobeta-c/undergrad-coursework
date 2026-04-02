@@ -1,0 +1,292 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+Lemma: $\{X_n\}$ is a martingale w.r.t  $ \{ \mathcal{F}_n\}$ there exists $X_\infty$ such that
+\[
+    X_n = \mathbb{E}[X_\infty | \mathcal{F}_n] \iff \{X_n\} \text{ is u.i}
+\] 
+Proof: $\implies$  $\{ \mathbb{E}[ X | G] : G \in \mathcal{F}$\} is Uniformly integrable.\\
+Proof of $\impliedby$  $\{X_n\}$ is uniformly integrable  $\implies$ 
+ \[
+\sup_n \mathbb{E}|X_n| < \infty
+\] 
+By martingale convergence theorem there exists $X_\infty$ such that $X_n \to X_\infty$ almost sure and $L_1$ since it is uniformly integrable.
+Need to prove that for all $n$
+\[
+    \mathbb{E}[X_\infty | \mathcal{F}_n] = X_n
+\] 
+$\iff$ for all  $A \in \mathcal{F}_n$
+\[
+    \mathbb{E}[X_n 1_A ] = \mathbb{E}[X_\infty 1_A]
+\] 
+We know
+\[
+    \mathbb{E}[X_{n+1} | \mathcal{F}_n] = X_n \qquad \mathbb{E} X_{n+1} 1_A = \mathbb{E}[X_n 1_A]
+\] 
+for any $m > n$
+ \[
+     \mathbb{E}[X_m 1_A] = \mathbb{E}[X_n 1_A]
+\] 
+so
+\[
+    \mathbb{E}[X_n 1_A] = \lim_{m\to \infty}  \mathbb{E}[X_m 1_A] = \mathbb{E} \lim_{m\to \infty} X_n 1_A = \mathbb{E}[X_\infty 1_A]
+\] 
+since the convergence is $L_1$\\
+Theorem: Levy 0-1 law.
+\[
+\{\mathcal{F}_n\} \quad F_\infty = \sigma(\bigcup \mathcal{F}_n) \quad A \in \mathcal{F}_\infty
+\] 
+filtration. Then
+\[
+    \mathbb{P}(A | \mathcal{F}_n) =  \mathbb{E}[1_A | \mathcal{F}_n] \to 1_A \text{a.s.}
+\] 
+Proof choose $X = 1_A$ and use levy's martingale convergence theorem.
+Applicagtion: Kolomogorov 0-1 law.
+If  $\{X_n\}$ are independent random variables. and $ \mathcal{F}_n = \sigma(X_1,\dots,X_n)$ and $\tau_N = \sigma( \mathcal{F}_{n+1} \dots )$ then $\tau = \bigcap \tau_n$ and  $A \in \tau \implies \mathbb{P}(A) \in \{0,1\}$ 
+Use Levy's 0-1 law we have
+\[
+    \mathbb{E}[1_A | \mathcal{F}_n] \to 1_A
+\] 
+but $1_a \in \tau \subset \tau_n$ so $1_A \perp \mathcal{F}_n$ so
+\[
+    \mathbb{E}[1_a | \mathcal{F}_n] = \mathbb{E}[1_A] = \mathbb{P}(A)
+\] 
+and if
+\[
+\mathbb{P}(A) \to 1_A
+\] 
+then $1_A$ must be one or zero everyhwere and so
+ \[
+     \mathbb{E}[1_A] = \mathbb{P}(A) \in \{0,1\}
+\] 
+Thoerem (Conditional Dominated Convergence Theorem):\\
+$ \{ \mathcal{F}_n\} \nearrow$ and $X_n \to X_\infty$ almost sure and 
+\[
+|X_n| < Z \quad a.s.
+\] 
+for all $n$. with $ \mathbb{E}|z| < \infty$
+then
+dct says
+ \[
+     \mathbb{E}[X_n] \to \mathbb{E}[X_\infty]
+\] 
+and we say
+\[
+    \mathbb{E}[X_n | \mathcal{F}_n] \to \mathbb{E}[X_\infty | \mathcal{F}_\infty]  \quad \text{a.s.}
+\] 
+Note we already learned that
+\[
+    \mathbb{E}[X_n | \mathcal{F}] \to \mathbb{E}[X_\infty | \mathcal{F}]
+\] 
+but that is different.\\
+Proof:
+\[
+    \mathbb{E}[X_n | \mathcal{F}_n]  - \mathbb{E}[X_\infty | \mathcal{F}_\infty] 
+    = \mathbb{E}[X_n | \mathcal{F}_n] + \mathbb{E}[X_\infty | \mathcal{F}_n] - ( \mathbb{E}[X_\infty | \mathcal{F}_\infty] - \mathbb{E}X_\infty | \mathcal{F}_n])
+\] 
+by Levy upward convergennce theorem the second term goes to zero so it suffices to check
+\[
+ |   \mathbb{E}[X_n | \mathcal{F}_n] - \mathbb{E}[X_\infty | \mathcal{F}_n] |\le ?
+\] 
+so we define
+\[
+    V_k = \sup_{n > k} |X_n - X_\infty|
+\] 
+
+\section{Wednesday}
+Need to prove for $X_n \to X_\infty $ almost sure, and $ \mathcal{F}_n \nearrow \mathcal{F}_\infty$ and $|X_n| \le Z$ for all  $n$ that
+ \[
+     \lim_{n\to \infty} |\mathbb{E}[X_n | \mathcal{F}_n] -  \mathbb{E}[X_\infty | \mathcal{F}_\infty]| = 0
+\] 
+We want 
+\[
+    | \mathbb{E}(X_n | \mathcal{F}_n) - \mathbb{E}[X_\infty | \mathcal{F}_n] | \to 0
+\] 
+Define $V_k = \sup_{n \ge k} | X_n - X_\infty|$.
+\[
+    lhs \le \mathbb{E}[V_k | \mathcal{F}_n] \qquad n \ge k
+\] 
+we have
+\[
+    \lim_{n\to \infty} \mathbb{E}[V_k | \mathcal{F}_n] = \mathbb{E}[ V_k | \mathcal{F}_\infty]
+\] 
+by levy martingale convergence theorem.
+We need to check that $ \mathbb{E}[|V_k|] < \infty$ is true since $ |V_k| \le 2Z$ is integrable.
+we have
+\[
+    \lim_{n\to \infty} | \mathbb{E}(X_n | \mathcal{F}_n) - \mathbb{E}(X_\infty | \mathcal{F}_n)| \le \mathbb{E}[V_k | \mathcal{F}_\infty]
+\] 
+for all $k$ so it is correct for the infimum.  $X_n \to X_\infty$ almost sure implies $V_k \to 0$ almost sure and  $|V_k| \le 2Z$ and  $E Z < \infty$ so with dominated convergence theorem
+\[
+    \inf_k \mathbb{E}[V_k | \mathcal{F}_\infty] = \lim_{k\to \infty} \mathbb{E}[V_k | \mathcal{F}_\infty]  = 0
+\] 
+so
+\[
+\lim_{n\to \infty} | \mathbb{E}(X_n | \mathcal{F}_n) - \mathbb{E}(X_\infty | \mathcal{F}_n)| = 0
+\] 
+
+Levy's backwards martingale.
+Normally we have $ \mathcal{F}_1, \mathcal{F}2,\dots \mathcal{F}_n, \dots \mathcal{F}_\infty$.
+Backwards we have
+\[
+   \dots \mathcal{F}_{-3}, \mathcal{F}_{-2}, \mathcal{F}_{-1}, \mathcal{F}_0 
+\] 
+\[
+    \{ \mathcal{F}_n\}_{n < 0} \qquad \mathcal{F}_n \subset \mathcal{F}_m \qquad n \le m
+\] 
+\[
+    \mathcal{F}_{-\infty} = \bigcap_{n < 0} \mathcal{F}_n
+\] 
+is a sigma algebra.
+Backward martingale $X_n \in \mathcal{F}_n$ and \\
+$ \mathbb{E}[X_{n+1} | \mathcal{F}_n] = X_n$ \\
+Result:
+\emph{
+    Levy BW martingale Convergence theorem\\
+    \[
+        X_{-n} \to X_{-\infty} \qquad \text{ a.s. and $L_1$}
+    \] 
+}
+renomralization group method.
+We skip the proof since $X_{-\infty} = \mathbb{E}[X_{-1} | \mathcal{F}_\infty]$ since we use 
+the same argument as forward process and the $X_n$ are uniformly integrable so a.s. implies  $L_1$ \\
+Applications:
+Prove strong law of large numbers. We have $X_1,\dots,X_n$ i.id and $E |X_i| < \infty$
+Define 
+\[
+    \mathcal{F}_{-n} := \mathcal{E}_n \qquad \mathcal{E}_n \subset \mathcal{F}, A \in \mathcal{E}_n, \pi \in S_n \pi(A) = A
+\] 
+symmetric sigma algebra with respect to the first $n$.
+H-S 01 law.
+We have
+\[
+\dots \subset \mathcal{E}_3 \subset \mathcal{E}_2
+\] 
+Let for $n > 0$
+\[
+    Y_{-n} = \mathbb{E}[X_1 | \mathcal{E}_n]
+\] 
+\[
+    Y_{-2} + \mathbb{E}[X_1 | \mathcal{E}_2] = \frac{X_1 + X_2}{2}
+\] 
+since
+\[
+    \mathbb{E}[X_1 | \mathcal{E}_2] = \mathbb{E}[X_2 | \mathcal{E}_2] = \frac{1}{2} \mathbb{E}[X_1 + X_2 | \mathcal{E}_2]  = \frac{X_1 + X_2}{2}
+\] 
+since the last one is $ \mathcal{E}_2$ measurable.
+So
+\[
+    Y_{-n} = \frac{\sum_{k=1}^{n}X_k}{n} \to Y_{-\infty} 
+\] 
+exists
+
+\section{Friday}
+SLLN
+\[
+\lim_{n\to \infty} \frac{S_n}{n} \to Z \qquad a.s.
+\] 
+and $Z$ is a random variable.
+\[
+    \mathbb{E}[Z] = \mathbb{E}[X_1]
+\] 
+since
+\[
+    Z = \lim_{n\to \infty } \mathbb{E}[X_1 |  \mathcal{E}_n] 
+\] 
+almost sure and $L_1$ so
+\[
+    \mathbb{E}[Z] = \mathbb{E}[X_1] 
+\] 
+Need to prove that $Z$ is constant\\
+First 
+\[
+    \lim_{n\to \infty} \frac{X_1 + \dots + X_n}{n } = \lim_{n\to \infty} \frac{X_2 + \dots + X_{n+1}}{n} = Z^{(1)}
+\] 
+and 
+\[
+    Z = Z^{(1)} \quad \text{a.s.}
+\]
+and
+\[
+Z^{(1)} \perp X_1 \implies Z \perp X_1
+\] 
+We have
+\[
+    Z^{(k)} = Z \text{ a.s.}
+\] 
+and
+\[
+Z^{(k)} \perp \sigma(X_1,\dots,X_k) = \mathcal{F}_k
+\] 
+so
+\[
+Z \perp \mathcal{F}_k
+\]
+and
+\[
+z \perp \bigcup_{k} \mathcal{F}_k \implies Z \perp \sigma( \bigcup_{k} \mathcal{F}_k) = \mathcal{F}_\infty
+\] 
+but $Z \in \mathcal{F}_\infty$. If $X \in \mathcal{F} \qquad X \perp \mathcal{F}$ then $X$ is a constant.
+We have
+\[
+    \mathbb{P}(X \le a) \in \{0,1\}
+\] 
+for all $a$ thus  $X$ is constant.\\
+
+
+\end{document}

@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 132H}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#4}{}{spongebob squarepants}{krusty krab}
+\date{}
+\maketitle
+Midterm only through theorem 5.14.
+\section{Theorem 5.14}
+\emph{
+    $f(z)$ holomorphic in a domain $\Omega$, and  $D = \{z : |z-z_0| < R\} \subset  \overline{D} \subset \Omega$ 
+    Then $|f(z)| \le \sup_{\partial D} |f(z)|$ for all $z \in D$. Equiality holds for some  $z \in D$ if and only if $f$ is constant in $\Omega$
+}\\
+Proof: $z \in D$,  $f(z) = \frac{1}{2\pi i} \int_{\partial D}^{}\frac{f(\zeta)}{\zeta - z}d\zeta$, $\zeta = z_0 + Re^{i \theta}$ 
+\[
+    = \int_{0}^{2\pi} \frac{f(z_0+ Re^{i\theta}}{R e^{i\theta}}|iR e^{i \theta}d \theta =\frac{1}{2\pi} \int_{0}^{2\pi}f(z_0+ Re^{i \theta} d \theta
+\] 
+so $|f(z_0)| \le \sup_{\Omega} |f(z)$ with equality holding if and only if $f$ is constant
+
+\section{Wednesday}
+
+\section{Theorem 5.14}
+\emph{
+    Let $f(z)$ be holomorphic on a domain $\Omega$. Let $z_0 \in \Omega$ and $D = \{z : |z-z_0| < R\} \subset \overline{ D} \subset \Omega$.
+    \[
+        |f(z_0)| \le \sup_{z \in \partial D} f(z)
+    \] 
+}
+with equality holding if and only if $f$ is constant in $\Omega$.
+Proof:
+\[
+f(z) = \frac{1}{2\pi } \int_{0}^{2\pi} f(z_0 + Re^{i\theta}) d \theta
+\] 
+therefore
+\[
+    |f(z_0)| \le \frac{1}{2\pi}\int_{0}^{2\pi}| f(z_0 + Re^{i\theta}) d \theta \le \sup_{z \in  \partial D} |f(z)|
+\] 
+assume there exists $z_0, R, \{|z-z_0| \le R\} \subset \Omega$ and
+\[
+    |f(z)| = \sup_{|z-z_0| = R}|f(z)|
+\] 
+Then let $g(z) = \overline{f(z_0)}f(z)$ and we get
+\[
+g(z_0) = \frac{1}{2\pi} \int_{0}^{2\pi}g(z_0 + Re^{i\theta}) d \theta \implies \Re g(z_0) =  \frac{1}{2\pi}\int_{0}^{2\pi}\Re g(z_0 + Re^{i\theta}) d \theta \le \frac{1}{2\pi} \int_{0}^{2\pi} \Re g(z_0)
+\] 
+therefore $g = g(z_0)$ on $\partial D$ and since $\partial D$ has a limit point we have that $g$ is constant and therefore  $f$ is constant
+
+\section{Definition (harmonic)}
+\emph{
+    \[
+    u : \Omega \rightarrow \mathbb{C}
+    \] 
+    is harmonic if $D = \{|z-z_0| < R\} \subset \overline{ D} \subset \Omega$ and
+    \[
+    u(z_0) = \frac{1}{2\pi}\int_{0}^{2\pi}u(z_0 + Re^{i \theta}) d \theta
+    \] 
+    and therefore
+    \[
+    u(z_0) = \frac{1}{\pi R^2} \int_{}^{}\int_{|z-z_0| < R}^{} u(z) dx dy
+    \] \\
+    If $u$ is harmonic on a domain  $\Omega$ and
+     \[
+         u(z_0) = \sup_{\Omega} u(z)
+    \] 
+    is finite, then $u$ is constant on  $\Omega$
+}
+
+\section{Further Results, Theorem 6.1 (Morera's Theorem)}
+\emph{
+    Let $f(z)$ be a continuous complex function on a domain  $\Omega$. And assume that
+     \[
+    \int_{\partial T}^{}f(z)dz =0
+    \] 
+    for all $U \subset \Omega$ T triangle, then $f$ is holomorphic on $\Omega$
+}\\
+Proof:  WLOG $\Omega$ is a disc  $D = \{|z-z_0| < R\}$. Define  for all $z \in D$
+\[
+    \gamma_z = \{tz + (1-t)z_0, 0 \le t \le 1\} \subset D
+\] 
+Define 
+\[
+F(z) = \int_{\gamma_z}^{}f(w) dw
+\] 
+then
+\[
+    F(z+h) - F(z) = -\int_{z,z+h}^{}f(w)dw
+\] 
+then
+\[
+    \frac{F(z+h) - F(z)}{h} = -\frac{1}{h}\int_{[z,z+h]}^{}f(w) dw \rightarrow -f(z)
+\] 
+therefore $F(z)$ is holomorphic and  $f = -F'$ is holmorphic in  $D$.
+\\
+Back to math 131.\\
+SUppose  $-\infty < a < b < \infty$ and 
+\[
+    f_n : [a,b] \rightarrow \mathbb{R}, \mathbb{C}, \mathbb{R}^{n}
+\] 
+and
+\[
+    f : [a,b] \rightarrow \mathbb{R}, \mathbb{C}, \mathbb{R}^{n}
+\] 
+$f_n \rightarrow f$ uniformly on $[a,b]$ if for all $\epsilon > 0$ there exists $N(\epsilon)$ such that $m > N(\epsilon)$ implies
+\[
+    \sup_{x \in [a,b]} |f_n(x) - f(x)| < \epsilon
+\] 
+if $f_n$ continuous for all $n$ and $f_n \rightarrow f$ uniformly then $f$ is continuous.
+
+\section{Theorem 6.2}
+Let $\{f_n\}_{n=1}^{\infty}$ be a sequence of holomorphic functions on a domain $\Omega$. Assume 
+ \[
+     f_n(z) \rightarrow f(z) \quad \text{ uniformly on $K$ for all compact $K$ subset of $\Omega$ }
+\] 
+then $f$ is holomorphic in $\Omega$. Use  Morera's theorem, and that the integrals aroudn the triangle will stay at 0.
+
+
+\section{Thm 6.2 (Weierstrass convergence theorem)}
+\emph{
+    Let $\{f_n\}_n$ be a sequence of holomorphic functions on a domain  $\Omega$ and assume
+     \[
+    \exists f(z)
+    \] 
+    on $\Omega$ such that
+     \[
+    f_n(z) \rightarrow f(z)
+    \] 
+    uniformly on each compact $K \subset \Omega$, then $f$ is holomorphic on $\Omega$.
+}
+
+\section{Theorem 6.3}
+\emph{
+    Assue $\Omega$ and  $\{f_n\}$ and  $f$ are as in theorem 6.2. then for all $k = 1,2,\dots$
+     \[
+    f_n^{(k)}(z) \rightarrow f^{(k)}(z)
+    \] 
+    uniformly on all compact  $K \subset \Omega$
+}\\
+Proof: Let $K$ compact  $K \subset \Omega$ for all $z \in K$ there exists  $r_z > 0$ so that  $B(z,2r_z) = \{w : |w-z| < r_z\} \subset \overline{B(z,2r_z)}  \subset\Omega$
+$K$ compact implies there exists $z_1,\dots,z_N \in K$ such that
+\[
+K \subset \bigcup_{j=1}^{N}B(z_j,r_{z_J})
+\] 
+for $z \in B(z_j, r_{z_j})$
+ \[
+     f^{(k)}_n(z) = \frac{k!}{2\pi i} \int_{\partial B(z_j, 2r_{z_j})}^{} \frac{f_n(\zeta)}{(\zeta - z)^{k+1}}d \zeta \xrightarrow{n \to \infty} \frac{k!}{2\pi i} \int_{\partial B(z_j, 2r_{z_j}}^{} \frac{f(\zeta)}{(\zeta - z)^{k+1}}d \zeta
+\] 
+and the convergence is uniform in $z \in B(z_j, r_{z_J})$
+because  $\zeta \in \partial B(z_j, 2r_{z_j})$ and $z \in B(z_j, r_{z_j})$ 
+\[
+    \left| \frac{f_n(\zeta)}{(\zeta - z)^{k+1}} - \frac{f(\zeta)}{(\zeta - z)^{k+1}} \right| \le \sup_{\zeta \in \partial B(z_J, 2 r_{z_j})} \frac{|f_n(\zeta) - f_n(z)|}{N_r^{k+1}} \rightarrow 0
+\] 
+uniformly in $z \in B(z_j, r_{z_j})$
+since for all $\epsilon > 0$ there exists $N = N(\epsilon)$ so that  the supremum above ($M_{k+1})$ is less than  $\epsilon $ for all $z \in B(z_j,r_{z_j})$
+So this implies that
+\[
+    \sup_{B(z_j,r_{z_j})} \left|f_n^{(k)}(z) - f^{(k)}(z)\right| < \epsilon
+\] 
+and since we have finitely many balls covering everything we can take the maximum $N$ so that everythign converges uniformly everywhere.
+
+\section{Theorem 6.4}
+\emph{
+    Let $F(z,t)$ be defined on  $\Omega \times [a,b]$ where  $\Omega$ is a domain contained in the complex plan and  $-\infty < a < b < +\infty$. Now assume
+    $F(z,t)$ is continuous in  $\Omega \times [a,b]$  i.e. if  $z_n \rightarrow z \in \Omega, t_n \rightarrow t \in \mathbb{R}$ then $(z_n,t_n) \rightarrow (z,t)$.
+    And for all $t$  $z \in \Omega$ then $F(z,t)$ is holomorphic in  $\Omega$, then  $F(z) = \int_{a}^{b}F(z,t)dt$ is holomorphic in $z \in \Omega$
+}
+Let $\Omega_k := \Omega \cap \{z : |z| < k\} \cap \{z : d(z, \partial \Omega) > \frac{1}{k}\}$ then $\Omega_k \subset \Omega$ open and $\overline{\Omega_k}$ compact and in  $\Omega$.\\
+Given $\epsilon > 0$ there exists $\delta > 0$ so that if $|s-t| < \delta$ and $s,t \in [a,b]$ then  $\sup_{\overline{\Omega_k}} \left| F(z,s) - F(z,t)\right| < \epsilon$ or equivalently
+\[
+    (z,t) \rightarrow F(z,t)
+\] 
+is uniformly continuous on $\overline{\Omega_k} \times [a,b]$. Without loss of generality, $[a,b]$ is  $[0,1]$ and  $\delta = \frac{1}{n}$ where $n \in \mathbb{N}$ and define
+\[
+f_n(z) = \frac{1}{n}\sum_{j=1}^{n}F(z,\frac{j}{n})
+\] 
+then $f_n(z)$ is holomorphic is holomorphic on  $\Omega$
+ \[
+     f(z) - f_n(z) = \sum_{j=1}^{n}  \left(\int_{\frac{j-1}{n}}^{\frac{j}{n}}F(z,t) dt - \frac{1}{n}F(z,\frac{j}{n})\right) \le \sum_{j=1}^{n} \frac{1}{n}\left| \sup_{\frac{j-1}{n} \le t \le \frac{j}{n}, z \in \Omega_k}  \left|F(z,t) - F(z,s)\right| \right| \xrightarrow{n\to \infty} 0
+\] 
+end of proof.\\
+Special case : Let $\gamma \subset \mathbb{C}$ be a piecewise smooth curve and let  $g(\zeta)$ be continuous  on  on $\gamma \subset \mathbb{C}$, then 
+\[
+G(z) = \int_{\gamma}^{}\frac{g(\zeta)}{(\zeta - z)} d \zeta
+\] 
+for $z \in \mathbb{C} \setminus \gamma$ and $G(z)$ is holomorphic on  $ \mathbb{C} \setminus \gamma$\\
+Alternat eproof: $z_0 \in \mathbb{C} \setminus \gamma$ then $B(z_0, R) \subset \overline{ B(z_0, R)} \subset \mathbb{C} \setminus \gamma$ with $ R > 0$ for $\zeta \in \gamma$ and $z \in B(z_0, R)$
+\[
+\frac{1}{\zeta - z} = \sum_{n=0}^{\infty}\frac{1}{(\zeta - z_0)^{n+1}}(z-z_0)^{n}
+\] 
+converges uniformly in $\zeta \in \gamma$ so we are integrating a power series that gives a power series converging in the disc and so the function output is analytic
+
+
+\end{document}
