@@ -1,0 +1,413 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245C}
+\newcommand{\ced}{Spring 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{}
+\date{}
+\maketitle
+
+\section{Exercise 1.5}
+Exercise 4
+\emph{
+    Let $\{U_\alpha\}_{\alpha \in I}$ be a finite open cover of a compact metric space $X$
+     \begin{enumerate}
+         \item Show that there exists $\epsilon > 0$ such that for each $x \in X$ the open ball  $B_\epsilon(x)$ is contained in one of the $U_\alpha's$
+         \item Show that if at all of the $U_\alpha's$ are proper subsets of $X$, then there is a largest Lebesgue number for the cover
+    \end{enumerate}
+}
+\solution{
+    \begin{enumerate}
+        \item Suppose for the sake of contradiction that no such $\epsilon $ existed. Then for all $n \in \mathbb{N}$ there exists $x_n$ such that
+            for all  $\alpha \in I$ the ball  $B_{\frac{1}{n}}(x_n)$ is not contained in $U_\alpha$. Thus we have a sequence $\{x_n\}_{n=1}^{\infty}$.
+            Since $X$ is compact it is sequentially compact and there exists a subsequence 
+            $\{x_{n_k}\}_{k=1}^{\infty} \subset \{x_n\}_{n=1}^{\infty}$ and $x \in X$ such that  $x_{n_k} \to x$.
+            Since  $\{U_\alpha\}_{\alpha \in I}$  is a cover of $X$ there exists some $\alpha \in I$ such that $x \in U_\alpha$ and since $U_\alpha$
+            is open there exists some $\epsilon > 0$ such that $B_\epsilon(x) \subset U_\alpha$.
+            Pick $K_1$ such that $k > K_1 \implies \frac{1}{n_k} < \frac{\epsilon}{2}$ and pick $K_2 $ such that $n > K_2 \implies d(x_{n_k},x) < \frac{\epsilon}{2}$ and
+            set $K = \max\{K_1,K_2\}$. Then for $k > K$
+             \[
+                 B_{\frac{1}{n_k}}(x_{n_k}) \subset U_\alpha
+            \] 
+            indeed if $y \in B_{\frac{1}{n_{k}}}(x_n)$ then
+            \[
+                d(y,x) \le d(y,x_{n_k}) + d(x_{n_k},x) < \frac{1}{n_k} + \frac{\epsilon}{2} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+            \] 
+            which implies
+            \[
+            y \in B_\epsilon(x) \subset U_\alpha
+            \] 
+            So $B_{\frac{1}{n_k}}(x_{n_k}) \subset U_\alpha$ which contradicts our construction therefore there exists such $\epsilon$ as in the problem statement.
+        \item Consider
+            \[
+                A := \{\epsilon > 0: \text{$\forall x \in X$, $\exists \alpha \in I$ such that  $B_\epsilon(x) \subset U_\alpha$ }\}
+            \] 
+            We assume that each $U_\alpha$ is a proper subset of $X$ and fix  $x \in X$, for each  $\alpha \in I$ there exists $N_\alpha$ such that
+            $B_{N_\alpha}(x) \not\subset U_\alpha$ which is possible since if  $y_\alpha \not\in U_\alpha$ is a point that is not in $U_\alpha$, picking $N_\alpha > d(y_\alpha,x)$ would work.
+            Letting $N = \max_{\alpha \in I}\{N_\alpha\}$ we see that if $\epsilon > N$ then  $\epsilon \not\in A$. Additionally, $A$ is nonempty by 
+            the previous part of this problem. Since  $A$ is a nonempty bounded subset of $ \mathbb{R}$ it  has a least upper bound, say $r$. We want to show $r \in A$.
+            Suppose for contradiction  $r \not\in A$ then there exists a point $x \in X$ such that for all  $\alpha \in I$, $B_r(x) \not\subset U_\alpha$.
+            By the properties of the least upper bound and the fact that it is not attained there exist $(r_n)_n \subset A$ such that $r_n > r_{n-1}$ and  $|r-r_n| < \frac{1}{n}$ 
+            a sequence approaching $r$ in  $A$ from below. Since for all $n \in \mathbb{N}$ $r_n \in A$, there is a corresponding $\alpha_n$ such that $B_{r_n}(x) \subset U_{\alpha_n}$ since each $\alpha_n \in I$
+            and there are infinitely many $\alpha_n$ and $I$ is finite, so by the pigeonhole principle there must be some $\alpha \in I$ such that $\alpha_n = \alpha$ infinitely often. Let $\{n_k\}_{k=1}^{\infty}$ be the subsetquence such that $\alpha_{n_k} = \alpha$ for all $k \in \mathbb{N}$.
+            Since subsequences of convergent sequences converge to the same limit: $r_{n_k} \nearrow r$. so
+            \[
+                \forall k \in \mathbb{N}, B_{r_{n_k}}(x) \subset U_\alpha
+            \] 
+            I claim two things
+            \[
+                (1) \quad B_r(x) \subset \bigcup_{k=1}^{\infty}B_{r_{n_k}}(x)
+            \] 
+            \[
+                (2) \quad \bigcup_{k=1}^{\infty}B_{r_{n_k}}(x) \subset U_\alpha
+            \] 
+            for $(1)$ if  $y \in B_r(x)$ then $l = d(y,x) < r$ then there exists  $k$ such that  $\frac{1}{n_k} < r-l  \implies l < r - \frac{1}{n_k} < r_n \implies l < r_n $ since $r - r_{n_k} < \frac{1}{n_k}$.
+            Therefore $d(y,x) < r_{n_k} \implies y \in B_{r_{n_k}}(x) \implies y \in \bigcup_{k=1}^{\infty}B_{r_{n_k}}(x)$, this proves $(1)$.
+            For  $(2)$ if  $y \in \bigcup_{k=1}^{\infty}B_{r_{n_k}}(x)$ then $y \in B_{r_{n_K}}(x) \subset U_\alpha$ for some  $k \in \mathbb{N}$ so $y \in U_\alpha$.
+            Combining $(1)$ and  $(2)$ we get
+             \[
+            B_r(x) \subset U_\alpha
+            \] 
+            This contradicts our assumption that $B_r(x) \not\subset U_\alpha$, therefore  $r \in A$.
+            And since $r$ is an upper bound on  $A$ we see that  $r$ is the largest lebesgue number for the cover.
+    \end{enumerate}
+}
+Exercise 5
+\emph{
+    Prove that the product of a finite number of compact metric spaces is compact
+}
+\solution{
+    Let $(X_1,\rho_1),\dots,(X_d,\rho_d)$ be compact metric spaces and let  $X = X_1\times\dots\times X_d$ equipped with a standard product metric $d(x,y) = \rho_1(\pi_1(x),\pi_1(y)) + \dots + \rho_d(\pi_d(x),\pi_d(y))$.
+    I intend to show that $X$ is sequentially compact. Let $(x_n)_n \subset X$ be a sequence.
+    Then since $X_1$ is compact there exists $\{n_{k,1}\}_{k=1}^{\infty} \subset \mathbb{N}$ subsequence and $y_1 \in X_1$ such that
+    \[\pi_1(x_{n_{k,1}}) \to y_1 \]
+    Assuming $n_{k,j}$ is picked, by sequenctial compactness of $X_{j+1}$ there exists  $\{n_{k,j+1}\}_{k=1}^{\infty} \subset \{n_{k,j}\}_{k=1}^{\infty}$ such that
+    \[
+        \pi_{j+1}(x_{n_{k,j+1}}) \to y_{j+1}
+    \] 
+    since subsequences of convergent sequences converge to the same limit we also have for all $i \le j$
+     \[
+         \pi_i(x_{n_{k,j+1}}) \to y_i
+    \] 
+    Thus holds for all $j$ so we can consider ultimatley  $\{x_{n_{k,d}}\}_{k=1}^{\infty} \subset \{x_n\}_{n=1}^{\infty} \subset X$ such that
+    \[
+        \forall j \in \{1,\dots,d\} \quad \pi_j(x_{n_{k,d}}) \to y_j
+    \] 
+    Let $y = (y_1,\dots,y_d)$ then by (4.4) in the textbook we must have $x_{n_{k,d}} \to y$ in  $X$. Therefore
+    every sequence admits a convergent subsequence and so  $X$ is sequentially compact which implies it is compact since it is a metric space.
+}
+
+\section{1.6}
+Exericse 7
+\emph{
+    Show that if $f$ is a continuous function from a compact metric space $X$ to a metric space $Y$, then the image of $f$ is a compact subset of $ Y$. In
+    particular, show that  $f$ is bounded, the range of $f$ is a bounded subset of $ Y$
+}
+\solution{
+    I will show directly that  $Z := ran(f) \subset Y$ is a compact subset of $ Y$. Let
+    \[
+        \{U_\alpha\}_{\alpha \in I}
+    \] 
+    Be a collection of open sets in $ Y$ such that $Z \subset \bigcup_{\alpha \in I} U_\alpha$ then to each $U_\alpha$, the set $V_\alpha = f^{-1}(U_\alpha)$ is an open  subset of $X$ since $f$ is continuous. additionally 
+    \[
+        X \subset \bigcup_{\alpha \in I} V_\alpha
+    \] 
+    since for each $x \in X, f(x) \in U_\alpha$ for some $ \alpha$ so $x \in V_\alpha$. Since $X$ is compact there exists a finite set  $K \subset I$ such that
+    \[
+        X \subset \bigcup_{\alpha \in K} V_\alpha
+    \] 
+    and so for all $y \in Z, \exists x \in X : f(x) = y$ and there exists $\alpha \in K$ such that $x \in V_\alpha$, thus
+    $y \in f(V_\alpha) = U_\alpha$ and we see
+    \[
+        Z \subset \bigcup_{\alpha \in K} U_\alpha
+    \] 
+    We have thus shown that for any arbitrary open cover of $Z$ there exists a finite subcover and therefore $Z$ is compact.
+    Lastly since compact sets are totally bounded and therefore trivially bounded, the range of $f$ is a bounded subset of  $ Y$
+}
+\\
+Exercise 8
+\emph{
+   Prove that a continuous real-valued function on a compact metric space assumes its maximum and its minimum value 
+}
+\solution{
+    Let $f: X \to \mathbb{R}$ be continuous and $X$ compact metric space. By the previous problem we have  $f(X)$, the range of  $f$, is a
+    compact subset of $ \mathbb{R}$. By Heine-Borel, $f(X)$ is closed and bounded therefore there exists  $a = \inf f(X), b = \sup f(X)$ by the least upper bound property of the real numbers
+    It is left to show that  $a,b \in f(X)$. Indeed for each $n \in \mathbb{N}$ there exists $x_n \in f(X)$ such that  $a \le x_n \le a + \frac{1}{n}$ by the property of the infimmum.
+    It is clear that $x_n \to a$ since $|x_n- a| \le \frac{1}{n}$ and since  $f(X)$ is closed and each  $x_n \in f(X)$ we must have  $\lim_{n\to \infty}x_n = a \in f(X)$ so the function $f$ achieves its minimum value $a$.
+    A similar argument shows that  $b \in f(X)$
+}
+\\ \\
+Exercise 9
+\emph{
+Prove that a metric space $X$ is compact if and only if every real valued continuous function on $X$ is bounded.
+}
+\solution{
+    The previous problem shows that if $X$ is compact every real valued continuous function assumes its maximum and minimum value which must be strictly less than  $\infty$ so
+    every real valued continuous function is bounded. I show the other direction by contrapositive. Assume for contradiction
+    that $X$ is not compact then there are two cases
+    \begin{enumerate}
+        \item $X$ is complete but not compact: Then I first prove the following lemma: For all $A, B$ closed sets in a metric space  $X$ such that  $A \cap B = \emptyset$ there exists a function  $f \in C(X,[0,1])$ such that $f \equiv 1$ on $A$ and  $f \equiv 0$ on  $B$.
+            Indeed let
+            \[
+            f(x) = \frac{d(x,B)}{d(x,B) + d(x,A)}
+            \] 
+            is the composition of continuous functions and is thus continuous since $d(x,B) + d(x,A) > 0$ for all  $x$, this is because $d(x,B) = \inf_{y \in B}\{d(x,y)\}$ is continuous for any  $B$ closed and greater than 0 for any $x \not\in B$. since if  $\epsilon > 0$ is fixed
+            and $d(y,x) < \epsilon$ then for any $z \in B$
+            \[
+                d(x,z) \le d(y,z) + d(x,y) \implies \inf_{z \in B} d(x,z) \le \inf_{z \in B} d(y,z) + d(x,y) \implies d(x,B) \le d(y,B) + d(x,y)
+            \] 
+            by symmetry
+            \[
+            d(y,B) \le d(x,B) + d(x,y)
+            \] 
+            and combining we get
+            \[
+            |d(y,B) - d(x,B)| \le d(x,y)  = \epsilon
+            \] 
+            which implies that $d(x,B)$ is continuous in  $x$. Additionally if  $x \not\in B$ then  $d(x,B) > 0$ since if it is equal to zero
+            that would imply the existence of a sequence in  $B$ converging to  $x$ but since  $B$ is closed that would imply that  $x \in B$.
+            \\
+            With this Lemma out of the way, since  $X$ is complete but compact it must not be totally bounded so we can construct a sequence as follows:\\
+            Since $X$ is not totally bounded there is a radius, say  $r$, such that no finite set of balls of radius  $r$ covers  $X$. Let $x_0$ be arbitrary 
+            then since
+            \[
+            X \setminus B_r(x_0) \ne \emptyset
+            \] 
+            we can pick $x_1 \in X \setminus B_r(x_0)$. Inductively pick $x_n \in X \setminus (\bigcup_{j=1}^{n-1}B_r(x_j))$ which is possible
+            since if it were not, finitely many balls would cover $X$.
+            Thus we have a sequence $(x_n)_n$ of non repeating points with no convergent subsequence.  Letting $\epsilon < \frac{r}{2}$
+            by construction we have $d(x_n,x_m) > 2\epsilon$ for all $n \ne m$, equivalently
+            $B_\epsilon(x_n) \cap B_\epsilon(x_m) = \emptyset$.
+            I create the function
+            \[
+                f_n  \in C(X, [0,1]) \quad f_n(x) =
+                \begin{cases}
+                    1 & x \in \bigcup_{m=n}^{2n} \overline{B_{\frac{\epsilon}{3}}(x_m)} = \bigcup_{m=n}^{2n}\{x \in X : d(x_n,x) \le \frac{\epsilon}{3}\}\\
+                    0 & x \in X \setminus  \bigcup_{m=n}^{2n}B_{\frac{2}{3}\epsilon}(x_m)
+                \end{cases}
+            \] 
+            as in the lemma proved aboved since the finite union of closed sets is closed and the complement of a union of open sets is closed and the two sets are clearly disjoint.
+            Then I define
+            \[
+            f(x) = \sum_{n=1}^{\infty}f_n(x)
+            \] 
+            first I show this function is well defined. Indeed if $x \not\in \bigcup_{n=1}^{\infty}B_\epsilon(x_n)$ then $f_n(x) = 0$ for all  $n$.
+            If  $x \in B_\epsilon(x_n)$ for some $n$  then for all   $m > n$,  $f_m(x) = 0$ since the  $\epsilon$ balls are disjoint.
+            So $f(x) < \infty$ for all $x \in X$. Additionally,  $f$ is continuous. Since if $x \not\in \bigcup_{n=1}^{\infty}B_\epsilon(x_n)$ then $B_{\frac{\epsilon}{3}}(x) \cap B_{\frac{2}{3}\epsilon}(x_n) = \emptyset$ for all $x_n$ which implies that
+            for all  $n$ and all  $y \in B_{\frac{\epsilon}{3}}(x)$, $f_n(y) = 0$ so  $f$ is continuous at  $x$.
+            If  $x \in B_\epsilon(x_n)$ for some $n$, then there exists some  $\delta$ such that $B_\delta(x) \subset B_\epsilon(x_n)$ since $B_\epsilon(x_n)$ is open.
+            and in $B_\delta(x), f = \sum_{k=1}^{n}f_n$ since the other terms are zero. This is a finite sum of continuous functions
+            and is therefore continuous on this ball and is continuous at $x$.
+            Lastly,  $f(x_{2n}) \ge n$ this is because  $f_m(x_{2n}) = 1$ for all  $2n \ge m \ge n$ and so their sum is greater than or equal to  $n$.
+            Thus  $f$ is unbounded and we have constructed explicitely our unbounded real valued continuous function on  $X$
+        \item X is not complete:  since $X$ is not complete there exists a cauchy sequence  $(x_n)_n$  with no limit, i.e. for all  $x \in X$
+             \[
+            \lim_{n\to \infty}d(x_n,x) > 0
+            \] 
+            this limit exists since
+            \[
+            |d(x_n,x) - d(x_m,x)| \le d(x_n,x_m)
+            \] 
+            by the reverse triangle inequality
+            define
+            \[
+                f(x) = \inf_{n \in \mathbb{N}}(d(x,x_n) + \lim_{m\to \infty}d(x_n,x_m))
+            \] 
+            \[
+            d(x,x_n) + \lim_{m\to \infty}d(x_n,x_m) \le d(x,y) + d(y,x_n) + \lim_{m\to \infty}d(x_n,x_m)
+            \] 
+            taking infimum on both sides over all natural numbers $n$ yields
+             \[
+            f(x) \le f(y) + d(x,y)
+            \] 
+            and by symmetry
+            \[
+            f(y) \le f(x) + d(x,y)
+            \] 
+            together implies
+            \[
+            |f(y) - f(x)| \le d(x,y)
+            \] 
+            so  $f$ is continuous. Additionally  $f(x) > 0$ for all  $x$ since if not, for all  $\epsilon > 0$ there would exist
+            some $n$ such that $d(x,x_n) + \lim_{m\to \infty}d(x_n,x_m) < \epsilon$ so we could generate a sequence $(x_{n_k})_k$ such that
+             \[
+                 \lim_{k\to \infty}(d(x,x_{n_k})  + \lim_{m\to \infty}d(x_{n_k},x_m)) = 0
+            \] 
+            which would imply that
+            \[
+                \lim_{k\to \infty}d(x,x_{n_k}) = 0
+            \] 
+            and so this subsequence of $\{x_n\}_n$ converges to  $x$ but since  $\{x_n\}_n$ is cauchy, if it has a convergent sequence it must also converge
+            so we have a contradiction, thus for all  $x \in X$
+             \[
+            f(x) > 0
+            \] 
+            Thus we can take reciprocal to get
+            \[
+            g(x) = \frac{1}{f(x)}
+            \] 
+            is continuous on $X$. It suffices further to show that $g(x)$ is unbounded. Indeed for each  $K \in \mathbb{N}$ there exists $N \in \mathbb{N}$
+            such that
+            \[
+            d(x_n,x_m) < \frac{1}{K} \quad \forall n,m \ge N
+            \] 
+            then we have for any $n \ge N$
+            \[
+            f(x_n) \le d(x_n,x_n) + \lim_{m\to \infty}d(x_n,x_m) \le 0 + \frac{1}{K}
+            \] 
+            which implies that
+            \[
+            g(x_n) \ge K
+            \] 
+            so $g$ is unbounded.
+    \end{enumerate}
+    Thus In either case there exist unbounded continuous functions on $X$ if $X$ is not compact proving the other direction.
+}
+
+\section{2.1}
+Exercise 2
+\emph{
+    Let $X$ be a set and let  $ \tau$ be the family of subsets  $U$ of  $X$ such that  $ X \setminus U$ is finite, together with the empty
+    set  $\emptyset$. Show that  $\tau$ is a topology
+}
+\solution{
+    it is given that $\emptyset \in \tau$, and since $X \setminus X = \emptyset$ is finite we have  $X \in \tau$. This 
+    gives the first axiom. Let  $\{U_\alpha\}_{\alpha \in I} \subset \tau$ then there are two cases, first each $U_\alpha = \emptyset$ which implies their union is the emptyset which is in the topology.
+    The second is that at least one, say $U_\alpha$ is nonempty then:
+    \[
+        X \setminus (\bigcup_{\alpha \in I} U_\alpha) \subset X \setminus U_\alpha \quad \forall \alpha \in I
+    \] 
+    so it is a finite set and therefore $\bigcup_{\alpha \in I} U_\alpha \in \tau$.
+    Now assume that $I$ is a finite set again we proceed by cases, if any $U_\alpha = \emptyset$ then the intersection is the emptyset and we are done. If not
+     \[
+         (\bigcap_{\alpha \in I}U_\alpha)^{c} = \bigcup_{\alpha \in I}U_\alpha^{c}
+    \] 
+    is the finite union of finite sets and is finite. Therefore
+    \[
+        \bigcap_{\alpha \in I}U_\alpha \in \tau
+    \] 
+    since $\tau$ is closed under arbitrary union, finite intersection, and has the whole set and emptyset, it is a topology.
+}\\
+Exercise 3
+\emph{
+    Let $\tau$ be the cofinite topology on the set  $ \mathbb{Z}$ of integers. Show that
+    the sequence $\{1,2,\dots\}$ converges in  $( \mathbb{Z}, \tau)$ to each point of $ \mathbb{Z}$ and describe the convergent sequences in $ ( \mathbb{Z}, \tau)$
+}\\ 
+\solution{
+    Let $(x_n)_n = (n)_n \subset \mathbb{Z}$
+    Fix $x \in \mathbb{Z}$ we must show that for each $U \in \tau$ with  $x \in U$ there exists  $N$ such that $n > N \implies x_n \in U$.
+    Let  $U \in \tau$ be such that  $x \in U$. First assume that $U \ne \mathbb{Z}$ since that case is trivial,  then  $U^{c}$ is finite so there exists a greatest element say $m$.
+    Then for  $n > m$,  $n \not\in U^{c} \implies n \in U$ so $x_n = n \in U$ for all  $n > m$ and since  $U$ is an arbitrary open set containing  $x$
+    we have that  $(x_n) \to x$. The convergent sequences in $( \mathbb{Z}, \tau)$ are the sequences that have at most one point repeating infinitely often and the rest of the points repeat only finitely often.
+}\\
+Exercise 12
+\emph{
+    Let $X$ be a set and  $ \tau$ be the family of subsets  $ U$ of  $X$ such that  $U^{c}$ is at most countable, together with the empty set
+    \begin{enumerate}
+        \item Prove that $\tau$ is a topology for  $X$
+        \item Describe the convergent sequences in  $X$ 
+        \item Prove that if  $X$ is uncountable, then there is a subset of  $X$ whose closure contains points
+            that are not limits of convergent sequences in  $ S$
+    \end{enumerate}
+}
+\solution{
+    Since $X^{c} = \emptyset$ we have that $X, \emptyset \in \tau$ and if  $\{U_\alpha\}_{\alpha \in I}$ is a collection of open sets not all of which are empty (trivial case)
+    we have
+    \[
+        (\bigcup_{\alpha \in I}U_\alpha)^{c} \subset U_{\alpha_0}^{c}
+    \] 
+    where $U_{\alpha_0}, \alpha_0 \in I$ is nonempty, and since $U_{\alpha_0}^{c}$ is at most countable we have the above set
+    which is a subset of that set is at most countable so $\bigcup_{\alpha \in I}U_\alpha \in \tau$.
+    Now assume that $I$ is finite and that no  $U_\alpha = \emptyset$ which is the trivial case, We have
+    \[
+        (\bigcap_{\alpha \in I}U_\alpha)^{c} = \bigcup_{\alpha \in I} U_\alpha^{c}
+    \] 
+    is the finite union of at most countable sets and is thus countable which implies that $\bigcap_{\alpha \in I}U_\alpha \in \tau$.
+    Thus $\tau$ is a topology.
+    Let $(x_n)_n$ be a sequence in $X$ then if $x_n \to x$ we must have for each $U$ open set containing $x$ $x_n \in U$ for all $n > N$.
+    This means that $x_n$ is not in  $U^{c}$ for $n$ large enough but the set
+    \[
+        V := X \setminus \{y \in X : y = x_n \text{for some $n \in \mathbb{N}$}\wedge y \ne x\}
+    \] 
+    is in $\tau$ since its complement is  a subset of the sequence's range which is at most countable so for $x_n \to x$ we must have that there exists  $N$ such that  $n > N \implies x_n = x$.
+    For any other sequence that had terms not equal  $x$ infinitely often would not converge to  $x$ since it would not be in  $V$ 
+    after any threshold. Additionally, sequences satisfying this property of being constant after a given index clearly converge to  the
+    point eventually stay. This characterizes all sequences. Now suppose $X$ is uncountable and pick a point  $x \in X$ and the set  $S = X \setminus \{x\}$ is open.
+    Additionally, if  $U$ is an open set containing  $x$ then  $U$ must contain some other point in  $X$ since it is co-countable and  $X$ is uncountable,
+    therefore  $U \cap S \ne \emptyset$ and so  $x$ is adherent to  $S$ and so  $\overline{S} = X$. No sequence in $S$ converges to  $x$ however,
+    since as illustrated above such a sequence would need to equal the point  $x$ infinitely often which cannot happen since  $x \not\in S$. Therefore  $x \in \overline{S}$ but
+    no sequence in $S$ converges to  $x$
+}
+
+\section{2.2}
+Exericse 1
+\emph{
+    Let $X$ be a topological space. Let $S$ be a subspace of  $X$, and let  $E$ be a
+    subset of  $S$. Show that the relative topology that  $E$ inherits from $S$ coincides with the relative topology that $E$ inherits from $X$
+}
+\solution{
+    Let
+    \[
+        \tau_S := \{U \cap S: U \in \tau_X\}
+    \] 
+    be the relative topology on $S$.
+    I need to show
+    \[
+        A := \{U \cap E: U \in \tau_S\} = B := \{U \cap E: U \in \tau_X\}
+    \] 
+    let $O \in A$ then $O = U \cap E$ for some $U \in \tau_S$. since  $U \in \tau_S$ we have
+     $U = V \cap S$ for some  $V \in \tau_X$ and so  $O = (V \cap S) \cap E = V \cap E$ since  $E \subset S$ therefore $O \in B$ since $V \in \tau_X$.
+     This finishes the first direction. Now suppose   $O \in B$ then  $O = U \cap E$ for some  $U \in \tau_X$. Let  $V := U \cap S$.
+     Then $V \in \tau_S$ and so  $V \cap E \in A$ but  $V \cap E = U \cap S \cap E = U \cap E = O$ so  $O \in A$.
+     Thus the two relative topologies are identical.
+}
+
+\end{document}
