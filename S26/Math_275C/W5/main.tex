@@ -1,0 +1,356 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245B}
+\newcommand{\ced}{Winter 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\Assignment #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{006-150-286}
+\date{}
+\maketitle
+
+\section{Monday}
+Strong Markov Property
+\[
+    1_{\tau  <\infty}   \mathbb{E}[Y \circ \theta_\tau | \mathcal{F}_\tau] = 1_{\tau < \infty}\mathbb{E}_{X_\tau} Y
+\] 
+\[
+    \mathcal{F}_\tau = \{A : A \cap \{\tau = n\} \in \mathcal{F}_n\}
+\] 
+since it is a stopping time we have $\{\tau = n\} \in \mathcal{F}_n$
+\[
+    = \{A : A \cap \{\tau = n\} \in \mathcal{F}_n \cap \{\tau = n\}\}
+\] 
+\[
+    = \{A  \in \bigcup_{n=1}^{\infty} \left(\mathcal{F}_n \cap \{\tau = n\}\right)\}
+\] 
+e.g.
+\[
+A = \bigcup_{n} \left\{X_{n-1} = 5\} \cap \{\tau = n\}\right)
+\] 
+r.h.s = $g(X_\tau)$ 
+$g(a) = \mathbb{E}(Y | X_0 = a)$
+Example:
+simple random walk half half from $X_0 = 0$
+\[
+    \tau = \min\{n  > 0 : X_n \in \{-5,10\}\}
+\] 
+what is
+\[
+    \mathbb{P}(X_\tau + 2 = 12) = \mathbb{E}[1_{X_{\tau + 2} = 12}] = \mathbb{E}(1_{X_2 = 12} \circ \theta_\tau)
+\] 
+\[
+    = \mathbb{E}[ 1_{\tau < \infty} \left(1_{X_2 = 12} \circ \theta_\tau\right)]
+\] 
+\[
+    = \mathbb{E}\left( \mathbb{E}[1_{\tau < \infty} ( 1_{X_2 = 12} \circ \theta_\tau) | \mathcal{F}_{\tau}] \right)
+\] 
+\[
+    = \mathbb{E}\left( 1_{\tau < \infty} \mathbb{E}[1_{X_2 = 12} \circ \theta_\tau| \mathcal{F}_\tau]\right) 
+\] 
+\[
+    = \mathbb{E}\left(1_{\tau < \infty} \mathbb{E}_{X_\tau} 1_{X_2 = 12}\right)
+\] 
+\[
+    = \mathbb{E}[g(X_{\tau})]
+\] 
+where
+\[
+    g(a) = \mathbb{P}(X_{12} = 12 | X_0 = a)
+\] 
+\[
+    = \mathbb{P}(X_{\tau} = -5) g(-5) + \mathbb{P}(X_{\tau} = 10) g(10)
+\] 
+\[
+= \frac{1}{3} g(10) = \frac{1}{12}
+\] 
+Second example
+THMC $(S, \mathcal{S})$
+Def: 
+ \[
+     \rho_{xy} : \mathbb{P}(\exists n > 0 , X_n = y | X_0 = x)
+\] 
+\[
+    = \mathbb{E}[1_{\exists n > 0, X_n  =y} | X_0 = x]
+\] 
+\[
+    \mathbb{P}(\exists n_1 > n_2 > 0 , X_{n_1} = z, X_{n_2} = y | X_0 = x) = \mathbb{P}(A | X_0 = x)
+\] 
+what is 
+\[
+    \mathbb{E}[1_A | X_0 = x] = \rho_{xy} \rho_{yz}
+\] 
+\[
+    1_A \sim Y \circ \theta_\tau
+\] 
+\[
+    \tau = T_y \quad Y = 1_{\exists n > 0, X_n = z}
+\] 
+then
+\[
+    Y \circ \theta_\tau = 1_{\exists n > \tau , X_n = z}
+\] 
+\[
+    1_A \sim Y \circ \theta_\tau 1_{\tau < \infty}
+\] 
+
+\[
+    \mathbb{E}_x (1_{\tau < \infty} Y \circ \theta_\tau)
+\] 
+\[
+    = \mathbb{E}_x(1_{\tau < \infty} \mathbb{E}(Y \circ \theta_\tau | \mathcal{F}_\tau]) = \mathbb{E}_x(1_{\tau < \infty} g(X_\tau))
+\] 
+where $g(a) = \mathbb{E}[Y | X_0 = a] = \mathbb{P}(\exists n > 0, X_n = z | X_0 = a)$ 
+\[
+    = \mathbb{E}_x(1_{\tau < \infty} \rho_{yz}) = \rho_{yz} \rho_{xy}
+\] 
+strong strong markov property
+\[
+    1_{\tau < \infty} \mathbb{E}[Y_{\tau} \circ \theta_{\tau} | \mathcal{F}_{\tau}] = \mathbb{E}_{X_\tau}(Y_\tau) 1_{\tau < \infty}
+\] 
+for example $X_{2\tau} = [X_{\tau} \circ \theta_\tau]$
+for the rhs
+\[
+    = g(X_{\tau} , \tau)
+\] 
+\[
+    g(a,m) = \mathbb{E}[Y_m | X_0 = a]
+\] 
+Random walk
+\[
+X_n = \sum_{k=1}^{n}\xi_k 
+\] 
+i.i.d
+\[
+\mathbb{E} \xi_k = 0
+\] 
+\[
+\mathbb{P}(\xi_k > a) = \mathbb{P}(\xi_k < -a)
+\] 
+for any $a > 0$ and $ \forall n $
+ \[
+\mathbb{P}(\exists m , 0 \le m \le n, X_m \ge a) \le 2 \mathbb{P}(X_n \ge a)
+\] 
+\section{Wednesday}
+Application of SMCP
+Example $X_n = \sum_{k=1}^{n}\xi_k$ with $\xi_k$ i.i.d  $\xi_k \sim \mu$ symmetric
+\[
+\forall a, \mathbb{P}(\exists m, 0 \le m \le N, X_m \ge a) \le 2 \mathbb{P}(X_N \ge a)
+\] 
+\[
+    \tau - \min\{n > 0, X_n \ge a\}
+\] 
+Proof:
+\[
+    \mathbb{P}(X_N \ge a) \ge \mathbb{P}(\tau \le N,  X_N - X_{\tau} \ge 0) = \mathbb{P}(B)
+\] 
+%are they not equal
+$B = \bigcup B_m$ where $B_m = \{\tau = m\} \cap \{X_n \ge X_m\}$ clearly $B_m \subset A$ so $B \subset A$.
+\[
+    = \mathbb{E}[1_{\tau \le N} 1_{X_N - X_{tau} \ge 0}]
+\] 
+For strong markov chain property we need to write it into $Y_\tau \circ \theta_\tau$\\
+We need to define $Y_m$ first
+ \[
+     Y_m = 1_{X_{N-m} - X_0 \ge 0}
+\] 
+for $m \le N$
+Then
+\[
+    Y_\tau \circ \theta_\tau = 1_{X_N - X_{\tau} \ge 0}
+\] 
+and we know
+\[
+\mathbb{P}(Y_m = 1) \ge \frac{1}{2} 
+\] 
+\[
+    = \mathbb{E}[1_{\tau \le N} \mathbb{E}[ Y_{\tau} \circ \theta_\tau | \mathcal{F}_\tau]]
+\] 
+\[
+    = \mathbb{E}[1_{\tau \le N} g(X_{\tau},\tau)]
+\] 
+\[
+    g(X_\tau,\tau) = \mathbb{E}_{X_\tau}Y_\tau
+\] 
+\[
+    g(a,m) = \mathbb{E}[Y_m | X_0 = a] = \mathbb{E}[Y_m] \ge \frac{1}{2}
+\] 
+so
+\[
+    \ge \frac{1}{2} \mathbb{E}[1_{\tau \le N}] = \frac{1}{2} \mathbb{P}(\tau \le N)
+\] 
+simple random walk $N = 10^{4}$ we can calculate $X_N$ distribution and
+$ \mathbb{P}(X_N \ge 2\cdot10^{2})$ 
+what about
+\[
+    \mathbb{P}(\max_{m \le n} X_m \ge 2 \cdot 10^{3}) \le 2 \mathbb{P}(X_N \ge 2 \cdot 10^{3})
+\] 
+Recurrent and transient
+if $\rho_{xx} = 1$ then $\rho_{yx} = 1$ if $x \to y$ since if  $\rho_{yx} < 1$ then there
+is a finite probability you got to $y$ and dont come back so there is a finite probability you never come back so  $\rho_{xx} < 1$\\
+Let $S$ be countable
+Definition: recurrent $\rho_{xx} = 1$ and transient $\rho_{xx} < 1$
+\[
+    \rho_{xx}^{(2)} = \rho_{xx} \rho_{xx} = \rho_{xx}^2
+\] 
+\[
+    \rho_{x\to y\to z} = \rho_{xy}\rho_{yz}
+\] 
+similarly
+\[
+    \rho_{xx}^{(m)} = \rho_{xx}^{m}
+\] 
+Def
+\[
+    N_x = |\{n > 0 : X_n = x\}|
+\] 
+\[
+    \mathbb{P}_x(N_x \ge 1) = \rho_{xx}
+\] 
+similarly
+\[
+    \mathbb{P}_x(N_x \ge 2) = \rho_{xx}^2
+\] 
+\[
+    \mathbb{E} N_x = \sum_{k}^{} \mathbb{P}(N_x \ge k) = \frac{\rho_{xx}}{1- \rho_{xx}} = 
+    \begin{cases}
+        \infty & R\\
+        < \infty & T
+    \end{cases}
+\] 
+\[
+    \mathbb{E}_x N_x = \sum_{k}^{} \mathbb{E}_x 1_{X_k = x} = \sum_{k}^{} \mathbb{P}_x(X_k = x)
+\] 
+
+\section{Friday}
+
+Lemma: 
+\[
+    \mathbb{E}_x N_x = \frac{\rho_{xx}}{1 - \rho_{xx}} = \sum_{k=0}^{\infty} \mathbb{P}_x(X_k = x)
+\] 
+This can show whether a state is recurrent or transient.
+Th example is simple random walk in $ \mathbb{Z}^{d}$ we can show that
+\[
+\mathbb{P}_x(X_2k = x) \sim k^{-\frac{d}{2}}
+\] 
+so
+\[
+    \rho_{xx} < 1 \quad d \ge 3 \qquad \rho_{xx} = 1 \quad d \le 2
+\] 
+Lemma:
+if $x \to y$  and  $y \to x$ where we say  $x \to y \iff \rho_{xy} > 0$
+and $\rho_{xx} = 1 \implies \rho_{yy} = 1$
+$x \sim y \iff x \to y, y \to x$ is an equivalence relation.
+Proof:
+suppose  $x \to y$ so  $\exists n$ such that  $p^{(n)}_{xy} > 0$ 
+and since $y \to x$ there exists  $m$ such that  $p_{yx}^{(m)} > 0$ we want to prove
+\[
+\mathbb{E}_y N_y = +\infty = \sum_{k=1}^{\infty} \mathbb{P}_y(X_k = y) = +\infty
+\] 
+\[
+    = \sum_{k=1}^{\infty} p_{yy}^{(k)} = +\infty
+\] 
+where
+\[
+    p_{xy}^{(n)} = \mathbb{P}(X_n = y| X_0 = x)
+\] 
+\[
+    \sum_{k=1}^{\infty} p_{yy}^{(k)} \ge \sum_{k=1}^{\infty}p^{(k+m+n)}_{yy} \ge \sum_{k=1}^{\infty}p_{yx}^{(m)}p^{(k)}_{xx}p^{(n)}_{xy} \ge C \sum_{k=1}^{\infty}p_{xx}^{(k)} 
+\] 
+so if the rhs is infinite then the left hand side is infinite.
+\section{Lemma}
+If $\rho_{xx} = 1$ and $x \to y$ then  $\rho_{yy} = 1$ and $\rho_{yx} = 1$.
+Let
+\[
+    T = \min\{n > 0, X_n = y , 1 \le m < n, X_m \ne x\}
+\] 
+\[
+\mathbb{P}(T_x < \infty | X_0 = x) = \mathbb{P}(T_x < \infty , T> \infty | X_0 = x) + \mathbb{P}(T_x < \infty, T < \infty | X_0 = x)
+\] 
+%shouldnt we say show that P(T < inft) > 0
+\[
+ = \mathbb{P}_x(T > \infty) + \mathbb{P}(T_x < \infty | T< \infty , X_0 = x)  \mathbb{P}(T < \infty)
+\] 
+\[
+   \implies 1 =  \mathbb{E}[1_{T_x < \infty} | T< \infty X_0 =x]
+\] 
+\[
+    = \mathbb{E}[1_{T_x < \infty} 1_{T < \infty} | T< \infty X_0 = x]
+\] 
+\[
+    = \mathbb{E}[1_{T < \infty} \circ \theta_T
+\] 
+\[
+    \sim  \mathbb{E}_{X_T} T_x 1_{T< \infty}
+\] 
+and since $X_T = y$ we have equal  $\rho_{yx}$\\
+\\
+If $|S| < \infty$ then there exists $x \in X$ such that  $\rho_{xx} = 1$
+Proof: If $x \to y$  then
+\[
+\begin{cases}
+    \rho_{yy} = 1 & \mathbb{E}_x N_y = +\infty\\
+    \rho_{yy} < 1 & \mathbb{E}_x N_y < \infty
+\end{cases}
+\] 
+And since $|S| < \infty$
+\[
+\sum_{x \in S}^{} N_x = +\infty
+\] 
+so
+\[
+    \mathbb{E} \sum_{x \in S}^{} N_x = +\infty \implies \sum_{x \in S}^{} \mathbb{E}_{*}N_x = +\infty 
+\] 
+so for all $x \in S$ there exists y such that  $ \mathbb{E}_x N_y = \infty$\\
+If $x \to y$ and  $y \not\to x$ then  $x $ is transient
+
+
+
+
+\end{document}

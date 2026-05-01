@@ -1,0 +1,472 @@
+\documentclass[11pt]{article}
+
+\newcommand{\cnum}{Math 245C}
+\newcommand{\ced}{Spring 2026}
+\newcommand{\ctitle}[4]{\title{\vspace{-0.5in}\cnum, \ced\\week #1: #2}\author{\vspace{-0.35in}\\#3, #4}}
+\usepackage{enumitem}
+\usepackage[usenames,dvipsnames,svgnames,table,hyperref]{xcolor}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{float}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{comment}
+
+\renewcommand*{\theenumi}{\alph{enumi}}
+\renewcommand*\labelenumi{(\theenumi)}
+\renewcommand*{\theenumii}{\roman{enumii}}
+\renewcommand*\labelenumii{\theenumii.}
+\newcommand{\notiff}{%
+  \mathrel{{\ooalign{\hidewidth$\not\phantom{"}$\hidewidth\cr$\iff$}}}}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{header}{HTML}{205459}
+\definecolor{solution}{HTML}{204d52}
+
+\newcommand{\solution}[1]{{{\textcolor{header}{Solution:} \textcolor{solution}{#1}}}}
+\setlist[enumerate]{label=(\alph*)}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+
+\begin{document}
+\ctitle{\#1}{}{Asher Christian}{}
+\date{}
+\maketitle
+
+\section{Monday}
+Theorem: Let $f : \mathbb{R}^{d} \to \mathbb{C}$ be a  locally  bounded Borel function such that
+$|f| \equiv 1$ and $f(x+y) = f(x)f(y)$ for all $x,y \in \mathbb{R}^{d}$. Then
+\begin{enumerate}
+    \item there exists $\xi \in \mathbb{R}^{d}$ such that
+        \[
+        f(x) = e^{2\pi i \langle x, \xi \rangle}
+        \] 
+        for $x \in \mathbb{R}^{d}$ 
+    \item If we further assume that $f : \Pi^{d} = \mathbb{R}^{d} / \mathbb{Z}^{d} \to \mathbb{C}$ 
+        then $\xi \in \mathbb{Z}^{d}$ $f(x+ k) = f(x) $ for all  $x \in \mathbb{R}^{d}$ and $k \in \mathbb{Z}^{d}$
+\end{enumerate}
+Proof:
+Let $\{e_1,\dots,e_d\}$  be the standard orthonormal
+basis of $ \mathbb{R}^{d}$. Set
+\[
+f_j(t) = f(te_j) \quad \forall t \in \mathbb{R}
+\] 
+by Friday exercise, there exists $\xi_j \in \mathbb{R}$ such that
+\[
+f_j(t) = e^{2\pi i t \xi_j} \quad \forall t \in \mathbb{R}
+\] 
+Note that
+\[
+    f(x) = f(\sum_{j=1}^{n}x_j e_j) = \Pi_{j=1}^{n} f(x_je_j) = \Pi_{j=1}^{n}f_j(x_j)
+\] 
+\[
+ = e^{2\pi i \langle x, \xi \rangle}
+\] 
+where $\xi = (\xi_1,\dots,\xi_d)$
+Goal: Show that $(f_{\xi})_{\xi \in \mathbb{Z}^{d}}$ is an orthonormal basis of $ L^{2}( \Pi^{d},  \mathbb{C})$
+\[
+    L^{2}( \Pi^{d}, \mathbb{C}) = \bigcup_{k=1}^{\infty} span\{f_{\xi_1},\dots,f_{\xi_k}\} \quad \{f_{\xi}\}_{\xi \in \mathbb{Z}^{d}} = \{f_{\xi_j}\}_{j \in \mathbb{N}}
+\] 
+The weierstrass approximation theorem tells us that $\overline{p[0,1]^{d}}^{C([0,1]^{d})} = C([0,1]^{d})$ 
+Stone-weierstrass theorem
+
+$S, +, \cdot$ is an algebra if it is a vector space with respect to addition and a ring with respect to multiplication\\
+Let $ \mathcal{X}$ be locally compact hausdorff space
+Step 1: $ \mathcal{X}$ is a compact Hausdorff space
+Step 2: $ \mathcal{X}$ is a locally compact hausdorff space
+
+Let $S \subset C_0( \mathcal{X}, \mathbb{R}) = C_0( \mathcal{X})$ we call $ S$ a sub-algebra of  $ C_{0} ( \mathcal{X})$ if
+$S$ is a real vector space such that
+ \[
+fg \in S \impliedby f,g \in S
+\] 
+we call $S$ a lattice if
+ \[
+     \min\{f,g\}, \max\{f,g\} \in S \impliedby f,g \in S
+\] 
+We say that $S$ separates points if
+whenever  $x,y \in X$ and  $x \ne y$ there exists  $f \in S$ such that
+ \[
+f(x) \ne f(y)
+\] 
+we say that $S$ vanishes at  $x_0 \in X$ if
+\[
+\forall f \in S, \quad f(x_0) = 0
+\] 
+Remark: If we replace $ C_0( \mathcal{X})$ by  $ C_0( \mathcal{X}, \mathbb{C})$
+and the above definition (except for lattice) can be extended
+\section{Theorem: Stone-Weierstrass, Real Case}
+Here and in next theorem we further assume that
+$ \mathcal{X}$ is compact. $C_0( \mathcal{X}) = C( \mathcal{X}) = C_c( \mathcal{X})$.
+Let $ A$ be  a sub-algebra  of $ C_0( \mathcal{X})$ then the following are equivalent
+\begin{enumerate}
+    \item 
+        \[
+        \overline{ A}^{C_0( \mathcal{X})} = C_0( \mathcal{X})
+        \] 
+    \item $A$ separates points and vanishes nowhere
+\end{enumerate}
+Remark [compact]: Assume  $A$ is a closed sub-algebra of   $C_0 ( \mathcal{X})$ then either 
+$A = C_0( \mathcal{X})$ or there exists $x_0 \in \mathcal{X}$ such that
+\[
+    A = \overline{A}^{C_0( \mathcal{X})} = \{f \in C_0( \mathcal{X}) : f(x_{0}) = 0\}
+\] 
+Corollary: If $  \mathcal{X} \subset \mathbb{R}^{d}$ is compact, and $ \mathbb{R}[x]$ is the set of polynomials
+on $ \mathcal{X}$ then $ C( \mathcal{X}) = \overline{ \mathbb{R}[ \mathcal{X}]}^{C( \mathcal{X})}$\\
+Proof:
+\[
+    \mathbb{R}[ \mathcal{X}]
+\] 
+separates points in $ \mathcal{X}$ and is nowhere vanishing
+%But polynomials are not dense in $C_0( \mathbb{R})$ right?
+
+\section{Theorem: Stone-Weierstrass, The complex case}
+Let $A$ be a closed complex sub-algebra of  $C_{0}( \mathcal{X}, \mathbb{C})$ which is closed under conjugation
+and separates points, then one of the following holds.
+\begin{enumerate}
+    \item $A = C_0( \mathcal{X}, \mathbb{C})$
+    \item $\exists x_0 \in \mathcal{X}$ such that $A = \{f \in C_0( \mathcal{X}, \mathbb{C}) : f(x_0) = 0\}$
+\end{enumerate}
+Proof:
+\[
+f = f_1 + if_2 \in A \implies \overline{f} = f_1 - if_2 \in A \implies f_1 \in A
+\] 
+implies that
+\[
+if = if_1 - f_2 \in A \implies f_2 \in A
+\] 
+Let 
+\[
+    A_{ \mathbb{R}} = \{R(f) : f \in A\}
+\] 
+we have that
+\[
+    A = A_{ \mathbb{R}} + i A_{ \mathbb{R}}
+\] 
+We have thatmk $ A_{ \mathbb{R}}$ is a closed sub-algebra of $ C_0 ( \mathcal{X})$ By the previous remark,
+either $ A_{ \mathbb{R}} = C_0( \mathcal{X})$  or $A_ \mathbb{R}$ vanishes at some point
+If $A_{ \mathbb{R}} = C_0( \mathcal{X})$ then
+\[
+A = C_0( \mathbb{R}) + i  C_0( \mathbb{R}) \implies A = C_0( \mathcal{X}, \mathbb{C})
+\] 
+this concludes the proof.
+
+\section{Wednesday}
+Fourier Series and Transform:\\
+Reminder: If $X$ is a compact Hausdorff space and  $A \subset C( \mathcal{X}, \mathbb{C})$ is a complex
+closed sub-algebra closed under conjugation and separates points.
+Then either $A = C( \mathcal{X}, \mathbb{C})$ or else there exists $x_0 \in \mathcal{X}$
+such that
+\[
+    A = \{f \in C( \mathcal{X}, \mathbb{C}) : f(x_0) = 0\}
+\]  %isnt i just a subset?
+Warning:
+\[
+    p([0,1]^{d}, \mathbb{C}) :=    C([0,1]^{d}, \mathbb{C}) \cap \mathbb{C}[x_1,\dots,x_d]
+\] 
+%really? 
+is not closed under conjugation. In fact $p([0,1]^{d}, \mathbb{C})$ is contained in the set of holomorphic
+function on $(0,1)^{d}$ \\
+\[
+    \mathbb{R}[x_1,\dots,x_d]
+\] 
+polynomail of real coefficients
+\[
+ \mathbb{R} \langle x_1,\dots,x_d \rangle
+\]
+for $x_1,\dots,x_d \in A$ an algebra for example $\Pi_n ( \mathbb{R})$ the set of $n \times n$ matrices.
+\\
+Notation
+ \[
+     \Pi^{d} = \mathbb{R}^{d} / \mathbb{Z}^{d} \ni [x] = \{x + k : k \in \mathbb{Z}^{d}\}
+\] 
+\begin{enumerate}
+    \item For $k_1,\dots,k_d \in \mathbb{Z}$ we define
+        \[
+        E_k(x) = e^{2\pi  i \langle x, k \rangle} \quad x \in \mathbb{R}^{d}
+        \] 
+        where $\langle x , k \rangle = \sum_{j=1}^{d}x_jk_j$
+    \item If $p,q \in [1,+\infty]$ and $\frac{1}{p} + \frac{1}{q} = 1$ for $\Omega \subset \mathbb{R}^{d}$ 
+        Borel and $f \in L^{p}(\Omega, \mathbb{C})$ $g \in L^{q}(\Omega, \mathbb{C})$
+        we set
+        \[
+        \overline{g} = \Re(g) + i \Im(g)
+        \] 
+        \[
+            \langle f, g \rangle_{\Omega} := \int_{ \Omega}^{}f(x) \overline{g}(x) dx
+        \] 
+\end{enumerate}
+Exercise: Let $f \in L^{1}_{loc}( \mathbb{R}^{d}, \mathbb{C})$ be such that
+ \[
+f : \Pi^{d} \to \mathbb{C}
+\] 
+(is periodic). Show that for any  $\xi \in \mathbb{R}^{d}$ 
+\[
+    \int_{[0,1)^{d}}^{}f(x)dx = \int_{[0,1)^{d} + \xi}^{}f(x)dx
+\] 
+Assume without loss of generality that $d = 1$ and  $\xi \in [0,1)$
+we are to show that
+ \[
+     \int_{\xi}^{xi + 1}f(t)dt = \int_{0}^{1}f(t)dt
+\] 
+If we further assume that $f$ is continuous then 
+\[
+\xi \to \int_{\xi}^{\xi + 1}f(t)dt = a(\xi)
+\] 
+is differentiable and
+\[
+a'(\xi) = f(\xi+1) - f(\xi) = 0
+\] 
+and so $a(\xi) = a(0)$
+Let  $\rho \in C_c^{\infty}([-1,1])$ be a probability density 
+and set $\rho_\epsilon(t) = \frac{1}{\epsilon}\rho(\frac{t}{\epsilon})$ then
+\[
+    \rho_{\epsilon} * f \in C^{1}(\Pi)
+\] 
+and so
+\[
+    \int_{\xi}^{\xi+1}f(t)dt = \lim_{\epsilon\to 0} \int_{\xi}^{\xi+1} \rho_{\epsilon} * f(t) = \lim_{\epsilon\to 0 } \int_{0}^{1}\rho_{\epsilon} * f(t)dt = \int_{0}^{1}f(t)dt
+\] 
+Exercise:
+Show that the set
+\[
+\{E_k : k \in \mathbb{Z}\}
+\] 
+is an orthonormal basis for $L^{2}(\Pi^{d}, \mathbb{C})$ \\
+Solution:
+\[
+    \overline{C( \Pi^{d}. \mathbb{C})}^{L^2(\Pi^{d}, \mathbb{C})} = L^2(\Pi^{d}, \mathbb{C})
+\] 
+If we can show
+\[
+\overline{S}^{C(\Pi^{d}, \mathbb{C})} = C(\Pi^{d}, \mathbb{C})
+\] 
+Note that if $k, l \in \mathbb{Z}^{d} $ then
+\[
+    \langle E_k, E_l \rangle_{L^2(\Pi^{d}, \mathbb{C})} = \int_{\Pi^{d}}^{}e^{2\pi i \langle k-l,x \rangle}dx
+\] 
+\[
+ = \Pi_{j=1}^{d} \int_{0}^{1} e^{2\pi i (k_j - l_j)x_j}dx_j = 
+\begin{cases}
+    1 & k = l\\
+    0 & k \ne l
+\end{cases}
+\] 
+Let $S = \overline{span\{ E_k : k \in \mathbb{Z}^{d}\}}^{C(\Pi^{d}, \mathbb{C})}$ 
+The set $S$ is a closed sub-algebra of  $C(\Pi^{d}, \mathbb{C})$ which separates points and is closed
+under conjugation and since $E_{0,\dots,0} \in S$ we conclude that
+$S = C( \Pi^{d}, \mathbb{C})$\\
+Definition:
+If $f \in L^2( \Pi^{d})$ and $g \in L^{1}( \mathbb{R}^{d})$ for
+$k \in \mathbb{Z}^{d}$ and $\xi \in \mathbb{R}^{d}$ we define
+\[
+    \hat f(k) = \langle f, E_k \rangle_{L^2(\Pi^{d}, \mathbb{C})} 
+\] 
+\[
+    F(g)(\xi) = \int_{ \mathbb{R}^{d}}^{}g(x)e^{-2\pi i \langle \xi ,x\rangle}dx= \langle g, \xi \rangle_{ \mathbb{R}^{d}}
+\] 
+we call
+\[
+    \hat f
+\] 
+the fourier transform of $f$ and
+ \[
+F(g) 
+\] 
+the fourier transform of $g$.\\
+Fact: 
+\[
+    f =^{||\cdot||_{L^2}} \sum_{k \in \mathbb{Z}^{d}}^{} \hat f(k) E_k
+\] 
+We call the sum
+\[
+\sum_{k \in \mathbb{Z}^{d}}^{} \hat f(k) E_k
+\] 
+the fourier series of $f$
+Proof: Define  $f_N = \sum_{|k| \le N}^{} \hat f(k) E_k$  this is the projection
+\[
+    proj_{S_N} f
+\] 
+where
+\[
+    S_n = span\{E_k : |k| \le N\}
+\] 
+
+\section{Friday}
+If $k \in \mathbb{Z}^{d}$ $E_k(x) = e^{2\pi i \langle k , x \rangle}$ for all $x \in \Pi^{d}$
+\begin{enumerate}
+    \item $(E_k)_{k \in \mathbb{Z}^{d}}$ is an orthonormal basis 
+        for $L^2(\Pi^{d}, \mathbb{C})$
+\end{enumerate}
+Remark: Let $f \in L^2(\Pi^{d}, \mathbb{C})$. Then
+\[
+f = \sum_{k \in \mathbb{Z}^{d}}^{}\hat f(k) E_k \quad \hat f(k) = \langle f, E_k \rangle
+\] 
+Note that $\hat f : \mathbb{Z}^{d} \to \mathbb{C}$ and
+\[
+    (*) \quad   ||f||_{L^2(\Pi^{d}, \mathbb{C})}^{2} = \sum_{k \in \mathbb{Z}^{d}}^{}|\hat f (k)|^2
+\] 
+\[
+    = ||\hat f||_{L^2( \mathbb{Z}^{d}, \mathcal{H}^{0})}^{2}
+\] 
+where, here
+\[
+    \mathcal{H}^{0}
+\] 
+is the counting measure on $ \mathbb{Z}^{d}$ 
+\[
+    L^2( \mathbb{Z}^{d}, \mathcal{H}^{0}) = l_2( \mathbb{C})
+\] 
+If $f \in L^{1}(\Pi^{d}, \mathbb{C})$ then $|\hat f(k)| \le ||f||_{L^{1}(\Pi^{d}, \mathbb{C})}$ since $||E_k||_{L^{\infty}(\Pi^{d}, \mathbb{C})} = 1$
+Hence: 
+\[
+    (**) \quad    ||\hat f||_{l_{\infty}( \mathbb{C})} = ||\hat f||_{L^{\infty}(Z^{d}, \mathcal{H}^{0})} \le ||f||_{L^{1}( \Pi^{d}, \mathbb{C})}
+\] 
+then $(*)$ is Parseval's identity
+then
+\[
+\begin{cases}
+    L^{2}(\Pi^{d}, \mathbb{C}, \mathcal{L}^2) & L^2( \mathbb{Z}^{d}, \mathbb{C}, \mathcal{H}^{0})\\
+    L^{1}(\Pi^{d}, \mathbb{C}, \mathcal{L}^2) & L^{\infty}( \mathbb{Z}^{d}, \mathbb{C}, \mathcal{H}^{0})
+\end{cases}
+\] 
+Can we conclude that for $1 < p < 2$
+\[
+    L^{p}(\Pi^{d}, \mathbb{C}, \mathcal{L}^{2}) \to L^{q}( \mathbb{Z}^{d}, \mathbb{C}, \mathcal{H}^{0})
+\]?\\
+Goal: let $(\Omega_0, \mu_0)$ be a $\sigma$-finite measure space
+and let $(\Omega_1, \mu_1)$ be another $\sigma$-finite measure space. Assume that
+\[
+    1 \le p_0 < p_1 \le +\infty
+\] 
+\[
+1 \le q_0, q_1 < +\infty
+\] 
+Define the interpolation $p_t$ and  $q_t$ by
+ \[
+\frac{1}{p_t} = \frac{1-t}{p_0} + \frac{t}{p_1} \qquad \frac{1}{q_t} = \frac{1-t}{q_0} + \frac{t}{q_1}
+\] 
+Assume that
+\[
+T_0 : L^{p_0}(\Omega_0, \mathbb{C}, \mu_0) \to L^{q_0}(\Omega_1, \mathbb{C}, \mu_1)
+\] 
+linear, bounded, and 
+\[
+T_1: L^{p_1}( \Omega_0, \mathbb{C}, \mu) \to L^{q_1}(\Omega_1, \mathbb{C}, \mu_1)
+\] 
+is linear and bounded. We want to show that $T$ yields
+\[
+T_t : L^{q_t}(\Omega_0, \mathbb{C}, \mu_0) \to L^{q_t}(\Omega_1, \mathbb{C}, \mu_1)
+\] 
+is linear bounded
+\[
+    (***) \quad    ||T_t||_{L^{p_t} \to L^{q_t}} \le ||T_0||_{L^{p_0}\to L^{q_0}}^{1-t}||T_1||_{L^{p_1} \to L^{q_1}}^{t}
+\] 
+\[
+\log(\dots) \le (1-t)\log + t\log
+\] 
+We show that $(***)$ is a consequence of the following
+we draw the complex plan  $ \mathbb{C} = \mathbb{R} + i \mathbb{R} \sim \mathbb{R}^2$.
+Facts from complex analysis:
+\[
+    f: \mathbb{C} \to \mathbb{C} \quad \text{holomorphic}
+\] 
+\[
+    M_0 = \sup\{|f(x)| : \Re(z) = 1\} \qquad M_t = \sup\{|f(z)| : \Re(z) = (1-t)1 + t2\}
+\] 
+Then
+\[
+M_t \le M_0^{1-t}M_1^{t}
+\] 
+Elements of complex analysis.
+We identify $ \mathbb{C}$ with $ \mathbb{R}^2$ where $x +iy \to(x,y)$
+and similarly we identify  $D \subset \mathbb{C}$ by $\tilde D \subset \mathbb{R}^2$
+and $f : D \to \mathbb{C}$ with $\tilde f : \tilde  D \to \mathbb{C}$
+Let
+\[
+D \subset \mathbb{C}
+\] 
+be an open set.
+We say that $f : D \to \mathbb{C}$ is holomorphic if
+\[
+f'(z) 
+\] 
+exists for every $z \in D$.
+We say that  $u : D \to \mathbb{R}$ is harmonic if
+\[
+u \in C^2( D)
+\] 
+and
+\[
+\frac{\partial^2 u}{ \partial x^2} + \frac{\partial^2 u}{ \partial y^2} = \triangle u \equiv 0
+\] 
+holomorphic functions have real and imaginary part harmonic.
+Fact: Assume that $u \in C^2(D)$ is harmonic
+then if $B_r(x_0) \subset D$ thena
+\[
+    (1) \quad   f(x_0) = \frac{1}{ \mathcal{L}^{s}(B_r(x_0))}\int_{\partial B_r(x_0)}^{} u d \mathcal{H}^{1} =  \frac{1}{ \mathcal{L}^{2}(B_r(x_0))} \int_{B_r(x_0)}^{}u d \mathcal{L}^2
+\] 
+Let
+\[
+    / \int_{A}^{}d\mu = \frac{1}{\mu[A]} \int_{A}^{}d \mu
+\] 
+Proof of (1) fix  $R > 0$ such that  $B_R(x_0) \subset D$
+define
+\[
+    \phi(r) = / \int_{\partial B_r(x_0)}^{} u d \mathcal{H}^{1} = / \int_{ \partial B_1(0)}^{}u(x_0 + rx) \mathcal{H}^{1}(dz)
+\] 
+we have
+\[
+    \phi'(r) = / \int_{\partial B_1(0)}^{} \langle \nabla u(x_0 + rx), \frac{x_0 + rx - x_0}{r} \rangle \mathcal{H}^{1}(dx)
+\] 
+\[
+    = / \int_{B_r(x_0)}^{} \langle \nabla u(x), \nu \rangle \mathcal{H}^{1}(dx)
+\] 
+using Gauss-Green we conclude this is equal to 
+\[
+    \frac{1}{\mathcal{H}^{1}(\partial B_r(x_0)} \int_{B_r(x_0)}^{} div(\nabla u) dx = 0
+\] 
+so $\phi : (0, R) \to \mathbb{R}$ is constant and so 
+\[
+    (1) \quad \phi(r) = \lim_{t\to 0}\phi(t) = u(x_0)
+\] 
+Note that
+\[
+    \int_{B_r(x_0)}^{}u(x)dx = \int_{0}^{r}ds \int_{\partial B_s(x_0)}^{}u d \mathcal{H}^{1} = \int_{0}^{r}ds \mathcal{H}^{1}(\partial B_s(x_0)) u(x_0) d \mathcal{H}^{1}
+\] 
+\[
+    = u(x_0) \int_{ 0}^{r}\int_{\partial B_s(x_0)}^{}d\mathcal{H}^{1}ds =  u(x_0) \mathcal{L}^{d}(B_r(x_{0}))
+\] 
+Corollary:
+If $u$ achieves its maximum on  $D$ then it achieves its maximum on  $\partial D$.
+Provided that  $D$ is connected
+Proof:
+Let 
+\[
+    E = \{x \in D: u(x) = \max\}
+\] 
+then $E$ is closed and by 1  $E$ is open
+
+\end{document}

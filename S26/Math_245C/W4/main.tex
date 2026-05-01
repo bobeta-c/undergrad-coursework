@@ -305,5 +305,160 @@ let
 \check g = \int_{ \mathbb{R}^{d}}^{}e^{2\pi i x \xi} g(\xi) d\xi = \hat f(-x)
 \] 
 
+\section{Friday}
+Notation $\phi \in L^{1}( \mathbb{R}^{d})$. For $t > 0$
+we define  $\phi_t(x) = \frac{1}{t^{d}}\phi(\frac{x}{t})$ and we observe that
+\[
+    ||\phi_t||_{L^{1}} = ||\phi||_{L^{1}}
+\] 
+Lemma. Let $p \in [1,+\infty)$ and set $a = \int_{ \mathbb{R}^{d}}^{}\phi(x)dx$
+\begin{enumerate}
+    \item If $f \in L^{p}( \mathbb{R}^{d})$ then $(\phi_t * f)_t$ converges to $af$ in  $ L^{p}( \mathbb{R}^{d})$ as $t \to 0$.
+    \item If  $f \in L^{\infty} ( \mathbb{R}^{d})$ is uniformly continuous then $(\phi_t * f)$ converges uniformly to $af$ as
+         $t \to 0$ 
+     \item If $O \subset \mathbb{R}^{d}$ is open and $f|_O \in C(O)$ then
+          \[
+              (\phi_t * f)_t
+         \] 
+         converges uniformly to $af$ on every  $K \subset O$ compact
+\end{enumerate}
+Proof: For $x \in \mathbb{R}^{d}$ $\phi_t * f(x) - af(x) = \int_{ \mathbb{R}^{d}}^{} \phi_t(y)(f(x-y)-f(x))dy $.
+Now we replace $\phi_t$ by what it is
+\[
+\int_{ \mathbb{R}^{d}}^{}\frac{1}{t^{d}}\phi\left(\frac{y}{t}\right)(f(x-y)-f(x))dy
+\] 
+by setting $z = \frac{y}{t}$
+\[
+    (1) \quad \phi_t* f(x) - f(x) = \int_{ \mathbb{R}^{d}}^{} \phi(z) \left(f(x-tz) - f(x)\right) dz
+\] 
+So for case $(i)$ we recall Minkowski inequality: for $f \ge 0$, $\mu ,\nu$ $\sigma$-finite
+\[
+\left(\int_{\Omega}^{}\left(\int_{ \Lambda}^{} f(x,y) \nu(dy)\right)^{p} \mu(dx)\right)^{\frac{1}{p}}
+\] 
+\[
+\le \int_{\Lambda}^{} \nu(dy)\left(\int_{\Omega}^{}f^{p}(x,y) \mu(dx)\right)^{\frac{1}{p}}
+\] 
+By $(1)$
+ \[
+\left|\phi_t * f(x) - af(x)\right|^{p} \le \left|\int_{ \mathbb{R}^{d} }^{} |\phi(z)| |f(x-tz) - f(x)|dz \right|^{p}
+\] 
+therefore
+if we integrate we get
+\[
+\left(\int_{ \mathbb{R}^{d}}^{}\left|\phi_t * f(x) - af(x)\right|^{p} dx \right)^{\frac{1}{p}} \le  \left(\int_{ \mathbb{R}^{d}}^{}\left|\int_{ \mathbb{R}^{d} }^{} |\phi(z)| |f(x-tz) - f(x)|dz \right|^{p}dx\right)^{\frac{1}{p}}
+\] 
+\[
+\le \int_{ \mathbb{R}^{d}}^{} dz\left( \int_{ \mathbb{R}^{d}}^{} |\phi(x)|^{p}|f(x-tz)-f(x)|^{p}dx \right)^{\frac{1}{p}}
+\] 
+By minkowski
+\[
+\le \int_{ \mathbb{R}^{d}}^{}|\phi(z)|dz\left( \int_{ \mathbb{R}^{d}}^{}|f(x-tz) - f(x)|^{p}dx\right)^{\frac{1}{p}}
+\] 
+Let $F(t,z)$ be the final term  $F(t,z) = \left(\int_{ \mathbb{R}^{d}}^{} |f(x-tz) - f(x)|^{p}dx\right)^{\frac{1}{p}}$.
+it remains to show that
+\[
+\lim_{t\to 0} \int_{ \mathbb{R}^{d}}^{}|\phi(z)|F(t,z) = \int_{ \mathbb{R}^{d}}^{}\lim_{t\to 0} |\phi(z)|F(t,z)dz
+\] 
+we have
+\[
+    F(t,z) \le 2 ||f||_{L^{p}}
+\] 
+so
+\[
+    |\phi(z)|F(t,z) \le 2 ||\phi||_{L^{p}} |\phi(z)|
+\] 
+It is pretty clear that 
+\[
+\lim_{t\to 0}F(t,z)dz = 0
+\] 
+we apply dominated convergence theorem to conclude.
+For case $(ii)$ we assume  $f \in L^{\infty} ( \mathbb{R}^{d})$ is uniformly continuous.
+Since $f$ is continuous we have  $\sup_{|a| < \delta}f(x+a) - f(x) = O(\delta)$ 
+By $(1)$
+\[
+    |\phi_t * f(x) - af(x)| \le \int_{ B_r(0)}^{} |\phi(z)| |f(x-tz) - f(x)|dz + \int_{ B_r(0)^{c}}^{}|\phi(z)|dz (2 ||f||_{L^{\infty}})
+\] 
+for any $\epsilon > 0$ we can choose $ R$ large so that
+ \[
+     \int_{ B_R(0)^{c}}^{}|\phi(z)|dz (2 ||f||_{L^{\infty}}) < \epsilon
+\] 
+By $(2)$ 
+ \[
+     \limsup_{t\to 0} ||\phi_t * f - af||_{L^{\infty}} \le \epsilon + \limsup_{t\to 0}\int_{B_R(0)}^{}|\phi(z)| \omega_f(tR) dz
+\] 
+where
+\[
+    \omega_f(\delta) = \sup_{||x-y||\le \delta}|f(x) -f(y)|
+\] 
+which conclude sthe proof since $\lim_{\delta\to 0}\omega_f(\delta) = 0$.
+For the third part we do similar where we argue that the restriction of $f$ to a compact set is uniformly continuous.
+
+\section{Exercise}
+Let  $\phi \in L^{1}_{loc}( \mathbb{R}, \mathbb{C})$ be such that
+\[
+|\phi| \equiv q \quad \phi(x+y) = \phi(x) \phi(y) \quad \forall x,y \in \mathbb{R}
+\] 
+Show that there exists $\xi \in  \mathbb{R}$ such that
+\[
+\phi(x) = e^{i \xi x} \quad x \in \mathbb{R}
+\] 
+Show that if $\phi$ is $2\pi$-periodic then $\psi \in \mathbb{Z}$.
+Solution Choose $a > 0 $ such that
+ \[
+\int_{0}^{a}\phi(t)dt \ne 0
+\] 
+Set 
+ \[
+A = \frac{1}{\int_{0}^{a}\phi(t)dt}
+\] 
+we have
+\[
+\phi(x) = \phi(x) A \int_{0}^{a}\phi(t)dt = A \int_{0}^{a} \phi(x+t)dt
+\] 
+\[
+    (3) \quad = A \int_{x}^{x+a}\phi(u)du
+\] 
+\[
+= \int_{x}^{0} + \int_{0}^{x+a}
+\] 
+by $(3)$,  $\phi$ is continuous. and so $\phi \in C^{1}( \mathbb{R}, \mathbb{C})$  and so 
+inductively, we conclude that $\phi \in C^{\infty} ( \mathbb{R}, \mathbb{C})$.
+By (3),
+\[
+\phi'(x) = A (\phi(x+a) - \phi(x)) = A(\phi(x)\phi(a) - \phi(x)) = \phi(x) A(\phi(a) - 1)
+\] 
+\[
+= \phi(x)B
+\] 
+so
+\[
+    (\log \phi)' = \frac{\phi'}{\phi} = B
+\] 
+so
+\[
+\log \frac{\phi(x)}{\phi(0)} = Bx
+\] 
+and so
+\[
+    (4) \quad \phi(x) = \phi(0)e^{Bx} = \phi(0) e^{B_1x + i B_2x}
+\] 
+we have
+\[
+\phi(0) = \phi(0+0) = \phi(0)\phi(0)
+\] 
+so $\phi(0) \in \{0,1\}$ and so, since $\phi \not\equiv 0 $, $\phi(0) = 1$.
+We use (4) to conclude that
+\[
+1 = |\phi(x)| = e^{B_1x}
+\] 
+and so $B_1 = 0$ so we conclude that
+\[
+\phi(x) = e^{iB_2 x}
+\] 
+
+
+
+
+
 
 \end{document}
